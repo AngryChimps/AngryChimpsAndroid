@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_card">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/imageCompanyMain"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Company Title"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_toRightOf="@id/imageCompanyMain"
+            android:layout_margin="8dp"
+            android:id="@+id/tvCompanyTitle"/>
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_margin="8dp"
+            android:id="@+id/imageLocationSymbol"
+            android:layout_toRightOf="@id/imageCompanyMain"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageCompanyMain"
+            android:layout_toRightOf="@id/imageCompanyMain"
+            android:text="Tomorrow 9:30am - 12:00pm"
+            android:textStyle="bold"
+            android:layout_margin="8dp"
+            android:id="@+id/tvCompanyTimeAvailable"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageLocationSymbol"
+            android:text="Company Name, \nSan Francisco, CA 94110 "
+            android:layout_above="@id/tvCompanyTimeAvailable"
+            android:layout_margin="8dp"
+            android:id="@+id/tvCompanyAddress"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
