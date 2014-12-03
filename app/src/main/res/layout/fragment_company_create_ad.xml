@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Create Ad"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Title"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/etCreateAdTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Description"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:inputType="textMultiLine"
+        android:layout_margin="5dp"
+        android:id="@+id/etCreateAdDescription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Available Starting At" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:text="12/30/2014"
+            android:ems="5"
+            android:layout_margin="5dp"
+            android:id="@+id/etCreateAdStartDate" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_go_to_today"
+            android:layout_margin="5dp"
+            android:id="@+id/imageCreateAdStartDate"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:ems="4"
+            android:text="12:00pm"
+            android:layout_margin="5dp"
+            android:id="@+id/etCreateAdStartTime" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_time"
+            android:layout_margin="5dp"
+            android:id="@+id/imageCreateAdStartTime"/>
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Available Ending At" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:text="12/30/2014"
+            android:ems="5"
+            android:layout_margin="5dp"
+            android:id="@+id/etCreateAdEndDate" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_go_to_today"
+            android:layout_margin="5dp"
+            android:id="@+id/imageCreateAdEndDate"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:ems="4"
+            android:text="12:00pm"
+            android:layout_margin="5dp"
+            android:id="@+id/etCreateAdEndTime" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_time"
+            android:layout_margin="5dp"
+            android:id="@+id/imageCreateAdEndTime"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Service Name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/etCreateAdServiceName" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
+
+        <TableRow>
+            <TextView
+                android:text="Discounted Price"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:text="Original Price"
+                android:layout_margin="5dp"/>
+        </TableRow>
+        <TableRow>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/etCreateAdDiscountedPrice"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="40dp"
+                />
+            <EditText
+                android:inputType="number"
+                android:id="@+id/etCreateAdOriginalPrice"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="40dp"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Minutes Required for Service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:text="Minutes Notice Required to Book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+        </TableRow>
+        <TableRow>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/etCreateAdMinutesRequired"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="40dp"/>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/etCreateAdMinutesNotice"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="40dp"/>
+        </TableRow>
+
+        </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category: Plumbing"
+            android:layout_margin="5dp"
+            android:id="@+id/tvCreateAdCategory"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change"
+            android:layout_margin="5dp"
+            android:id="@+id/bCreateAdCategorySelection"/>
+        </LinearLayout>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Post My Ad"
+        android:id="@+id/bCreateAdSubmit"/>
+</LinearLayout>
+
+</ScrollView>

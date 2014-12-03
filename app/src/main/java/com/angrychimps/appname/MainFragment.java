@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.angrychimps.appname.search.SearchResultArrayAdapter;
+import com.angrychimps.appname.search.SearchResultItem;
+
+import java.util.ArrayList;
+
 public class MainFragment extends ListFragment {
 
         @Override
@@ -15,9 +20,8 @@ public class MainFragment extends ListFragment {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            String[] values = new String[] { "Message1", "Message2", "Message3" };
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_1, values);
+            ArrayAdapter<SearchResultItem> adapter = new SearchResultArrayAdapter(getActivity(), getCompanies());
+
             setListAdapter(adapter);
             return rootView;
         }
@@ -41,6 +45,11 @@ public class MainFragment extends ListFragment {
         public void onListItemClick(ListView l, View v, int position, long id) {
 
         }
-
+    private ArrayList<SearchResultItem> getCompanies() {
+        ArrayList<SearchResultItem> list = new ArrayList<SearchResultItem>();
+        list.add(new SearchResultItem(null, "We cut your hairs", "Hair company \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
+        list.add(new SearchResultItem(null, "We're the best!", "Haircut Express \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        return list;
+    }
 
 }
