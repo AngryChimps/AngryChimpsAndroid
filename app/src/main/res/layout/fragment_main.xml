@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageLogo"
-        android:layout_gravity="center_horizontal"
-        android:padding="5dp"
-        android:src="@drawable/ic_launcher"/>
+        android:background="@drawable/bg_card">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Discounted services \n       in your town"
-        android:id="@+id/tvMainTitle"
-        android:layout_gravity="center_horizontal"
-        android:padding="5dp"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_action_search"
+            android:id="@+id/bSearch"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/bSearch"
+            android:layout_margin="5dp"
+            android:id="@+id/etSearch" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSearchDetails"
+            android:text="Showing all deals in all categories near your current location"
+            android:layout_below="@id/etSearch"
+            android:layout_toLeftOf="@id/bSearch"
+            android:layout_margin="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMap"
+            android:text="Map"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tvSearchDetails"
+            android:clickable="true"
+            android:padding="5dp"
+            android:onClick="onClickMap"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Yard work, Catering, Beauty @ Spas, Home Services, Entertainment, Automotive, Professional Services, Pets, Financial Services, Bartending, Boat Charters"
-        android:paddingLeft="35dp"
-        android:paddingRight="35dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        android:id="@+id/tvServicesList"
-        android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSearchOptions"
+            android:text="Search Options"
+            android:layout_toLeftOf="@id/tvMap"
+            android:layout_below="@id/tvSearchDetails"
+            android:clickable="true"
+            android:padding="5dp"
+            android:onClick="onClickSearchOptions"/>
+        </RelativeLayout>
 
     <ListView
         android:layout_width="match_parent"
