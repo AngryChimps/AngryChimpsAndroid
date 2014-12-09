@@ -1,4 +1,4 @@
-package com.angrychimps.appname;
+package com.angrychimps.appname.provider;
 
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.angrychimps.appname.search.SearchResultArrayAdapter;
-import com.angrychimps.appname.search.SearchResultItem;
+import com.angrychimps.appname.R;
+import com.angrychimps.appname.consumer.search.SearchResultArrayAdapter;
+import com.angrychimps.appname.consumer.search.SearchResultItem;
 
 import java.util.ArrayList;
 
-public class MainFragment extends ListFragment {
+public class ProviderMainFragment extends ListFragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +48,14 @@ public class MainFragment extends ListFragment {
         }
     private ArrayList<SearchResultItem> getCompanies() {
         ArrayList<SearchResultItem> list = new ArrayList<SearchResultItem>();
-        list.add(new SearchResultItem(null, "We cut your hairs", "Hair company \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "We're the best!", "Haircut Express \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new SearchResultItem(null, "We cut your hair", "Hair Company \n" +
+                "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm (+2 more)"));
+        list.add(new SearchResultItem(null, "We're the best!", "Haircut Express \n" +
+                "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new SearchResultItem(null, "Best deals in town", "Cheap Hairdos \n" +
+                "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
+        list.add(new SearchResultItem(null, "Half off hair!", "Barber Man \n" +
+                "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
         return list;
     }
 

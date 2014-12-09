@@ -1,4 +1,4 @@
-package com.angrychimps.appname.search;
+package com.angrychimps.appname.consumer.search;
 
 import android.app.ListFragment;
 import android.os.Bundle;

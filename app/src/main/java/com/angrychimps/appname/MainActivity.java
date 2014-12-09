@@ -1,6 +1,7 @@
 package com.angrychimps.appname;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -14,9 +15,11 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.angrychimps.appname.consumer.ConsumerMainFragment;
+import com.angrychimps.appname.consumer.search.SearchResultFragment;
 import com.angrychimps.appname.menu.NavigationDrawerAdapter;
 import com.angrychimps.appname.menu.NavigationDrawerItem;
-import com.angrychimps.appname.search.SearchResultFragment;
+import com.angrychimps.appname.provider.ProviderMainFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,7 @@ public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private boolean serviceProviderMode = true;
+    private boolean serviceProviderMode = false;
     NavigationDrawerAdapter adapter;
     List<NavigationDrawerItem> dataList;
 
@@ -44,15 +47,16 @@ public class MainActivity extends Activity {
         container = new FrameLayout(this);
         container.setId(R.id.container_id);
 
-        MainFragment mainFragment = new MainFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(container.getId(), mainFragment);
-        fragmentTransaction.commit();
-
+        if(serviceProviderMode){
+            ProviderMainFragment providerMainFragment = new ProviderMainFragment();
+            replaceFragmentNoBackStack(providerMainFragment);
+        }else {
+            ConsumerMainFragment consumerMainFragment = new ConsumerMainFragment();
+            replaceFragmentNoBackStack(consumerMainFragment);
+        }
         fragmentContainer.addView(container);
 
-        // ActionBarDrawerToggle ties together the interactions between the sliding drawer and the action bar app icon
+        // ActionBarDrawerToggle ties together the interactions between the sliding drawer and the app icon in the action bar
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.closed) {
             @Override
             public void onDrawerClosed(View view) {
@@ -72,6 +76,17 @@ public class MainActivity extends Activity {
             getActionBar().setHomeButtonEnabled(true);
         }
     }
+
+    private void replaceFragmentNoBackStack(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(container.getId(), fragment).commit();
+    }
+    private void replaceFragmentAddBackStack(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(container.getId(), fragment).addToBackStack(null).commit();
+    }
+
 
     private void initiateNavigationDrawer(boolean serviceProviderMode) {
         dataList = new ArrayList<NavigationDrawerItem>();
@@ -102,19 +117,17 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        //TODO add menu options, connect them, and clean this code
+        // Handle action bar item clicks here.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -124,7 +137,6 @@ public class MainActivity extends Activity {
         }
 
         if (id == android.R.id.home) return true;
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,8 +154,7 @@ public class MainActivity extends Activity {
 
     public void buttonSearch(View view) {
         SearchResultFragment fragment = new SearchResultFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(container.getId(), fragment).addToBackStack(null).commit();
+        replaceFragmentAddBackStack(fragment);
     }
 
     // Item selected functionality
