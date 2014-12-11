@@ -1,4 +1,4 @@
-package com.angrychimps.appname.consumer.search;
+package com.angrychimps.appname;
 
 
 import android.app.Activity;
@@ -9,18 +9,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.angrychimps.appname.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SearchResultArrayAdapter extends ArrayAdapter<SearchResultItem> {
+public class AdFlowArrayAdapter extends ArrayAdapter<AdFlowCompanyListing> {
 
-    // This is the Adapter that handles the data for the MissionPlanner listview.
 
     HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
     private final Activity context;
-    private final ArrayList<SearchResultItem> searchResultItems;
+    private final ArrayList<AdFlowCompanyListing> searchResultItems;
 
     // ViewHolder increases speed and efficiency by recycling views rather than doing many findViewByIds, which are expensive.
     static class ViewHolder {
@@ -30,14 +27,14 @@ public class SearchResultArrayAdapter extends ArrayAdapter<SearchResultItem> {
         public TextView tvCompanyTimeAvailable;
     }
 
-    public SearchResultArrayAdapter(Activity context, ArrayList<SearchResultItem> searchResultItems) {
+    public AdFlowArrayAdapter(Activity context, ArrayList<AdFlowCompanyListing> searchResultItems) {
         super(context, R.layout.rowlayout_search_result, searchResultItems);
         this.context = context;
         this.searchResultItems = searchResultItems;
     }
 
     @Override
-    public SearchResultItem getItem(int position) {
+    public AdFlowCompanyListing getItem(int position) {
         return searchResultItems.get(position);
     }
 
@@ -52,7 +49,6 @@ public class SearchResultArrayAdapter extends ArrayAdapter<SearchResultItem> {
         return true;
     }
 
-    //check if necessary
     @Override
     public boolean isEnabled(int position) {
         return true;

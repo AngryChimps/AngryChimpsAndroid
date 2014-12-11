@@ -2,6 +2,7 @@ package com.angrychimps.appname.consumer;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,12 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.angrychimps.appname.AdFlowArrayAdapter;
+import com.angrychimps.appname.AdFlowCompanyListing;
 import com.angrychimps.appname.QuickReturnListView;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.consumer.search.SearchResultArrayAdapter;
-import com.angrychimps.appname.consumer.search.SearchResultItem;
 
 import java.util.ArrayList;
 
@@ -34,8 +36,10 @@ public class ConsumerMainFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, null);
-        header = inflater.inflate(R.layout.header, null);
+        header = inflater.inflate(R.layout.quick_return_header, null);
         quickReturnView = (LinearLayout) view.findViewById(R.id.sticky);
+        TextView tvSearchDetails = (TextView) view.findViewById(R.id.tvSearchDetails);
+        tvSearchDetails.setText(Html.fromHtml("Showing <b>all</b> deals in <b>all</b> categories near your <b>current location</b>"));
         return view;
     }
 
@@ -46,10 +50,10 @@ public class ConsumerMainFragment extends ListFragment {
         listView = (QuickReturnListView) getListView();
         listView.addHeaderView(header);
 
-        ArrayAdapter<SearchResultItem> adapter = new SearchResultArrayAdapter(getActivity(), getCompanies());
+        ArrayAdapter<AdFlowCompanyListing> adapter = new AdFlowArrayAdapter(getActivity(), getCompanies());
         setListAdapter(adapter);
 
-        //Set up the animations for the header when the user swipes up
+        //Set up the animations for the quick_return_header when the user swipes up
         listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
@@ -138,8 +142,7 @@ public class ConsumerMainFragment extends ListFragment {
                     case STATE_EXPANDED:
                         if (rawY < minRawY - 2 && !noAnimation) {
                             noAnimation = true;
-                            anim = new TranslateAnimation(0, 0, 0,
-                                    -quickReturnHeight);
+                            anim = new TranslateAnimation(0, 0, 0,-quickReturnHeight);
                             anim.setFillAfter(true);
                             anim.setDuration(250);
                             anim.setAnimationListener(new Animation.AnimationListener() {
@@ -196,31 +199,55 @@ public class ConsumerMainFragment extends ListFragment {
         public void onListItemClick(ListView l, View v, int position, long id) {
         }
 
-    private ArrayList<SearchResultItem> getCompanies() {
-        ArrayList<SearchResultItem> list = new ArrayList<SearchResultItem>();
-        list.add(new SearchResultItem(null, "We cut your hair", "Hair Company \n" +
+    private ArrayList<AdFlowCompanyListing> getCompanies() {
+        ArrayList<AdFlowCompanyListing> list = new ArrayList<AdFlowCompanyListing>();
+        list.add(new AdFlowCompanyListing(null, "We cut your hair", "Hair Company \n" +
                 "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "We're the best!", "Haircut Express \n" +
+        list.add(new AdFlowCompanyListing(null, "We're the best!", "Haircut Express \n" +
                 "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "Best deals in town", "Cheap Hairdos \n" +
+        list.add(new AdFlowCompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
                 "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "Half off hair!", "Barber Man \n" +
+        list.add(new AdFlowCompanyListing(null, "Half off hair!", "Barber Man \n" +
                 "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "We cut your hair", "Hair Company \n" +
+        list.add(new AdFlowCompanyListing(null, "We cut your hair", "Hair Company \n" +
                 "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "We're the best!", "Haircut Express \n" +
+        list.add(new AdFlowCompanyListing(null, "We're the best!", "Haircut Express \n" +
                 "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "Best deals in town", "Cheap Hairdos \n" +
+        list.add(new AdFlowCompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
                 "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "Half off hair!", "Barber Man \n" +
+        list.add(new AdFlowCompanyListing(null, "Half off hair!", "Barber Man \n" +
                 "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "We cut your hair", "Hair Company \n" +
+        list.add(new AdFlowCompanyListing(null, "We cut your hair", "Hair Company \n" +
                 "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "We're the best!", "Haircut Express \n" +
+        list.add(new AdFlowCompanyListing(null, "We're the best!", "Haircut Express \n" +
                 "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "Best deals in town", "Cheap Hairdos \n" +
+        list.add(new AdFlowCompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
                 "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
-        list.add(new SearchResultItem(null, "Half off hair!", "Barber Man \n" +
+        list.add(new AdFlowCompanyListing(null, "Half off hair!", "Barber Man \n" +
+                "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "We cut your hair", "Hair Company \n" +
+                "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "We're the best!", "Haircut Express \n" +
+                "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
+                "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "Half off hair!", "Barber Man \n" +
+                "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "We cut your hair", "Hair Company \n" +
+                "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "We're the best!", "Haircut Express \n" +
+                "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
+                "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "Half off hair!", "Barber Man \n" +
+                "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "We cut your hair", "Hair Company \n" +
+                "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "We're the best!", "Haircut Express \n" +
+                "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
+                "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
+        list.add(new AdFlowCompanyListing(null, "Half off hair!", "Barber Man \n" +
                 "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
         return list;
     }

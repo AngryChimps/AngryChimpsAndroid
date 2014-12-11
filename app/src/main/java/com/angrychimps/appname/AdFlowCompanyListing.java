@@ -1,14 +1,14 @@
-package com.angrychimps.appname.consumer.search;
+package com.angrychimps.appname;
 
 import android.graphics.Bitmap;
 
-public class SearchResultItem {
+public class AdFlowCompanyListing {
     private Bitmap imageCompanyMain;
     private String companyTitle;
     private String companyAddress;
     private String companyTimeAvailable;
 
-    public SearchResultItem(Bitmap imageCompanyMain, String companyTitle, String companyAddress, String companyTimeAvailable) {
+    public AdFlowCompanyListing(Bitmap imageCompanyMain, String companyTitle, String companyAddress, String companyTimeAvailable) {
         this.imageCompanyMain = imageCompanyMain;
         this.companyTitle = companyTitle;
         this.companyAddress = companyAddress;

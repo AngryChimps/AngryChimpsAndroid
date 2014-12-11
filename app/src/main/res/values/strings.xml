@@ -8,6 +8,8 @@
     <string name="open">Open</string>
     <string name="closed">Closed</string>
 
-    <item type="id" name="container_id">12345</item>
+    <item name="container_id" type="id">12345</item>
+
+    <string name="title_activity_search">SearchActivity</string>
 
 </resources>

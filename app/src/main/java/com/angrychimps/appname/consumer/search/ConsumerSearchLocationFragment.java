@@ -1,30 +1,33 @@
 package com.angrychimps.appname.consumer.search;
 
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.angrychimps.appname.R;
 
-public class SearchFragment extends Fragment {
+public class ConsumerSearchLocationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
-        final TextView tvRadius = (TextView) rootView.findViewById(R.id.tvRadius);
-        Button bMyLocation = (Button) rootView.findViewById(R.id.bMyLocation);
-        Button bCityState = (Button) rootView.findViewById(R.id.bCityState);
-        Button bZipcode = (Button) rootView.findViewById(R.id.bZipcode);
-        SeekBar seekBarRadius = (SeekBar) rootView.findViewById(R.id.seekBarRadius);
-        Spinner spinnerPrimary = (Spinner) rootView.findViewById(R.id.spinnerPrimary);
-        Spinner spinnerSecondary = (Spinner) rootView.findViewById(R.id.spinnerSecondary);
+        View rootView = inflater.inflate(R.layout.fragment_search_location, container, false);
+        final TextView tvRadius = (TextView) rootView.findViewById(R.id.tvSearchLocationRadius);
+        Button bMyLocation = (Button) rootView.findViewById(R.id.bSearchLocationMyLocation);
+        Button bCityState = (Button) rootView.findViewById(R.id.bSearchLocationCityState);
+        Button bZipcode = (Button) rootView.findViewById(R.id.bSearchLocationZipcode);
+        SeekBar seekBarRadius = (SeekBar) rootView.findViewById(R.id.seekBarSearchLocationRadius);
+        EditText etLocationCurrent = (EditText) rootView.findViewById(R.id.etSearchLocationCurrent);
+        bMyLocation.requestFocus();
+
+
 
         bMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override

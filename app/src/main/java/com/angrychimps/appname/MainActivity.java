@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,7 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.angrychimps.appname.consumer.ConsumerMainFragment;
-import com.angrychimps.appname.consumer.search.SearchResultFragment;
+import com.angrychimps.appname.consumer.search.SearchActivity;
 import com.angrychimps.appname.menu.NavigationDrawerAdapter;
 import com.angrychimps.appname.menu.NavigationDrawerItem;
 import com.angrychimps.appname.provider.ProviderMainFragment;
@@ -143,18 +144,11 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed()
     {
-        //if (mDrawerLayout.isDrawerOpen()) {
-        //    mDrawerLayout.closeDrawer();
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
-    }
-
-    public void buttonSearch(View view) {
-        SearchResultFragment fragment = new SearchResultFragment();
-        replaceFragmentAddBackStack(fragment);
     }
 
     // Item selected functionality
@@ -182,9 +176,6 @@ public class MainActivity extends Activity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    public void onClickSearchOptions(View view) {
-    }
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -192,6 +183,19 @@ public class MainActivity extends Activity {
         mDrawerToggle.syncState();
     }
 
+
+    public void onClickSearchOptions(View view) {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickMap(View view) {
+
+    }
+
+    public void onClickPlaceAd(View view) {
+
+    }
 
     // The click listener for the ListView in the navigation drawer
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
