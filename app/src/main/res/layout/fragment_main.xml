@@ -1,100 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.angrychimps.appname.QuickReturnListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:id="@android:id/list" />
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.etsy.android.grid.StaggeredGridView
+        android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/sticky">
+        app:item_margin="8dp"
+        app:column_count="2" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ddd">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:padding="18dp"
-                android:src="@drawable/ic_action_search"
-                android:id="@+id/bSearch"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/bSearch"
-                android:id="@+id/etSearch" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvSearchDetails"
-                android:text="Showing all deals in all categories near your current location"
-                android:layout_below="@id/etSearch"
-                android:layout_toLeftOf="@id/bSearch"
-                android:layout_marginLeft="5dp"
-                android:onClick="onClickSearchOptions"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvMap"
-                android:text="Map"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/tvSearchDetails"
-                android:clickable="true"
-                android:padding="5dp"
-                android:onClick="onClickMap"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvSearchOptions"
-                android:text="Search Options"
-                android:layout_toLeftOf="@id/tvMap"
-                android:layout_below="@id/tvSearchDetails"
-                android:clickable="true"
-                android:padding="5dp"
-                android:onClick="onClickSearchOptions"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#bbb"
-            android:id="@+id/bPlaceAnAd"
-            android:onClick="onClickPlaceAd">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_action_network_wifi"
-                android:id="@+id/imagePlaceAd"
-                android:layout_margin="5dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/imagePlaceAd"
-                android:text="Place an Ad"
-                android:textStyle="bold"
-                android:layout_margin="5dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/imagePlaceAd"
-                android:layout_alignBottom="@id/imagePlaceAd"
-                android:text="Just 2 quick steps and they'll come to you!"
-                android:layout_margin="5dp"/>
-        </RelativeLayout>
-
-
-
-    </LinearLayout>
+    <com.angrychimps.appname.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_create_white_24dp"
+        app:fab_colorNormal="@color/accent"
+        app:fab_colorPressed="@color/accent_pressed"
+        app:fab_colorRipple="@color/ripple"/>
 
 </FrameLayout>

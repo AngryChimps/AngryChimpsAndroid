@@ -1,10 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:id="@+id/action_search"
+        android:title="Search"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_search_white_24dp"/>
+
+    <item
+        android:id="@+id/action_map"
+        android:title="Map"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_room_white_24dp"/>
+
+    <item
+        android:id="@+id/action_filter"
+        android:title="Filter"
+        android:orderInCategory="3"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_filter_list_white_24dp"/>
 </menu>

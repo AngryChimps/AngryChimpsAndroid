@@ -10,32 +10,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class AdFlowArrayAdapter extends ArrayAdapter<AdFlowCompanyListing> {
 
-
-    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-    private final Activity context;
-    private final ArrayList<AdFlowCompanyListing> searchResultItems;
+    private final Activity mContext;
+    private final ArrayList<AdFlowCompanyListing> mSearchResultItems;
 
     // ViewHolder increases speed and efficiency by recycling views rather than doing many findViewByIds, which are expensive.
     static class ViewHolder {
-        public ImageView imageCompanyMain;
-        public TextView tvCompanyTitle;
-        public TextView tvCompanyAddress;
-        public TextView tvCompanyTimeAvailable;
+        public ImageView mImageCompanyMain;
+        public TextView mTextViewCompanyTitle, mTextViewCompanyAddress, mTextViewCompanyTimeAvailable;
     }
 
     public AdFlowArrayAdapter(Activity context, ArrayList<AdFlowCompanyListing> searchResultItems) {
         super(context, R.layout.rowlayout_search_result, searchResultItems);
-        this.context = context;
-        this.searchResultItems = searchResultItems;
+        this.mContext = context;
+        this.mSearchResultItems = searchResultItems;
     }
 
     @Override
     public AdFlowCompanyListing getItem(int position) {
-        return searchResultItems.get(position);
+        return mSearchResultItems.get(position);
     }
 
     //check if necessary
@@ -56,27 +51,27 @@ public class AdFlowArrayAdapter extends ArrayAdapter<AdFlowCompanyListing> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        ViewHolder mViewHolder;
 
         // Reuse views
         if (convertView == null) {
-            LayoutInflater inflater = context.getLayoutInflater();
+            LayoutInflater inflater = mContext.getLayoutInflater();
             convertView = inflater.inflate(R.layout.rowlayout_search_result, null);
 
             // Configure ViewHolder
-            viewHolder = new ViewHolder();
-            viewHolder.imageCompanyMain = (ImageView) convertView.findViewById(R.id.imageCompanyMain);
-            viewHolder.tvCompanyTitle = (TextView) convertView.findViewById(R.id.tvCompanyTitle);
-            viewHolder.tvCompanyAddress = (TextView) convertView.findViewById(R.id.tvCompanyAddress);
-            viewHolder.tvCompanyTimeAvailable = (TextView) convertView.findViewById(R.id.tvCompanyTimeAvailable);
-            convertView.setTag(viewHolder);
+            mViewHolder = new ViewHolder();
+            mViewHolder.mImageCompanyMain = (ImageView) convertView.findViewById(R.id.imageCompanyMain);
+            mViewHolder.mTextViewCompanyTitle = (TextView) convertView.findViewById(R.id.tvCompanyTitle);
+            mViewHolder.mTextViewCompanyAddress = (TextView) convertView.findViewById(R.id.tvCompanyAddress);
+            mViewHolder.mTextViewCompanyTimeAvailable = (TextView) convertView.findViewById(R.id.tvCompanyTimeAvailable);
+            convertView.setTag(mViewHolder);
         }
         // Fill data
-        viewHolder = (ViewHolder) convertView.getTag();
-        viewHolder.imageCompanyMain.setImageBitmap(searchResultItems.get(position).getImageCompanyMain());
-        viewHolder.tvCompanyTitle.setText(searchResultItems.get(position).getCompanyTitle());
-        viewHolder.tvCompanyAddress.setText(searchResultItems.get(position).getCompanyAddress());
-        viewHolder.tvCompanyTimeAvailable.setText(searchResultItems.get(position).getCompanyTimeAvailable());
+        mViewHolder = (ViewHolder) convertView.getTag();
+        mViewHolder.mImageCompanyMain.setImageBitmap(mSearchResultItems.get(position).getImageCompanyMain());
+        mViewHolder.mTextViewCompanyTitle.setText(mSearchResultItems.get(position).getCompanyTitle());
+        mViewHolder.mTextViewCompanyAddress.setText(mSearchResultItems.get(position).getCompanyAddress());
+        mViewHolder.mTextViewCompanyTimeAvailable.setText(mSearchResultItems.get(position).getCompanyTimeAvailable());
         return convertView;
         }
 }

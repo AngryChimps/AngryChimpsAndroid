@@ -3,48 +3,46 @@ package com.angrychimps.appname;
 import android.graphics.Bitmap;
 
 public class AdFlowCompanyListing {
-    private Bitmap imageCompanyMain;
-    private String companyTitle;
-    private String companyAddress;
-    private String companyTimeAvailable;
+    private Bitmap mImageCompanyMain;
+    private String mCompanyTitle, mCompanyAddress, mCompanyTimeAvailable;
 
     public AdFlowCompanyListing(Bitmap imageCompanyMain, String companyTitle, String companyAddress, String companyTimeAvailable) {
-        this.imageCompanyMain = imageCompanyMain;
-        this.companyTitle = companyTitle;
-        this.companyAddress = companyAddress;
-        this.companyTimeAvailable = companyTimeAvailable;
+        this.mImageCompanyMain = imageCompanyMain;
+        this.mCompanyTitle = companyTitle;
+        this.mCompanyAddress = companyAddress;
+        this.mCompanyTimeAvailable = companyTimeAvailable;
     }
 
     public Bitmap getImageCompanyMain() {
-        return imageCompanyMain;
+        return mImageCompanyMain;
     }
 
     public void setImageCompanyMain(Bitmap imageCompanyMain) {
-        this.imageCompanyMain = imageCompanyMain;
+        this.mImageCompanyMain = imageCompanyMain;
     }
 
     public String getCompanyTitle() {
-        return companyTitle;
+        return mCompanyTitle;
     }
 
-    public void setCompanyTitle(String companyTitle) {
-        this.companyTitle = companyTitle;
+    public void setCompanyTitle(String mCompanyTitle) {
+        this.mCompanyTitle = mCompanyTitle;
     }
 
     public String getCompanyAddress() {
-        return companyAddress;
+        return mCompanyAddress;
     }
 
     public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress;
+        this.mCompanyAddress = companyAddress;
     }
 
     public String getCompanyTimeAvailable() {
-        return companyTimeAvailable;
+        return mCompanyTimeAvailable;
     }
 
     public void setCompanyTimeAvailable(String companyTimeAvailable) {
-        this.companyTimeAvailable = companyTimeAvailable;
+        this.mCompanyTimeAvailable = companyTimeAvailable;
     }
 
 

@@ -1,45 +1,37 @@
 package com.angrychimps.appname.consumer;
 
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
-import com.angrychimps.appname.AdFlowArrayAdapter;
 import com.angrychimps.appname.AdFlowCompanyListing;
-import com.angrychimps.appname.QuickReturnListView;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.fab.FloatingActionButton;
+import com.angrychimps.appname.fab.ScrollDirectionListener;
+import com.angrychimps.appname.provider.AdFlowGridArrayAdapter;
+import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
 
-public class ConsumerMainFragment extends ListFragment {
+public class ConsumerMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
 
-    private QuickReturnListView listView;
-    private View header;
-    private LinearLayout quickReturnView;
-    private int cachedVerticalScrollRange, quickReturnHeight, scrollY, minRawY = 0, rawY;
-    private static final int STATE_ONSCREEN = 0, STATE_OFFSCREEN = 1, STATE_RETURNING = 2, STATE_EXPANDED = 3;
-    private int state = STATE_ONSCREEN;
-    private boolean noAnimation = false;
-    private TranslateAnimation anim;
+
+    private static final String TAG = "StaggeredGridActivity";
+    public static final String SAVED_DATA_KEY = "SAVED_DATA";
+    private StaggeredGridView mGridView;
+    private boolean mHasRequestedMore;
+    private AdFlowGridArrayAdapter mAdapter;
+    private ArrayList<String> mData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, null);
-        header = inflater.inflate(R.layout.quick_return_header, null);
-        quickReturnView = (LinearLayout) view.findViewById(R.id.sticky);
-        TextView tvSearchDetails = (TextView) view.findViewById(R.id.tvSearchDetails);
-        tvSearchDetails.setText(Html.fromHtml("Showing <b>all</b> deals in <b>all</b> categories near your <b>current location</b>"));
         return view;
     }
 
@@ -47,157 +39,51 @@ public class ConsumerMainFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        listView = (QuickReturnListView) getListView();
-        listView.addHeaderView(header);
+//        ArrayAdapter<AdFlowCompanyListing> adapter = new AdFlowArrayAdapter(getActivity(), getCompanies());
+//        setListAdapter(adapter);
+        mGridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
+        mAdapter = new AdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, generateData());
 
-        ArrayAdapter<AdFlowCompanyListing> adapter = new AdFlowArrayAdapter(getActivity(), getCompanies());
-        setListAdapter(adapter);
+        // do we have saved data?
+        if (savedInstanceState != null) {
+            mData = savedInstanceState.getStringArrayList(SAVED_DATA_KEY);
+        }
+        if (mData == null) {
+            mData = generateData();
+        }
+        for (String data : mData) {
+            mAdapter.add(data);
+        }
+        mGridView.setAdapter(mAdapter);
+        mGridView.setOnScrollListener(this);
+        mGridView.setOnItemClickListener(this);
 
-        //Set up the animations for the quick_return_header when the user swipes up
-        listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        quickReturnHeight = quickReturnView.getHeight();
-                        listView.computeScrollY();
-                        cachedVerticalScrollRange = listView.getListHeight();
-                    }
-                });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.attachToListView(mGridView, new ScrollDirectionListener() {
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-
-                scrollY = 0;
-                int translationY = 0;
-
-                if (listView.scrollYIsComputed()) {
-                    scrollY = listView.getComputedScrollY();
-                }
-
-                rawY = header.getTop()
-                        - Math.min(
-                        cachedVerticalScrollRange
-                                - listView.getHeight(), scrollY);
-
-                switch (state) {
-                    case STATE_OFFSCREEN:
-                        if (rawY <= minRawY) {
-                            minRawY = rawY;
-                        } else {
-                            state = STATE_RETURNING;
-                        }
-                        translationY = rawY;
-                        break;
-
-                    case STATE_ONSCREEN:
-                        if (rawY < -quickReturnHeight) {
-                            System.out.println("test3");
-                            state = STATE_OFFSCREEN;
-                            minRawY = rawY;
-                        }
-                        translationY = rawY;
-                        break;
-
-                    case STATE_RETURNING:
-
-                        if (translationY > 0) {
-                            translationY = 0;
-                            minRawY = rawY - quickReturnHeight;
-                        } else if (rawY > 0) {
-                            state = STATE_ONSCREEN;
-                            translationY = rawY;
-                        } else if (translationY < -quickReturnHeight) {
-                            state = STATE_OFFSCREEN;
-                            minRawY = rawY;
-
-                        } else if (quickReturnView.getTranslationY() != 0
-                                && !noAnimation) {
-                            noAnimation = true;
-                            anim = new TranslateAnimation(0, 0,
-                                    -quickReturnHeight, 0);
-                            anim.setFillAfter(true);
-                            anim.setDuration(250);
-                            quickReturnView.startAnimation(anim);
-                            anim.setAnimationListener(new Animation.AnimationListener() {
-
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    noAnimation = false;
-                                    minRawY = rawY;
-                                    state = STATE_EXPANDED;
-                                }
-                            });
-                        }
-                        break;
-
-                    case STATE_EXPANDED:
-                        if (rawY < minRawY - 2 && !noAnimation) {
-                            noAnimation = true;
-                            anim = new TranslateAnimation(0, 0, 0,-quickReturnHeight);
-                            anim.setFillAfter(true);
-                            anim.setDuration(250);
-                            anim.setAnimationListener(new Animation.AnimationListener() {
-
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    noAnimation = false;
-                                    state = STATE_OFFSCREEN;
-                                }
-                            });
-                            quickReturnView.startAnimation(anim);
-                        } else if (translationY > 0) {
-                            translationY = 0;
-                            minRawY = rawY - quickReturnHeight;
-                        } else if (rawY > 0) {
-                            state = STATE_ONSCREEN;
-                            translationY = rawY;
-                        } else if (translationY < -quickReturnHeight) {
-                            state = STATE_OFFSCREEN;
-                            minRawY = rawY;
-                        } else {
-                            minRawY = rawY;
-                        }
-                }
-                quickReturnView.setTranslationY(translationY);
+            public void onScrollDown() {
+                Log.d("ListViewFragment", "onScrollDown()");
             }
 
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            public void onScrollUp() {
+                Log.d("ListViewFragment", "onScrollUp()");
             }
         });
-    }
 
+
+    }
 
         // Called every time the screen orientation changes or Android kills an Activity to conserve resources
         // We save the last item selected in the list here and attach it to the key curChoice
         @Override
         public void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
-
+            outState.putStringArrayList(SAVED_DATA_KEY, mData);
         }
 
-        // TODO add onClick functionality
-        @Override
-        public void onListItemClick(ListView l, View v, int position, long id) {
-        }
+
 
     private ArrayList<AdFlowCompanyListing> getCompanies() {
         ArrayList<AdFlowCompanyListing> list = new ArrayList<AdFlowCompanyListing>();
@@ -251,4 +137,53 @@ public class ConsumerMainFragment extends ListFragment {
                 "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
         return list;
     }
-}
+
+
+        @Override
+        public void onScrollStateChanged(final AbsListView view, final int scrollState) {
+            Log.d(TAG, "onScrollStateChanged:" + scrollState);
+        }
+        @Override
+        public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
+            Log.d(TAG, "onScroll firstVisibleItem:" + firstVisibleItem +
+                    " visibleItemCount:" + visibleItemCount +
+                    " totalItemCount:" + totalItemCount);
+        // our handling
+            if (!mHasRequestedMore) {
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                if (lastInScreen >= totalItemCount) {
+                    Log.d(TAG, "onScroll lastInScreen - so load more");
+                    mHasRequestedMore = true;
+                    onLoadMoreItems();
+                }
+            }
+        }
+        private void onLoadMoreItems() {
+            final ArrayList<String> sampleData = generateData();
+            for (String data : sampleData) {
+                mAdapter.add(data);
+            }
+        // stash all the data in our backing store
+            mData.addAll(sampleData);
+        // notify the adapter that we can update now
+            mAdapter.notifyDataSetChanged();
+            mHasRequestedMore = false;
+        }
+        private ArrayList<String> generateData() {
+            ArrayList<String> listData = new ArrayList<String>();
+            listData.add("http://i62.tinypic.com/2iitkhx.jpg");
+            listData.add("http://i61.tinypic.com/w0omeb.jpg");
+            listData.add("http://i60.tinypic.com/w9iu1d.jpg");
+            listData.add("http://i60.tinypic.com/iw6kh2.jpg");
+            listData.add("http://i57.tinypic.com/ru08c8.jpg");
+            listData.add("http://i60.tinypic.com/k12r10.jpg");
+            listData.add("http://i58.tinypic.com/2e3daug.jpg");
+            listData.add("http://i59.tinypic.com/2igznfr.jpg");
+            return listData;
+        }
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            Toast.makeText(getActivity(), "Item Clicked: " + position, Toast.LENGTH_SHORT).show();
+        }
+    }
+
