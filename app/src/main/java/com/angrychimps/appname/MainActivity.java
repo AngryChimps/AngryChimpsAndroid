@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,9 +21,11 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 
-import com.angrychimps.appname.consumer.ConsumerMainFragment;
-import com.angrychimps.appname.consumer.search.SearchActivity;
+import com.angrychimps.appname.customer.CustomerMainFragment;
+import com.angrychimps.appname.customer.search.CustomerSearchFragment;
+import com.angrychimps.appname.customer.search.SearchActivity;
 import com.angrychimps.appname.menu.NavigationDrawerAdapter;
 import com.angrychimps.appname.menu.NavigationDrawerItem;
 import com.angrychimps.appname.provider.ProviderMainFragment;
@@ -57,8 +61,8 @@ public class MainActivity extends Activity {
             ProviderMainFragment providerMainFragment = new ProviderMainFragment();
             replaceFragmentNoBackStack(providerMainFragment);
         }else {
-            ConsumerMainFragment consumerMainFragment = new ConsumerMainFragment();
-            replaceFragmentNoBackStack(consumerMainFragment);
+            CustomerMainFragment customerMainFragment = new CustomerMainFragment();
+            replaceFragmentNoBackStack(customerMainFragment);
         }
         fragmentContainer.addView(mContainer);
 
@@ -125,6 +129,11 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -141,6 +150,21 @@ public class MainActivity extends Activity {
             return true;
         }
         if (id == R.id.action_filter) {
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+                ft.remove(prev);
+            }
+            ft.addToBackStack(null);
+
+            // Create and show the dialog.
+            CustomerSearchFragment fragment = new CustomerSearchFragment();
+            //DialogFragment newFragment = MyDialogFragment.newInstance(mStackLevel);
+            fragment.show(ft, "dialog");
+
+
+            //replaceFragmentAddBackStack(fragment);
             return true;
         }
 

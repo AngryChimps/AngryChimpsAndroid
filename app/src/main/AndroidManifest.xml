@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+    <meta-data android:name="android.app.searchable"
+        android:resource="@xml/searchable" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -20,8 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".consumer.search.SearchActivity"
+            android:name=".SearchResultsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName="com.angrychimps.appname.MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+        </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".customer.search.SearchActivity"
             android:label="@string/title_activity_search"
             android:parentActivityName="com.angrychimps.appname.MainActivity"
             android:theme="@android:style/Theme.Dialog">

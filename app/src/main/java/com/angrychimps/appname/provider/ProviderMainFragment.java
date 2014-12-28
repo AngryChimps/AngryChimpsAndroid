@@ -5,14 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.AdFlowArrayAdapter;
-import com.angrychimps.appname.AdFlowCompanyListing;
-
-import java.util.ArrayList;
 
 public class ProviderMainFragment extends ListFragment {
 
@@ -21,9 +16,9 @@ public class ProviderMainFragment extends ListFragment {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            ArrayAdapter<AdFlowCompanyListing> adapter = new AdFlowArrayAdapter(getActivity(), getCompanies());
+            //ArrayAdapter<CompanyListing> adapter = new AdFlowArrayAdapter(getActivity(), getCompanies());
 
-            setListAdapter(adapter);
+            //setListAdapter(adapter);
             return rootView;
         }
 
@@ -46,17 +41,17 @@ public class ProviderMainFragment extends ListFragment {
         public void onListItemClick(ListView l, View v, int position, long id) {
 
         }
-    private ArrayList<AdFlowCompanyListing> getCompanies() {
-        ArrayList<AdFlowCompanyListing> list = new ArrayList<AdFlowCompanyListing>();
-        list.add(new AdFlowCompanyListing(null, "We cut your hair", "Hair Company \n" +
-                "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm (+2 more)"));
-        list.add(new AdFlowCompanyListing(null, "We're the best!", "Haircut Express \n" +
-                "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
-        list.add(new AdFlowCompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
-                "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
-        list.add(new AdFlowCompanyListing(null, "Half off hair!", "Barber Man \n" +
-                "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
-        return list;
-    }
+    //private ArrayList<CompanyListing> getCompanies() {
+//        ArrayList<CompanyListing> list = new ArrayList<CompanyListing>();
+//        list.add(new CompanyListing(null, "We cut your hair", "Hair Company \n" +
+//                "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm (+2 more)"));
+//        list.add(new CompanyListing(null, "We're the best!", "Haircut Express \n" +
+//                "123 Harrison St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+//        list.add(new CompanyListing(null, "Best deals in town", "Cheap Hairdos \n" +
+//                "123 Folsom St \nSan Francisco, CA 94114", "Tomorrow 9:30-12:00pm"));
+//        list.add(new CompanyListing(null, "Half off hair!", "Barber Man \n" +
+//                "123 12th St \nSan Francisco, CA 94112", "Tomorrow 9:30-12:00pm"));
+        //return list;
+    //}
 
 }

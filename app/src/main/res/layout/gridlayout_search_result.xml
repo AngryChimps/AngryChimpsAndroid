@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/panel_content"
-    android:layout_width="match_parent"
+    android:layout_width="170dp"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
@@ -11,33 +11,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <com.etsy.android.grid.util.DynamicHeightImageView
-            android:id="@+id/imgView"
+            android:id="@+id/imageCompanyMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop" />
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:rating="4.5"
                 android:stepSize="0.5"
-                android:layout_margin="5dp"
+                android:layout_alignParentLeft="true"
                 style="?android:attr/ratingBarStyleSmall"
                 android:id="@+id/ratingBarCompany"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/tvCompanyDistance"
+                android:text="1.2mi"/>
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_toLeftOf="@id/tvCompanyDistance"
                 android:src="@drawable/ic_action_place"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvCompanyDistance"
-                android:text="1.2km"/>
-            </LinearLayout>
+
+            </RelativeLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,5 +78,7 @@
             android:id="@+id/tvCompanyTimeAvailable"
             android:layout_margin="5dp"
             android:text="Time available"/>
+
     </LinearLayout>
+
 </FrameLayout>

@@ -1,5 +1,5 @@
 
-package com.angrychimps.appname.consumer.search;
+package com.angrychimps.appname.customer.search;
 
 import android.content.Context;
 import android.graphics.Typeface;
