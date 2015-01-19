@@ -24,7 +24,6 @@ public class AdFlowGridArrayAdapter extends ArrayAdapter<String> {
     private final LayoutInflater mLayoutInflater;
     private final Random mRandom;
     private static final SparseArray<Double> sPositionHeightRatios = new SparseArray<>();
-    private String units; //TODO: set settings for kilometers or miles
 
     public AdFlowGridArrayAdapter(Context context, int textViewResourceId, ArrayList<CompanyListing> company) {
         super(context, textViewResourceId);
@@ -65,7 +64,6 @@ public class AdFlowGridArrayAdapter extends ArrayAdapter<String> {
         }
 
         // Fill data
-        if (units == null) units = "mi";
         double positionHeight = getPositionRatio(position);
         viewHolder.imageCompanyMain.setHeightRatio(positionHeight);
         Picasso.with(mContext).load(getItem(position)).into(viewHolder.imageCompanyMain);
@@ -92,7 +90,6 @@ public class AdFlowGridArrayAdapter extends ArrayAdapter<String> {
         return ratio;
     }
     private double getRandomHeightRatio() {
-        return (mRandom.nextDouble() / 2.0) + 1.0; // height will be 1.0 - 1.5
-// the width
+        return (mRandom.nextDouble() / 1.5) + 0.5; // height will be 1.0 - 1.5 of the width
     }
 }

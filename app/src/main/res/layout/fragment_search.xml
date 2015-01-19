@@ -35,7 +35,7 @@
                 style="@style/Subheader"/>
 
             <Button
-                android:text="All"
+                android:text="Dentists"
                 android:id="@+id/button"
                 style="@style/SpinnerButton" />
 
@@ -57,7 +57,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginBottom="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
                 app:dsb_min="1"
                 app:dsb_max="50"
                 app:dsb_value="5"/>
@@ -74,20 +75,23 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="72dp">
+                android:layout_marginLeft="72dp"
+                android:id="@+id/rgSearch">
 
                 <RadioButton
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="I'll go to them"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:id="@+id/rbSearchGoToThem"/>
 
                 <RadioButton
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="They must come to me"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:id="@+id/rbSearchComeToMe"/>
                 </RadioGroup>
 
             <View
@@ -129,7 +133,7 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:text="Wed, Dec 31"
+                    android:text="Sat, Jan 3"
                     android:id="@+id/button5"
                     style="@style/SpinnerDateButton" />
 

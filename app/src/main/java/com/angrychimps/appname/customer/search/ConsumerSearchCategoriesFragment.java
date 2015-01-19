@@ -22,8 +22,8 @@ public class ConsumerSearchCategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search_categories, container, false);
 
-        ArrayList<String> listDataHeader = new ArrayList<String>();
-        HashMap<String, List<String>> listDataChild = new HashMap<String, List<String>>();
+        ArrayList<String> listDataHeader = new ArrayList<>();
+        HashMap<String, List<String>> listDataChild = new HashMap<>();
         String[][] data = {{"Cleaning", "Plumbing", "Roofing"},{"Dentists", "Pediatricians"},{"Hair Salons", "Nail Salons", "Tanning"}};
 
         listDataHeader.add("Home Needs");

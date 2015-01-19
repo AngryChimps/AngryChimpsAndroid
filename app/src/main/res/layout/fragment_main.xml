@@ -17,6 +17,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_create_white_24dp"
+        android:onClick="onClickCreateNewCustomerAd"
         app:fab_colorNormal="@color/accent"
         app:fab_colorPressed="@color/accent_pressed"
         app:fab_colorRipple="@color/ripple"/>

@@ -6,221 +6,163 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Create Ad"
-            android:layout_margin="10dp"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            style="@style/Caption"
             android:text="Title"/>
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:id="@+id/etConsumerCreateAdTitle" />
+            android:id="@+id/etCustomerCreateAdTitle"
+            android:textSize="16sp"
+            android:hint="What do you need?"
+            style="@style/TextField"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            style="@style/Caption"
             android:text="Description"/>
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:lines="6"
             android:inputType="textMultiLine"
-            android:layout_margin="5dp"
-            android:id="@+id/etConsumerCreateAdDescription" />
+            android:id="@+id/etCustomerCreateAdDescription"
+            android:gravity="top"
+            style="@style/TextField"/>
         
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="Manage Photos"
-            android:layout_margin="5dp"
-            android:id="@+id/bConsumerManagePhotos"/>
+            android:id="@+id/bCustomerCreateAdManagePhotos"
+            style="@style/RaisedButton"/>
 
         <RadioGroup
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
-            android:id="@+id/rgConsumerCreateAd">
+            android:layout_marginLeft="72dp"
+            android:id="@+id/rgCustomerCreateAd">
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="I'll go to the service provider"
-                android:id="@+id/rbConsumerGoesToBusiness"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="I need the service provider to come to me"
                 android:checked="true"
-                android:id="@+id/rbConsumerHouseCall"/>
+                android:text="I'll go to them"
+                android:id="@+id/rbCustomerGoesToBusiness"
+                android:textSize="14sp"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="They must come to me"
+                android:id="@+id/rbCustomerHouseCall"
+                android:textSize="14sp"/>
         </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Street Address"
-            android:id="@+id/tvConsumerAddress"/>
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:inputType="textPostalAddress"
-            android:id="@+id/etConsumerAddress" />
+            android:orientation="vertical"
+            android:id="@+id/lCreateAdAddressVisibility"
+            android:visibility="gone">
+            <TextView
+                style="@style/Caption"
+                android:text="Street Address"/>
+
+            <EditText
+                android:inputType="textPostalAddress"
+                android:id="@+id/etCustomerAddress"
+                style="@style/TextField"/>
+
+            <TextView
+                style="@style/Caption"
+                android:text="Street Address 2 (optional)"/>
+
+            <EditText
+                android:id="@+id/etCustomerAddress2"
+                style="@style/TextField"/>
+
+            <TextView
+                style="@style/Caption"
+                android:text="Zipcode"/>
+
+            <EditText
+                android:inputType="number"
+                android:id="@+id/etCustomerZipcode"
+                style="@style/TextField"/>
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Street Address 2 (optional)"
-            android:id="@+id/tvConsumerAddress2"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:id="@+id/etConsumerAddress2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Zipcode"
-            android:id="@+id/tvConsumerZipcode"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:inputType="number"
-            android:id="@+id/etConsumerZipcode" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            style="@style/Caption"
             android:text="Available Starting At" />
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:text="12/30/2014"
-                android:ems="5"
-                android:layout_margin="5dp"
-                android:id="@+id/etConsumerCreateAdStartDate" />
+            <Button
+                android:text="Today"
+                android:id="@+id/bCustomerCreateAdStartDate"
+                style="@style/SpinnerDateButton"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_go_to_today"
-                android:layout_margin="5dp"
-                android:id="@+id/imageConsumerCreateAdStartDate"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="time"
-                android:ems="4"
-                android:text="12:00pm"
-                android:layout_margin="5dp"
-                android:id="@+id/etConsumerCreateAdStartTime" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_time"
-                android:layout_margin="5dp"
-                android:id="@+id/imageConsumerCreateAdStartTime"/>
+            <Button
+                android:layout_marginLeft="0dp"
+                android:text="7:00pm"
+                android:id="@+id/bCustomerCreateAdStartTime"
+                style="@style/SpinnerTimeButton" />
         </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            style="@style/Caption"
             android:text="Available Ending At" />
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:text="12/30/2014"
-                android:ems="5"
-                android:layout_margin="5dp"
-                android:id="@+id/etCreateAdEndDate" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_go_to_today"
-                android:layout_margin="5dp"
-                android:id="@+id/imageConsumerConsumerCreateAdEndDate"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="time"
-                android:ems="4"
-                android:text="12:00pm"
-                android:layout_margin="5dp"
-                android:id="@+id/etConsumerCreateAdEndTime" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_time"
-                android:layout_margin="5dp"
-                android:id="@+id/imageConsumerCreateAdEndTime"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category: Plumbing"
-                android:layout_margin="5dp"
-                android:id="@+id/tvConsumerCreateAdCategory"/>
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Change"
-                android:layout_margin="5dp"
-                android:id="@+id/bConsumerCreateAdCategorySelection"/>
+                android:text="Wed, Dec 31"
+                android:id="@+id/bCustomerCreateAdEndDate"
+                style="@style/SpinnerDateButton" />
+
+            <Button
+                android:layout_marginLeft="0dp"
+                android:text="7:00pm"
+                android:id="@+id/bCustomerCreateAdEndTime"
+                style="@style/SpinnerTimeButton" />
         </LinearLayout>
+
+        <TextView
+            android:text="Category"
+            style="@style/Caption"/>
 
         <Button
+            android:text="All"
+            android:id="@+id/bCustomerCreateAdCategory"
+            style="@style/SpinnerButton" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Post My Ad"
-            android:id="@+id/bConsumerCreateAdSubmit"/>
+            android:layout_height="wrap_content">
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/bCustomerCreateAdPost"
+            android:text="POST"
+            android:textColor="@color/primary"
+            android:layout_marginRight="16dp"
+            style="@style/FlatButton"/>
+
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/bCustomerCreateAdPost"
+            android:id="@+id/bCustomerCreateAdCancel"
+            android:text="CANCEL"
+            style="@style/FlatButton"/>
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>

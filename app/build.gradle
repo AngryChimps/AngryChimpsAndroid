@@ -26,5 +26,7 @@ dependencies {
     compile 'com.etsy.android.grid:library:1.0.5'
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.facebook.android:facebook-android-sdk:+'
+    compile 'com.balysv.materialmenu:material-menu:1.5.0'
+    compile 'it.neokree:MaterialNavigationDrawer:1.2.8'
     compile project(':library')
 }

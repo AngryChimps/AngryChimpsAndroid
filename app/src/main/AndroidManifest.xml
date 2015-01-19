@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name=".SearchResultsActivity"
+            android:name="com.angrychimps.appname.customer.search.SearchResultsActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName="com.angrychimps.appname.MainActivity">
         <intent-filter>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,19 +16,19 @@
         android:layout_height="match_parent" >
 
         <FrameLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-            <ListView
-                android:id="@+id/left_drawer"
-                android:layout_width="304dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:background="#FFF"
-                android:choiceMode="none"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp" />
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="304dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#FFF"
+            android:choiceMode="none"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp" />
 
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

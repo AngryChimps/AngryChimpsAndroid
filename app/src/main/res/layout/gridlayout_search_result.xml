@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="5dp">
+            android:layout_margin="4dp">
 
             <RatingBar
                 android:layout_width="wrap_content"
@@ -46,38 +46,50 @@
                 android:layout_toLeftOf="@id/tvCompanyDistance"
                 android:src="@drawable/ic_action_place"/>
 
-            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Company Title"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_below="@id/tvCompanyDistance"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="2dp"
+                android:id="@+id/tvCompanyTitle"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Company Title"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_margin="5dp"
-            android:id="@+id/tvCompanyTitle"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:id="@+id/tvCompanyName"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:layout_below="@id/tvCompanyTitle"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="2dp"
+                android:text="25"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="1dp"
-            android:layout_marginTop="1dp"
-            android:background="#EEE" >
-        </View>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/tvCompanyName"
+                android:layout_alignTop="@id/tvCompanyName"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="$"
+                android:textColor="@color/accent"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvCompanyName"
-            android:layout_margin="5dp"
-            android:text="Company"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCompanyTimeAvailable"
+                android:layout_alignBottom="@id/tvCompanyName"
+                android:textSize="16sp"
+                android:text="50% off"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvCompanyTimeAvailable"
-            android:layout_margin="5dp"
-            android:text="Time available"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

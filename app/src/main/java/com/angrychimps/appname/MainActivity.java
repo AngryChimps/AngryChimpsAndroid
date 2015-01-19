@@ -6,12 +6,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,18 +24,19 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.angrychimps.appname.customer.CustomerCreateAdFragment;
 import com.angrychimps.appname.customer.CustomerMainFragment;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
-import com.angrychimps.appname.customer.search.SearchActivity;
 import com.angrychimps.appname.menu.NavigationDrawerAdapter;
 import com.angrychimps.appname.menu.NavigationDrawerItem;
 import com.angrychimps.appname.provider.ProviderMainFragment;
+import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.MaterialMenuIcon;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MainActivity extends Activity {
+public class MainActivity extends Activity  {
 
     private FrameLayout mContainer;
     private DrawerLayout mDrawerLayout;
@@ -43,6 +45,8 @@ public class MainActivity extends Activity {
     private boolean mServiceProviderMode = false;
     private NavigationDrawerAdapter mAdapter;
     private List<NavigationDrawerItem> mDataList;
+    private MaterialMenuIcon materialMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         setStatusBarColor(findViewById(R.id.statusBarBackground),getResources().getColor(R.color.primary_dark));
+        materialMenu = new MaterialMenuIcon(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
 
         initiateNavigationDrawer(mServiceProviderMode);
 
@@ -66,26 +71,42 @@ public class MainActivity extends Activity {
         }
         fragmentContainer.addView(mContainer);
 
+
+
+
+
+
+
         // ActionBarDrawerToggle ties together the interactions between the sliding drawer and the app icon in the action bar
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.closed) {
-            @Override
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu(); // Creates call to onPrepareOptionsMenu()
-            }
+//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.closed) {
+//            @Override
+//            public void onDrawerClosed(View view) {
+//                invalidateOptionsMenu(); // Creates call to onPrepareOptionsMenu()
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                invalidateOptionsMenu(); // Creates call to onPrepareOptionsMenu()
+//            }
+//        };
+//        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu(); // Creates call to onPrepareOptionsMenu()
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        //Enable ActionBar app icon to behave as action to toggle nav drawer
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);
-        }
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                int stackHeight = getFragmentManager().getBackStackEntryCount();
+                Log.i(null, stackHeight + " Items in the stack");
+                if (stackHeight == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
+//                if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
+//                    getActionBar().setDisplayHomeAsUpEnabled(true);
+//                } else {
+//                    //getActionBar().setDisplayHomeAsUpEnabled(false);
+//                }
+            }
+        });
     }
+
 
     private void replaceFragmentNoBackStack(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
@@ -95,6 +116,7 @@ public class MainActivity extends Activity {
     private void replaceFragmentAddBackStack(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(mContainer.getId(), fragment).addToBackStack(null).commit();
+        materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 
 
@@ -123,6 +145,8 @@ public class MainActivity extends Activity {
         mAdapter = new NavigationDrawerAdapter(this, R.layout.navigation_drawer_item, mDataList);
         mDrawerList.setAdapter(mAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
     }
 
     @Override
@@ -139,46 +163,34 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //TODO add menu options, connect them, and clean this code
+
+        //if (mDrawerToggle.onOptionsItemSelected(item)) return true;
         // Handle action bar item clicks here.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getFragmentManager().popBackStack();
+                return true;
+            case R.id.action_search:
+                return true;
+            case R.id.action_map:
+                return true;
+            case R.id.action_filter:
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) ft.remove(prev);
+                ft.addToBackStack(null);
 
-        if (id == R.id.action_search) {
-            return true;
-        }
-        if (id == R.id.action_map) {
-            return true;
-        }
-        if (id == R.id.action_filter) {
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-            if (prev != null) {
-                ft.remove(prev);
-            }
-            ft.addToBackStack(null);
-
-            // Create and show the dialog.
-            CustomerSearchFragment fragment = new CustomerSearchFragment();
-            //DialogFragment newFragment = MyDialogFragment.newInstance(mStackLevel);
-            fragment.show(ft, "dialog");
-
-
-            //replaceFragmentAddBackStack(fragment);
+                // Create and show the dialog.
+                CustomerSearchFragment fragment = new CustomerSearchFragment();
+                fragment.show(ft, "dialog");
             return true;
         }
 
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        if (id == android.R.id.home) return true;
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed(){
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
@@ -215,15 +227,10 @@ public class MainActivity extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+        //mDrawerToggle.syncState();
+        materialMenu.syncState(savedInstanceState);
+
     }
-
-
-    public void onClickSearchOptions(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
-
 
     public void setStatusBarColor(View statusBar,int color){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -243,7 +250,7 @@ public class MainActivity extends Activity {
         TypedValue tv = new TypedValue();
         if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
         {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
         }
         return actionBarHeight;
     }
@@ -255,6 +262,11 @@ public class MainActivity extends Activity {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    public void onClickCreateNewCustomerAd(View view) {
+        CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
+        replaceFragmentAddBackStack(fragment);
     }
 
     // The click listener for the ListView in the navigation drawer
