@@ -23,16 +23,14 @@ import java.util.ArrayList;
 public class CustomerMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
 
     private static final String TAG = "StaggeredGridActivity";
-    public static final String SAVED_DATA_KEY = "SAVED_DATA";
-    private StaggeredGridView mGridView;
+    private static final String SAVED_DATA_KEY = "SAVED_DATA";
     private boolean mHasRequestedMore;
     private AdFlowGridArrayAdapter mAdapter;
     private ArrayList<String> mData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, null);
-        return view;
+        return inflater.inflate(R.layout.fragment_main, null);
     }
 
     @Override
@@ -40,11 +38,11 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnScro
         super.onActivityCreated(savedInstanceState);
 
 
-        //Get company listings
+        //Get company listings- possibly move this into the adapter?
         JSONParser parser = new JSONParser();
         parser.getSearch();
 
-        mGridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
+        StaggeredGridView mGridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
         mAdapter = new AdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
 
         // do we have saved data?
@@ -126,7 +124,7 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnScro
             mHasRequestedMore = false;
         }
         private ArrayList<String> generateData() {
-            ArrayList<String> listData = new ArrayList<String>();
+            ArrayList<String> listData = new ArrayList<>();
             listData.add("http://devvy.angrychimps.com/media/ci/d0f335bf6996890e45b4548740af4100.jpg");
             listData.add("http://devvy.angrychimps.com/media/ci/e5c840d404f9417e8d19891958125ff0.jpg");
             listData.add("http://i62.tinypic.com/2iitkhx.jpg");

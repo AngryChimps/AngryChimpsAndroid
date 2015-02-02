@@ -1,6 +1,6 @@
 package com.angrychimps.appname;
 
-public class TimeSlot {
+class TimeSlot {
     private String mTimeSlotId, mStartDate, mStartTime, mEndDate, mEndTime;
 
     public TimeSlot(String startDate, String startTime, String endDate, String endTime) {

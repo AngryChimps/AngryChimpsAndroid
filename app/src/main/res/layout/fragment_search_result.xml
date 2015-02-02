@@ -9,6 +9,6 @@
         android:layout_height="match_parent"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:id="@android:id/list"></ListView>
+        android:id="@android:id/list"/>
 
 </LinearLayout>

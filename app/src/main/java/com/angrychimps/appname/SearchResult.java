@@ -2,7 +2,7 @@ package com.angrychimps.appname;
 
 import java.util.ArrayList;
 
-public class SearchResult {
+class SearchResult {
 
     private String providerAdImmutableId, providerAdId, companyName, title, photo;
 

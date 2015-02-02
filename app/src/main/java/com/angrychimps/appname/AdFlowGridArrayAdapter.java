@@ -18,19 +18,18 @@ import java.util.Random;
 
 public class AdFlowGridArrayAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<CompanyListing> mCompany;
-    private Context mContext;
+    private final Context mContext;
     private static final String TAG = "SampleAdapter";
     private final LayoutInflater mLayoutInflater;
     private final Random mRandom;
     private static final SparseArray<Double> sPositionHeightRatios = new SparseArray<>();
 
     public AdFlowGridArrayAdapter(Context context, int textViewResourceId, ArrayList<CompanyListing> company) {
-        super(context, textViewResourceId);
+        super(context, android.R.layout.simple_list_item_1);
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRandom = new Random();
-        this.mCompany = company;
+        ArrayList<CompanyListing> mCompany = company;
     }
 
     // ViewHolder increases speed and efficiency by recycling views rather than doing many findViewByIds, which are expensive.

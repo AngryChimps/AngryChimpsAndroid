@@ -2,7 +2,6 @@ package com.angrychimps.appname;
 
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.angrychimps.appname.customer.search.ExpandableListAdapter;
 
@@ -31,12 +30,54 @@ import java.util.List;
 
 public class JSONParser {
 
-    private String  photo, companyId,  calendarId, start, end, method, categoryId, icon, description, filename, locationId, addressId, street1, street2, city, state, zip, phone, phoneMobile, latitude, longitude, providerAdId, providerAdImmutableId, title, rating, ratingCount, serviceId, priceDiscount, priceOriginal, minsForService, minsNotice, otherUserId, memberId, memberName, memberPhoto, memberEmail, isMobile;
+    private String  photo;
+    private String companyId;
+    private String calendarId;
+    private String start;
+    private String end;
+    private String method;
+    private String categoryId;
+    private String icon;
+    private String description;
+    private String filename;
+    private String locationId;
+    private String addressId;
+    private String street1;
+    private String street2;
+    private String city;
+    private String state;
+    private String zip;
+    private String phone;
+    private String phoneMobile;
+    private String latitude;
+    private String longitude;
+    private String providerAdId;
+    private String providerAdImmutableId;
+    private String title;
+    private String rating;
+    private String ratingCount;
+    private String serviceId;
+    private String priceDiscount;
+    private String priceOriginal;
+    private String minsForService;
+    private String minsNotice;
+    private String otherUserId;
+    private String isMobile;
 
-    private static String email, password, userId, name, sessionId, street1Home, street2Home, cityHome, stateHome, zipHome, phoneMain, phoneMainMobile;
+    private static String email;
+    private static String password;
+    private static String userId;
+    private static String sessionId;
+    private static String street1Home;
+    private static String street2Home;
+    private static String cityHome;
+    private static String stateHome;
+    private static String zipHome;
+    private static String phoneMain;
+    private static String phoneMainMobile;
 
-    ArrayList<String> listDataHeader = new ArrayList<>();
-    HashMap<String, List<String>> listDataChild = new HashMap<>();
+    private final ArrayList<String> listDataHeader = new ArrayList<>();
+    private final HashMap<String, List<String>> listDataChild = new HashMap<>();
 
     public JSONParser(){
         if(sessionId == null) {
@@ -49,7 +90,7 @@ public class JSONParser {
         comm.execute("authPost");
     }
 
-    public void getSession(){
+    void getSession(){
         ServerCommunication comm = new ServerCommunication();
         comm.execute("sessionGet");
     }
@@ -84,17 +125,17 @@ public class JSONParser {
                         objectReceived = new JSONObject(getHttpPost(serverURL, objectSent));
                         payloadReceived = objectReceived.getJSONObject("payload");
                         JSONObject memberReceived = payloadReceived.getJSONObject("member");
-                        memberId = memberReceived.getString("id");
-                        memberName = memberReceived.getString("name");
-                        memberPhoto = memberReceived.getString("photo");
-                        memberEmail = memberReceived.getString("email");
+                        String memberId = memberReceived.getString("id");
+                        String memberName = memberReceived.getString("name");
+                        String memberPhoto = memberReceived.getString("photo");
+                        String memberEmail = memberReceived.getString("email");
                         companyId = memberReceived.getString("company_ids");
 
-                        Log.i("memberId = ", memberId);
-                        Log.i("memberName = ", memberName);
-                        Log.i("memberPhoto = ", memberPhoto);
-                        Log.i("memberEmail = ", memberEmail);
-                        Log.i("companyId = ", companyId);
+//                        Log.i("memberId = ", memberId);
+//                        Log.i("memberName = ", memberName);
+//                        Log.i("memberPhoto = ", memberPhoto);
+//                        Log.i("memberEmail = ", memberEmail);
+//                        Log.i("companyId = ", companyId);
 
                         break;
                     case "availabilityPost": //not yet implemented
@@ -177,10 +218,10 @@ public class JSONParser {
                         serverURL = serverURL + "member/" + userId + "?userId=" + userId;
                         objectReceived = new JSONObject(getHttpPut(serverURL, objectSent));
                         payloadReceived = objectReceived.getJSONObject("payload");
-                        name = payloadReceived.getString("name");
+                        String name = payloadReceived.getString("name");
                         email = payloadReceived.getString("email");
 
-                        Log.i("memberPut = ", "Name: " + name + " Email: " + email);
+//                        Log.i("memberPut = ", "Name: " + name + " Email: " + email);
                         break;
                     case "memberDelete":
                         serverURL = serverURL + "member/" + userId + "?userId=" + userId;
@@ -193,17 +234,17 @@ public class JSONParser {
                     case "searchPost":
                         serverURL = serverURL + "search"; //check uri if this doesn't work
                         objectReceived = new JSONObject(getHttpPost(serverURL, null));
-                        Log.i("objectReceived", ""+objectReceived.toString());
+//                        Log.i("objectReceived", ""+objectReceived.toString());
                         payloadReceived = objectReceived.getJSONObject("payload");
-                        Log.i("payloadReceived", ""+payloadReceived.toString());
+//                        Log.i("payloadReceived", ""+payloadReceived.toString());
                         JSONArray resultsReceived = payloadReceived.getJSONArray("results");
-                        Log.i("resultsReceived", ""+resultsReceived.toString());
+//                        Log.i("resultsReceived", ""+resultsReceived.toString());
                         for (int i=0;i<resultsReceived.length();i++) {
                             JSONObject resultReceived = resultsReceived.getJSONObject(i);
                             JSONObject addressReceived = resultReceived.getJSONObject("address");
-                            Log.i("addressReceived", "" + addressReceived.toString());
+//                            Log.i("addressReceived", "" + addressReceived.toString());
                             JSONArray availsReceived = resultReceived.getJSONArray("availabilities");
-                            Log.i("availsReceived", "" + availsReceived.toString());
+//                            Log.i("availsReceived", "" + availsReceived.toString());
 
                             Address address = new Address(
                                     addressReceived.getString("street1"),
@@ -251,7 +292,7 @@ public class JSONParser {
                         payloadReceived = objectReceived.getJSONObject("payload");
                         sessionId = payloadReceived.getString("session_id");
 
-                        Log.i("Session ID: ", "Session ID = " + sessionId);
+//                        Log.i("Session ID: ", "Session ID = " + sessionId);
                         break;
                     case "signupPost":
                         serverURL = serverURL + "signup/registerProviderAd";
@@ -265,7 +306,7 @@ public class JSONParser {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.i("url = ", serverURL);
+//            Log.i("url = ", serverURL);
 
             return "result";
         }
@@ -314,9 +355,9 @@ public class JSONParser {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
                 String line;
-                while ((line = reader.readLine()) != null) sb.append(line + "\n");
+                while ((line = reader.readLine()) != null) sb.append(line).append("\n");
                 result = sb.toString();
-                Log.i("JSON response = ", result);
+//                Log.i("JSON response = ", result);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {

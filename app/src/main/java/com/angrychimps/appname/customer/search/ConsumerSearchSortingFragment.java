@@ -12,8 +12,12 @@ import com.angrychimps.appname.R;
 
 public class ConsumerSearchSortingFragment extends Fragment {
 
-    Button bSearchSortRelevance, bSearchSortLocation, bSearchSortPriceLowHigh, bSearchSortPriceHighLow, bSearchSortDiscount;
-    static int sortMode= 0; //0 = relevance, 1 = location, 2 = price low high, 3 = price high low, 4 = discount
+    private Button bSearchSortRelevance;
+    private Button bSearchSortLocation;
+    private Button bSearchSortPriceLowHigh;
+    private Button bSearchSortPriceHighLow;
+    private Button bSearchSortDiscount;
+    private static int sortMode= 0; //0 = relevance, 1 = location, 2 = price low high, 3 = price high low, 4 = discount
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {

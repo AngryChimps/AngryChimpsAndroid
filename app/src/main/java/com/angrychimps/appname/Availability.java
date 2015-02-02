@@ -1,7 +1,7 @@
 package com.angrychimps.appname;
 
 
-public class Availability {
+class Availability {
 
     private String start, end, calendarID;
 

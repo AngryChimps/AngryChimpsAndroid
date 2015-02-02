@@ -1,6 +1,6 @@
 package com.angrychimps.appname;
 
-public class Customer {
+class Customer {
 
     private String mCustomerId, mCustomerName, mCustomerPhotoMain, mCustomerPhotoAlbumId, mCustomerAddressId, mCustomerPhone, mCustomerEmail, mCustomerPassword, mCustomerBirthdate;
 
