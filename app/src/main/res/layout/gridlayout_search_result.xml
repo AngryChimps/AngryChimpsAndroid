@@ -3,9 +3,9 @@
     android:id="@+id/panel_content"
     android:layout_width="170dp"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="horizontal"
-    android:background="@drawable/bg_card">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,73 +21,73 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="4dp">
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
 
             <RatingBar
+                android:id="@+id/ratingBarCompany"
+                style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:rating="4.5"
-                android:stepSize="0.5"
                 android:layout_alignParentLeft="true"
-                style="?android:attr/ratingBarStyleSmall"
-                android:id="@+id/ratingBarCompany"/>
+                android:rating="4.5"
+                android:stepSize="0.5"/>
 
             <TextView
+                android:id="@+id/tvCompanyDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:id="@+id/tvCompanyDistance"
                 android:text="1.2mi"/>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_toLeftOf="@id/tvCompanyDistance"
-                android:src="@drawable/ic_action_place"/>
+                android:src="@drawable/ic_location_grey"/>
 
             <TextView
+                android:id="@+id/tvCompanyTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tvCompanyDistance"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="8dp"
                 android:text="Company Title"
                 android:textColor="@color/primary"
-                android:textStyle="bold"
                 android:textSize="14sp"
-                android:layout_below="@id/tvCompanyDistance"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="2dp"
-                android:id="@+id/tvCompanyTitle"/>
+                android:textStyle="bold"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/accent"
                 android:id="@+id/tvCompanyName"
-                android:textStyle="bold"
-                android:textSize="28sp"
-                android:layout_below="@id/tvCompanyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_below="@id/tvCompanyTitle"
                 android:layout_marginLeft="2dp"
-                android:text="25"/>
+                android:text="25"
+                android:textColor="@color/accent"
+                android:textSize="28sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/tvCompanyName"
                 android:layout_alignTop="@id/tvCompanyName"
                 android:layout_marginTop="4dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
+                android:layout_toLeftOf="@id/tvCompanyName"
                 android:text="$"
-                android:textColor="@color/accent"/>
+                android:textColor="@color/accent"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvCompanyTimeAvailable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvCompanyTimeAvailable"
                 android:layout_alignBottom="@id/tvCompanyName"
-                android:textSize="16sp"
-                android:text="50% off"/>
+                android:text="50% off"
+                android:textSize="16sp"/>
 
         </RelativeLayout>
 

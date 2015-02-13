@@ -23,21 +23,11 @@
 
         <activity
             android:name="com.angrychimps.appname.customer.search.SearchResultsActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="com.angrychimps.appname.MainActivity">
+            android:parentActivityName="com.angrychimps.appname.MainActivity"
+            android:theme="@style/AppTheme">
         <intent-filter>
             <action android:name="android.intent.action.SEARCH" />
         </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".customer.search.SearchActivity"
-            android:label="@string/title_activity_search"
-            android:parentActivityName="com.angrychimps.appname.MainActivity"
-            android:theme="@android:style/Theme.Dialog">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.angrychimps.appname.MainActivity" />
         </activity>
 
         <meta-data android:name="com.google.android.gms.version"

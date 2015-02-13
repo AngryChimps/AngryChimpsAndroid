@@ -8,7 +8,6 @@
     <color name="ripple">#82B1FF</color>
     <color name="accent">#FF9100</color>
     <color name="accent_pressed">#FF6D00</color>
-
     <color name="dsb_disabled_color">#999999</color>
     <color name="dsb_track_color">#2196F3</color>
     <color name="dsb_ripple_color_focused">#1976D2</color>

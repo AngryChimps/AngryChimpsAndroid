@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,36 +14,36 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/etSearchStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:text="12/30/2014"
-            android:ems="5"
             android:layout_margin="5dp"
-            android:id="@+id/etSearchStartDate" />
+            android:ems="5"
+            android:inputType="date"
+            android:text="12/30/2014" />
 
         <ImageView
+            android:id="@+id/imageSearchStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_go_to_today"
             android:layout_margin="5dp"
-            android:id="@+id/imageSearchStartDate"/>
+            android:src="@drawable/ic_date_grey"/>
 
         <EditText
+            android:id="@+id/etSearchStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="time"
-            android:ems="4"
-            android:text="12:00pm"
             android:layout_margin="5dp"
-            android:id="@+id/etSearchStartTime" />
+            android:ems="4"
+            android:inputType="time"
+            android:text="12:00pm" />
 
         <ImageView
+            android:id="@+id/imageSearchStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_time"
             android:layout_margin="5dp"
-            android:id="@+id/imageSearchStartTime"/>
+            android:src="@drawable/ic_time_grey"/>
     </LinearLayout>
 
     <TextView
@@ -58,35 +58,35 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/etSearchEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:text="12/30/2014"
-            android:ems="5"
             android:layout_margin="5dp"
-            android:id="@+id/etSearchEndDate" />
+            android:ems="5"
+            android:inputType="date"
+            android:text="12/30/2014" />
 
         <ImageView
+            android:id="@+id/imageSearchEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_go_to_today"
             android:layout_margin="5dp"
-            android:id="@+id/imageSearchEndDate"/>
+            android:src="@drawable/ic_date_grey"/>
 
         <EditText
+            android:id="@+id/etSearchEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="time"
-            android:ems="4"
-            android:text="12:00pm"
             android:layout_margin="5dp"
-            android:id="@+id/etSearchEndTime" />
+            android:ems="4"
+            android:inputType="time"
+            android:text="12:00pm" />
 
         <ImageView
+            android:id="@+id/imageSearchEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_time"
             android:layout_margin="5dp"
-            android:id="@+id/imageSearchEndTime"/>
+            android:src="@drawable/ic_time_grey"/>
     </LinearLayout>
 </LinearLayout>

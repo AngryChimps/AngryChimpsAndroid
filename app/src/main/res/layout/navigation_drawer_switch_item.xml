@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/drawer_item_base"
+    android:background="#f5f5f5"
+    android:descendantFocusability="blocksDescendants">
+
+    <View
+        android:id="@+id/drawer_mode_color"
+        style="@style/drawer_mode_color" />
+
+    <TextView
+        android:id="@+id/drawer_itemName"
+        style="@style/drawer_text"
+        android:layout_marginLeft="16dp"
+        android:textStyle="bold"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/drawer_switch"
+        style="@style/drawer_switch" />
+
+</RelativeLayout>

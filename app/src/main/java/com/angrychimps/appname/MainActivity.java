@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.angrychimps.appname.customer.CustomerCreateAdFragment;
 import com.angrychimps.appname.customer.CustomerMainFragment;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
 import com.angrychimps.appname.menu.NavigationDrawerAdapter;
@@ -30,12 +29,12 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
-    private FrameLayout mContainer;
+    public static FrameLayout mContainer;
+    public static MaterialMenuIconToolbar materialMenu;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private final boolean mServiceProviderMode = false;
+    private boolean mServiceProviderMode = false;
     private List<NavigationDrawerItem> mDataList;
-    private MaterialMenuIconToolbar materialMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,7 @@ public class MainActivity extends ActionBarActivity {
         };
         materialMenu.setNeverDrawTouch(true);
 
-
-        initiateNavigationDrawer(mServiceProviderMode);
+        initiateNavigationDrawer();
 
 
         //Set up the main fragment
@@ -98,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    private void initiateNavigationDrawer(boolean serviceProviderMode) {
+    private void initiateNavigationDrawer() {
         mDataList = new ArrayList<>();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -107,24 +105,31 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // Set up the drawer's list view with items and onclick listener
-        mDataList.add(new NavigationDrawerItem("Your Settings", R.drawable.ic_action_person));
-        mDataList.add(new NavigationDrawerItem("Messages", R.drawable.ic_action_email));
-        if(serviceProviderMode) {
-            mDataList.add(new NavigationDrawerItem("Availability Manager", R.drawable.ic_action_go_to_today));
-            mDataList.add(new NavigationDrawerItem("Provider Ad Manager", R.drawable.ic_action_dock));
-            mDataList.add(new NavigationDrawerItem("Company Manager", R.drawable.ic_action_dock));
+        mDataList.add(new NavigationDrawerItem(R.drawable.photo, "Name Nameson", "example@email.com",
+                R.drawable.navigation_drawer_profile_background, R.layout.navigation_drawer_profile));
+        mDataList.add(new NavigationDrawerItem(R.drawable.ic_explore_blue,"Explore deals near you", false, true, R.layout.navigation_drawer_item));
+        mDataList.add(new NavigationDrawerItem(R.drawable.ic_messages_blue, "Messages", "2",
+                R.layout.navigation_drawer_messages_item));
+        if(mServiceProviderMode) {
+            mDataList.add(new NavigationDrawerItem("Provider Mode", R.layout.navigation_drawer_switch_item));
+            mDataList.add(new NavigationDrawerItem(R.drawable.ic_add_dkblue,"Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavigationDrawerItem(R.drawable.ic_avail_dkblue,"Availability Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavigationDrawerItem(R.drawable.ic_company_dkblue,"Company Profile Manager", true, true, R.layout.navigation_drawer_item));
         } else{
-            mDataList.add(new NavigationDrawerItem("Consumer Ad Manager", R.drawable.ic_action_dock));
+            mDataList.add(new NavigationDrawerItem("Consumer Mode", R.layout.navigation_drawer_switch_item));
+            mDataList.add(new NavigationDrawerItem(R.drawable.ic_request_blue,"Request a Service", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavigationDrawerItem(R.drawable.ic_notification_blue,"Notification Manager", true, true, R.layout.navigation_drawer_item));
         }
-        mDataList.add(new NavigationDrawerItem("Rate this App", R.drawable.ic_action_important));
-        mDataList.add(new NavigationDrawerItem("Help/Offer Feedback", R.drawable.ic_action_help));
-        mDataList.add(new NavigationDrawerItem("Log Out", R.drawable.ic_action_cancel));
+        mDataList.add(new NavigationDrawerItem(R.drawable.ic_star_grey,"Rate this App", false, false,
+                R.layout.navigation_drawer_item));
+        mDataList.add(new NavigationDrawerItem(R.drawable.ic_help_grey,"Help!", false, false,
+                R.layout.navigation_drawer_item));
+        mDataList.add(new NavigationDrawerItem(R.drawable.ic_logout_grey,"Log Out", false, false,
+                R.layout.navigation_drawer_item));
 
-        NavigationDrawerAdapter mAdapter = new NavigationDrawerAdapter(this, R.layout.navigation_drawer_item, mDataList);
+        NavigationDrawerAdapter mAdapter = new NavigationDrawerAdapter(this, mDataList, mServiceProviderMode);
         mDrawerList.setAdapter(mAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-
     }
 
     @Override
@@ -174,6 +179,12 @@ public class MainActivity extends ActionBarActivity {
                     break;
                 case 1:
                     break;
+                case 3:
+                    mServiceProviderMode = false;
+                    initiateNavigationDrawer();
+                    CustomerMainFragment fragment = new CustomerMainFragment();
+                    replaceFragmentAddBackStack(fragment);
+                    return;
                 default:
                     break;
             }
@@ -183,11 +194,16 @@ public class MainActivity extends ActionBarActivity {
                     break;
                 case 1:
                     break;
+                case 3:
+                    mServiceProviderMode = true;
+                    initiateNavigationDrawer();
+                    ProviderMainFragment fragment = new ProviderMainFragment();
+                    replaceFragmentAddBackStack(fragment);
+                    return;
                 default:
                     break;
             }
         }
-        mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
@@ -198,18 +214,11 @@ public class MainActivity extends ActionBarActivity {
         materialMenu.syncState(savedInstanceState);
     }
 
-    public void onClickCreateNewCustomerAd(View view) {
-        CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
-        replaceFragmentAddBackStack(fragment);
-    }
-
     // The click listener for the ListView in the navigation drawer
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (mDataList.get(position).getTitle() == null) {
-                selectItem(position);
-            }
-        }
+            selectItem(position);
+       }
     }
 }

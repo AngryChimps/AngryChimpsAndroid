@@ -1,6 +1,7 @@
 package com.angrychimps.appname.customer;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,12 @@ import android.widget.Toast;
 
 import com.angrychimps.appname.CompanyListing;
 import com.angrychimps.appname.JSONParser;
+import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.fab.FloatingActionButton;
 import com.angrychimps.appname.fab.ScrollDirectionListener;
 import com.angrychimps.appname.AdFlowGridArrayAdapter;
+import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
@@ -56,6 +59,7 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnScro
 
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_request_white);
         fab.attachToListView(mGridView, new ScrollDirectionListener() {
             @Override
             public void onScrollDown() {
@@ -67,6 +71,18 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnScro
                 Log.d("ListViewFragment", "onScrollUp()");
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(MainActivity.mContainer.getId(), fragment).addToBackStack(null).commit();
+                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+            }
+        });
+
+
 
         if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");
 

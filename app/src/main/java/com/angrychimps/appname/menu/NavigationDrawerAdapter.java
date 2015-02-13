@@ -2,12 +2,13 @@ package com.angrychimps.appname.menu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.angrychimps.appname.R;
@@ -16,59 +17,80 @@ import java.util.List;
 
 public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> {
 
-	private final Context context;
+	private final Activity context;
 	private final List<NavigationDrawerItem> drawerItemList;
-	private final int layoutResID;
+    private final boolean serviceProviderMode;
 
-	public NavigationDrawerAdapter(Context context, int layoutResourceId, List<NavigationDrawerItem> listItems) {
-		super(context, layoutResourceId, listItems);
+	public NavigationDrawerAdapter(Activity context, List<NavigationDrawerItem> listItems, boolean serviceProviderMode) {
+		super(context, R.layout.navigation_drawer_item, listItems);
 		this.context = context;
 		this.drawerItemList = listItems;
-		this.layoutResID = layoutResourceId;
+        this.serviceProviderMode = serviceProviderMode;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		DrawerItemHolder drawerHolder;
-		View view = convertView;
+        NavigationDrawerItem item = drawerItemList.get(position);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(item.getLayoutID(), null);
 
-		if (view == null) {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			drawerHolder = new DrawerItemHolder();
+        int color;
+        if(serviceProviderMode) {
+            color = context.getResources().getColor(R.color.primary_dark);
+        }else color = context.getResources().getColor(R.color.primary);
 
-			view = inflater.inflate(layoutResID, parent, false);
-			drawerHolder.ItemName = (TextView) view.findViewById(R.id.drawer_itemName);
-			drawerHolder.icon = (ImageView) view.findViewById(R.id.drawer_icon);
-			drawerHolder.title = (TextView) view.findViewById(R.id.drawerTitle);
-			drawerHolder.headerLayout = (LinearLayout) view.findViewById(R.id.headerLayout);
-			drawerHolder.itemLayout = (LinearLayout) view.findViewById(R.id.itemLayout);
+        switch(item.getLayoutID()){
+            case R.layout.navigation_drawer_profile:
+                ImageView imageProfile = (ImageView) v.findViewById(R.id.drawer_profile_image);
+                TextView tvName = (TextView) v.findViewById(R.id.drawer_profile_name);
+                TextView tvEmail = (TextView) v.findViewById(R.id.drawer_profile_email);
+                RelativeLayout layout = (RelativeLayout) v.findViewById(R.id.drawer_profile_settings);
+                imageProfile.setImageResource(item.getImageID());
+                tvName.setText(item.getItemName());
+                tvEmail.setText(item.getEmail());
+                layout.setBackgroundResource(item.getImageBackground());
+                break;
 
-			view.setTag(drawerHolder);
+            case R.layout.navigation_drawer_item:
+                View sideColor = v.findViewById(R.id.drawer_mode_color);
+                ImageView icon = (ImageView) v.findViewById(R.id.drawer_icon);
+                TextView itemName = (TextView) v.findViewById(R.id.drawer_itemName);
+                if(item.isIndented()){
+                    sideColor.setBackgroundColor(color);
+                    itemName.setTextColor(color);
+                    v.setBackgroundColor(0xFFFAFAFA);
+                }else{
+                    if(item.isBlue()) itemName.setTextColor(context.getResources().getColor(R.color.primary));
+                }
+                itemName.setText(item.getItemName());
+                icon.setImageResource(item.getImageID());
+                break;
 
-		} else {
-			drawerHolder = (DrawerItemHolder) view.getTag();
-		}
+            case R.layout.navigation_drawer_messages_item:
+                ImageView iconMessage = (ImageView) v.findViewById(R.id.drawer_icon);
+                TextView itemNameMessage = (TextView) v.findViewById(R.id.drawer_itemName);
+                TextView itemMessage = (TextView) v.findViewById(R.id.drawer_messages);
+                iconMessage.setImageResource(item.getImageID());
+                itemNameMessage.setTextColor(context.getResources().getColor(R.color.primary));
+                itemNameMessage.setText(item.getItemName());
+                itemMessage.setText(item.getMessages());
+                if(!item.getMessages().equals("0")) itemMessage.setVisibility(View.VISIBLE);
+                break;
 
-		NavigationDrawerItem dItem = this.drawerItemList.get(position);
+            case R.layout.navigation_drawer_switch_item:
+                View side = v.findViewById(R.id.drawer_mode_color);
+                TextView itemModeName = (TextView) v.findViewById(R.id.drawer_itemName);
+                SwitchCompat modeSwitch = (SwitchCompat) v.findViewById(R.id.drawer_switch);
+                side.setBackgroundColor(color);
+                itemModeName.setTextColor(color);
+                itemModeName.setText(item.getItemName());
+                modeSwitch.setChecked(serviceProviderMode);
+                break;
+        }
 
-		if (dItem.getTitle() != null) {
-			drawerHolder.headerLayout.setVisibility(LinearLayout.VISIBLE);
-			drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
-			drawerHolder.title.setText(dItem.getTitle());
-		} else {
-			drawerHolder.headerLayout.setVisibility(LinearLayout.INVISIBLE);
-			drawerHolder.itemLayout.setVisibility(LinearLayout.VISIBLE);
-
-			drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(dItem.getImgResID()));
-			drawerHolder.ItemName.setText(dItem.getItemName());
-		}
-		return view;
+		return v;
 	}
 
-	private static class DrawerItemHolder {
-		TextView ItemName, title;
-		ImageView icon;
-		LinearLayout headerLayout, itemLayout;
-	}
+
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/drawer_item_base">
+
+    <ImageView
+        android:id="@+id/drawer_icon"
+        style="@style/drawer_icon"/>
+
+    <TextView
+        android:id="@+id/drawer_itemName"
+        style="@style/drawer_text"/>
+
+    <TextView
+        android:id="@+id/drawer_messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:background="@color/accent"
+        android:paddingBottom="1dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:paddingTop="1dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
+</RelativeLayout>

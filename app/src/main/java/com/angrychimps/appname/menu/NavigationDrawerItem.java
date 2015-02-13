@@ -2,42 +2,76 @@ package com.angrychimps.appname.menu;
 
 public class NavigationDrawerItem {
 
-	private String ItemName;
-	private int imgResID;
-	private String title;
+	private String itemName;
+    private String messages;
+    private String email;
+	private int imageID;
+    private int imageBackground;
+    private boolean blue;
+    private boolean indented;
+    private int layoutID;
 
-	public NavigationDrawerItem(String itemName, int imgResID) {
-		ItemName = itemName;
-		this.imgResID = imgResID;
-	}
+    //email item
+    public NavigationDrawerItem(int imagePerson, String itemName, String email, int imageBackground, int layoutID){
+        imageID = imagePerson;
+        this.itemName = itemName;
+        this.email = email;
+        this.imageBackground = imageBackground;
+        this.layoutID = layoutID;
+    }
 
-	public NavigationDrawerItem(String title) {
-		this(null, 0);
-		this.title = title;
-	}
+    //messages item
+    public NavigationDrawerItem(int imageID, String itemName, String messages, int layoutID){
+        this.imageID = imageID;
+        this.itemName = itemName;
+        this.messages = messages;
+        this.layoutID = layoutID;
+    }
 
-	public String getItemName() {
-		return ItemName;
-	}
+    //providerMode switch
+    public NavigationDrawerItem(String itemName, int layoutID){
+        this.itemName = itemName;
+        this.layoutID = layoutID;
+    }
 
-	public void setItemName(String itemName) {
-		ItemName = itemName;
-	}
+    //normal item
+    public NavigationDrawerItem(int imageID, String itemName, boolean indented, boolean blue, int layoutID){
+        this.imageID = imageID;
+        this.itemName = itemName;
+        this.indented = indented;
+        this.blue = blue;
+        this.layoutID = layoutID;
+    }
 
-	public int getImgResID() {
-		return imgResID;
-	}
+    public String getItemName() {
+        return itemName;
+    }
 
-	public void setImgResID(int imgResID) {
-		this.imgResID = imgResID;
-	}
+    public int getImageID() {
+        return imageID;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public int getImageBackground() {
+        return imageBackground;
+    }
 
+    public String getMessages() {
+        return messages;
+    }
+
+    public boolean isIndented() {
+        return indented;
+    }
+
+    public boolean isBlue() {
+        return blue;
+    }
+
+    public int getLayoutID() {
+        return layoutID;
+    }
 }

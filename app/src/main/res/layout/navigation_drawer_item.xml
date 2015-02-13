@@ -1,69 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    style="@style/drawer_item_base">
 
-    <LinearLayout
-        android:id="@+id/headerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical" >
+    <View
+        android:id="@+id/drawer_mode_color"
+        style="@style/drawer_mode_color" />
 
-        <TextView
-            android:id="@+id/drawerTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+    <ImageView
+        android:id="@+id/drawer_icon"
+        style="@style/drawer_icon"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="1dp"
-            android:layout_marginTop="1dp"
-            android:background="#EEE" >
-        </View>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/itemLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="0dp"
-        android:background="?android:attr/activatedBackgroundIndicator"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/drawer_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"/>
-
-            <TextView
-                android:id="@+id/drawer_itemName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="72dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="0dp"
-            android:background="#EEE" >
-        </View>
-    </LinearLayout>
-
+    <TextView
+        android:id="@+id/drawer_itemName"
+        style="@style/drawer_text"/>
 </RelativeLayout>
