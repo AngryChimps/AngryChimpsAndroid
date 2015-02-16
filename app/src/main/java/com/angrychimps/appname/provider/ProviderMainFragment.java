@@ -1,6 +1,7 @@
 package com.angrychimps.appname.provider;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +14,11 @@ import android.widget.Toast;
 import com.angrychimps.appname.AdFlowGridArrayAdapter;
 import com.angrychimps.appname.CompanyListing;
 import com.angrychimps.appname.JSONParser;
+import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.fab.FloatingActionButton;
 import com.angrychimps.appname.fab.ScrollDirectionListener;
+import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
@@ -72,6 +75,11 @@ public class ProviderMainFragment extends Fragment implements AbsListView.OnScro
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ProviderCreateAdFragment fragment = new ProviderCreateAdFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(MainActivity.mContainer.getId(), fragment).addToBackStack(null).commit();
+                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
 
             }
         });

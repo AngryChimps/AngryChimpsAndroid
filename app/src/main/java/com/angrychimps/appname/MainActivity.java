@@ -16,10 +16,12 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.angrychimps.appname.customer.CustomerCreateAdFragment;
 import com.angrychimps.appname.customer.CustomerMainFragment;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
 import com.angrychimps.appname.menu.NavigationDrawerAdapter;
 import com.angrychimps.appname.menu.NavigationDrawerItem;
+import com.angrychimps.appname.provider.ProviderCreateAdFragment;
 import com.angrychimps.appname.provider.ProviderMainFragment;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -166,6 +168,8 @@ public class MainActivity extends ActionBarActivity {
     public void onBackPressed(){
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
+        } else if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+            mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             super.onBackPressed();
         }
@@ -183,8 +187,12 @@ public class MainActivity extends ActionBarActivity {
                     mServiceProviderMode = false;
                     initiateNavigationDrawer();
                     CustomerMainFragment fragment = new CustomerMainFragment();
-                    replaceFragmentAddBackStack(fragment);
+                    replaceFragmentNoBackStack(fragment);
                     return;
+                case 4:
+                    ProviderCreateAdFragment providerCreateAdFragment = new ProviderCreateAdFragment();
+                    replaceFragmentAddBackStack(providerCreateAdFragment);
+                    break;
                 default:
                     break;
             }
@@ -198,8 +206,12 @@ public class MainActivity extends ActionBarActivity {
                     mServiceProviderMode = true;
                     initiateNavigationDrawer();
                     ProviderMainFragment fragment = new ProviderMainFragment();
-                    replaceFragmentAddBackStack(fragment);
+                    replaceFragmentNoBackStack(fragment);
                     return;
+                case 4:
+                    CustomerCreateAdFragment customerCreateAdFragment = new CustomerCreateAdFragment();
+                    replaceFragmentAddBackStack(customerCreateAdFragment);
+                    break;
                 default:
                     break;
             }

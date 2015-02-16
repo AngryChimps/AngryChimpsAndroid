@@ -1,227 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:text="Create Ad"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Title"/>
-
-    <EditText
-        android:id="@+id/etCreateAdTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Description"/>
-
-    <EditText
-        android:id="@+id/etCreateAdDescription"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="5dp"
-        android:inputType="textMultiLine" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Available Starting At" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etCreateAdStartDate"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="5"
-            android:inputType="date"
-            android:text="12/30/2014" />
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageCreateAdStartDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_date_grey"/>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/metCompanyCreateAdTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/title"
+                app:errorColor="@color/error_red"
+                app:floatingLabel="normal"
+                app:floatingLabelText="@string/title"
+                app:maxCharacters="140"/>
 
-        <EditText
-            android:id="@+id/etCreateAdStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="4"
-            android:inputType="time"
-            android:text="12:00pm" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/metCompanyCreateAdDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="top|left"
+                android:hint="@string/description"
+                android:lines="4"
+                app:errorColor="@color/error_red"
+                app:floatingLabel="normal"
+                app:floatingLabelText="@string/description"
+                app:maxCharacters="840"/>
 
-        <ImageView
-            android:id="@+id/imageCreateAdStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_time_grey"/>
+            <Spinner
+                android:id="@+id/spinnerCompanyCreateAdCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"/>
+
         </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Available Ending At" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/etCreateAdEndDate"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="5"
-            android:inputType="date"
-            android:text="12/30/2014" />
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageCreateAdEndDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_date_grey"/>
-
-        <EditText
-            android:id="@+id/etCreateAdEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="4"
-            android:inputType="time"
-            android:text="12:00pm" />
-
-        <ImageView
-            android:id="@+id/imageCreateAdEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:src="@drawable/ic_time_grey"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Service Name"/>
-
-    <EditText
-        android:id="@+id/etCreateAdServiceName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:shrinkColumns="*"
-        android:stretchColumns="*">
-
-        <TableRow>
             <TextView
-                android:layout_margin="5dp"
-                android:text="Discounted Price"/>
-            <TextView
-                android:layout_margin="5dp"
-                android:text="Original Price"/>
-        </TableRow>
-        <TableRow>
-            <EditText
-                android:id="@+id/etCreateAdDiscountedPrice"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="40dp"
-                android:inputType="number"
-                />
-            <EditText
-                android:id="@+id/etCreateAdOriginalPrice"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="40dp"
-                android:inputType="number"
-                />
-        </TableRow>
-        <TableRow>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:text="Available Time Blocks"
+                android:textColor="@color/primary"
+                android:textSize="20sp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Minutes Required for Service"/>
+                android:text="From"
+                android:textColor="@color/primary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bCompanyCreateAdStartDate"
+                    style="@style/SpinnerDateButton"
+                    android:text="Sat, Jan 3" />
+
+                <Button
+                    android:id="@+id/bCompanyCreateAdStartTime"
+                    style="@style/SpinnerTimeButton"
+                    android:layout_marginLeft="0dp"
+                    android:text="7:00pm" />
+                </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Minutes Notice Required to Book"/>
-        </TableRow>
-        <TableRow>
-            <EditText
-                android:id="@+id/etCreateAdMinutesRequired"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="40dp"
-                android:inputType="number"/>
-            <EditText
-                android:id="@+id/etCreateAdMinutesNotice"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="40dp"
-                android:inputType="number"/>
-        </TableRow>
+                android:text="To"
+                android:textColor="@color/primary" />
 
-        </TableLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <Button
+                    android:id="@+id/bCompanyCreateAdEndDate"
+                    style="@style/SpinnerDateButton"
+                    android:text="Sat, Jan 3" />
+
+                <Button
+                    android:id="@+id/bCompanyCreateAdEndTime"
+                    style="@style/SpinnerTimeButton"
+                    android:layout_marginLeft="0dp"
+                    android:text="7:00pm" />
+            </LinearLayout>
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/tvCreateAdCategory"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvCompanyCreateAdAddTimeBlock"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Category: Plumbing"/>
-        <Button
-            android:id="@+id/bCreateAdCategorySelection"
-            android:layout_width="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_card"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Add Another Time Block"
+            android:textColor="@color/primary"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Change"/>
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/metCompanyCreateAdServiceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/service_name"
+                app:errorColor="@color/error_red"
+                app:floatingLabelText="@string/service_name"
+                app:maxCharacters="80"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metCompanyCreateAdDiscountedPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:hint="@string/discounted_price"
+                    android:inputType="numberDecimal"
+                    android:maxLength="7"
+                    app:errorColor="@color/error_red"
+                    app:floatingLabel="normal"
+                    app:floatingLabelText="@string/discounted_price"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metCompanyCreateAdOriginalPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:hint="@string/original_price"
+                    android:inputType="numberDecimal"
+                    android:maxLength="7"
+                    app:errorColor="@color/error_red"
+                    app:floatingLabel="normal"
+                    app:floatingLabelText="@string/original_price"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metCompanyCreateAdDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:hint="@string/service_duration"
+                    android:inputType="number"
+                    android:lines="2"
+                    android:maxLength="4"
+                    app:errorColor="@color/error_red"
+                    app:floatingLabel="normal"
+                    app:floatingLabelText="@string/service_duration"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/metCompanyCreateAdTimeNotice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:hint="@string/service_time_notice"
+                    android:inputType="number"
+                    android:lines="2"
+                    android:maxLength="4"
+                    app:errorColor="@color/error_red"
+                    app:floatingLabel="normal"
+                    app:floatingLabelText="@string/service_time_notice"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="Cancel"/>
 
-    <Button
-        android:id="@+id/bCreateAdSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Post My Ad"/>
-</LinearLayout>
-
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:background="@color/accent"
+                android:text="Next"
+                android:textColor="@color/white"/>
+            </LinearLayout>
+    </LinearLayout>
 </ScrollView>

@@ -27,5 +27,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.facebook.android:facebook-android-sdk:+'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.1'
+    compile 'com.rengwuxian.materialedittext:library:1.8.2'
     compile project(':library')
 }
