@@ -1,8 +1,9 @@
-package com.angrychimps.appname.provider;
+package com.angrychimps.appname.company;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
 
-public class ProviderMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
+public class CompanyMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
 
     private static final String TAG = "StaggeredGridActivity";
     private static final String SAVED_DATA_KEY = "SAVED_DATA";
@@ -57,7 +58,6 @@ public class ProviderMainFragment extends Fragment implements AbsListView.OnScro
         mGridView.setOnScrollListener(this);
         mGridView.setOnItemClickListener(this);
 
-
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setImageResource(R.drawable.ic_add_white);
         fab.attachToListView(mGridView, new ScrollDirectionListener() {
@@ -76,10 +76,11 @@ public class ProviderMainFragment extends Fragment implements AbsListView.OnScro
             @Override
             public void onClick(View v) {
 
-                ProviderCreateAdFragment fragment = new ProviderCreateAdFragment();
+                CompanyCreateAdFragment fragment = new CompanyCreateAdFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(MainActivity.mContainer.getId(), fragment).addToBackStack(null).commit();
                 MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Create Ad");
 
             }
         });

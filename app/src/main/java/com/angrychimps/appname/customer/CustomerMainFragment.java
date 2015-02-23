@@ -3,6 +3,7 @@ package com.angrychimps.appname.customer;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,7 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnScro
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(MainActivity.mContainer.getId(), fragment).addToBackStack(null).commit();
                 MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Request Service");
             }
         });
 

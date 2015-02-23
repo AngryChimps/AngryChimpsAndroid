@@ -12,8 +12,8 @@
     <string name="service_name">Service Name</string>
     <string name="discounted_price">Discounted Price</string>
     <string name="original_price">Original Price</string>
-    <string name="service_duration">Minutes Required for Service</string>
-    <string name="service_time_notice">Minutes Notice Required to Book</string>
+    <string name="service_duration">Minutes Required\nfor Service</string>
+    <string name="service_time_notice">Minutes Notice\nRequired to Book</string>
 
     <item name="container_id" type="id">12345</item>
 

@@ -1,5 +1,6 @@
 package com.angrychimps.appname.menu;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.SwitchCompat;
@@ -28,6 +29,8 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         this.serviceProviderMode = serviceProviderMode;
 	}
 
+    //ViewHolder is pointless because there is no scrolling
+    @SuppressLint({"CutPasteID","ViewHolder"})
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -49,7 +52,10 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
                 imageProfile.setImageResource(item.getImageID());
                 tvName.setText(item.getItemName());
                 tvEmail.setText(item.getEmail());
-                layout.setBackgroundResource(item.getImageBackground());
+                if (item.getImageBackground() != null) {
+                    layout.setBackgroundResource(item.getImageBackground());
+                }else layout.setBackgroundColor(context.getResources().getColor(R.color.primary));
+
                 break;
 
             case R.layout.navigation_drawer_item:

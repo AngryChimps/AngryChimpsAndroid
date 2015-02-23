@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/bCompanyCreateAdAddTimeBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_card">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="8dp"
+            android:drawableRight="@drawable/ic_add_circle_blue"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="Add Another Time Block"
+            android:textColor="@color/primary"
+            android:textSize="20sp"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card"
+        android:orientation="vertical">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/metCompanyCreateAdServiceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/service_name"
+            android:inputType="textCapSentences"
+            app:errorColor="@color/error_red"
+            app:floatingLabel="normal"
+            app:floatingLabelText="@string/service_name"
+            app:maxCharacters="80"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/metCompanyCreateAdDiscountedPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:hint="@string/discounted_price"
+                android:inputType="numberDecimal"
+                android:maxLength="7"
+                app:errorColor="@color/error_red"
+                app:floatingLabel="normal"
+                app:floatingLabelText="@string/discounted_price"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/metCompanyCreateAdOriginalPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:hint="@string/original_price"
+                android:inputType="numberDecimal"
+                android:maxLength="7"
+                app:errorColor="@color/error_red"
+                app:floatingLabel="normal"
+                app:floatingLabelText="@string/original_price"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/metCompanyCreateAdDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:hint="@string/service_duration"
+                android:inputType="number"
+                android:lines="2"
+                android:maxLength="4"
+                app:errorColor="@color/error_red"
+                app:floatingLabel="normal"
+                app:floatingLabelText="@string/service_duration"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/metCompanyCreateAdTimeNotice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:hint="@string/service_time_notice"
+                android:inputType="number"
+                android:lines="2"
+                android:maxLength="4"
+                app:errorColor="@color/error_red"
+                app:floatingLabel="normal"
+                app:floatingLabelText="@string/service_time_notice"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:onClick="onCancel"
+            android:text="Cancel"/>
+
+        <Button
+            android:id="@+id/bCompanyCreateAdNext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:background="@color/accent"
+            android:text="Next"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+</LinearLayout>

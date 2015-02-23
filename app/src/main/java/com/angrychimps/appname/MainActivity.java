@@ -16,13 +16,13 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.angrychimps.appname.company.CompanyCreateAdFragment;
+import com.angrychimps.appname.company.CompanyMainFragment;
 import com.angrychimps.appname.customer.CustomerCreateAdFragment;
 import com.angrychimps.appname.customer.CustomerMainFragment;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
 import com.angrychimps.appname.menu.NavigationDrawerAdapter;
 import com.angrychimps.appname.menu.NavigationDrawerItem;
-import com.angrychimps.appname.provider.ProviderCreateAdFragment;
-import com.angrychimps.appname.provider.ProviderMainFragment;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private boolean mServiceProviderMode = false;
     private List<NavigationDrawerItem> mDataList;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Using Toolbar in place of ActionBar lets us place the Navigation Drawer over the top, as Material Design recommends
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -70,13 +71,9 @@ public class MainActivity extends ActionBarActivity {
         mContainer = new FrameLayout(this);
         mContainer.setId(R.id.container_id);
 
-        if(mServiceProviderMode){
-            ProviderMainFragment providerMainFragment = new ProviderMainFragment();
-            replaceFragmentNoBackStack(providerMainFragment);
-        }else {
-            CustomerMainFragment customerMainFragment = new CustomerMainFragment();
-            replaceFragmentNoBackStack(customerMainFragment);
-        }
+        setMode();
+        setTitle();
+
         fragmentContainer.addView(mContainer);
 
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -85,6 +82,24 @@ public class MainActivity extends ActionBarActivity {
                 if (getFragmentManager().getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
             }
         });
+    }
+
+    private void setMode() {
+        if(mServiceProviderMode){
+            CompanyMainFragment companyMainFragment = new CompanyMainFragment();
+            replaceFragmentNoBackStack(companyMainFragment);
+        }else {
+            CustomerMainFragment customerMainFragment = new CustomerMainFragment();
+            replaceFragmentNoBackStack(customerMainFragment);
+        }
+    }
+
+    private void setTitle() {
+        if(mServiceProviderMode){
+            getSupportActionBar().setTitle("Provider Mode");
+        }else {
+            getSupportActionBar().setTitle("Customer Mode");
+        }
     }
 
     private void replaceFragmentNoBackStack(Fragment fragment) {
@@ -108,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Set up the drawer's list view with items and onclick listener
         mDataList.add(new NavigationDrawerItem(R.drawable.photo, "Name Nameson", "example@email.com",
-                R.drawable.navigation_drawer_profile_background, R.layout.navigation_drawer_profile));
+                null, R.layout.navigation_drawer_profile));
         mDataList.add(new NavigationDrawerItem(R.drawable.ic_explore_blue,"Explore deals near you", false, true, R.layout.navigation_drawer_item));
         mDataList.add(new NavigationDrawerItem(R.drawable.ic_messages_blue, "Messages", "2",
                 R.layout.navigation_drawer_messages_item));
@@ -166,8 +181,10 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed(){
+
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
+            if(getFragmentManager().getBackStackEntryCount() < 2) setTitle();
         } else if(mDrawerLayout.isDrawerOpen(mDrawerList)){
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
@@ -175,8 +192,11 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+
+
     // Item selected functionality
     private void selectItem(int position) {
+        getFragmentManager().popBackStack();
         if(mServiceProviderMode) {
             switch (position) {
                 case 0:
@@ -186,12 +206,12 @@ public class MainActivity extends ActionBarActivity {
                 case 3:
                     mServiceProviderMode = false;
                     initiateNavigationDrawer();
-                    CustomerMainFragment fragment = new CustomerMainFragment();
-                    replaceFragmentNoBackStack(fragment);
+                    setMode();
                     return;
                 case 4:
-                    ProviderCreateAdFragment providerCreateAdFragment = new ProviderCreateAdFragment();
-                    replaceFragmentAddBackStack(providerCreateAdFragment);
+                    CompanyCreateAdFragment companyCreateAdFragment = new CompanyCreateAdFragment();
+                    replaceFragmentAddBackStack(companyCreateAdFragment);
+                    getSupportActionBar().setTitle("Create Ad");
                     break;
                 default:
                     break;
@@ -205,12 +225,12 @@ public class MainActivity extends ActionBarActivity {
                 case 3:
                     mServiceProviderMode = true;
                     initiateNavigationDrawer();
-                    ProviderMainFragment fragment = new ProviderMainFragment();
-                    replaceFragmentNoBackStack(fragment);
+                    setMode();
                     return;
                 case 4:
                     CustomerCreateAdFragment customerCreateAdFragment = new CustomerCreateAdFragment();
                     replaceFragmentAddBackStack(customerCreateAdFragment);
+                    getSupportActionBar().setTitle("Request Service");
                     break;
                 default:
                     break;
@@ -224,6 +244,10 @@ public class MainActivity extends ActionBarActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         materialMenu.syncState(savedInstanceState);
+    }
+
+    public void onCancel(View view) {
+        getFragmentManager().popBackStack();
     }
 
     // The click listener for the ListView in the navigation drawer

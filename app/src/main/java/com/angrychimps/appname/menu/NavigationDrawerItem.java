@@ -6,13 +6,13 @@ public class NavigationDrawerItem {
     private String messages;
     private String email;
 	private int imageID;
-    private int imageBackground;
+    private Integer imageBackground;
     private boolean blue;
     private boolean indented;
     private int layoutID;
 
     //email item
-    public NavigationDrawerItem(int imagePerson, String itemName, String email, int imageBackground, int layoutID){
+    public NavigationDrawerItem(int imagePerson, String itemName, String email, Integer imageBackground, int layoutID){
         imageID = imagePerson;
         this.itemName = itemName;
         this.email = email;
@@ -55,7 +55,7 @@ public class NavigationDrawerItem {
         return email;
     }
 
-    public int getImageBackground() {
+    public Integer getImageBackground() {
         return imageBackground;
     }
 
