@@ -33,11 +33,15 @@ public class MainActivity extends ActionBarActivity {
 
     public static FrameLayout mContainer;
     public static MaterialMenuIconToolbar materialMenu;
+    private static Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private boolean mServiceProviderMode = false;
     private List<NavigationDrawerItem> mDataList;
-    private Toolbar toolbar;
+
+    public static void removeMenu(){
+        toolbar.getMenu().clear();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,12 +110,12 @@ public class MainActivity extends ActionBarActivity {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(mContainer.getId(), fragment).commit();
     }
+
     private void replaceFragmentAddBackStack(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(mContainer.getId(), fragment).addToBackStack(null).commit();
         materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
-
 
     private void initiateNavigationDrawer() {
         mDataList = new ArrayList<>();
@@ -184,6 +188,8 @@ public class MainActivity extends ActionBarActivity {
 
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_main);
             if(getFragmentManager().getBackStackEntryCount() < 2) setTitle();
         } else if(mDrawerLayout.isDrawerOpen(mDrawerList)){
             mDrawerLayout.closeDrawer(mDrawerList);
@@ -191,8 +197,6 @@ public class MainActivity extends ActionBarActivity {
             super.onBackPressed();
         }
     }
-
-
 
     // Item selected functionality
     private void selectItem(int position) {
@@ -247,7 +251,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onCancel(View view) {
-        getFragmentManager().popBackStack();
+        onBackPressed();
     }
 
     // The click listener for the ListView in the navigation drawer

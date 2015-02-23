@@ -39,7 +39,6 @@ public class CompanyCreateAdTimeBlockListAdapter extends ArrayAdapter<String>{
             convertView.setTag(viewHolder);
         }
 
-
         //TODO - save inputted data
 
         return convertView;

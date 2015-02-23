@@ -2,6 +2,7 @@ package com.angrychimps.appname.company;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 
 
@@ -18,6 +20,9 @@ public class CompanyCreateAdFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_company_create_ad, container, false);
+
+        MainActivity.removeMenu();
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Create Ad");
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewCompanyCreateAdTimeBlock);
         ViewGroup header = (ViewGroup)inflater.inflate(R.layout.company_create_ad_header, listView, false);
@@ -44,7 +49,7 @@ public class CompanyCreateAdFragment extends Fragment {
         bCompanyCreateAdTimeBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.add("next");
+                adapter.add("new");
                 adapter.notifyDataSetChanged();
             }
         });
@@ -65,7 +70,5 @@ public class CompanyCreateAdFragment extends Fragment {
         super.onSaveInstanceState(outState);
 
     }
-
-
 
 }
