@@ -2,6 +2,9 @@ package com.angrychimps.appname.customer;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -12,25 +15,36 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.angrychimps.appname.CompanyListing;
-import com.angrychimps.appname.JSONParser;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.angrychimps.appname.CompanyAdFlowGridArrayAdapter;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.fab.FloatingActionButton;
-import com.angrychimps.appname.fab.ScrollDirectionListener;
-import com.angrychimps.appname.AdFlowGridArrayAdapter;
+import com.angrychimps.appname.VolleySingleton;
+import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.etsy.android.grid.StaggeredGridView;
+import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.ScrollDirectionListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class CustomerMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
+public class CustomerMainFragment extends Fragment implements AbsListView.OnItemClickListener{
 
-    private static final String TAG = "StaggeredGridActivity";
-    private static final String SAVED_DATA_KEY = "SAVED_DATA";
-    private boolean mHasRequestedMore;
-    private AdFlowGridArrayAdapter mAdapter;
-    private ArrayList<String> mData;
+    private CompanyAdFlowGridArrayAdapter mAdapter;
+    private ArrayList<SearchPostResponseResults> mResults;
+    private StaggeredGridView mGridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,22 +55,52 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnScro
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mGridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
+        mResults = new ArrayList<>();
 
-        //Get company listings- possibly move this into the adapter?
-        JSONParser parser = new JSONParser();
-        parser.getSearch();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, MainActivity.url + "search", getRequestJSONObject(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject object) {
+                Log.i(null, "Response received");
+                try {
+                    JSONObject payload = new JSONObject(object.getJSONObject("payload").toString());
+                    Log.i("object payload = ", payload.getString("results"));
+                    JSONArray jArray = payload.getJSONArray("results");
+                    for (int i = 0; i < jArray.length(); i++){
+                        mResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                    }
 
-        StaggeredGridView mGridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
-        mAdapter = new AdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
+                    if(mAdapter == null){
+                        mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(), mResults);
+                        mGridView.setAdapter(mAdapter);
+                    }else {
+                        mAdapter.addAll(mResults);
+                        mAdapter.notifyDataSetChanged();
+                    }
 
-        // do we have saved data?
-        if (savedInstanceState != null) mData = savedInstanceState.getStringArrayList(SAVED_DATA_KEY);
-        if (mData == null) mData = generateData();
-        for (String data : mData) mAdapter.add(data);
+                } catch (IOException | JSONException e) {
+                    Log.i(null, "JsonObjectRequest error");
+                    e.printStackTrace();
+                }
+            } },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("VOLLEY ERROR", "error => " + error.toString());
+                    }
+                }
+        ) {
+            // Attach headers
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<>();
+                params.put("angrychimps-api-session-token", MainActivity.sessionId);
+                return params;
+            }
 
-        mGridView.setAdapter(mAdapter);
-        mGridView.setOnScrollListener(this);
-        mGridView.setOnItemClickListener(this);
+        };
+        VolleySingleton.getInstance().addToRequestQueue(request);
+
 
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -72,98 +116,66 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnScro
                 Log.d("ListViewFragment", "onScrollUp()");
             }
         });
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(MainActivity.mContainer.getId(), fragment).addToBackStack(null).commit();
-                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                MainActivity.sMaterialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
                 ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Request Service");
             }
         });
 
-
-
         if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");
-
-
     }
 
-        // Called every time the screen orientation changes or Android kills an Activity to conserve resources
-        // We save the last item selected in the list here and attach it to the key curChoice
-        @Override
-        public void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-            outState.putStringArrayList(SAVED_DATA_KEY, mData);
+    private JSONObject getRequestJSONObject() {
+        //get current location
+        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        Log.i("latitude: ", "" + latitude);
+        Log.i("longitude: ", "" + longitude);
+
+        //get the current date and the data 14 days from now
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+//        df.getTimeZone();
+//        String startDate = df.format(new Date());
+//        Calendar c = Calendar.getInstance();
+//        try {
+//            c.setTime(df.parse(startDate));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        c.add(Calendar.DATE, 14);  // number of days to add, can also use Calendar.DAY_OF_MONTH in place of Calendar.DATE
+//        String endDate = df.format(c.getTime());
+//        Log.i("startDate = ", startDate);
+//        Log.i("endDate = ", endDate);
+
+        //SearchPostRequestPayload locationData = new SearchPostRequestPayload(latitude, longitude);
+        //String jsonString = null;
+        JSONObject payload = new JSONObject();
+        JSONObject object = new JSONObject();
+        try {
+            //jsonString = LoganSquare.serialize(locationData);
+            //Log.i("jsonString = ", jsonString);
+            payload.put("lat", latitude);
+            payload.put("lon", longitude);
+//            payload.put("starting_at", startDate);
+//            payload.put("ending_at", endDate);
+//            payload.put("offset", 0);
+            object.put("payload", payload);
+            Log.i("object = ", payload.toString());
+            Log.i("object2 = ", object.toString());
+        } catch ( JSONException e) {
+            e.printStackTrace();
         }
-
-
-
-    private ArrayList<CompanyListing> getCompanies() {
-        ArrayList<CompanyListing> list = new ArrayList<>();
-//
-//        list.add(new CompanyListing(null, "We cut your hair", "Hair Company \n" +
-//                "123 Main St \nSan Francisco, CA 94110", "Tomorrow 9:30-12:00pm"));
-
-        return list;
+        return object;
     }
 
-
-        @Override
-        public void onScrollStateChanged(final AbsListView view, final int scrollState) {
-            Log.d(TAG, "onScrollStateChanged:" + scrollState);
-        }
-        @Override
-        public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
-            Log.d(TAG, "onScroll firstVisibleItem:" + firstVisibleItem +
-                    " visibleItemCount:" + visibleItemCount +
-                    " totalItemCount:" + totalItemCount);
-        // our handling
-            if (!mHasRequestedMore) {
-                int lastInScreen = firstVisibleItem + visibleItemCount;
-                if (lastInScreen >= totalItemCount) {
-                    Log.d(TAG, "onScroll lastInScreen - so load more");
-                    mHasRequestedMore = true;
-                    onLoadMoreItems();
-                }
-            }
-        }
-        private void onLoadMoreItems() {
-            final ArrayList<String> sampleData = generateData();
-            for (String data : sampleData) {
-                mAdapter.add(data);
-            }
-        // stash all the data in our backing store
-            mData.addAll(sampleData);
-        // notify the adapter that we can update now
-            mAdapter.notifyDataSetChanged();
-            mHasRequestedMore = false;
-        }
-        private ArrayList<String> generateData() {
-            ArrayList<String> listData = new ArrayList<>();
-            listData.add("http://devvy.angrychimps.com/media/ci/d0f335bf6996890e45b4548740af4100.jpg");
-            listData.add("http://devvy.angrychimps.com/media/ci/e5c840d404f9417e8d19891958125ff0.jpg");
-            listData.add("http://i62.tinypic.com/2iitkhx.jpg");
-            listData.add("http://i61.tinypic.com/w0omeb.jpg");
-            listData.add("http://devvy.angrychimps.com/media/ci/d0f335bf6996890e45b4548740af4100.jpg");
-            listData.add("http://i60.tinypic.com/w9iu1d.jpg");
-            listData.add("http://i62.tinypic.com/2iitkhx.jpg");
-            listData.add("http://devvy.angrychimps.com/media/ci/d0f335bf6996890e45b4548740af4100.jpg");
-            listData.add("http://devvy.angrychimps.com/media/ci/e5c840d404f9417e8d19891958125ff0.jpg");
-            listData.add("http://i60.tinypic.com/iw6kh2.jpg");
-            listData.add("http://i57.tinypic.com/ru08c8.jpg");
-            listData.add("http://devvy.angrychimps.com/media/ci/d0f335bf6996890e45b4548740af4100.jpg");
-            listData.add("http://i60.tinypic.com/k12r10.jpg");
-            listData.add("http://devvy.angrychimps.com/media/ci/e5c840d404f9417e8d19891958125ff0.jpg");
-            listData.add("http://i58.tinypic.com/2e3daug.jpg");
-            listData.add("http://i59.tinypic.com/2igznfr.jpg");
-            listData.add("http://devvy.angrychimps.com/media/ci/e5c840d404f9417e8d19891958125ff0.jpg");
-            listData.add("http://i62.tinypic.com/2iitkhx.jpg");
-            return listData;
-        }
-        @Override
+    @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             Toast.makeText(getActivity(), "Item Clicked: " + position, Toast.LENGTH_SHORT).show();
         }
