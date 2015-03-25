@@ -11,7 +11,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.angrychimps.appname.CompanyAdFlowGridArrayAdapter;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.balysv.materialmenu.MaterialMenuDrawable;
@@ -19,15 +18,16 @@ import com.etsy.android.grid.StaggeredGridView;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ScrollDirectionListener;
 
-import java.util.ArrayList;
+/*
+    Note- nothing in here should be considered correct right now.
+    TODO- copy CustomerMainFragment over here and adapt it
+ */
 
 public class CompanyMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
 
     private static final String TAG = "StaggeredGridActivity";
-    private static final String SAVED_DATA_KEY = "SAVED_DATA";
-    private boolean mHasRequestedMore;
-    private CompanyAdFlowGridArrayAdapter mAdapter;
-    private ArrayList<String> mData;
+    private boolean hasRequestedMore;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,18 +41,18 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
 
 
 
-        StaggeredGridView mGridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
+        StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
         //mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
 
 
 
-        mGridView.setAdapter(mAdapter);
-        mGridView.setOnScrollListener(this);
-        mGridView.setOnItemClickListener(this);
+        //gridView.setAdapter(adapter);
+        gridView.setOnScrollListener(this);
+        gridView.setOnItemClickListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setImageResource(R.drawable.ic_add_white);
-        fab.attachToListView(mGridView, new ScrollDirectionListener() {
+        fab.attachToListView(gridView, new ScrollDirectionListener() {
             @Override
             public void onScrollDown() {
                 Log.d("ListViewFragment", "onScrollDown()");
@@ -69,10 +69,10 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
             public void onClick(View v) {
 
                 CompanyCreateAdFragment fragment = new CompanyCreateAdFragment();
-                fragment.setTargetFragment(getParentFragment(), 0);
+                //fragment.setTargetFragment(getParentFragment(), 0);
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(MainActivity.mContainer.getId(), fragment).addToBackStack(null).commit();
-                MainActivity.sMaterialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
 
             }
         });
@@ -89,7 +89,6 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArrayList(SAVED_DATA_KEY, mData);
     }
 
 
@@ -103,11 +102,11 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
                 " visibleItemCount:" + visibleItemCount +
                 " totalItemCount:" + totalItemCount);
         // our handling
-        if (!mHasRequestedMore) {
+        if (!hasRequestedMore) {
             int lastInScreen = firstVisibleItem + visibleItemCount;
             if (lastInScreen >= totalItemCount) {
                 Log.d(TAG, "onScroll lastInScreen - so load more");
-                mHasRequestedMore = true;
+                hasRequestedMore = true;
             }
         }
     }

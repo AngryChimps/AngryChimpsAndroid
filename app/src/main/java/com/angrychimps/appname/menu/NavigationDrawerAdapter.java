@@ -29,7 +29,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         this.serviceProviderMode = serviceProviderMode;
 	}
 
-    //ViewHolder is pointless because there is no scrolling
+    //ViewHolder is pointless because there is no scrolling, and thus no need to recycle
     @SuppressLint({"CutPasteID","ViewHolder"})
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -43,6 +43,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
             color = context.getResources().getColor(R.color.primary_dark);
         }else color = context.getResources().getColor(R.color.primary);
 
+        //Get which xml file is used so we know what we can set
         switch(item.getLayoutID()){
             case R.layout.navigation_drawer_profile:
                 ImageView imageProfile = (ImageView) v.findViewById(R.id.drawer_profile_image);
@@ -94,9 +95,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
                 modeSwitch.setChecked(serviceProviderMode);
                 break;
         }
-
 		return v;
 	}
-
 
 }

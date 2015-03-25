@@ -40,11 +40,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+    The main fragment for customer mode.
+ */
+
 public class CustomerMainFragment extends Fragment implements AbsListView.OnItemClickListener{
 
-    private CompanyAdFlowGridArrayAdapter mAdapter;
-    private ArrayList<SearchPostResponseResults> mResults;
-    private StaggeredGridView mGridView;
+    private CompanyAdFlowGridArrayAdapter adapter;
+    private ArrayList<SearchPostResponseResults> results;
+    private StaggeredGridView gridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +59,12 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mGridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
-        mResults = new ArrayList<>();
+        gridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
+        results = new ArrayList<>();
 
+        //Request the data using Volley for the Staggered Grid View and parse it into SearchPostResponseResults objects
+        //TODO- load more data when the user reaches the bottom of the list
+        //TODO- Get rid of log messages, clean code, and add search filter options
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, MainActivity.url + "search", getRequestJSONObject(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
@@ -67,15 +74,15 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
                     Log.i("object payload = ", payload.getString("results"));
                     JSONArray jArray = payload.getJSONArray("results");
                     for (int i = 0; i < jArray.length(); i++){
-                        mResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                        results.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
                     }
 
-                    if(mAdapter == null){
-                        mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(), mResults);
-                        mGridView.setAdapter(mAdapter);
+                    if(adapter == null){
+                        adapter = new CompanyAdFlowGridArrayAdapter(getActivity(), results);
+                        gridView.setAdapter(adapter);
                     }else {
-                        mAdapter.addAll(mResults);
-                        mAdapter.notifyDataSetChanged();
+                        adapter.addAll(results);
+                        adapter.notifyDataSetChanged();
                     }
 
                 } catch (IOException | JSONException e) {
@@ -97,15 +104,13 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
                 params.put("angrychimps-api-session-token", MainActivity.sessionId);
                 return params;
             }
-
         };
         VolleySingleton.getInstance().addToRequestQueue(request);
 
-
-
+        //Set up the Floating Action Button
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setImageResource(R.drawable.ic_request_white);
-        fab.attachToListView(mGridView, new ScrollDirectionListener() {
+        fab.attachToListView(gridView, new ScrollDirectionListener() {
             @Override
             public void onScrollDown() {
                 Log.d("ListViewFragment", "onScrollDown()");
@@ -121,8 +126,8 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
             public void onClick(View v) {
                 CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(MainActivity.mContainer.getId(), fragment).addToBackStack(null).commit();
-                MainActivity.sMaterialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
                 ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Request Service");
             }
         });
@@ -130,6 +135,8 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
         if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");
     }
 
+    //JSONObject used in the Volley request- at a minimum, this passes location data
+    //TODO- Add search filter options
     private JSONObject getRequestJSONObject() {
         //get current location
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);

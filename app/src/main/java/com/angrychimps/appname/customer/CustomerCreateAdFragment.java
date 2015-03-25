@@ -13,6 +13,10 @@ import android.widget.RadioGroup;
 
 import com.angrychimps.appname.R;
 
+/*
+    Customer Create Ad page, currently not implemented
+ */
+
 public class CustomerCreateAdFragment extends Fragment {
 
     @Override

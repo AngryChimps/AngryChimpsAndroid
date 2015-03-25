@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Customer version of Create Ad, currently unfinished -->
+<!--TODO - update design and test -->
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
         <TextView
             style="@style/Caption"
@@ -17,63 +21,63 @@
 
         <EditText
             android:id="@+id/etCustomerCreateAdTitle"
-            android:textSize="16sp"
+            style="@style/TextField"
             android:hint="What do you need?"
-            style="@style/TextField"/>
+            android:textSize="16sp"/>
 
         <TextView
             style="@style/Caption"
             android:text="Description"/>
 
         <EditText
-            android:lines="6"
-            android:inputType="textMultiLine"
             android:id="@+id/etCustomerCreateAdDescription"
+            style="@style/TextField"
             android:gravity="top"
-            style="@style/TextField"/>
+            android:inputType="textMultiLine"
+            android:lines="6"/>
         
         <Button
-            android:layout_gravity="center_horizontal"
-            android:text="Manage Photos"
             android:id="@+id/bCustomerCreateAdManagePhotos"
-            style="@style/RaisedButton"/>
+            style="@style/RaisedButton"
+            android:layout_gravity="center_horizontal"
+            android:text="Manage Photos"/>
 
         <RadioGroup
+            android:id="@+id/rgCustomerCreateAd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="72dp"
-            android:id="@+id/rgCustomerCreateAd">
+            android:layout_marginLeft="72dp">
 
             <RadioButton
+                android:id="@+id/rbCustomerGoesToBusiness"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="I'll go to them"
-                android:id="@+id/rbCustomerGoesToBusiness"
                 android:textSize="14sp"/>
 
             <RadioButton
+                android:id="@+id/rbCustomerHouseCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="They must come to me"
-                android:id="@+id/rbCustomerHouseCall"
                 android:textSize="14sp"/>
         </RadioGroup>
 
         <LinearLayout
+            android:id="@+id/lCreateAdAddressVisibility"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/lCreateAdAddressVisibility"
             android:visibility="gone">
             <TextView
                 style="@style/Caption"
                 android:text="Street Address"/>
 
             <EditText
-                android:inputType="textPostalAddress"
                 android:id="@+id/etCustomerAddress"
-                style="@style/TextField"/>
+                style="@style/TextField"
+                android:inputType="textPostalAddress"/>
 
             <TextView
                 style="@style/Caption"
@@ -88,9 +92,9 @@
                 android:text="Zipcode"/>
 
             <EditText
-                android:inputType="number"
                 android:id="@+id/etCustomerZipcode"
-                style="@style/TextField"/>
+                style="@style/TextField"
+                android:inputType="number"/>
         </LinearLayout>
 
         <TextView
@@ -98,20 +102,20 @@
             android:text="Available Starting At" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
-                android:text="Today"
                 android:id="@+id/bCustomerCreateAdStartDate"
-                style="@style/SpinnerDateButton"/>
+                style="@style/SpinnerDateButton"
+                android:text="Today"/>
 
             <Button
-                android:layout_marginLeft="0dp"
-                android:text="7:00pm"
                 android:id="@+id/bCustomerCreateAdStartTime"
-                style="@style/SpinnerTimeButton" />
+                style="@style/SpinnerTimeButton"
+                android:layout_marginLeft="0dp"
+                android:text="7:00pm" />
         </LinearLayout>
 
         <TextView
@@ -119,49 +123,49 @@
             android:text="Available Ending At" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
-                android:text="Wed, Dec 31"
                 android:id="@+id/bCustomerCreateAdEndDate"
-                style="@style/SpinnerDateButton" />
+                style="@style/SpinnerDateButton"
+                android:text="Wed, Dec 31" />
 
             <Button
-                android:layout_marginLeft="0dp"
-                android:text="7:00pm"
                 android:id="@+id/bCustomerCreateAdEndTime"
-                style="@style/SpinnerTimeButton" />
+                style="@style/SpinnerTimeButton"
+                android:layout_marginLeft="0dp"
+                android:text="7:00pm" />
         </LinearLayout>
 
         <TextView
-            android:text="Category"
-            style="@style/Caption"/>
+            style="@style/Caption"
+            android:text="Category"/>
 
         <Button
-            android:text="All"
             android:id="@+id/bCustomerCreateAdCategory"
-            style="@style/SpinnerButton" />
+            style="@style/SpinnerButton"
+            android:text="All" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <Button
+            android:id="@+id/bCustomerCreateAdPost"
+            style="@style/FlatButton"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:id="@+id/bCustomerCreateAdPost"
-            android:text="POST"
-            android:textColor="@color/primary"
             android:layout_marginRight="16dp"
-            style="@style/FlatButton"/>
+            android:text="POST"
+            android:textColor="@color/primary"/>
 
         <Button
+            android:id="@+id/bCustomerCreateAdCancel"
+            style="@style/FlatButton"
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@id/bCustomerCreateAdPost"
-            android:id="@+id/bCustomerCreateAdCancel"
-            android:text="CANCEL"
-            style="@style/FlatButton"/>
+            android:text="CANCEL"/>
         </RelativeLayout>
     </LinearLayout>
 

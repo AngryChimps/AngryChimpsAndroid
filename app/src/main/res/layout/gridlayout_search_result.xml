@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Standard layout for the StaggeredGridView results -->
+
 <FrameLayout android:id="@+id/panel_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="170dp"
@@ -12,6 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--NetworkImageView is designed to work with Volley -->
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imageCompanyMain"
             android:layout_width="match_parent"
@@ -30,7 +34,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:rating="4.5"
                 android:stepSize="0.5"/>
 
             <TextView
@@ -38,8 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:drawableLeft="@drawable/ic_location_grey"
-                android:text="1.2mi"/>
+                android:drawableLeft="@drawable/ic_location_grey"/>
 
             <TextView
                 android:id="@+id/tvCompanyTitle"
@@ -48,7 +50,6 @@
                 android:layout_below="@id/tvCompanyDistance"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="8dp"
-                android:text="Company Title"
                 android:textColor="@color/primary"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
@@ -60,7 +61,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/tvCompanyTitle"
                 android:layout_marginLeft="2dp"
-                android:text="99"
                 android:textColor="@color/accent"
                 android:textSize="16sp"/>
 
@@ -71,7 +71,6 @@
                 android:layout_below="@id/tvCompanyTitle"
                 android:layout_marginLeft="2dp"
                 android:layout_toLeftOf="@+id/tvCompanyServicePriceDecimal"
-                android:text="35"
                 android:textColor="@color/accent"
                 android:textSize="28sp"
                 android:textStyle="bold"/>
@@ -82,7 +81,7 @@
                 android:layout_alignTop="@id/tvCompanyServicePrice"
                 android:layout_marginTop="4dp"
                 android:layout_toLeftOf="@id/tvCompanyServicePrice"
-                android:text="$"
+                android:text="@string/dollar_sign"
                 android:textColor="@color/accent"
                 android:textSize="18sp"/>
 
@@ -91,7 +90,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tvCompanyServicePrice"
-                android:text="50% off"
                 android:textSize="16sp"/>
 
         </RelativeLayout>

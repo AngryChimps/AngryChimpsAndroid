@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/drawer_item_base">
 
+<!--Navigation drawer row, standard -->
+
+<RelativeLayout style="@style/drawer_item_base"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--Colored strip to indicate ServiceProviderMode status -->
     <View
         android:id="@+id/drawer_mode_color"
         style="@style/drawer_mode_color" />

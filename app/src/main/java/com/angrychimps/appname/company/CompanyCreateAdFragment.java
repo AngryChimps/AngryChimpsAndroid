@@ -14,6 +14,9 @@ import android.widget.ListView;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 
+/*
+    First page when the user clicks to create an ad from the company main fragment
+ */
 
 public class CompanyCreateAdFragment extends Fragment {
 

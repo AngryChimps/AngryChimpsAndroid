@@ -15,15 +15,19 @@ import com.angrychimps.appname.models.SearchPostResponseResults;
 
 import java.util.ArrayList;
 
+/*
+    This adapter handles the StaggeredGridView in Provider Mode
+ */
+
 public class CompanyAdFlowGridArrayAdapter extends ArrayAdapter<SearchPostResponseResults> {
 
-    private final LayoutInflater mLayoutInflater;
+    private final LayoutInflater layoutInflater;
     private ArrayList<SearchPostResponseResults> arrayList;
     private ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
 
     public CompanyAdFlowGridArrayAdapter(Context context, ArrayList<SearchPostResponseResults> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);
-        this.mLayoutInflater = LayoutInflater.from(context);
+        this.layoutInflater = LayoutInflater.from(context);
         this.arrayList = arrayList;
     }
 
@@ -38,30 +42,30 @@ public class CompanyAdFlowGridArrayAdapter extends ArrayAdapter<SearchPostRespon
 
         // Reuse views
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.gridlayout_search_result, parent, false);
+            convertView = layoutInflater.inflate(R.layout.gridlayout_search_result, parent, false);
 
             // Configure ViewHolder
             viewHolder = new ViewHolder();
             viewHolder.imageCompanyMain = (NetworkImageView) convertView.findViewById(R.id.imageCompanyMain);
-            viewHolder.ratingBarCompany = (RatingBar) convertView.findViewById(R.id.ratingBarCompany);
-            viewHolder.textViewCompanyDistance = (TextView) convertView.findViewById(R.id.tvCompanyDistance);
-            viewHolder.textViewCompanyTitle = (TextView) convertView.findViewById(R.id.tvCompanyTitle);
-            viewHolder.textViewCompanyServicePrice = (TextView) convertView.findViewById(R.id.tvCompanyServicePrice);
-            viewHolder.textViewCompanyServiceDiscount = (TextView) convertView.findViewById(R.id.tvCompanyServiceDiscount);
-            viewHolder.textViewCompanyServicePriceDecimal = (TextView) convertView.findViewById(R.id.tvCompanyServicePriceDecimal);
-            viewHolder.textViewCompanyServicePriceDecimal.setPaintFlags(viewHolder.textViewCompanyServicePriceDecimal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            viewHolder.rbCompany = (RatingBar) convertView.findViewById(R.id.ratingBarCompany);
+            viewHolder.tvCompanyDistance = (TextView) convertView.findViewById(R.id.tvCompanyDistance);
+            viewHolder.tvCompanyTitle = (TextView) convertView.findViewById(R.id.tvCompanyTitle);
+            viewHolder.tvCompanyServicePrice = (TextView) convertView.findViewById(R.id.tvCompanyServicePrice);
+            viewHolder.tvCompanyServiceDiscount = (TextView) convertView.findViewById(R.id.tvCompanyServiceDiscount);
+            viewHolder.tvCompanyServicePriceDecimal = (TextView) convertView.findViewById(R.id.tvCompanyServicePriceDecimal);
+            viewHolder.tvCompanyServicePriceDecimal.setPaintFlags(viewHolder.tvCompanyServicePriceDecimal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.imageCompanyMain.setImageUrl("http://devvy3.angrychimps.com/media/" + arrayList.get(position).getPhoto(), imageLoader);
-        viewHolder.ratingBarCompany.setRating(arrayList.get(position).getRating());
-        viewHolder.textViewCompanyDistance.setText(arrayList.get(position).getDistance() + "mi");
-        viewHolder.textViewCompanyTitle.setText(arrayList.get(position).getTitle());
-        viewHolder.textViewCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
-        if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.textViewCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());
-        viewHolder.textViewCompanyServiceDiscount.setText(arrayList.get(position).getDiscount_percentage() + "% off");
+        viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
+        viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
+        viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + "mi");
+        viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());
+        viewHolder.tvCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
+        if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());
+        viewHolder.tvCompanyServiceDiscount.setText(arrayList.get(position).getDiscount_percentage() + "% off");
 
         return convertView;
     }
@@ -69,8 +73,8 @@ public class CompanyAdFlowGridArrayAdapter extends ArrayAdapter<SearchPostRespon
     // ViewHolder increases speed and efficiency by recycling views rather than doing many findViewByIds, which are expensive.
     static class ViewHolder {
         NetworkImageView imageCompanyMain;
-        TextView textViewCompanyDistance, textViewCompanyTitle, textViewCompanyServicePrice, textViewCompanyServiceDiscount, textViewCompanyServicePriceDecimal;
-        RatingBar ratingBarCompany;
+        TextView tvCompanyDistance, tvCompanyTitle, tvCompanyServicePrice, tvCompanyServiceDiscount, tvCompanyServicePriceDecimal;
+        RatingBar rbCompany;
     }
 
 }

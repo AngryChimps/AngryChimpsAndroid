@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Footer for the Company Create Ad screen, everything below the time blocks  -->
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,7 +24,7 @@
             android:drawableRight="@drawable/ic_add_circle_blue"
             android:paddingBottom="16dp"
             android:paddingTop="16dp"
-            android:text="Add Another Time Block"
+            android:text="@string/add_time_block"
             android:textColor="@color/primary"
             android:textSize="20sp"/>
     </FrameLayout>
@@ -133,7 +136,7 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:onClick="onCancel"
-            android:text="Cancel"/>
+            android:text="@string/cancel"/>
 
         <Button
             android:id="@+id/bCompanyCreateAdNext"
@@ -143,7 +146,7 @@
             android:layout_marginRight="32dp"
             android:layout_weight="1"
             android:background="@color/accent"
-            android:text="Next"
+            android:text="@string/next"
             android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

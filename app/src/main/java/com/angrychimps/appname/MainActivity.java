@@ -42,17 +42,18 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static FrameLayout mContainer;
-    public static MaterialMenuIconToolbar sMaterialMenu;
-    public static String sessionId;
+    public static FrameLayout container;
+    public static MaterialMenuIconToolbar materialMenu; //Manually control the Up Navigation button
+    public static String sessionId; //Session ID required for all server calls
     public static String url = "http://devvy3.angrychimps.com/api/v1/";
-    private static Toolbar sToolbar;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private boolean mServiceProviderMode = false;
+    public static String mediaUrl = "http://devvy3.angrychimps.com/media/";
+    private static Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
+    private boolean serviceProviderMode = false;
 
     public static void removeMenu(){
-        sToolbar.getMenu().clear();
+        toolbar.getMenu().clear();
     }
 
     @Override
@@ -63,31 +64,31 @@ public class MainActivity extends ActionBarActivity {
         getSessionId();
 
         // Using Toolbar in place of ActionBar lets us place the Navigation Drawer over the top, as Material Design recommends
-        sToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(sToolbar);
-        sToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager().getBackStackEntryCount() != 0) {
                     onBackPressed();
                 } else {
-                    mDrawerLayout.openDrawer(mDrawerList);
+                    drawerLayout.openDrawer(drawerList);
                 }
             }
         });
-        sMaterialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+        materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
             @Override public int getToolbarViewId() {
                 return R.id.toolbar;
             }
         };
-        sMaterialMenu.setNeverDrawTouch(true);
+        materialMenu.setNeverDrawTouch(true);
 
         initiateNavigationDrawer();
 
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                if (getFragmentManager().getBackStackEntryCount() == 0) sMaterialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
+                if (getFragmentManager().getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
             }
         });
     }
@@ -96,13 +97,13 @@ public class MainActivity extends ActionBarActivity {
         //Set up the main fragment
         //App waits until sessionId has been acquired, because that is required for further communication with the server
         FrameLayout fragmentContainer = (FrameLayout) findViewById(R.id.container);
-        mContainer = new FrameLayout(this);
-        mContainer.setId(R.id.container_id);
+        container = new FrameLayout(this);
+        container.setId(R.id.container_id);
 
         setMode();
         setTitle();
 
-        fragmentContainer.addView(mContainer);
+        fragmentContainer.addView(container);
     }
 
     private void getSessionId() {
@@ -132,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setMode() {
-        if(mServiceProviderMode){
+        if(serviceProviderMode){
             CompanyMainFragment companyMainFragment = new CompanyMainFragment();
             replaceFragmentNoBackStack(companyMainFragment);
         }else {
@@ -142,7 +143,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setTitle() {
-        if(mServiceProviderMode){
+        if(serviceProviderMode){
             getSupportActionBar().setTitle("Provider Mode");
         }else {
             getSupportActionBar().setTitle("Customer Mode");
@@ -151,22 +152,22 @@ public class MainActivity extends ActionBarActivity {
 
     private void replaceFragmentNoBackStack(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(mContainer.getId(), fragment).commit();
+        fragmentManager.beginTransaction().replace(container.getId(), fragment).commit();
     }
 
     private void replaceFragmentAddBackStack(Fragment fragment) {
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(mContainer.getId(), fragment).addToBackStack(null).commit();
-        sMaterialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+        fragmentManager.beginTransaction().replace(container.getId(), fragment).addToBackStack(null).commit();
+        materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 
     private void initiateNavigationDrawer() {
         List<NavigationDrawerItem> mDataList = new ArrayList<>();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
 
         // Set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // Set up the drawer's list view with items and onclick listener
         mDataList.add(new NavigationDrawerItem(R.drawable.photo, "Name Nameson", "example@email.com",
@@ -174,7 +175,7 @@ public class MainActivity extends ActionBarActivity {
         mDataList.add(new NavigationDrawerItem(R.drawable.ic_explore_blue, "Explore deals near you", false, true, R.layout.navigation_drawer_item));
         mDataList.add(new NavigationDrawerItem(R.drawable.ic_messages_blue, "Messages", "2",
                 R.layout.navigation_drawer_messages_item));
-        if(mServiceProviderMode) {
+        if(serviceProviderMode) {
             mDataList.add(new NavigationDrawerItem("Provider Mode", R.layout.navigation_drawer_switch_item));
             mDataList.add(new NavigationDrawerItem(R.drawable.ic_add_dkblue, "Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
             mDataList.add(new NavigationDrawerItem(R.drawable.ic_avail_dkblue, "Availability Manager", true, true, R.layout.navigation_drawer_item));
@@ -191,9 +192,9 @@ public class MainActivity extends ActionBarActivity {
         mDataList.add(new NavigationDrawerItem(R.drawable.ic_logout_grey, "Log Out", false, false,
                 R.layout.navigation_drawer_item));
 
-        NavigationDrawerAdapter mAdapter = new NavigationDrawerAdapter(this, mDataList, mServiceProviderMode);
-        mDrawerList.setAdapter(mAdapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        NavigationDrawerAdapter mAdapter = new NavigationDrawerAdapter(this, mDataList, serviceProviderMode);
+        drawerList.setAdapter(mAdapter);
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     @Override
@@ -231,11 +232,11 @@ public class MainActivity extends ActionBarActivity {
 
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
-            sToolbar.getMenu().clear();
-            sToolbar.inflateMenu(R.menu.menu_main);
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_main);
             if(getFragmentManager().getBackStackEntryCount() < 2) setTitle();
-        } else if(mDrawerLayout.isDrawerOpen(mDrawerList)){
-            mDrawerLayout.closeDrawer(mDrawerList);
+        } else if(drawerLayout.isDrawerOpen(drawerList)){
+            drawerLayout.closeDrawer(drawerList);
         } else {
             super.onBackPressed();
         }
@@ -244,14 +245,14 @@ public class MainActivity extends ActionBarActivity {
     // Item selected functionality
     private void selectItem(int position) {
         getFragmentManager().popBackStack();
-        if(mServiceProviderMode) {
+        if(serviceProviderMode) {
             switch (position) {
                 case 0:
                     break;
                 case 1:
                     break;
                 case 3:
-                    mServiceProviderMode = false;
+                    serviceProviderMode = false;
                     initiateNavigationDrawer();
                     setMode();
                     return;
@@ -270,7 +271,7 @@ public class MainActivity extends ActionBarActivity {
                 case 1:
                     break;
                 case 3:
-                    mServiceProviderMode = true;
+                    serviceProviderMode = true;
                     initiateNavigationDrawer();
                     setMode();
                     return;
@@ -283,14 +284,14 @@ public class MainActivity extends ActionBarActivity {
                     break;
             }
         }
-        mDrawerLayout.closeDrawer(mDrawerList);
+        drawerLayout.closeDrawer(drawerList);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        sMaterialMenu.syncState(savedInstanceState);
+        materialMenu.syncState(savedInstanceState);
     }
 
     public void onCancel(View view) {

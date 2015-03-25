@@ -1,107 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Screen displayed just after the Company posts an ad, as confirmation -->
+<!--TODO - update to current version in mocks -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
         android:text="Thank You!"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
+        android:id="@+id/tvConfirmationAdLive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Your ad is now live! You can view it or edit it, but you can also enhance it."
-        android:id="@+id/tvConfirmationAdLive"/>
+        android:text="Your ad is now live! You can view it or edit it, but you can also enhance it."/>
 
     <RelativeLayout
+        android:id="@+id/bConfirmationAddPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:id="@+id/bConfirmationAddPhoto">
+        android:background="@drawable/bg_card">
         <ImageView
+            android:id="@+id/imageConfirmationAddPhoto"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageConfirmationAddPhoto"
             android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/imageConfirmationAddPhoto"
             android:layout_margin="5dp"
-            android:textSize="@dimen/abc_text_size_medium_material"
-            android:text="Add Photos!"/>
+            android:layout_toRightOf="@id/imageConfirmationAddPhoto"
+            android:text="Add Photos!"
+            android:textSize="@dimen/abc_text_size_medium_material"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageConfirmationAddPhoto"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/imageConfirmationAddPhoto"
-            android:layout_alignBottom="@id/imageConfirmationAddPhoto"
             android:text="Adding a photo will definitely make your ad stand out"/>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/bConfirmationAddServices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/bConfirmationAddServices">
+        android:background="@drawable/bg_card">
         <ImageView
+            android:id="@+id/imageConfirmationAddServices"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageConfirmationAddServices"
             android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/imageConfirmationAddServices"
             android:layout_margin="5dp"
-            android:textSize="@dimen/abc_text_size_medium_material"
-            android:text="Add Services"/>
+            android:layout_toRightOf="@id/imageConfirmationAddServices"
+            android:text="Add Services"
+            android:textSize="@dimen/abc_text_size_medium_material"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageConfirmationAddServices"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/imageConfirmationAddServices"
-            android:layout_alignBottom="@id/imageConfirmationAddServices"
             android:text="You can have more than one service in your ad. Click to add more."/>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/bConfirmationAddAvail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/bConfirmationAddAvail">
+        android:background="@drawable/bg_card">
         <ImageView
+            android:id="@+id/imageConfirmationAddAvail"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageConfirmationAddAvail"
             android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/imageConfirmationAddAvail"
             android:layout_margin="5dp"
-            android:textSize="@dimen/abc_text_size_medium_material"
-            android:text="Add Availabilities"/>
+            android:layout_toRightOf="@id/imageConfirmationAddAvail"
+            android:text="Add Availabilities"
+            android:textSize="@dimen/abc_text_size_medium_material"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageConfirmationAddAvail"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/imageConfirmationAddAvail"
-            android:layout_alignBottom="@id/imageConfirmationAddAvail"
             android:text="You can advertise multiple availability slots if you'd like."/>
     </RelativeLayout>
 

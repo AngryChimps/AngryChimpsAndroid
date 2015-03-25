@@ -1,6 +1,5 @@
 package com.angrychimps.appname;
 
-
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
@@ -9,15 +8,22 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+/*
+    Volley is an Android library designed by Google which provides very fast and simple server communication optimized for large numbers of requests
+    and a small file sizes. Also provides image loading. Not for use with large files or streaming.
+
+    A single instance of Volley sets up a queue for all server communication and handles threading.
+ */
+
 public class VolleySingleton {
 
-    private static VolleySingleton sInstance=null;
-    private ImageLoader mImageLoader;
-    private RequestQueue mRequestQueue;
+    private static VolleySingleton instance =null;
+    private ImageLoader imageLoader;
+    private RequestQueue requestQueue;
 
     private VolleySingleton(){
-        mRequestQueue = getRequestQueue();
-        mImageLoader=new ImageLoader(mRequestQueue,new ImageLoader.ImageCache() {
+        requestQueue = getRequestQueue();
+        imageLoader =new ImageLoader(requestQueue,new ImageLoader.ImageCache() {
 
             private LruCache<String, Bitmap> cache=new LruCache<>((int)(Runtime.getRuntime().maxMemory()/1024)/8);
             @Override
@@ -33,18 +39,18 @@ public class VolleySingleton {
     }
 
     public static synchronized VolleySingleton getInstance() {
-        if (sInstance == null) {
-            sInstance = new VolleySingleton();
+        if (instance == null) {
+            instance = new VolleySingleton();
         }
-        return sInstance;
+        return instance;
     }
 
     public RequestQueue getRequestQueue(){
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(MainApplication.getAppContext());
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(MainApplication.getAppContext());
         }
 
-        return mRequestQueue;
+        return requestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
@@ -53,6 +59,6 @@ public class VolleySingleton {
     }
 
     public ImageLoader getImageLoader(){
-        return mImageLoader;
+        return imageLoader;
     }
 }

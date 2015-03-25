@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Header for the Company Create Ad screen, everything above the time blocks  -->
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -42,7 +45,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:text="Category"
+        android:text="@string/category"
         android:textColor="@color/text_grey"
         android:textSize="18sp"/>
 

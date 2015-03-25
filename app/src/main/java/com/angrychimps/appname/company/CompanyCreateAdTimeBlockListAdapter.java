@@ -11,14 +11,17 @@ import android.widget.TextView;
 
 import com.angrychimps.appname.R;
 
+/*
+    This adapter handles the time blocks added in the Company Create Ad screen
+ */
+
 public class CompanyCreateAdTimeBlockListAdapter extends ArrayAdapter<String>{
 
-    private final LayoutInflater mLayoutInflater;
-
+    private final LayoutInflater inflater;
 
     public CompanyCreateAdTimeBlockListAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
-        this.mLayoutInflater = LayoutInflater.from(context);
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -27,7 +30,7 @@ public class CompanyCreateAdTimeBlockListAdapter extends ArrayAdapter<String>{
 
         // Reuse views
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.company_create_ad_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.company_create_ad_list_item, parent, false);
 
             // Configure ViewHolder
             viewHolder = new ViewHolder();

@@ -6,10 +6,10 @@ public class NavigationDrawerItem {
     private String messages;
     private String email;
 	private int imageID;
-    private Integer imageBackground;
-    private boolean blue;
+    private Integer imageBackground; //Image background in the profile area
+    private boolean blue; //Does this row have a blue stripe along the side?
     private boolean indented;
-    private int layoutID;
+    private int layoutID; //Identifies which xml layout to use
 
     //email item
     public NavigationDrawerItem(int imagePerson, String itemName, String email, Integer imageBackground, int layoutID){

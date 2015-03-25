@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Search filter menu, opens in dialog fragment -->
+<!--Currently not updated to latest mock -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/bSearch"
+        style="@style/FlatButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:id="@+id/bSearch"
-        android:text="SEARCH"
-        android:textColor="@color/primary"
         android:layout_marginRight="16dp"
-        style="@style/FlatButton"/>
+        android:text="SEARCH"
+        android:textColor="@color/primary"/>
 
     <Button
+        android:id="@+id/bCancel"
+        style="@style/FlatButton"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/bSearch"
-        android:id="@+id/bCancel"
-        android:text="CANCEL"
-        style="@style/FlatButton"/>
+        android:text="CANCEL"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,72 +30,72 @@
         android:layout_above="@id/bSearch">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:text="Categories"
-                style="@style/Subheader"/>
+                style="@style/Subheader"
+                android:text="Categories"/>
 
             <Button
-                android:text="Dentists"
                 android:id="@+id/button"
-                style="@style/SpinnerButton" />
+                style="@style/SpinnerButton"
+                android:text="Dentists" />
 
             <View
                 style="@style/Separator" >
             </View>
 
             <TextView
-                android:text="Distance"
-                style="@style/Subheader"/>
+                style="@style/Subheader"
+                android:text="Distance"/>
 
             <TextView
-                android:text="5 Miles"
                 android:id="@+id/textView5"
+                style="@style/Caption"
                 android:paddingBottom="0dp"
-                style="@style/Caption"/>
+                android:text="5 Miles"/>
 
             <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                app:dsb_min="1"
+                android:paddingTop="4dp"
                 app:dsb_max="50"
+                app:dsb_min="1"
                 app:dsb_value="5"/>
 
             <TextView
-                android:text="Near"
                 android:id="@+id/textView6"
-                style="@style/Caption"/>
+                style="@style/Caption"
+                android:text="Near"/>
             <Button
-                android:text="Current Location"
                 android:id="@+id/button2"
-                style="@style/SpinnerButton" />
+                style="@style/SpinnerButton"
+                android:text="Current Location" />
 
             <RadioGroup
+                android:id="@+id/rgSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="72dp"
-                android:id="@+id/rgSearch">
+                android:layout_marginLeft="72dp">
 
                 <RadioButton
+                    android:id="@+id/rbSearchGoToThem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="I'll go to them"
-                    android:textSize="14sp"
-                    android:id="@+id/rbSearchGoToThem"/>
+                    android:textSize="14sp"/>
 
                 <RadioButton
+                    android:id="@+id/rbSearchComeToMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="They must come to me"
-                    android:textSize="14sp"
-                    android:id="@+id/rbSearchComeToMe"/>
+                    android:textSize="14sp"/>
                 </RadioGroup>
 
             <View
@@ -99,49 +103,49 @@
             </View>
 
             <TextView
-                android:text="Availability"
-                style="@style/Subheader"/>
+                style="@style/Subheader"
+                android:text="Availability"/>
 
             <TextView
-                android:text="From"
-                style="@style/Caption"/>
+                style="@style/Caption"
+                android:text="From"/>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <Button
-                    android:text="Today"
                     android:id="@+id/button3"
-                    style="@style/SpinnerDateButton" />
+                    style="@style/SpinnerDateButton"
+                    android:text="Today" />
 
                 <Button
-                    android:layout_marginLeft="0dp"
-                    android:text="7:00pm"
                     android:id="@+id/button4"
-                    style="@style/SpinnerTimeButton" />
+                    style="@style/SpinnerTimeButton"
+                    android:layout_marginLeft="0dp"
+                    android:text="7:00pm" />
                 </LinearLayout>
 
             <TextView
-                android:text="To"
-                style="@style/Caption"/>
+                style="@style/Caption"
+                android:text="To"/>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <Button
-                    android:text="Sat, Jan 3"
                     android:id="@+id/button5"
-                    style="@style/SpinnerDateButton" />
+                    style="@style/SpinnerDateButton"
+                    android:text="Sat, Jan 3" />
 
                 <Button
-                    android:layout_marginLeft="0dp"
-                    android:text="7:00pm"
                     android:id="@+id/button6"
-                    style="@style/SpinnerTimeButton" />
+                    style="@style/SpinnerTimeButton"
+                    android:layout_marginLeft="0dp"
+                    android:text="7:00pm" />
             </LinearLayout>
 
             <View
@@ -149,13 +153,13 @@
             </View>
 
             <TextView
-                android:text="Sort by"
-                style="@style/Subheader"/>
+                style="@style/Subheader"
+                android:text="Sort by"/>
 
             <Button
-                android:text="Relevance"
                 android:id="@+id/button7"
-                style="@style/SpinnerButton" />
+                style="@style/SpinnerButton"
+                android:text="Relevance" />
         </LinearLayout>
     </ScrollView>
 

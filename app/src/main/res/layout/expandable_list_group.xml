@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--List item header-category row for category selection in the search filter  -->
+<!--TODO- confirm this looks correct per the mocks  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/tvExpandableListGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Category"
-        android:textSize="16sp"
-        android:id="@+id/tvExpandableListGroup"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:textSize="16sp"/>
 
     <CheckBox
+        android:id="@+id/checkBoxExpandableListGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:id="@+id/checkBoxExpandableListGroup"/>
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>
