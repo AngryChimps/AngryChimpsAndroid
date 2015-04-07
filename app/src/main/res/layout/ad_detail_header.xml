@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--Ad Detail screen header -->
-<!--TODO- implement as per mocks  -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/viewPagerAdDetailImage"/>
+
+    <me.relex.circleindicator.CircleIndicator
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="-30dp"
+        android:layout_alignBottom="@id/viewPagerAdDetailImage"
+        android:visibility="invisible"
+        android:id="@+id/circleIndicatorAdDetail"/>
+
+    <TextView
+        android:id="@+id/tvCompanyTagLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_below="@id/viewPagerAdDetailImage"
+        android:textColor="@color/primary"
+        android:textSize="20sp"/>
+
+    <!-- TODO- Make text fade out at bottom -->
+    <TextView
+        android:id="@+id/tvCompanyDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_below="@id/tvCompanyTagLine"
+        android:clickable="true"
+        android:maxLines="4"/>
+
+</RelativeLayout>

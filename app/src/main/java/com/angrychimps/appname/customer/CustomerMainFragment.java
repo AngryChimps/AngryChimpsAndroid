@@ -11,16 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.angrychimps.appname.CompanyAdFlowGridArrayAdapter;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
@@ -44,9 +41,9 @@ import java.util.Map;
     The main fragment for customer mode.
  */
 
-public class CustomerMainFragment extends Fragment implements AbsListView.OnItemClickListener{
+public class CustomerMainFragment extends Fragment implements StaggeredGridView.OnItemClickListener{
 
-    private CompanyAdFlowGridArrayAdapter adapter;
+    private CustomerMainGridArrayAdapter adapter;
     private ArrayList<SearchPostResponseResults> results;
     private StaggeredGridView gridView;
 
@@ -59,7 +56,9 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        gridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
+        gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
+        gridView.setOnItemClickListener(this);
+        gridView.setEnabled(false);
         results = new ArrayList<>();
 
         //Request the data using Volley for the Staggered Grid View and parse it into SearchPostResponseResults objects
@@ -73,17 +72,14 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
                     JSONObject payload = new JSONObject(object.getJSONObject("payload").toString());
                     Log.i("object payload = ", payload.getString("results"));
                     JSONArray jArray = payload.getJSONArray("results");
+
                     for (int i = 0; i < jArray.length(); i++){
                         results.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
                     }
-
-                    if(adapter == null){
-                        adapter = new CompanyAdFlowGridArrayAdapter(getActivity(), results);
-                        gridView.setAdapter(adapter);
-                    }else {
-                        adapter.addAll(results);
-                        adapter.notifyDataSetChanged();
-                    }
+                    Log.i("results size = ", ""+results.size());
+                    if(adapter == null) adapter = new CustomerMainGridArrayAdapter(getActivity(), results);
+                    gridView.setAdapter(adapter);
+                    gridView.setEnabled(true);
 
                 } catch (IOException | JSONException e) {
                     Log.i(null, "JsonObjectRequest error");
@@ -106,6 +102,7 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
             }
         };
         VolleySingleton.getInstance().addToRequestQueue(request);
+
 
         //Set up the Floating Action Button
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -182,9 +179,16 @@ public class CustomerMainFragment extends Fragment implements AbsListView.OnItem
         return object;
     }
 
+
     @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            Toast.makeText(getActivity(), "Item Clicked: " + position, Toast.LENGTH_SHORT).show();
-        }
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        CustomerAdDetailFragment fragment = new CustomerAdDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", results.get(position).getProvider_ad_immutable_id());
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+        MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
+}
 

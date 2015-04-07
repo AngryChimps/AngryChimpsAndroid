@@ -41,7 +41,7 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
 
 
 
-        StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.grid_view);
+        StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
         //mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
 
 

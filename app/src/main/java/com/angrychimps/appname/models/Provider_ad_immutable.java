@@ -7,16 +7,16 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class Provider_ad_immutable {
 
     @JsonField
-    String id;
+    Id id;
 
     public Provider_ad_immutable() {
     }
 
-    public String getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Id id) {
         this.id = id;
     }
 }

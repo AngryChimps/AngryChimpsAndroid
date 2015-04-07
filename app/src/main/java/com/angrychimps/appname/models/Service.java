@@ -17,16 +17,18 @@ public class Service {
     String description;
 
     @JsonField
-    float discounted_price;
+    double discounted_price;
 
     @JsonField
-    float original_price;
+    double original_price;
 
     @JsonField
     int mins_for_service;
 
     @JsonField
     int mins_notice;
+
+    int discounted_price_decimal;
 
     public Service() {
     }
@@ -55,19 +57,25 @@ public class Service {
         this.description = description;
     }
 
-    public float getDiscounted_price() {
+    public double getDiscounted_price() {
         return discounted_price;
     }
 
-    public void setDiscounted_price(float discounted_price) {
-        this.discounted_price = discounted_price;
+    public void setDiscounted_price(double discounted_price) {
+        double x = discounted_price - Math.floor(discounted_price);
+        discounted_price_decimal = (int) Math.round(x*100);
+        this.discounted_price = (int) discounted_price;
     }
 
-    public float getOriginal_price() {
+    public int getDiscounted_price_decimal() {
+        return discounted_price_decimal;
+    }
+
+    public double getOriginal_price() {
         return original_price;
     }
 
-    public void setOriginal_price(float original_price) {
+    public void setOriginal_price(double original_price) {
         this.original_price = original_price;
     }
 
@@ -85,5 +93,9 @@ public class Service {
 
     public void setMins_notice(int mins_notice) {
         this.mins_notice = mins_notice;
+    }
+
+    public int getDiscount(){
+        return (int) ((discounted_price/original_price) * 100);
     }
 }

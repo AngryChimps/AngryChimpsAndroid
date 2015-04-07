@@ -9,7 +9,7 @@
 
     <!--TODO - make sure this works properly with 4.0 -->
     <com.etsy.android.grid.StaggeredGridView
-        android:id="@+id/grid_view"
+        android:id="@+id/gridViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:item_margin="8dp"/>

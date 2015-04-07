@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--Ad detail list item  -->
-<!--TODO- implement as per mocks  -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:background="@color/background_material_light">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_card">
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="80dp"
+            android:background="@color/primary"/>
+
+        <TextView
+            android:id="@+id/tvAdDetailPriceDecimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="8dp"
+            android:textColor="@color/accent"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tvAdDetailPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_toLeftOf="@+id/tvAdDetailPriceDecimal"
+            android:textColor="@color/accent"
+            android:textSize="28sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tvAdDetailPrice"
+            android:layout_marginTop="4dp"
+            android:layout_toLeftOf="@id/tvAdDetailPrice"
+            android:text="@string/dollar_sign"
+            android:textColor="@color/accent"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_below="@id/tvAdDetailPrice"
+            android:id="@+id/tvAdDetailDiscount"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvAdDetailTitle"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAdDetailTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/tvAdDetailPrice"
+            android:id="@+id/tvAdDetailDescription"/>
+
+    </RelativeLayout>
+</FrameLayout>

@@ -1,4 +1,4 @@
-package com.angrychimps.appname;
+package com.angrychimps.appname.customer;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.R;
+import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 
 import java.util.ArrayList;
@@ -19,13 +22,13 @@ import java.util.ArrayList;
     This adapter handles the StaggeredGridView in Provider Mode
  */
 
-public class CompanyAdFlowGridArrayAdapter extends ArrayAdapter<SearchPostResponseResults> {
+public class CustomerMainGridArrayAdapter extends ArrayAdapter<SearchPostResponseResults> {
 
     private final LayoutInflater layoutInflater;
     private ArrayList<SearchPostResponseResults> arrayList;
     private ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
 
-    public CompanyAdFlowGridArrayAdapter(Context context, ArrayList<SearchPostResponseResults> arrayList) {
+    public CustomerMainGridArrayAdapter(Context context, ArrayList<SearchPostResponseResults> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);
         this.layoutInflater = LayoutInflater.from(context);
         this.arrayList = arrayList;
@@ -66,7 +69,6 @@ public class CompanyAdFlowGridArrayAdapter extends ArrayAdapter<SearchPostRespon
         viewHolder.tvCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
         if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());
         viewHolder.tvCompanyServiceDiscount.setText(arrayList.get(position).getDiscount_percentage() + "% off");
-
         return convertView;
     }
 

@@ -63,6 +63,7 @@
                 android:layout_marginLeft="16dp"
                 android:paddingBottom="4dp"
                 android:paddingTop="4dp"
+                android:id="@+id/seekBarFilterDistance"
                 app:dsb_max="50"
                 app:dsb_min="1"
                 app:dsb_value="5"/>
@@ -77,13 +78,13 @@
                 android:text="Current Location" />
 
             <RadioGroup
-                android:id="@+id/rgSearch"
+                android:id="@+id/rgFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="72dp">
 
                 <RadioButton
-                    android:id="@+id/rbSearchGoToThem"
+                    android:id="@+id/rbFilterGoToThem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -91,7 +92,7 @@
                     android:textSize="14sp"/>
 
                 <RadioButton
-                    android:id="@+id/rbSearchComeToMe"
+                    android:id="@+id/rbFilterComeToMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="They must come to me"
@@ -116,12 +117,12 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/bFilterFromDate"
                     style="@style/SpinnerDateButton"
                     android:text="Today" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/bFilterFromTime"
                     style="@style/SpinnerTimeButton"
                     android:layout_marginLeft="0dp"
                     android:text="7:00pm" />
@@ -137,12 +138,12 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/bFilterToDate"
                     style="@style/SpinnerDateButton"
                     android:text="Sat, Jan 3" />
 
                 <Button
-                    android:id="@+id/button6"
+                    android:id="@+id/bFilterToTime"
                     style="@style/SpinnerTimeButton"
                     android:layout_marginLeft="0dp"
                     android:text="7:00pm" />

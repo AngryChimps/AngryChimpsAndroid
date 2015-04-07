@@ -24,7 +24,7 @@ public class CompanyCreateAdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_company_create_ad, container, false);
 
-        MainActivity.removeMenu();
+        MainActivity.clearMenu();
         ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Create an Ad");
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewCompanyCreateAdTimeBlock);

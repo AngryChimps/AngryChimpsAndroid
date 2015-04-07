@@ -4,20 +4,19 @@ import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 @JsonObject
-
-public class Provider_ad {
+public class Id {
 
     @JsonField
-    Id id;
+    String id;
 
-    public Provider_ad() {
+    public Id() {
     }
 
-    public Id getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Id id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

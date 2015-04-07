@@ -48,11 +48,22 @@ public class MainActivity extends ActionBarActivity {
     public static String url = "http://devvy3.angrychimps.com/api/v1/";
     public static String mediaUrl = "http://devvy3.angrychimps.com/media/";
     private static Toolbar toolbar;
+    private static View toolbarPadding;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private boolean serviceProviderMode = false;
 
-    public static void removeMenu(){
+    public static void setToolbarTranslucent() {
+        toolbarPadding.setVisibility(View.GONE);
+        toolbar.setBackgroundResource(R.color.primary_translucent);
+    }
+
+    public static void setToolbarOpaque() {
+        toolbarPadding.setVisibility(View.VISIBLE);
+        toolbar.setBackgroundResource(R.color.primary);
+    }
+
+    public static void clearMenu(){
         toolbar.getMenu().clear();
     }
 
@@ -65,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Using Toolbar in place of ActionBar lets us place the Navigation Drawer over the top, as Material Design recommends
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarPadding = findViewById(R.id.toolbarPadding); //View that is removable to allow toolbar transparency
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,7 +254,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    // Item selected functionality
+    // Navigation Drawer item selected
     private void selectItem(int position) {
         getFragmentManager().popBackStack();
         if(serviceProviderMode) {

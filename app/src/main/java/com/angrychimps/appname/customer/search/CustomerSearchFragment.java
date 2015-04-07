@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioGroup;
 
 import com.angrychimps.appname.R;
+
+import org.json.JSONObject;
 
 public class CustomerSearchFragment extends DialogFragment {
 
@@ -15,6 +19,19 @@ public class CustomerSearchFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         getDialog().setTitle("Filters");
         getDialog().setCanceledOnTouchOutside(false);
+
+        Button bSearch = (Button) rootView.findViewById(R.id.bSearch);
+        Button bCancel = (Button) rootView.findViewById(R.id.bCancel);
+        Button bFilterFromDate = (Button) rootView.findViewById(R.id.bFilterFromDate);
+        Button bFilterFromTime = (Button) rootView.findViewById(R.id.bFilterFromTime);
+        Button bFilterToDate = (Button) rootView.findViewById(R.id.bFilterToDate);
+        Button bFilterToTime = (Button) rootView.findViewById(R.id.bFilterToTime);
+        RadioGroup rgFilter = (RadioGroup) rootView.findViewById(R.id.rgFilter);
+
+        JSONObject filterObject = new JSONObject();
+        //TODO- add results to JSONObject and pass back to CustomerMainFragment
+
+
         return rootView;
     }
 

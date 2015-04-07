@@ -3,6 +3,8 @@ package com.angrychimps.appname.models;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
+import java.util.ArrayList;
+
 @JsonObject
 public class ProviderAdImmutableGetResponsePayload {
 
@@ -25,10 +27,10 @@ public class ProviderAdImmutableGetResponsePayload {
     Address address;
 
     @JsonField
-    Availabilities availabilities;
+    ArrayList<Service> services;
 
     @JsonField
-    String photos;
+    ArrayList<String> photos;
 
     @JsonField
     float rating;
@@ -87,19 +89,19 @@ public class ProviderAdImmutableGetResponsePayload {
         this.address = address;
     }
 
-    public Availabilities getAvailabilities() {
-        return availabilities;
+    public ArrayList<Service> getServices() {
+        return services;
     }
 
-    public void setAvailabilities(Availabilities availabilities) {
-        this.availabilities = availabilities;
+    public void setServices(ArrayList<Service> services) {
+        this.services = services;
     }
 
-    public String getPhotos() {
+    public ArrayList<String> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(String photos) {
+    public void setPhotos(ArrayList<String> photos) {
         this.photos = photos;
     }
 

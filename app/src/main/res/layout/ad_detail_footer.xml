@@ -4,8 +4,101 @@
 <!--TODO- implement as per mocks  -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/background_material_light"
+      android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card">
+
+        <com.google.android.gms.maps.MapView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="8dp"
+            android:id="@+id/mapAdDetail"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@id/mapAdDetail"
+            android:id="@+id/tvAdDetailCompanyName"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@id/tvAdDetailCompanyName"
+            android:id="@+id/tvAdDetailCompanyAddress"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@id/tvAdDetailCompanyAddress"
+            android:id="@+id/tvAdDetailDistance"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAdDetailDistance"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_marginLeft="8dp"
+            android:stepSize="0.5"
+            android:id="@+id/ratingBarAdDetail"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mapAdDetail"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:padding="4dp"
+            android:background="@color/background_material_light"
+            android:src="@drawable/ic_call_grey"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_alignBottom="@id/ratingBarAdDetail"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/ratingBarAdDetail"
+            android:background="@color/white"
+            android:id="@+id/bAdDetailReviews"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/bAdDetailReviews"
+            style="@style/Separator"
+            android:layout_margin="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bAdDetailReviews"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:drawableLeft="@drawable/ic_flag_grey"
+            android:text="@string/ad_detail_flag_listing"
+            android:textStyle="italic"/>
+        </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Subheader"
+        android:text="Most Popular Deals Near You"/>
+
+    <com.etsy.android.grid.StaggeredGridView
+        android:id="@+id/gridViewAdDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_margin="8dp"/>
 
 </LinearLayout>
