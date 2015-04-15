@@ -1,234 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Company registration page -->
-<!--TODO- update to current version in mock -->
+<!--Company registration page --><!--TODO- update to current version in mock -->
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:text="Company Registration"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Company Name"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegCompanyName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Your Name"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegYourName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Email Address"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Password"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="Minimum 6 characters"
-        android:inputType="textPassword" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Date of Birth" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etCompanyRegBirthdate"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="5"
-            android:inputType="date" />
-
-        <ImageView
-            android:id="@+id/imageCompanyRegBirthdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_date_grey"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:text="Company Registration"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="By federal law, all members must be at least 13 years of age"/>
-    </LinearLayout>
+            android:text="Company Name" />
 
+        <EditText
+            android:id="@+id/etCompanyRegCompanyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
 
-    <RadioGroup
-        android:id="@+id/rgCompanyReg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp">
-        <RadioButton
-            android:id="@+id/rbCompanyCustomersComeToMe"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="My Customers Must Come to Me"/>
-        <RadioButton
-            android:id="@+id/rbCompanyMobileBusiness"
+            android:layout_margin="5dp"
+            android:text="Your Name" />
+
+        <EditText
+            android:id="@+id/etCompanyRegYourName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:inputType="textPersonName" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I am a Mobile Business"/>
-    </RadioGroup>
+            android:layout_margin="5dp"
+            android:text="Email Address" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Street Address of Home Base"/>
+        <EditText
+            android:id="@+id/etCompanyRegEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:inputType="textEmailAddress" />
 
-    <EditText
-        android:id="@+id/etCompanyRegAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="textPostalAddress" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Street Address 2 (optional)"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegAddress2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Zipcode"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegZipcode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="number" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Phone Number"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="phone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Mobile Number (for SMS Notifications)"/>
-
-    <EditText
-        android:id="@+id/etCompanyRegMobilePhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="phone" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
-        <ImageView
-            android:id="@+id/imageCompanyRegPhoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"/>
-        <Button
-            android:id="@+id/bCompanyRegTakePhoto"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/imageCompanyRegPhoto"
-            android:padding="5dp"
-            android:text="Take a Photo"/>
-        <Button
-            android:id="@+id/bCompanyRegChooseImage"
+            android:layout_margin="5dp"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/etCompanyRegPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Minimum 6 characters"
+            android:inputType="textPassword" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/imageCompanyRegPhoto"
-            android:layout_toRightOf="@id/imageCompanyRegPhoto"
-            android:padding="5dp"
-            android:text="Choose Image"/>
+            android:layout_margin="5dp"
+            android:text="Date of Birth" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etCompanyRegBirthdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ems="5"
+                android:inputType="date" />
+
+            <ImageView
+                android:id="@+id/imageCompanyRegBirthdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_date_grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="By federal law, all members must be at least 13 years of age" />
+        </LinearLayout>
+
+
+        <RadioGroup
+            android:id="@+id/rgCompanyReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp">
+
+            <RadioButton
+                android:id="@+id/rbCompanyCustomersComeToMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="My Customers Must Come to Me" />
+
+            <RadioButton
+                android:id="@+id/rbCompanyMobileBusiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I am a Mobile Business" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Street Address of Home Base" />
+
+        <EditText
+            android:id="@+id/etCompanyRegAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:inputType="textPostalAddress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Street Address 2 (optional)" />
+
+        <EditText
+            android:id="@+id/etCompanyRegAddress2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Zipcode" />
+
+        <EditText
+            android:id="@+id/etCompanyRegZipcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Phone Number" />
+
+        <EditText
+            android:id="@+id/etCompanyRegPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:inputType="phone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Mobile Number (for SMS Notifications)" />
+
+        <EditText
+            android:id="@+id/etCompanyRegMobilePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:inputType="phone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/imageCompanyRegPhoto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentLeft="true" />
+
+            <Button
+                android:id="@+id/bCompanyRegTakePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imageCompanyRegPhoto"
+                android:padding="5dp"
+                android:text="Take a Photo" />
+
+            <Button
+                android:id="@+id/bCompanyRegChooseImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/imageCompanyRegPhoto"
+                android:layout_toRightOf="@id/imageCompanyRegPhoto"
+                android:padding="5dp"
+                android:text="Choose Image" />
         </RelativeLayout>
 
-    <CheckBox
-        android:id="@+id/cboxTermsOfService"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="I agree to the Terms of Service and Privacy Policy."/>
+        <CheckBox
+            android:id="@+id/cboxTermsOfService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="I agree to the Terms of Service and Privacy Policy." />
 
-    <Button
-        android:id="@+id/bCreateAdSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Post My Ad"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/bCreateAdSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Post My Ad" />
+    </LinearLayout>
 
 </ScrollView>

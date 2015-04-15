@@ -2,8 +2,7 @@
 
 <!--Footer for the Company Create Ad screen, everything below the time blocks  -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,7 +25,7 @@
             android:paddingTop="16dp"
             android:text="@string/add_time_block"
             android:textColor="@color/primary"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </FrameLayout>
 
     <LinearLayout
@@ -47,7 +46,7 @@
             app:errorColor="@color/error_red"
             app:floatingLabel="normal"
             app:floatingLabelText="@string/service_name"
-            app:maxCharacters="80"/>
+            app:maxCharacters="80" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +66,7 @@
                 android:maxLength="7"
                 app:errorColor="@color/error_red"
                 app:floatingLabel="normal"
-                app:floatingLabelText="@string/discounted_price"/>
+                app:floatingLabelText="@string/discounted_price" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/metCompanyCreateAdOriginalPrice"
@@ -82,7 +81,7 @@
                 android:maxLength="7"
                 app:errorColor="@color/error_red"
                 app:floatingLabel="normal"
-                app:floatingLabelText="@string/original_price"/>
+                app:floatingLabelText="@string/original_price" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,7 +101,7 @@
                 android:maxLength="4"
                 app:errorColor="@color/error_red"
                 app:floatingLabel="normal"
-                app:floatingLabelText="@string/service_duration"/>
+                app:floatingLabelText="@string/service_duration" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/metCompanyCreateAdTimeNotice"
@@ -116,7 +115,7 @@
                 android:maxLength="4"
                 app:errorColor="@color/error_red"
                 app:floatingLabel="normal"
-                app:floatingLabelText="@string/service_time_notice"/>
+                app:floatingLabelText="@string/service_time_notice" />
 
         </LinearLayout>
 
@@ -128,6 +127,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
+
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:onClick="onCancel"
-            android:text="@string/cancel"/>
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/bCompanyCreateAdNext"
@@ -147,6 +147,6 @@
             android:layout_weight="1"
             android:background="@color/accent"
             android:text="@string/next"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

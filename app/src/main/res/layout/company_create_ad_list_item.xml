@@ -2,8 +2,7 @@
 
 <!--Time block list items for the company create ad screen  -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_card"
@@ -18,7 +17,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/available_time_blocks"
         android:textColor="@color/primary"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"

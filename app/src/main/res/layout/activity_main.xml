@@ -3,9 +3,9 @@
 <!--The Main Activity, which controls the navigation drawer  -->
 
 <android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -15,15 +15,15 @@
         android:layout_height="match_parent">
 
         <View
+            android:id="@+id/toolbarPadding"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/actionbar_height"
-            android:id="@+id/toolbarPadding"/>
+            android:layout_height="@dimen/actionbar_height" />
 
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbarPadding"/>
+            android:layout_below="@id/toolbarPadding" />
 
         <!-- Use a Toolbar so that the drawer can be displayed in front of the action bar -->
         <android.support.v7.widget.Toolbar
@@ -32,7 +32,7 @@
             android:layout_height="@dimen/actionbar_height"
             android:background="@color/primary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ToolBar"/>
+            app:theme="@style/ToolBar" />
 
     </RelativeLayout>
 

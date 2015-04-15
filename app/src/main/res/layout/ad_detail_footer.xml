@@ -1,104 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Ad Detail footer  -->
-<!--TODO- implement as per mocks  -->
+<!--Ad Detail footer  --><!--TODO- implement as per mocks  -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/background_material_light"
-      android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_material_light"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card">
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_card"
+        android:orientation="vertical">
 
-        <com.google.android.gms.maps.MapView
+        <TextView
+            android:id="@+id/mapAdDetail"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="8dp"
-            android:id="@+id/mapAdDetail"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_below="@id/mapAdDetail"
-            android:id="@+id/tvAdDetailCompanyName"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_below="@id/tvAdDetailCompanyName"
-            android:id="@+id/tvAdDetailCompanyAddress"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primary"
-            android:layout_marginLeft="8dp"
-            android:layout_below="@id/tvAdDetailCompanyAddress"
-            android:id="@+id/tvAdDetailDistance"/>
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvAdDetailDistance"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_marginLeft="8dp"
-            android:stepSize="0.5"
-            android:id="@+id/ratingBarAdDetail"/>
+            android:layout_height="180dp"
+            android:layout_margin="16dp"
+            android:background="@color/primary"
+            android:text="Map Here" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/mapAdDetail"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="top|right"
             android:layout_marginRight="8dp"
-            android:padding="4dp"
             android:background="@color/background_material_light"
-            android:src="@drawable/ic_call_grey"/>
+            android:padding="4dp"
+            android:src="@drawable/ic_call_grey" />
 
-        <Button
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvAdDetailCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" />
+
+        <TextView
+            android:id="@+id/tvAdDetailCompanyAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" />
+
+        <TextView
+            android:id="@+id/tvAdDetailDistance"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_alignBottom="@id/ratingBarAdDetail"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/ratingBarAdDetail"
-            android:background="@color/white"
-            android:id="@+id/bAdDetailReviews"/>
+            android:textColor="@color/primary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+
+            <RatingBar
+                android:id="@+id/ratingBarAdDetail"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:stepSize="0.5" />
+
+            <Button
+                android:id="@+id/bAdDetailReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="@color/white" />
+        </LinearLayout>
 
         <View
+            style="@style/Separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/bAdDetailReviews"
-            style="@style/Separator"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bAdDetailReviews"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
             android:drawableLeft="@drawable/ic_flag_grey"
             android:text="@string/ad_detail_flag_listing"
-            android:textStyle="italic"/>
-        </RelativeLayout>
+            android:textStyle="italic" />
+    </LinearLayout>
 
     <TextView
+        style="@style/Subheader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Subheader"
-        android:text="Most Popular Deals Near You"/>
+        android:text="@string/popular_deals" />
 
     <com.etsy.android.grid.StaggeredGridView
         android:id="@+id/gridViewAdDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:item_margin="8dp"/>
+        app:item_margin="8dp" />
 
 </LinearLayout>

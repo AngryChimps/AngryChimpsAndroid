@@ -12,7 +12,7 @@
         android:id="@+id/gridViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:item_margin="8dp"/>
+        app:item_margin="8dp" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
@@ -23,6 +23,6 @@
         android:src="@drawable/ic_request_white"
         app:fab_colorNormal="@color/primary"
         app:fab_colorPressed="@color/primary_dark"
-        app:fab_colorRipple="@color/ripple"/>
+        app:fab_colorRipple="@color/ripple" />
 
 </FrameLayout>

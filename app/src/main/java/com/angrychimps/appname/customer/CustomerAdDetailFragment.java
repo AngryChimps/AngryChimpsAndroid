@@ -1,6 +1,10 @@
 package com.angrychimps.appname.customer;
 
+import android.animation.ObjectAnimator;
 import android.app.Fragment;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -22,7 +26,6 @@ import com.angrychimps.appname.ViewPagerAdapter;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.google.android.gms.maps.MapView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,20 +54,15 @@ public class CustomerAdDetailFragment extends Fragment {
         final ViewPager pager = (ViewPager) rootView.findViewById(R.id.viewPagerAdDetailImage);
         final TextView tvCompanyTagLine = (TextView) rootView.findViewById(R.id.tvCompanyTagLine);
         final TextView tvCompanyDetails = (TextView) rootView.findViewById(R.id.tvCompanyDetails);
-        final MapView map = (MapView) rootView.findViewById(R.id.mapAdDetail);
+        //final View gradient = rootView.findViewById(R.id.gradient);
+        //final MapView map = (MapView) rootView.findViewById(R.id.mapAdDetail);
 
-        tvCompanyDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(tvCompanyDetails.getMaxLines() == 4) {
-                    tvCompanyDetails.setMaxLines(Integer.MAX_VALUE);
-                }else{
-                    tvCompanyDetails.setMaxLines(4);
-                }
-            }
-        });
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "providerAdImmutable/" + this.getArguments().getString("id") , new Response.Listener<JSONObject>() {
+
+
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "providerAdImmutable/" +
+                this.getArguments().getString("id") , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
                 Log.i(null, "Response received");
@@ -89,6 +87,33 @@ public class CustomerAdDetailFragment extends Fragment {
                     tvCompanyTagLine.setText(result.getTitle());
                     tvCompanyDetails.setText(result.getDescription());
 
+                    //Make text fade out if too long. Click to make visible
+                    if(tvCompanyDetails.length() > 280){
+
+                        //Shader makes the text fade out toward the bottom
+                        final Shader textShader=new LinearGradient(0, tvCompanyDetails.getLineHeight()*4, 0, 0, new int[]{Color.TRANSPARENT,Color.BLACK},
+                                new float[]{0, 1}, Shader.TileMode.CLAMP);
+                        tvCompanyDetails.getPaint().setShader(textShader);
+
+                        tvCompanyDetails.setMaxLines(4);
+                        tvCompanyDetails.setOnClickListener(new View.OnClickListener() {
+                            ObjectAnimator animation;
+                            boolean isExpanded = false;
+                            @Override
+                            public void onClick(View v) {
+                                if(isExpanded) {
+                                    tvCompanyDetails.getPaint().setShader(null);
+                                    animation = ObjectAnimator.ofInt(tvCompanyDetails, "maxLines", 100);
+                                    animation.setDuration(125).start();
+                                }else{
+                                    animation = ObjectAnimator.ofInt(tvCompanyDetails, "maxLines", 4);
+                                    animation.setDuration(125).start();
+                                    tvCompanyDetails.getPaint().setShader(textShader);
+                                }
+                                isExpanded = !isExpanded;
+                            }
+                        });
+                    }
 
                 } catch (JSONException e) {
                     Log.i(null, "JsonObjectRequest error");

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--How-to screen displayed upon first ad post -->
-<!--TODO - update to current mock, and make sure this screen is still necessary -->
+<!--How-to screen displayed upon first ad post --><!--TODO - update to current mock, and make sure this screen is still necessary -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
@@ -30,50 +30,56 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/bg_card">
+
         <ImageView
             android:id="@+id/imageFirstAd"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/imageFirstAd"
             android:text="Place My First Ad"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imageFirstAd"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/imageFirstAd"
-            android:text="We'll make the process easy for you in two screens!"/>
-        </RelativeLayout>
+            android:text="We'll make the process easy for you in two screens!" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/bg_card">
+
         <ImageView
             android:id="@+id/imageLearnMore"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/imageLearnMore"
             android:text="Learn More"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imageLearnMore"
             android:layout_margin="5dp"
             android:layout_toRightOf="@id/imageLearnMore"
-            android:text="Learn more about placing an ad in our network"/>
+            android:text="Learn more about placing an ad in our network" />
     </RelativeLayout>
 </LinearLayout>

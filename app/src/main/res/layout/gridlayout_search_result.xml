@@ -2,8 +2,9 @@
 
 <!--Standard layout for the StaggeredGridView results -->
 
-<FrameLayout android:id="@+id/panel_content"
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/panel_content"
     android:layout_width="170dp"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_card"
@@ -34,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:stepSize="0.5"/>
+                android:stepSize="0.5" />
 
             <TextView
                 android:id="@+id/tvCompanyDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:drawableLeft="@drawable/ic_location_grey"/>
+                android:drawableLeft="@drawable/ic_location_grey" />
 
             <TextView
                 android:id="@+id/tvCompanyTitle"
@@ -52,7 +53,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/primary"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvCompanyServicePriceDecimal"
@@ -62,7 +63,7 @@
                 android:layout_below="@id/tvCompanyTitle"
                 android:layout_marginLeft="2dp"
                 android:textColor="@color/accent"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvCompanyServicePrice"
@@ -73,7 +74,7 @@
                 android:layout_toLeftOf="@+id/tvCompanyServicePriceDecimal"
                 android:textColor="@color/accent"
                 android:textSize="28sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,14 +84,14 @@
                 android:layout_toLeftOf="@id/tvCompanyServicePrice"
                 android:text="@string/dollar_sign"
                 android:textColor="@color/accent"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvCompanyServiceDiscount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tvCompanyServicePrice"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </RelativeLayout>
 

@@ -2,8 +2,9 @@
 
 <!--Navigation drawer row with Material Design switch -->
 
-<RelativeLayout style="@style/drawer_item_base"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/drawer_item_base"
     android:background="#f5f5f5"
     android:descendantFocusability="blocksDescendants">
 
@@ -16,7 +17,7 @@
         android:id="@+id/drawer_itemName"
         style="@style/drawer_text"
         android:layout_marginLeft="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/drawer_switch"

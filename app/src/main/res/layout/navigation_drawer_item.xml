@@ -2,8 +2,9 @@
 
 <!--Navigation drawer row, standard -->
 
-<RelativeLayout style="@style/drawer_item_base"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/drawer_item_base">
 
     <!--Colored strip to indicate ServiceProviderMode status -->
     <View
@@ -12,9 +13,9 @@
 
     <ImageView
         android:id="@+id/drawer_icon"
-        style="@style/drawer_icon"/>
+        style="@style/drawer_icon" />
 
     <TextView
         android:id="@+id/drawer_itemName"
-        style="@style/drawer_text"/>
+        style="@style/drawer_text" />
 </RelativeLayout>

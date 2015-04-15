@@ -3,80 +3,98 @@
 <!--Ad detail list item  -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:background="@color/background_material_light">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_material_light"
+    android:orientation="horizontal">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="@drawable/bg_card">
+        android:background="@drawable/bg_card"
+        android:orientation="horizontal">
 
         <View
             android:layout_width="8dp"
-            android:layout_height="80dp"
-            android:background="@color/primary"/>
+            android:layout_height="match_parent"
+            android:background="@color/primary" />
 
-        <TextView
-            android:id="@+id/tvAdDetailPriceDecimal"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="8dp"
-            android:textColor="@color/accent"
-            android:textSize="16sp"/>
+            android:layout_margin="8dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvAdDetailPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_toLeftOf="@+id/tvAdDetailPriceDecimal"
-            android:textColor="@color/accent"
-            android:textSize="28sp"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvAdDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/primary"
+                android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/tvAdDetailPrice"
-            android:layout_marginTop="4dp"
-            android:layout_toLeftOf="@id/tvAdDetailPrice"
-            android:text="@string/dollar_sign"
-            android:textColor="@color/accent"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/tvAdDetailDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_below="@id/tvAdDetailPrice"
-            android:id="@+id/tvAdDetailDiscount"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvAdDetailTitle"
-            android:textColor="@color/primary"
-            android:textSize="18sp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvAdDetailTitle"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/tvAdDetailPrice"
-            android:id="@+id/tvAdDetailDescription"/>
+            android:layout_marginTop="8dp"
+            android:background="@color/separator" />
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/dollar_sign"
+                    android:textColor="@color/accent"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvAdDetailPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:textColor="@color/accent"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAdDetailPriceDecimal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/accent"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAdDetailDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

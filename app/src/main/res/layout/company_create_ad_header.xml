@@ -2,8 +2,7 @@
 
 <!--Header for the Company Create Ad screen, everything above the time blocks  -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,7 +21,7 @@
         app:errorColor="@color/error_red"
         app:floatingLabel="normal"
         app:floatingLabelText="@string/title"
-        app:maxCharacters="140"/>
+        app:maxCharacters="140" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/metCompanyCreateAdDescription"
@@ -37,7 +36,7 @@
         app:errorColor="@color/error_red"
         app:floatingLabel="normal"
         app:floatingLabelText="@string/description"
-        app:maxCharacters="840"/>
+        app:maxCharacters="840" />
 
     <Button
         android:id="@+id/bCompanyCreateAdCategory"
@@ -47,6 +46,6 @@
         android:layout_marginRight="12dp"
         android:text="@string/category"
         android:textColor="@color/text_grey"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
 </LinearLayout>

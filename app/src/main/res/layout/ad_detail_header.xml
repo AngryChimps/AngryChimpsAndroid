@@ -4,38 +4,44 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerAdDetailImage"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/viewPagerAdDetailImage"/>
+        android:layout_height="250dp" />
 
     <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/circleIndicatorAdDetail"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="-30dp"
         android:layout_alignBottom="@id/viewPagerAdDetailImage"
-        android:visibility="invisible"
-        android:id="@+id/circleIndicatorAdDetail"/>
+        android:layout_marginTop="-30dp"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/tvCompanyTagLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:layout_below="@id/viewPagerAdDetailImage"
+        android:layout_margin="8dp"
         android:textColor="@color/primary"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
-    <!-- TODO- Make text fade out at bottom -->
     <TextView
         android:id="@+id/tvCompanyDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:layout_below="@id/tvCompanyTagLine"
-        android:clickable="true"
-        android:maxLines="4"/>
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true" />
+
+    <View
+        style="@style/Line"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

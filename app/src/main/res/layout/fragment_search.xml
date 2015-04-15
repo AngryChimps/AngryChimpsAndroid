@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Search filter menu, opens in dialog fragment -->
-<!--Currently not updated to latest mock -->
+<!--Search filter menu, opens in dialog fragment --><!--Currently not updated to latest mock -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,14 +14,14 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
         android:text="SEARCH"
-        android:textColor="@color/primary"/>
+        android:textColor="@color/primary" />
 
     <Button
         android:id="@+id/bCancel"
         style="@style/FlatButton"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/bSearch"
-        android:text="CANCEL"/>
+        android:text="CANCEL" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,42 +35,41 @@
 
             <TextView
                 style="@style/Subheader"
-                android:text="Categories"/>
+                android:text="Categories" />
 
             <Button
                 android:id="@+id/button"
                 style="@style/SpinnerButton"
                 android:text="Dentists" />
 
-            <View
-                style="@style/Separator" >
-            </View>
+            <View style="@style/Separator"></View>
 
             <TextView
                 style="@style/Subheader"
-                android:text="Distance"/>
+                android:text="Distance" />
 
             <TextView
                 android:id="@+id/textView5"
                 style="@style/Caption"
                 android:paddingBottom="0dp"
-                android:text="5 Miles"/>
+                android:text="5 Miles" />
 
             <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                android:id="@+id/seekBarFilterDistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:paddingBottom="4dp"
                 android:paddingTop="4dp"
-                android:id="@+id/seekBarFilterDistance"
                 app:dsb_max="50"
                 app:dsb_min="1"
-                app:dsb_value="5"/>
+                app:dsb_value="5" />
 
             <TextView
                 android:id="@+id/textView6"
                 style="@style/Caption"
-                android:text="Near"/>
+                android:text="Near" />
+
             <Button
                 android:id="@+id/button2"
                 style="@style/SpinnerButton"
@@ -89,27 +87,25 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="I'll go to them"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <RadioButton
                     android:id="@+id/rbFilterComeToMe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="They must come to me"
-                    android:textSize="14sp"/>
-                </RadioGroup>
+                    android:textSize="14sp" />
+            </RadioGroup>
 
-            <View
-                style="@style/Separator" >
-            </View>
+            <View style="@style/Separator"></View>
 
             <TextView
                 style="@style/Subheader"
-                android:text="Availability"/>
+                android:text="Availability" />
 
             <TextView
                 style="@style/Caption"
-                android:text="From"/>
+                android:text="From" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,11 +122,11 @@
                     style="@style/SpinnerTimeButton"
                     android:layout_marginLeft="0dp"
                     android:text="7:00pm" />
-                </LinearLayout>
+            </LinearLayout>
 
             <TextView
                 style="@style/Caption"
-                android:text="To"/>
+                android:text="To" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,13 +145,11 @@
                     android:text="7:00pm" />
             </LinearLayout>
 
-            <View
-                style="@style/Separator" >
-            </View>
+            <View style="@style/Separator"></View>
 
             <TextView
                 style="@style/Subheader"
-                android:text="Sort by"/>
+                android:text="Sort by" />
 
             <Button
                 android:id="@+id/button7"
