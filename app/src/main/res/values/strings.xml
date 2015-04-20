@@ -29,6 +29,6 @@
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
     <string name="ad_detail_flag_listing">Flag this listing for review</string>
-    <string name="popular_deals">Most Popular Deals Near You</string>
+    <string name="popular_deals">Most Popular Deals Near You:</string>
 
 </resources>

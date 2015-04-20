@@ -2,10 +2,11 @@
 
 <!--Ad Detail screen header -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:background="@color/background_material_light"
+    android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerAdDetailImage"
@@ -15,33 +16,161 @@
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/circleIndicatorAdDetail"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@id/viewPagerAdDetailImage"
+        android:layout_height="30dp"
         android:layout_marginTop="-30dp"
         android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/tvCompanyTagLine"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvAdDetailCompanyTagLine"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/viewPagerAdDetailImage"
-        android:layout_margin="8dp"
+        android:background="@color/white"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
         android:textColor="@color/primary"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tvCompanyDetails"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvAdDetailCompanyDetails"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvCompanyTagLine"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true" />
+        android:background="@color/white"
+        android:clickable="true"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp" />
 
     <View
-        style="@style/Line"
-        android:layout_alignParentBottom="true" />
+        style="@style/Line" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/serviceItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_card"
+        android:paddingBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
+
+        <FrameLayout
+            android:id="@+id/frameAdDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/map_outline">
+
+            <fragment
+                android:id="@+id/mapAdDetail"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_margin="2dp"/>
+        </FrameLayout>
+
+
+        <ImageButton
+            android:id="@+id/bAdDetailCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/frameAdDetail"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/button_outline_grey"
+            android:padding="6dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:src="@drawable/ic_call_grey" />
+
+        <TextView
+            android:id="@+id/tvAdDetailCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frameAdDetail"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAdDetailCompanyAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAdDetailCompanyName" />
+
+        <TextView
+            android:id="@+id/tvAdDetailCompanyDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAdDetailCompanyAddress"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/primary"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:id="@+id/layoutReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAdDetailCompanyDistance"
+            android:orientation="horizontal">
+
+            <RatingBar
+                android:id="@+id/ratingBarAdDetail"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:stepSize="0.5" />
+
+            <Button
+                android:id="@+id/bAdDetailReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/button_outline"
+                android:minHeight="0dp"
+                android:padding="8dp"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <View
+            style="@style/Separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/layoutReviews"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvAdDetailFlagListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutReviews"
+            android:layout_marginTop="33dp"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_flag_grey"
+            android:drawablePadding="8dp"
+            android:text="@string/ad_detail_flag_listing"
+            android:textColor="@color/text_grey"
+            android:textStyle="italic" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/popular_deals"
+        android:textColor="@color/primary"
+        android:textSize="16sp" />
+
+</LinearLayout>

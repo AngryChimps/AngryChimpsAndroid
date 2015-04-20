@@ -34,7 +34,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        NetworkImageView imageView = new NetworkImageView(context);
+        AnimatedNetworkImageView imageView = new AnimatedNetworkImageView(context);
         imageView.setImageUrl(MainActivity.mediaUrl + images.get(position), imageLoader);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         container.addView(imageView, 0);

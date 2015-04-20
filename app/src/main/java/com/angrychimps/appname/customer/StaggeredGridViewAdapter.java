@@ -10,7 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.angrychimps.appname.AnimatedNetworkImageView;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
@@ -22,13 +22,13 @@ import java.util.ArrayList;
     This adapter handles the StaggeredGridView in Provider Mode
  */
 
-public class CustomerMainGridArrayAdapter extends ArrayAdapter<SearchPostResponseResults> {
+public class StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseResults> {
 
     private final LayoutInflater layoutInflater;
     private ArrayList<SearchPostResponseResults> arrayList;
     private ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
 
-    public CustomerMainGridArrayAdapter(Context context, ArrayList<SearchPostResponseResults> arrayList) {
+    public StaggeredGridViewAdapter(Context context, ArrayList<SearchPostResponseResults> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);
         this.layoutInflater = LayoutInflater.from(context);
         this.arrayList = arrayList;
@@ -49,7 +49,7 @@ public class CustomerMainGridArrayAdapter extends ArrayAdapter<SearchPostRespons
 
             // Configure ViewHolder
             viewHolder = new ViewHolder();
-            viewHolder.imageCompanyMain = (NetworkImageView) convertView.findViewById(R.id.imageCompanyMain);
+            viewHolder.imageCompanyMain = (AnimatedNetworkImageView) convertView.findViewById(R.id.imageCompanyMain);
             viewHolder.rbCompany = (RatingBar) convertView.findViewById(R.id.ratingBarCompany);
             viewHolder.tvCompanyDistance = (TextView) convertView.findViewById(R.id.tvCompanyDistance);
             viewHolder.tvCompanyTitle = (TextView) convertView.findViewById(R.id.tvCompanyTitle);
@@ -74,9 +74,8 @@ public class CustomerMainGridArrayAdapter extends ArrayAdapter<SearchPostRespons
 
     // ViewHolder increases speed and efficiency by recycling views rather than doing many findViewByIds, which are expensive.
     static class ViewHolder {
-        NetworkImageView imageCompanyMain;
+        AnimatedNetworkImageView imageCompanyMain;
         TextView tvCompanyDistance, tvCompanyTitle, tvCompanyServicePrice, tvCompanyServiceDiscount, tvCompanyServicePriceDecimal;
         RatingBar rbCompany;
     }
-
 }

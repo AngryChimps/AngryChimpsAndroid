@@ -1,8 +1,9 @@
 package com.angrychimps.appname.company;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,6 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
     private static final String TAG = "StaggeredGridActivity";
     private boolean hasRequestedMore;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_main, null);
@@ -38,13 +38,8 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
-
-
         StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
         //mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
-
-
 
         //gridView.setAdapter(adapter);
         gridView.setOnScrollListener(this);

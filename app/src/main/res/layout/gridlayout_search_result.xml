@@ -3,8 +3,8 @@
 <!--Standard layout for the StaggeredGridView results -->
 
 <FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/panel_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="170dp"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_card"
@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <!--NetworkImageView is designed to work with Volley -->
-        <com.android.volley.toolbox.NetworkImageView
+        <com.angrychimps.appname.AnimatedNetworkImageView
             android:id="@+id/imageCompanyMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

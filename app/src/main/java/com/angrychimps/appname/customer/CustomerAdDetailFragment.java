@@ -1,18 +1,21 @@
 package com.angrychimps.appname.customer;
 
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -26,6 +29,13 @@ import com.angrychimps.appname.ViewPagerAdapter;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.bluelinelabs.logansquare.LoganSquare;
+import com.etsy.android.grid.StaggeredGridView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,32 +47,33 @@ import java.util.Map;
 import me.relex.circleindicator.CircleIndicator;
 
 
-public class CustomerAdDetailFragment extends Fragment {
+public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_ad_detail, container, false);
 
-        MainActivity.clearMenu();
+        MainActivity.setMenu(R.menu.menu_ad_detail);
 
-        final ListView listView = (ListView) rootView.findViewById(R.id.listViewServices);
-        final ViewGroup header = (ViewGroup)inflater.inflate(R.layout.ad_detail_header, listView, false);
-        final ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.ad_detail_footer, listView, false);
-        listView.addHeaderView(header, null, false);
-        listView.addFooterView(footer, null, false);
+        final StaggeredGridView gridViewAdDetail = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
+        final ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridViewAdDetail, false);
+        gridViewAdDetail.addHeaderView(header, null, false);
 
-        final ViewPager pager = (ViewPager) rootView.findViewById(R.id.viewPagerAdDetailImage);
-        final TextView tvCompanyTagLine = (TextView) rootView.findViewById(R.id.tvCompanyTagLine);
-        final TextView tvCompanyDetails = (TextView) rootView.findViewById(R.id.tvCompanyDetails);
-        //final View gradient = rootView.findViewById(R.id.gradient);
-        //final MapView map = (MapView) rootView.findViewById(R.id.mapAdDetail);
-
-
-
-
+        final ViewPager pager = (ViewPager) header.findViewById(R.id.viewPagerAdDetailImage);
+        final TextView tvAdDetailCompanyTagLine = (TextView) header.findViewById(R.id.tvAdDetailCompanyTagLine);
+        final TextView tvAdDetailCompanyDetails = (TextView) header.findViewById(R.id.tvAdDetailCompanyDetails);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapAdDetail);
+        mapFragment.getMapAsync(this);
+        final ImageButton bAdDetailCall = (ImageButton) header.findViewById(R.id.bAdDetailCall);
+        final TextView tvAdDetailCompanyName = (TextView) header.findViewById(R.id.tvAdDetailCompanyName);
+        final TextView tvAdDetailCompanyAddress = (TextView) header.findViewById(R.id.tvAdDetailCompanyAddress);
+        final TextView tvAdDetailCompanyDistance = (TextView) header.findViewById(R.id.tvAdDetailCompanyDistance);
+        final RatingBar ratingBarAdDetail = (RatingBar) header.findViewById(R.id.ratingBarAdDetail);
+        final Button bAdDetailReviews = (Button) header.findViewById(R.id.bAdDetailReviews);
+        final TextView tvAdDetailFlagListing = (TextView) header.findViewById(R.id.tvAdDetailFlagListing);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "providerAdImmutable/" +
-                this.getArguments().getString("id") , new Response.Listener<JSONObject>() {
+                this.getArguments().getString("id"), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
                 Log.i(null, "Response received");
@@ -75,45 +86,58 @@ public class CustomerAdDetailFragment extends Fragment {
                     ProviderAdImmutableGetResponsePayload result = LoganSquare.parse(payload.getJSONObject("payload").toString(), ProviderAdImmutableGetResponsePayload.class);
 
                     ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(result.getCompany().getName());
-                    CustomerAdDetailAdapter adapter = new CustomerAdDetailAdapter(getActivity(), result.getServices());
-                    listView.setAdapter(adapter);
 
                     pager.setAdapter(new ViewPagerAdapter(getActivity(), result.getPhotos()));
-
-                    CircleIndicator indicator = (CircleIndicator) rootView.findViewById(R.id.circleIndicatorAdDetail);
+                    CircleIndicator indicator = (CircleIndicator) header.findViewById(R.id.circleIndicatorAdDetail);
                     indicator.setViewPager(pager);
-                    if(result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
+                    if (result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
 
-                    tvCompanyTagLine.setText(result.getTitle());
-                    tvCompanyDetails.setText(result.getDescription());
+                    tvAdDetailCompanyTagLine.setText(result.getTitle());
+                    tvAdDetailCompanyDetails.setText(result.getDescription());
 
                     //Make text fade out if too long. Click to make visible
-                    if(tvCompanyDetails.length() > 280){
-
+                    if (tvAdDetailCompanyDetails.length() > 280) {
                         //Shader makes the text fade out toward the bottom
-                        final Shader textShader=new LinearGradient(0, tvCompanyDetails.getLineHeight()*4, 0, 0, new int[]{Color.TRANSPARENT,Color.BLACK},
+                        final Shader textShader = new LinearGradient(0, tvAdDetailCompanyDetails.getLineHeight() * 4, 0, 0, new int[]{Color.TRANSPARENT, Color.BLACK},
                                 new float[]{0, 1}, Shader.TileMode.CLAMP);
-                        tvCompanyDetails.getPaint().setShader(textShader);
-
-                        tvCompanyDetails.setMaxLines(4);
-                        tvCompanyDetails.setOnClickListener(new View.OnClickListener() {
+                        tvAdDetailCompanyDetails.getPaint().setShader(textShader);
+                        tvAdDetailCompanyDetails.setMaxLines(4);
+                        tvAdDetailCompanyDetails.setOnClickListener(new View.OnClickListener() {
                             ObjectAnimator animation;
                             boolean isExpanded = false;
+
                             @Override
                             public void onClick(View v) {
-                                if(isExpanded) {
-                                    tvCompanyDetails.getPaint().setShader(null);
-                                    animation = ObjectAnimator.ofInt(tvCompanyDetails, "maxLines", 100);
-                                    animation.setDuration(125).start();
-                                }else{
-                                    animation = ObjectAnimator.ofInt(tvCompanyDetails, "maxLines", 4);
-                                    animation.setDuration(125).start();
-                                    tvCompanyDetails.getPaint().setShader(textShader);
+                                if (isExpanded) {
+                                    tvAdDetailCompanyDetails.getPaint().setShader(null);
+                                    animation = ObjectAnimator.ofInt(tvAdDetailCompanyDetails, "maxLines", 30);
+                                    animation.setDuration(100).start();
+                                } else {
+                                    animation = ObjectAnimator.ofInt(tvAdDetailCompanyDetails, "maxLines", 4);
+                                    animation.setDuration(100).start();
+                                    tvAdDetailCompanyDetails.getPaint().setShader(textShader);
                                 }
                                 isExpanded = !isExpanded;
                             }
                         });
                     }
+
+                    LinearLayout serviceItem = (LinearLayout) header.findViewById(R.id.serviceItem);
+                    CustomerAdDetailAdapter adapter = new CustomerAdDetailAdapter(getActivity(), result.getServices());
+                    for (int i = 0; i < adapter.getCount(); i++) {
+                        View item = adapter.getView(i, null, null);
+                        serviceItem.addView(item);
+                    }
+
+                    tvAdDetailCompanyName.setText(result.getCompany().getName());
+                    String street2 = "";
+                    if (result.getAddress().getStreet2() != null) street2 = result.getAddress().getStreet2() + "\n";
+                    tvAdDetailCompanyAddress.setText(result.getAddress().getStreet1() + "\n" + street2 + result.getAddress().getCity() +
+                            ", " + result.getAddress().getState() + " " + result.getAddress().getZip());
+                    tvAdDetailCompanyDistance.setText(String.format("%.1f", getArguments().getDouble("distance")) + " miles");
+
+                    ratingBarAdDetail.setRating(result.getRating());
+                    bAdDetailReviews.setText(result.getRating_count() + " Reviews");
 
                 } catch (JSONException e) {
                     Log.i(null, "JsonObjectRequest error");
@@ -121,8 +145,9 @@ public class CustomerAdDetailFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } },
-                new Response.ErrorListener(){
+            }
+        },
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("VOLLEY ERROR", "error => " + error.toString());
@@ -132,12 +157,15 @@ public class CustomerAdDetailFragment extends Fragment {
             // Attach headers
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("angrychimps-api-session-token", MainActivity.sessionId);
                 return params;
             }
         };
         VolleySingleton.getInstance().addToRequestQueue(request);
+
+        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridViewAdDetail);
+        builder.getResults();
 
         return rootView;
     }
@@ -162,7 +190,7 @@ public class CustomerAdDetailFragment extends Fragment {
             object.put("payload", payload);
             Log.i("object = ", payload.toString());
             Log.i("object2 = ", object.toString());
-        } catch ( JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return object;
@@ -178,5 +206,14 @@ public class CustomerAdDetailFragment extends Fragment {
     public void onPause() {
         super.onPause();
         MainActivity.setToolbarOpaque();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        LatLng companyLocation = new LatLng(getArguments().getDouble("lat"), getArguments().getDouble("lon"));
+        Log.i("location = ", companyLocation.toString());
+        googleMap.addMarker(new MarkerOptions().position(companyLocation));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(companyLocation, 15));
     }
 }

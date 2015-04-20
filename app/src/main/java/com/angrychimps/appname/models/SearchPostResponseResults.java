@@ -35,7 +35,7 @@ public class SearchPostResponseResults {
     @JsonField
     private double lat;
 
-    @JsonField
+    @JsonField(name = "long")
     private double lon;
 
     @JsonField

@@ -1,10 +1,14 @@
 package com.angrychimps.appname;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
+import android.content.Context;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -52,6 +56,7 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private boolean serviceProviderMode = false;
+    private boolean isFavorite = false;
 
     public static void setToolbarTranslucent() {
         toolbarPadding.setVisibility(View.GONE);
@@ -65,6 +70,16 @@ public class MainActivity extends ActionBarActivity {
 
     public static void clearMenu(){
         toolbar.getMenu().clear();
+    }
+
+    public static void setMenu(int resId){
+        clearMenu();
+        toolbar.inflateMenu(resId);
+    }
+
+    public static Location getLocation(Context context){
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     }
 
     @Override
@@ -97,7 +112,7 @@ public class MainActivity extends ActionBarActivity {
 
         initiateNavigationDrawer();
 
-        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
                 if (getFragmentManager().getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
@@ -163,12 +178,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void replaceFragmentNoBackStack(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(container.getId(), fragment).commit();
     }
 
     private void replaceFragmentAddBackStack(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(container.getId(), fragment).addToBackStack(null).commit();
         materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
@@ -226,15 +241,21 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_map:
                 return true;
             case R.id.action_filter:
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
                 if (prev != null) ft.remove(prev);
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
                 CustomerSearchFragment fragment = new CustomerSearchFragment();
                 fragment.show(ft, "dialog");
-            return true;
+                return true;
+            case R.id.action_favorite:
+                if(!isFavorite){
+                    item.setIcon(R.drawable.ic_favorite_white);
+                }else item.setIcon(R.drawable.ic_favorite_outline_white);
+                isFavorite = !isFavorite;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
