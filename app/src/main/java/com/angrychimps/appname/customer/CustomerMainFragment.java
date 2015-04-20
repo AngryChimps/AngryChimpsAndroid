@@ -31,8 +31,9 @@ public class CustomerMainFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        JsonRequestObjectBuilder object = new JsonRequestObjectBuilder(getActivity());
         StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
-        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView);
+        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
         builder.getResults();
 
         //Set up the Floating Action Button

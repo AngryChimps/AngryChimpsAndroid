@@ -190,7 +190,8 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
         };
         VolleySingleton.getInstance().addToRequestQueue(request);
 
-        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridViewAdDetail);
+        JsonRequestObjectBuilder object = new JsonRequestObjectBuilder(getActivity());
+        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridViewAdDetail, object.getJsonObject());
         builder.getResults();
 
         return rootView;

@@ -35,11 +35,13 @@ public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickLi
     private StaggeredGridView gridView;
     private Context context;
     private FragmentManager fragmentManager;
+    private JSONObject requestObjectToSend;
 
-    public StaggeredGridViewBuilder(Context context, FragmentManager fragmentManager, StaggeredGridView gridView) {
+    public StaggeredGridViewBuilder(Context context, FragmentManager fragmentManager, StaggeredGridView gridView, JSONObject requestObjectToSend) {
         this.gridView = gridView;
         this.context = context;
         this.fragmentManager = fragmentManager;
+        this.requestObjectToSend = requestObjectToSend;
     }
 
     public void getResults(){
@@ -49,8 +51,8 @@ public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickLi
 
         //Request the data using Volley for the Staggered Grid View and parse it into SearchPostResponseResults objects
         //TODO- load more data when the user reaches the bottom of the list
-        //TODO- Get rid of log messages, clean code, and add search filter options
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, MainActivity.url + "search", getRequestJSONObject(), new Response.Listener<JSONObject>() {
+        JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder(context);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, MainActivity.url + "search", requestObjectToSend, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
                 Log.i(null, "Response received");
@@ -87,44 +89,6 @@ public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickLi
             }
         };
         VolleySingleton.getInstance().addToRequestQueue(request);
-    }
-
-    private JSONObject getRequestJSONObject() {
-
-        //get the current date and the data 14 days from now
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
-//        df.getTimeZone();
-//        String startDate = df.format(new Date());
-//        Calendar c = Calendar.getInstance();
-//        try {
-//            c.setTime(df.parse(startDate));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        c.add(Calendar.DATE, 14);  // number of days to add, can also use Calendar.DAY_OF_MONTH in place of Calendar.DATE
-//        String endDate = df.format(c.getTime());
-//        Log.i("startDate = ", startDate);
-//        Log.i("endDate = ", endDate);
-
-        //SearchPostRequestPayload locationData = new SearchPostRequestPayload(latitude, longitude);
-        //String jsonString = null;
-        JSONObject payload = new JSONObject();
-        JSONObject object = new JSONObject();
-        try {
-            //jsonString = LoganSquare.serialize(locationData);
-            //Log.i("jsonString = ", jsonString);
-            payload.put("lat", MainActivity.getLocation(context).getLatitude());
-            payload.put("lon", MainActivity.getLocation(context).getLongitude());
-//            payload.put("starting_at", startDate);
-//            payload.put("ending_at", endDate);
-//            payload.put("offset", 0);
-            object.put("payload", payload);
-            Log.i("object = ", payload.toString());
-            Log.i("object2 = ", object.toString());
-        } catch ( JSONException e) {
-            e.printStackTrace();
-        }
-        return object;
     }
 
     @Override
