@@ -32,8 +32,10 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import com.etsy.android.grid.StaggeredGridView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -49,6 +51,8 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCallback {
 
+    MapView mapView;
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_ad_detail, container, false);
@@ -62,8 +66,12 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
         final ViewPager pager = (ViewPager) header.findViewById(R.id.viewPagerAdDetailImage);
         final TextView tvAdDetailCompanyTagLine = (TextView) header.findViewById(R.id.tvAdDetailCompanyTagLine);
         final TextView tvAdDetailCompanyDetails = (TextView) header.findViewById(R.id.tvAdDetailCompanyDetails);
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapAdDetail);
-        mapFragment.getMapAsync(this);
+
+        MapsInitializer.initialize(getActivity());
+        mapView =  (MapView) header.findViewById(R.id.mapAdDetail);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+
         final ImageButton bAdDetailCall = (ImageButton) header.findViewById(R.id.bAdDetailCall);
         final TextView tvAdDetailCompanyName = (TextView) header.findViewById(R.id.tvAdDetailCompanyName);
         final TextView tvAdDetailCompanyAddress = (TextView) header.findViewById(R.id.tvAdDetailCompanyAddress);
@@ -199,12 +207,14 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
     @Override
     public void onResume() {
         super.onResume();
+        mapView.onResume();
         MainActivity.setToolbarTranslucent();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        mapView.onPause();
         MainActivity.setToolbarOpaque();
     }
 
@@ -212,8 +222,19 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         googleMap.getUiSettings().setAllGesturesEnabled(false);
         LatLng companyLocation = new LatLng(getArguments().getDouble("lat"), getArguments().getDouble("lon"));
-        Log.i("location = ", companyLocation.toString());
-        googleMap.addMarker(new MarkerOptions().position(companyLocation));
+        googleMap.addMarker(new MarkerOptions().position(companyLocation).icon(BitmapDescriptorFactory.defaultMarker(207)));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(companyLocation, 15));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 }

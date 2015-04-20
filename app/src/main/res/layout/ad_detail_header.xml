@@ -62,27 +62,26 @@
         android:paddingTop="20dp">
 
         <FrameLayout
-            android:id="@+id/frameAdDetail"
+            android:id="@+id/mapFrameAdDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/map_outline">
 
-            <fragment
+            <com.google.android.gms.maps.MapView
                 android:id="@+id/mapAdDetail"
-                class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_margin="2dp"/>
-        </FrameLayout>
+                android:layout_margin="2dp" />
 
+        </FrameLayout>
 
         <ImageButton
             android:id="@+id/bAdDetailCall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/frameAdDetail"
+            android:layout_below="@id/mapFrameAdDetail"
             android:layout_marginRight="4dp"
             android:background="@drawable/button_outline_grey"
             android:padding="6dp"
@@ -94,7 +93,7 @@
             android:id="@+id/tvAdDetailCompanyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/frameAdDetail"
+            android:layout_below="@id/mapFrameAdDetail"
             android:textStyle="bold" />
 
         <TextView

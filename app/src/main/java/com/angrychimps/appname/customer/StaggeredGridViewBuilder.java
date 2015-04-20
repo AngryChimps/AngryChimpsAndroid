@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickListener{
+public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickListener {
 
     private StaggeredGridViewAdapter adapter;
     private ArrayList<SearchPostResponseResults> results;
@@ -129,14 +129,14 @@ public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        int pos = position - gridView.getHeaderViewsCount();
         CustomerAdDetailFragment fragment = new CustomerAdDetailFragment();
         Bundle bundle = new Bundle();
-        Log.i("position = ", "" + position);
-        bundle.putString("id", results.get(position).getProvider_ad_immutable_id());
-        bundle.putDouble("lat", results.get(position).getLat());
-        bundle.putDouble("lon", results.get(position).getLon());
-        bundle.putDouble("distance", results.get(position).getDistance());
-        Log.i("lon = ", "" + bundle.getDouble("lon"));
+        bundle.putString("id", results.get(pos).getProvider_ad_immutable_id());
+        bundle.putDouble("lat", results.get(pos).getLat());
+        bundle.putDouble("lon", results.get(pos).getLon());
+        bundle.putDouble("distance", results.get(pos).getDistance());
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
         MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);

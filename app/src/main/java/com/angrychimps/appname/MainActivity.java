@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getFragmentManager().getBackStackEntryCount() != 0) {
+                if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
                     onBackPressed();
                 } else {
                     drawerLayout.openDrawer(drawerList);
@@ -115,7 +115,7 @@ public class MainActivity extends ActionBarActivity {
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                if (getFragmentManager().getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
+                if (getSupportFragmentManager().getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
             }
         });
     }
@@ -263,11 +263,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onBackPressed(){
 
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_main);
-            if(getFragmentManager().getBackStackEntryCount() < 2) setTitle();
+            if(getSupportFragmentManager().getBackStackEntryCount() < 2) setTitle();
         } else if(drawerLayout.isDrawerOpen(drawerList)){
             drawerLayout.closeDrawer(drawerList);
         } else {
@@ -277,7 +277,7 @@ public class MainActivity extends ActionBarActivity {
 
     // Navigation Drawer item selected
     private void selectItem(int position) {
-        getFragmentManager().popBackStack();
+        getSupportFragmentManager().popBackStack();
         if(serviceProviderMode) {
             switch (position) {
                 case 0:
