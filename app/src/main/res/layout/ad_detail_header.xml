@@ -42,14 +42,13 @@
         android:paddingRight="16dp"
         android:paddingTop="8dp" />
 
-    <View
-        style="@style/Line" />
+    <View style="@style/Line" />
 
     <LinearLayout
         android:id="@+id/serviceItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 
     <RelativeLayout
         android:layout_width="match_parent"

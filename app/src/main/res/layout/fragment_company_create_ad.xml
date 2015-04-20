@@ -2,9 +2,8 @@
 
 <!--Company create ad screen. This is just the list view- the bulk of the design is in the header and footer -->
 
-<ListView
+<ListView android:id="@+id/listViewCompanyCreateAdTimeBlock"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listViewCompanyCreateAdTimeBlock"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
