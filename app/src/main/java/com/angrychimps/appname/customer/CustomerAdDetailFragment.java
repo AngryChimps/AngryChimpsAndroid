@@ -1,9 +1,11 @@
 package com.angrychimps.appname.customer;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -27,6 +29,7 @@ import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.ViewPagerAdapter;
 import com.angrychimps.appname.VolleySingleton;
+import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.etsy.android.grid.StaggeredGridView;
@@ -52,6 +55,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCallback {
 
     MapView mapView;
+    Address address;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -136,12 +140,25 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
                         View item = adapter.getView(i, null, null);
                         serviceItem.addView(item);
                     }
-
+                    address = result.getAddress();
                     tvAdDetailCompanyName.setText(result.getCompany().getName());
+                    tvAdDetailCompanyName.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            launchNavigation();
+                        }
+                    });
+
                     String street2 = "";
-                    if (result.getAddress().getStreet2() != null) street2 = result.getAddress().getStreet2() + "\n";
-                    tvAdDetailCompanyAddress.setText(result.getAddress().getStreet1() + "\n" + street2 + result.getAddress().getCity() +
-                            ", " + result.getAddress().getState() + " " + result.getAddress().getZip());
+                    if (address.getStreet2() != null) street2 = address.getStreet2() + "\n";
+                    tvAdDetailCompanyAddress.setText(address.getStreet1() + "\n" + street2 + address.getCity() +
+                            ", " + address.getState() + " " + address.getZip());
+                    tvAdDetailCompanyAddress.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            launchNavigation();
+                        }
+                    });
                     tvAdDetailCompanyDistance.setText(String.format("%.1f", getArguments().getDouble("distance")) + " miles");
 
                     ratingBarAdDetail.setRating(result.getRating());
@@ -224,6 +241,27 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
         LatLng companyLocation = new LatLng(getArguments().getDouble("lat"), getArguments().getDouble("lon"));
         googleMap.addMarker(new MarkerOptions().position(companyLocation).icon(BitmapDescriptorFactory.defaultMarker(207)));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(companyLocation, 15));
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                launchNavigation();
+            }
+        });
+    }
+
+    public void launchNavigation() {
+        if(address != null) {
+            // Create a Uri from an intent string. Use the result to create an Intent.
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + address.getStreet1() + " " + address.getCity() +
+                    ", " + address.getState() + " " + address.getZip());
+
+            // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+
+            // Make the Intent explicit by setting the Google Maps package
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        }
     }
 
     @Override
