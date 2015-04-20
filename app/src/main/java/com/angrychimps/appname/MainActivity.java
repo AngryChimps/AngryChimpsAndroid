@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-                    onBackPressed();
+                    onNavigateUp();
                 } else {
                     drawerLayout.openDrawer(drawerList);
                 }
@@ -115,6 +115,7 @@ public class MainActivity extends ActionBarActivity {
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
+                Log.i(null, "back stack contains " + getSupportFragmentManager().getBackStackEntryCount() + " items");
                 if (getSupportFragmentManager().getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
             }
         });
@@ -261,12 +262,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public boolean onNavigateUp() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        setMenu(R.menu.menu_main);
+        setTitle();
+        return super.onNavigateUp();
+    }
 
+    @Override
+    public void onBackPressed(){
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
-            toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_main);
+            setMenu(R.menu.menu_main);
             if(getSupportFragmentManager().getBackStackEntryCount() < 2) setTitle();
         } else if(drawerLayout.isDrawerOpen(drawerList)){
             drawerLayout.closeDrawer(drawerList);
@@ -287,6 +294,7 @@ public class MainActivity extends ActionBarActivity {
                 case 3:
                     serviceProviderMode = false;
                     initiateNavigationDrawer();
+                    onNavigateUp();
                     setMode();
                     return;
                 case 4:
@@ -306,6 +314,7 @@ public class MainActivity extends ActionBarActivity {
                 case 3:
                     serviceProviderMode = true;
                     initiateNavigationDrawer();
+                    onNavigateUp();
                     setMode();
                     return;
                 case 4:

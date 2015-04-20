@@ -54,6 +54,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCallback {
 
+    JsonObjectRequest request;
     MapView mapView;
     Address address;
 
@@ -84,7 +85,7 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
         final Button bAdDetailReviews = (Button) header.findViewById(R.id.bAdDetailReviews);
         final TextView tvAdDetailFlagListing = (TextView) header.findViewById(R.id.tvAdDetailFlagListing);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "providerAdImmutable/" +
+        request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "providerAdImmutable/" +
                 this.getArguments().getString("id"), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
@@ -233,6 +234,12 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
         super.onPause();
         mapView.onPause();
         MainActivity.setToolbarOpaque();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        request.cancel();
     }
 
     @Override
