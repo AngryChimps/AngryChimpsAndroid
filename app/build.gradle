@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
@@ -21,8 +21,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -32,7 +32,7 @@ android {
     defaultConfig {
         applicationId "com.angrychimps.appname"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -56,27 +56,17 @@ dependencies {
     apt 'com.bluelinelabs:logansquare-compiler:1.0.1'
     apt 'com.google.dagger:dagger-compiler:2.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.+'
-    compile 'com.google.android.gms:play-services:6.5.87'
-    compile 'com.etsy.android.grid:library:1.0.5'
-    //StaggeredGridView
-    compile 'com.melnykov:floatingactionbutton:1.2.0'
-    //Floating Action Button
-    compile 'com.facebook.android:facebook-android-sdk:+'
-    compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.1'
-    //Up navigation button & animations
-    compile 'com.rengwuxian.materialedittext:library:1.8.2'
-    //Material Design EditText
-    compile 'com.bluelinelabs:logansquare:1.0.1'
-    //Super fast JSON parsing/serializing
-    compile 'com.mcxiaoke.volley:library:1.0.+'
-    //Fast and clean networking
-    compile 'com.jakewharton:butterknife:6.1.0'
-    //View Dependency Injection
-    compile 'com.google.dagger:dagger:2.0'
-    //Compile time Dependency Injection
-    compile 'me.relex:circleindicator:1.1.2@aar'
-    //Circle indicator for ViewPager
-    compile project(':library')
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.etsy.android.grid:library:1.0.5' //StaggeredGridView
+    compile 'com.melnykov:floatingactionbutton:1.2.0' //Floating Action Button
+    compile 'com.facebook.android:facebook-android-sdk:4.0.1'
+    compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.1' //Up navigation button & animations
+    compile 'com.rengwuxian.materialedittext:library:1.8.2' //Material Design EditText
+    compile 'com.bluelinelabs:logansquare:1.0.1' //Super fast JSON parsing/serializing
+    compile 'com.mcxiaoke.volley:library:1.0.15' //Fast and clean networking
+    compile 'com.jakewharton:butterknife:6.1.0' //View Dependency Injection
+    compile 'com.google.dagger:dagger:2.0' //Compile time Dependency Injection
+    compile 'me.relex:circleindicator:1.1.2@aar' //Circle indicator for ViewPager
     provided 'org.glassfish:javax.annotation:10.0-b28'
 }

@@ -134,4 +134,9 @@
         <item name="android:layout_marginRight">16dp</item>
     </style>
 
+    <style name="DefaultIndicatorTextAppearance" parent="android:TextAppearance.Small">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:padding">6dp</item>
+    </style>
+
 </resources>

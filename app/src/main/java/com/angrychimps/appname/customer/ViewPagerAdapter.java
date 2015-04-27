@@ -1,4 +1,4 @@
-package com.angrychimps.appname;
+package com.angrychimps.appname.customer;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.VolleySingleton;
+import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 
 import java.util.ArrayList;
 

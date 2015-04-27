@@ -54,16 +54,13 @@
                 android:paddingBottom="0dp"
                 android:text="5 Miles" />
 
-            <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            <SeekBar
                 android:id="@+id/seekBarFilterDistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:paddingBottom="4dp"
-                android:paddingTop="4dp"
-                app:dsb_max="50"
-                app:dsb_min="1"
-                app:dsb_value="5" />
+                android:paddingTop="4dp" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -97,7 +94,7 @@
                     android:textSize="14sp" />
             </RadioGroup>
 
-            <View style="@style/Separator"></View>
+            <View style="@style/Separator"/>
 
             <TextView
                 style="@style/Subheader"

@@ -1,4 +1,4 @@
-package com.angrychimps.appname;
+package com.angrychimps.appname.widgets;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;

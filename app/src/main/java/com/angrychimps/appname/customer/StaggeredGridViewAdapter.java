@@ -10,7 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.angrychimps.appname.AnimatedNetworkImageView;
+import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
@@ -64,7 +64,7 @@ public class StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseRes
 
         viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
         viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
-        viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + "mi");
+        viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
         viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());
         viewHolder.tvCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
         if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());

@@ -27,20 +27,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.ViewPagerAdapter;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
+import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.etsy.android.grid.StaggeredGridView;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,10 +44,9 @@ import java.util.Map;
 import me.relex.circleindicator.CircleIndicator;
 
 
-public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCallback {
+public class CustomerAdDetailFragment extends Fragment {
 
     JsonObjectRequest request;
-    MapView mapView;
     Address address;
 
     @Override
@@ -71,11 +62,19 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
         final ViewPager pager = (ViewPager) header.findViewById(R.id.viewPagerAdDetailImage);
         final TextView tvAdDetailCompanyTagLine = (TextView) header.findViewById(R.id.tvAdDetailCompanyTagLine);
         final TextView tvAdDetailCompanyDetails = (TextView) header.findViewById(R.id.tvAdDetailCompanyDetails);
+        final AnimatedNetworkImageView mapAdDetail = (AnimatedNetworkImageView) header.findViewById(R.id.mapAdDetail);
 
-        MapsInitializer.initialize(getActivity());
-        mapView =  (MapView) header.findViewById(R.id.mapAdDetail);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+        String coordinates = getArguments().getDouble("lat")+","+ getArguments().getDouble("lon");
+        String color = "0x"+Integer.toHexString(getResources().getColor(R.color.primary)).substring(2);
+        mapAdDetail.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center="+coordinates+
+                "&zoom=15&size=340x200"+"&markers=color:"+color+"%7C"+coordinates+
+                "&scale=2&format=jpeg",VolleySingleton.getInstance().getImageLoader());
+        mapAdDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchNavigation();
+            }
+        });
 
         final ImageButton bAdDetailCall = (ImageButton) header.findViewById(R.id.bAdDetailCall);
         final TextView tvAdDetailCompanyName = (TextView) header.findViewById(R.id.tvAdDetailCompanyName);
@@ -226,14 +225,12 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
     @Override
     public void onResume() {
         super.onResume();
-        mapView.onResume();
         MainActivity.setToolbarTranslucent();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mapView.onPause();
         MainActivity.setToolbarOpaque();
     }
 
@@ -241,20 +238,6 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
     public void onStop() {
         super.onStop();
         request.cancel();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        googleMap.getUiSettings().setAllGesturesEnabled(false);
-        LatLng companyLocation = new LatLng(getArguments().getDouble("lat"), getArguments().getDouble("lon"));
-        googleMap.addMarker(new MarkerOptions().position(companyLocation).icon(BitmapDescriptorFactory.defaultMarker(207)));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(companyLocation, 15));
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                launchNavigation();
-            }
-        });
     }
 
     public void launchNavigation() {
@@ -270,17 +253,5 @@ public class CustomerAdDetailFragment extends Fragment implements OnMapReadyCall
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
     }
 }
