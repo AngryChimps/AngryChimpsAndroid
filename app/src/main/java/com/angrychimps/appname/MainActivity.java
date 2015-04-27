@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,6 +30,7 @@ import com.angrychimps.appname.company.CompanyCreateAdFragment;
 import com.angrychimps.appname.company.CompanyMainFragment;
 import com.angrychimps.appname.customer.CustomerCreateAdFragment;
 import com.angrychimps.appname.customer.CustomerMainFragment;
+import com.angrychimps.appname.customer.JsonRequestObjectBuilder;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
 import com.angrychimps.appname.menu.NavDrawerAdapter;
 import com.angrychimps.appname.menu.NavDrawerItem;
@@ -36,13 +38,23 @@ import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.bluelinelabs.logansquare.LoganSquare;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -234,6 +246,55 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_search:
                 return true;
             case R.id.action_map:
+                materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                final SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(container.getId(), mapFragment).addToBackStack(null).commit();
+                mapFragment.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(final GoogleMap map) {
+                        setToolbarTitle("Map");
+                        setMenu(R.menu.menu_map);
+
+                        Location location = getLocation(getApplicationContext());
+                        LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
+                        map.addMarker(new MarkerOptions().position(currentPosition));
+
+                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "search",
+                                new JsonRequestObjectBuilder(getApplicationContext()).getJsonObject(), new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject object) {
+                                try {
+                                    JSONObject payload = new JSONObject(object.getJSONObject("payload").toString());
+                                    JSONArray jArray = payload.getJSONArray("results");
+                                    for (int i = 0; i < jArray.length(); i++){
+                                        map.addMarker(new MarkerOptions().position(new LatLng(jArray.getJSONObject(i).getDouble("lat"),
+                                                jArray.getJSONObject(i).getDouble("long"))).icon(BitmapDescriptorFactory.defaultMarker(207)));
+                                    }
+
+                                } catch (JSONException e) {
+                                    Log.i(null, "JsonObjectRequest error");
+                                    e.printStackTrace();
+                                }
+                            } },
+                                new Response.ErrorListener(){
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("VOLLEY ERROR", "error => " + error.toString());
+                                    }
+                                }) {
+                            // Attach headers
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                Map<String, String>  params = new HashMap<>();
+                                params.put("angrychimps-api-session-token", sessionId);
+                                return params;
+                            }
+                        };
+                        VolleySingleton.getInstance().addToRequestQueue(request);
+                    }
+                });
                 return true;
             case R.id.action_filter:
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -292,8 +353,7 @@ public class MainActivity extends AppCompatActivity {
                     setMode();
                     return;
                 case 4:
-                    CompanyCreateAdFragment companyCreateAdFragment = new CompanyCreateAdFragment();
-                    replaceFragmentAddBackStack(companyCreateAdFragment);
+                    replaceFragmentAddBackStack(new CompanyCreateAdFragment());
                     setTitle("Create Ad");
                     break;
                 default:
@@ -312,8 +372,7 @@ public class MainActivity extends AppCompatActivity {
                     setMode();
                     return;
                 case 4:
-                    CustomerCreateAdFragment customerCreateAdFragment = new CustomerCreateAdFragment();
-                    replaceFragmentAddBackStack(customerCreateAdFragment);
+                    replaceFragmentAddBackStack(new CustomerCreateAdFragment());
                     setTitle("Request Service");
                     break;
                 default:

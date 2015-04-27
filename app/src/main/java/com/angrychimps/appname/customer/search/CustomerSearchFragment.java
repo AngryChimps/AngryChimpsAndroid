@@ -26,7 +26,6 @@ public class CustomerSearchFragment extends DialogFragment implements View.OnCli
         getDialog().setCanceledOnTouchOutside(false);
 
         Button bSearch = (Button) rootView.findViewById(R.id.bSearch);
-        Button bCancel = (Button) rootView.findViewById(R.id.bCancel);
         Button bFilterFromDate = (Button) rootView.findViewById(R.id.bFilterFromDate);
         Button bFilterFromTime = (Button) rootView.findViewById(R.id.bFilterFromTime);
         Button bFilterToDate = (Button) rootView.findViewById(R.id.bFilterToDate);
@@ -58,9 +57,6 @@ public class CustomerSearchFragment extends DialogFragment implements View.OnCli
                 Bundle bundle = new Bundle();
                 bundle.putString("JsonObject", object.toString());
                 //TODO finish this
-                break;
-            case R.id.bCancel:
-                dismiss();
                 break;
             case R.id.bFilterFromDate:
                 break;

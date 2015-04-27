@@ -14,14 +14,15 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
         android:text="SEARCH"
-        android:textColor="@color/primary" />
+        android:textColor="@color/primary"/>
 
     <Button
         android:id="@+id/bCancel"
         style="@style/FlatButton"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/bSearch"
-        android:text="CANCEL" />
+        android:onClick="onCancel"
+        android:text="CANCEL"/>
 
     <ScrollView
         android:layout_width="match_parent"
