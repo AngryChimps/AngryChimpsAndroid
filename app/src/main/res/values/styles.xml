@@ -15,6 +15,10 @@
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 
+    <style name="AppThemeWhite" parent="AppTheme">
+        <item name="android:background">@color/white</item>
+    </style>
+
     <style name="Subheader">
         <item name="android:textColor">@color/primary</item>
         <item name="android:textSize">14sp</item>

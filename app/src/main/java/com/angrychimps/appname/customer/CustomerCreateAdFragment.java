@@ -54,21 +54,4 @@ public class CustomerCreateAdFragment extends Fragment {
 
         return rootView;
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    // Called every time the screen orientation changes or Android kills an Activity
-    // to conserve resources
-    // We save the last item selected in the list here and attach it to the key curChoice
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
-
-
-
 }

@@ -2,11 +2,11 @@
 
 <!--Ad Detail screen header -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/background_material_light"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerAdDetailImage"
@@ -48,6 +48,9 @@
         android:id="@+id/serviceItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"/>
 
     <RelativeLayout
@@ -76,7 +79,6 @@
                 android:layout_height="160dp"
                 android:layout_margin="2dp"
                 android:scaleType="centerCrop"/>
-
         </FrameLayout>
 
         <ImageButton

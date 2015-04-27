@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.angrychimps.appname.R;
@@ -49,7 +49,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
                 ImageView imageProfile = (ImageView) v.findViewById(R.id.drawer_profile_image);
                 TextView tvName = (TextView) v.findViewById(R.id.drawer_profile_name);
                 TextView tvEmail = (TextView) v.findViewById(R.id.drawer_profile_email);
-                RelativeLayout layout = (RelativeLayout) v.findViewById(R.id.drawer_profile_settings);
+                LinearLayout layout = (LinearLayout) v.findViewById(R.id.drawer_profile_settings);
                 imageProfile.setImageResource(item.getImageID());
                 tvName.setText(item.getItemName());
                 tvEmail.setText(item.getEmail());

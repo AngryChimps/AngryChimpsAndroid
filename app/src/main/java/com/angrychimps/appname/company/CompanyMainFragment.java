@@ -79,14 +79,6 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
 
     }
 
-    // Called every time the screen orientation changes or Android kills an Activity to conserve resources
-    // We save the last item selected in the list here and attach it to the key curChoice
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-
     @Override
     public void onScrollStateChanged(final AbsListView view, final int scrollState) {
         Log.d(TAG, "onScrollStateChanged:" + scrollState);

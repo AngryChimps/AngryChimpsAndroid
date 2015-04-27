@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setToolbarOpaque() {
-        toolbarPadding.setVisibility(View.VISIBLE);
+        toolbarPadding.setVisibility(View.INVISIBLE);
         toolbar.setBackgroundResource(R.color.primary);
     }
 
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Using Toolbar in place of ActionBar lets us place the Navigation Drawer over the top, as Material Design recommends
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbarPadding = findViewById(R.id.toolbarPadding); //View that is removable to allow toolbar transparency
+        toolbarPadding = findViewById(R.id.toolbarPadding); //Empty space that is removable to allow toolbar transparency
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

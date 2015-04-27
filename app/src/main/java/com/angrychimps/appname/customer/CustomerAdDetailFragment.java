@@ -195,11 +195,6 @@ public class CustomerAdDetailFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
     private JSONObject getRequestJSONObject() {
 
         JSONObject payload = new JSONObject();

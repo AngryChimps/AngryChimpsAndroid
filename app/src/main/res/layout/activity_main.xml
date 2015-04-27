@@ -13,11 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
+        <!-- Empty space used to position the main frame below the toolbar when translucent toolbar is not desired-->
+        <Space
             android:id="@+id/toolbarPadding"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/actionbar_height" />
 
+        <!-- Main content-->
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"

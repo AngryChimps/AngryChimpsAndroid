@@ -3,7 +3,6 @@
 <!--Search filter menu, opens in dialog fragment --><!--Currently not updated to latest mock -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -43,7 +42,7 @@
                 style="@style/SpinnerButton"
                 android:text="Dentists" />
 
-            <View style="@style/Separator"></View>
+            <View style="@style/Separator"/>
 
             <TextView
                 style="@style/Subheader"
@@ -143,7 +142,7 @@
                     android:text="7:00pm" />
             </LinearLayout>
 
-            <View style="@style/Separator"></View>
+            <View style="@style/Separator"/>
 
             <TextView
                 style="@style/Subheader"
