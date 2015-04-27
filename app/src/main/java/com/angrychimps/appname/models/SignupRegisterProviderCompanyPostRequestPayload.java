@@ -4,41 +4,40 @@ import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 @JsonObject
-
 public class SignupRegisterProviderCompanyPostRequestPayload {
 
     @JsonField
-    String member_id;
+    private String member_id;
 
     @JsonField
-    String company_name;
+    private String company_name;
 
     @JsonField
-    String member_name;
+    private String member_name;
 
     @JsonField
-    String email;
+    private String email;
 
     @JsonField
-    String password;
+    private String password;
 
     @JsonField
-    String dob;
+    private String dob;
 
     @JsonField
-    String street1;
+    private String street1;
 
     @JsonField
-    String street2;
+    private String street2;
 
     @JsonField
-    int zip;
+    private int zip;
 
     @JsonField
-    String phone;
+    private String phone;
 
     @JsonField
-    String mobile_phone;
+    private String mobile_phone;
 
     public SignupRegisterProviderCompanyPostRequestPayload() {
     }

@@ -7,8 +7,16 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class CompanyPutRequestPayload {
 
     @JsonField
-    String name;
+    private String name;
 
     public CompanyPutRequestPayload() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

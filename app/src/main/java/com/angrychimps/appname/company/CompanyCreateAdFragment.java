@@ -3,7 +3,6 @@ package com.angrychimps.appname.company;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ public class CompanyCreateAdFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_company_create_ad, container, false);
 
         MainActivity.clearMenu();
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle("Create an Ad");
+        MainActivity.setToolbarTitle("Create an Ad");
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewCompanyCreateAdTimeBlock);
         ViewGroup header = (ViewGroup)inflater.inflate(R.layout.company_create_ad_header, listView, false);

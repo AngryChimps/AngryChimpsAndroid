@@ -16,27 +16,21 @@ public class ProviderAdImmutableGetResponsePayload {
 
     @JsonField
     Company company;
-
-    @JsonField
-    String title;
-
-    @JsonField
-    String description;
-
     @JsonField
     Address address;
-
     @JsonField
     ArrayList<Service> services;
-
     @JsonField
     ArrayList<String> photos;
+    @JsonField
+    private String title;
+    @JsonField
+    private String description;
+    @JsonField
+    private float rating;
 
     @JsonField
-    float rating;
-
-    @JsonField
-    int rating_count;
+    private int rating_count;
 
     public ProviderAdImmutableGetResponsePayload() {
     }

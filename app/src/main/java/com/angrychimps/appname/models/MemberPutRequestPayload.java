@@ -7,10 +7,10 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class MemberPutRequestPayload {
 
     @JsonField
-    String name;
+    private String name;
 
     @JsonField
-    String email;
+    private String email;
 
     public MemberPutRequestPayload() {
     }

@@ -7,7 +7,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class LocationId {
 
     @JsonField
-    String id;
+    private String id;
 
     public LocationId() {
     }

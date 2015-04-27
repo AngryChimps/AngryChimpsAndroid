@@ -2,14 +2,14 @@ package com.angrychimps.appname.menu;
 
 public class NavigationDrawerItem {
 
-	private String itemName;
+	private final String itemName;
+    private final int layoutID; //Identifies which xml layout to use
     private String messages;
     private String email;
 	private int imageID;
     private Integer imageBackground; //Image background in the profile area
     private boolean blue; //Does this row have a blue stripe along the side?
     private boolean indented;
-    private int layoutID; //Identifies which xml layout to use
 
     //email item
     public NavigationDrawerItem(int imagePerson, String itemName, String email, Integer imageBackground, int layoutID){

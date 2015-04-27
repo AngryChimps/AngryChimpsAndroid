@@ -7,10 +7,9 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class CalendarGetResponsePayload {
 
     @JsonField
-    String name;
-
-    @JsonField
     Availabilities availabilities;
+    @JsonField
+    private String name;
 
     public CalendarGetResponsePayload() {
     }

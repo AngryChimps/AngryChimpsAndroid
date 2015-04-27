@@ -13,10 +13,10 @@ import com.angrychimps.appname.models.Service;
 
 import java.util.ArrayList;
 
-public class CustomerAdDetailAdapter extends ArrayAdapter<Service> {
+class CustomerAdDetailAdapter extends ArrayAdapter<Service> {
 
     private final LayoutInflater layoutInflater;
-    private ArrayList<Service> arrayList;
+    private final ArrayList<Service> arrayList;
 
     public CustomerAdDetailAdapter(Context context, ArrayList<Service> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);

@@ -4,23 +4,18 @@ import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 @JsonObject
-
 public class SignupRegisterProviderAdPostRequestPayload {
 
     @JsonField
-    String ad_title;
-
-    @JsonField
-    String ad_description;
-
-    @JsonField
     Availabilities availabilities;
-
     @JsonField
     Service services;
-
     @JsonField
-    String category_id;
+    private String ad_title;
+    @JsonField
+    private String ad_description;
+    @JsonField
+    private String category_id;
 
     public SignupRegisterProviderAdPostRequestPayload() {
     }

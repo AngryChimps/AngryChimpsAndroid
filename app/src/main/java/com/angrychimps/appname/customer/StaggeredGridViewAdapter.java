@@ -22,11 +22,11 @@ import java.util.ArrayList;
     This adapter handles the StaggeredGridView in Provider Mode
  */
 
-public class StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseResults> {
+class StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseResults> {
 
     private final LayoutInflater layoutInflater;
-    private ArrayList<SearchPostResponseResults> arrayList;
-    private ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
+    private final ArrayList<SearchPostResponseResults> arrayList;
+    private final ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
 
     public StaggeredGridViewAdapter(Context context, ArrayList<SearchPostResponseResults> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);

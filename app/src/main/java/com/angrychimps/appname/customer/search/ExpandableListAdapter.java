@@ -16,7 +16,7 @@ import com.angrychimps.appname.R;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	private final Context context;
 	private final List<String> listDataHeader; // quick_return_header titles

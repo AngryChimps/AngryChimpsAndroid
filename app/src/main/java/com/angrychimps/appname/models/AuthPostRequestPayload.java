@@ -8,10 +8,10 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class AuthPostRequestPayload {
 
     @JsonField
-    String email;
+    private String email;
 
     @JsonField
-    String password;
+    private String password;
 
     public AuthPostRequestPayload() {
     }

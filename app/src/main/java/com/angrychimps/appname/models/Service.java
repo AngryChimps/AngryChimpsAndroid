@@ -4,31 +4,30 @@ import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 @JsonObject
-
 public class Service {
 
     @JsonField
-    String id;
+    private String id;
 
     @JsonField
-    String name;
+    private String name;
 
     @JsonField
-    String description;
+    private String description;
 
     @JsonField
-    double discounted_price;
+    private double discounted_price;
 
     @JsonField
-    double original_price;
+    private double original_price;
 
     @JsonField
-    int mins_for_service;
+    private int mins_for_service;
 
     @JsonField
-    int mins_notice;
+    private int mins_notice;
 
-    int discounted_price_decimal;
+    private int discounted_price_decimal;
 
     public Service() {
     }

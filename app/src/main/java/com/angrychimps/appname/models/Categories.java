@@ -7,13 +7,13 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class Categories {
 
     @JsonField
-    String id;
+    private String id;
 
     @JsonField
-    String name;
+    private String name;
 
     @JsonField
-    String icon;
+    private String icon;
 
     public Categories() {
     }

@@ -7,19 +7,15 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class Location {
 
     @JsonField
-    String id;
-
-    @JsonField
-    String name;
-
-    @JsonField
-    String phone;
-
-    @JsonField
-    String is_mobile;
-
-    @JsonField
     Address address;
+    @JsonField
+    private String id;
+    @JsonField
+    private String name;
+    @JsonField
+    private String phone;
+    @JsonField
+    private String is_mobile;
 
     public Location() {
     }

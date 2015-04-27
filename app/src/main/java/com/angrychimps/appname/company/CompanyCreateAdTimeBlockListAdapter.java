@@ -15,7 +15,7 @@ import com.angrychimps.appname.R;
     This adapter handles the time blocks added in the Company Create Ad screen
  */
 
-public class CompanyCreateAdTimeBlockListAdapter extends ArrayAdapter<String>{
+class CompanyCreateAdTimeBlockListAdapter extends ArrayAdapter<String>{
 
     private final LayoutInflater inflater;
 

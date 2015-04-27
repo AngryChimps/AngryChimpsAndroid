@@ -1,6 +1,5 @@
 package com.angrychimps.appname.models;
 
-
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
@@ -10,13 +9,11 @@ import java.util.Date;
 public class AvailabilityRequestPayload {
 
     @JsonField
-    String calendar_id;
-
-    @JsonField
     Date start;
-
     @JsonField
     Date end;
+    @JsonField
+    private String calendar_id;
 
     public AvailabilityRequestPayload() {
     }

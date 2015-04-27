@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,8 +45,8 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class CustomerAdDetailFragment extends Fragment {
 
-    JsonObjectRequest request;
-    Address address;
+    private JsonObjectRequest request;
+    private Address address;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,7 +96,7 @@ public class CustomerAdDetailFragment extends Fragment {
                     Log.i("inner payload = ", payload.getJSONObject("payload").toString());
                     ProviderAdImmutableGetResponsePayload result = LoganSquare.parse(payload.getJSONObject("payload").toString(), ProviderAdImmutableGetResponsePayload.class);
 
-                    ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(result.getCompany().getName());
+                    MainActivity.setToolbarTitle(result.getCompany().getName());
 
                     pager.setAdapter(new ViewPagerAdapter(getActivity(), result.getPhotos()));
                     CircleIndicator indicator = (CircleIndicator) header.findViewById(R.id.circleIndicatorAdDetail);
@@ -240,7 +239,7 @@ public class CustomerAdDetailFragment extends Fragment {
         request.cancel();
     }
 
-    public void launchNavigation() {
+    private void launchNavigation() {
         if(address != null) {
             // Create a Uri from an intent string. Use the result to create an Intent.
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + address.getStreet1() + " " + address.getCity() +

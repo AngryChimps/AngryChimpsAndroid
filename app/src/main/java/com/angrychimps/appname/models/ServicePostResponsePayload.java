@@ -7,7 +7,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class ServicePostResponsePayload {
 
     @JsonField
-    public ServiceId service;
+    ServiceId service;
 
     public ServicePostResponsePayload() {
     }

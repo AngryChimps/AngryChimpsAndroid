@@ -7,7 +7,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class CompanyMediaResponsePayload {
 
     @JsonField
-    String filename;
+    private String filename;
 
     public CompanyMediaResponsePayload() {
     }

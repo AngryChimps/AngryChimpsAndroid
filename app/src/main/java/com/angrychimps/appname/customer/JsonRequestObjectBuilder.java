@@ -11,18 +11,18 @@ import org.json.JSONObject;
 /*
     This class builds JSONObjects for search and filtering in the StaggeredGridView
  */
-public class JsonRequestObjectBuilder {
+class JsonRequestObjectBuilder {
 
-    Context context;
-    String text;
-    int[] categories;
-    double radius_miles = 0;
-    boolean consumer_travels = true;
-    String starting_at;
-    String ending_at;
-    String sort;
-    int limit = 0;
-    int offset = 0;
+    private final Context context;
+    private String text;
+    private int[] categories;
+    private double radius_miles = 0;
+    private boolean consumer_travels = true;
+    private String starting_at;
+    private String ending_at;
+    private String sort;
+    private int limit = 0;
+    private int offset = 0;
 
 
     public JsonRequestObjectBuilder(Context context) {

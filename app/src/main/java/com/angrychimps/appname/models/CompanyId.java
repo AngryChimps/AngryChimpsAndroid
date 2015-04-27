@@ -1,7 +1,23 @@
 package com.angrychimps.appname.models;
 
-/**
- * Created by jim on 3/11/15.
- */
+import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
+@JsonObject
 public class CompanyId {
+
+    @JsonField
+    private String id;
+
+    public CompanyId() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

@@ -7,25 +7,25 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class LocationPRequestPayload {
 
     @JsonField
-    String name;
+    private String name;
 
     @JsonField
-    String street1;
+    private String street1;
 
     @JsonField
-    String street2;
+    private String street2;
 
     @JsonField
-    int zip;
+    private int zip;
 
     @JsonField
-    String company_id;
+    private String company_id;
 
     @JsonField
-    String phone;
+    private String phone;
 
     @JsonField
-    boolean is_mobile;
+    private boolean is_mobile;
 
     public LocationPRequestPayload() {
     }
@@ -78,7 +78,7 @@ public class LocationPRequestPayload {
         this.phone = phone;
     }
 
-    public boolean is_mobile() {
+    public boolean getIs_mobile() {
         return is_mobile;
     }
 

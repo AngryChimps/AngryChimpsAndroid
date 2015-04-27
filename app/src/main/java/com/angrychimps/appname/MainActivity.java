@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -44,13 +44,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
+    public static final String url = "http://devvy3.angrychimps.com/api/v1/";
+    public static final String mediaUrl = "http://devvy3.angrychimps.com/media/";
     public static FrameLayout container;
     public static MaterialMenuIconToolbar materialMenu; //Manually control the Up Navigation button
     public static String sessionId; //Session ID required for all server calls
-    public static String url = "http://devvy3.angrychimps.com/api/v1/";
-    public static String mediaUrl = "http://devvy3.angrychimps.com/media/";
     private static Toolbar toolbar;
     private static View toolbarPadding;
     private DrawerLayout drawerLayout;
@@ -75,6 +75,10 @@ public class MainActivity extends ActionBarActivity {
     public static void setMenu(int resId){
         clearMenu();
         toolbar.inflateMenu(resId);
+    }
+
+    public static void setToolbarTitle(String title){
+        toolbar.setTitle(title);
     }
 
     public static Location getLocation(Context context){
@@ -129,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
         container.setId(R.id.container_id);
 
         setMode();
-        setTitle();
+        setMainPageTitle();
 
         fragmentContainer.addView(container);
     }
@@ -169,13 +173,8 @@ public class MainActivity extends ActionBarActivity {
             replaceFragmentNoBackStack(customerMainFragment);
         }
     }
-
-    private void setTitle() {
-        if(serviceProviderMode){
-            getSupportActionBar().setTitle("Provider Mode");
-        }else {
-            getSupportActionBar().setTitle("Customer Mode");
-        }
+    private void setMainPageTitle() {
+        setTitle(serviceProviderMode? "Provider Mode" : "Customer Mode");
     }
 
     private void replaceFragmentNoBackStack(Fragment fragment) {
@@ -265,7 +264,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onNavigateUp() {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         setMenu(R.menu.menu_main);
-        setTitle();
+        setMainPageTitle();
         return super.onNavigateUp();
     }
 
@@ -274,7 +273,7 @@ public class MainActivity extends ActionBarActivity {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
             setMenu(R.menu.menu_main);
-            if(getSupportFragmentManager().getBackStackEntryCount() < 2) setTitle();
+            if(getSupportFragmentManager().getBackStackEntryCount() < 2) setMainPageTitle();
         } else if(drawerLayout.isDrawerOpen(drawerList)){
             drawerLayout.closeDrawer(drawerList);
         } else {
@@ -300,7 +299,7 @@ public class MainActivity extends ActionBarActivity {
                 case 4:
                     CompanyCreateAdFragment companyCreateAdFragment = new CompanyCreateAdFragment();
                     replaceFragmentAddBackStack(companyCreateAdFragment);
-                    getSupportActionBar().setTitle("Create Ad");
+                    setTitle("Create Ad");
                     break;
                 default:
                     break;
@@ -320,7 +319,7 @@ public class MainActivity extends ActionBarActivity {
                 case 4:
                     CustomerCreateAdFragment customerCreateAdFragment = new CustomerCreateAdFragment();
                     replaceFragmentAddBackStack(customerCreateAdFragment);
-                    getSupportActionBar().setTitle("Request Service");
+                    setTitle("Request Service");
                     break;
                 default:
                     break;

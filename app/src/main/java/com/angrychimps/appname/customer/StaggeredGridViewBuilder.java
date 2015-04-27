@@ -28,14 +28,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickListener {
+class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickListener {
 
+    private final StaggeredGridView gridView;
+    private final Context context;
+    private final FragmentManager fragmentManager;
+    private final JSONObject requestObjectToSend;
     private StaggeredGridViewAdapter adapter;
     private ArrayList<SearchPostResponseResults> results;
-    private StaggeredGridView gridView;
-    private Context context;
-    private FragmentManager fragmentManager;
-    private JSONObject requestObjectToSend;
 
     public StaggeredGridViewBuilder(Context context, FragmentManager fragmentManager, StaggeredGridView gridView, JSONObject requestObjectToSend) {
         this.gridView = gridView;
@@ -51,7 +51,6 @@ public class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickLi
 
         //Request the data using Volley for the Staggered Grid View and parse it into SearchPostResponseResults objects
         //TODO- load more data when the user reaches the bottom of the list
-        JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder(context);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, MainActivity.url + "search", requestObjectToSend, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {

@@ -7,31 +7,31 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class Address {
 
     @JsonField
-    String id;
+    private String id;
 
     @JsonField
-    String street1;
+    private String street1;
 
     @JsonField
-    String street2;
+    private String street2;
 
     @JsonField
-    String city;
+    private String city;
 
     @JsonField
-    String state;
+    private String state;
 
     @JsonField
-    int zip;
+    private int zip;
 
     @JsonField
-    String phone;
+    private String phone;
 
     @JsonField
-    double lat;
+    private double lat;
 
     @JsonField
-    double lon;
+    private double lon;
 
     public Address() {
     }
