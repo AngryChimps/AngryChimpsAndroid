@@ -11,7 +11,7 @@ import org.json.JSONObject;
 /*
     This class builds JSONObjects for search and filtering in the StaggeredGridView
  */
-class JsonRequestObjectBuilder {
+public class JsonRequestObjectBuilder {
 
     private final Context context;
     private String text;

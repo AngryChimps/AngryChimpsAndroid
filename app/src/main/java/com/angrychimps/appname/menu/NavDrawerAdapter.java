@@ -16,13 +16,13 @@ import com.angrychimps.appname.R;
 
 import java.util.List;
 
-public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> {
+public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
 
 	private final Activity context;
-	private final List<NavigationDrawerItem> drawerItemList;
+	private final List<NavDrawerItem> drawerItemList;
     private final boolean serviceProviderMode;
 
-	public NavigationDrawerAdapter(Activity context, List<NavigationDrawerItem> listItems, boolean serviceProviderMode) {
+	public NavDrawerAdapter(Activity context, List<NavDrawerItem> listItems, boolean serviceProviderMode) {
 		super(context, R.layout.navigation_drawer_item, listItems);
 		this.context = context;
 		this.drawerItemList = listItems;
@@ -34,7 +34,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-        NavigationDrawerItem item = drawerItemList.get(position);
+        NavDrawerItem item = drawerItemList.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(item.getLayoutID(), null);
 

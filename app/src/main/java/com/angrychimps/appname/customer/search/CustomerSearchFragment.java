@@ -10,10 +10,14 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.customer.JsonRequestObjectBuilder;
 
 import org.json.JSONObject;
 
-public class CustomerSearchFragment extends DialogFragment {
+public class CustomerSearchFragment extends DialogFragment implements View.OnClickListener{
+
+    JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder(getActivity());
+    //TODO- add results to JSONObject and pass back to CustomerMainFragment or implement interface through activity
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,10 +32,6 @@ public class CustomerSearchFragment extends DialogFragment {
         Button bFilterToDate = (Button) rootView.findViewById(R.id.bFilterToDate);
         Button bFilterToTime = (Button) rootView.findViewById(R.id.bFilterToTime);
         RadioGroup rgFilter = (RadioGroup) rootView.findViewById(R.id.rgFilter);
-
-        JSONObject filterObject = new JSONObject();
-        //TODO- add results to JSONObject and pass back to CustomerMainFragment
-
 
         return rootView;
     }
@@ -48,5 +48,30 @@ public class CustomerSearchFragment extends DialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bSearch:
+                JSONObject object = builder.getJsonObject();
+                Bundle bundle = new Bundle();
+                bundle.putString("JsonObject", object.toString());
+                //TODO finish this
+                break;
+            case R.id.bCancel:
+                dismiss();
+                break;
+            case R.id.bFilterFromDate:
+                break;
+            case R.id.bFilterFromTime:
+                break;
+            case R.id.bFilterToDate:
+                break;
+            case R.id.bFilterToTime:
+                break;
+            case R.id.rgFilter:
+                break;
+        }
     }
 }

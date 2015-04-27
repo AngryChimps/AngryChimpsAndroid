@@ -1,6 +1,6 @@
 package com.angrychimps.appname.menu;
 
-public class NavigationDrawerItem {
+public class NavDrawerItem {
 
 	private final String itemName;
     private final int layoutID; //Identifies which xml layout to use
@@ -12,7 +12,7 @@ public class NavigationDrawerItem {
     private boolean indented;
 
     //email item
-    public NavigationDrawerItem(int imagePerson, String itemName, String email, Integer imageBackground, int layoutID){
+    public NavDrawerItem(int imagePerson, String itemName, String email, Integer imageBackground, int layoutID){
         imageID = imagePerson;
         this.itemName = itemName;
         this.email = email;
@@ -21,7 +21,7 @@ public class NavigationDrawerItem {
     }
 
     //messages item
-    public NavigationDrawerItem(int imageID, String itemName, String messages, int layoutID){
+    public NavDrawerItem(int imageID, String itemName, String messages, int layoutID){
         this.imageID = imageID;
         this.itemName = itemName;
         this.messages = messages;
@@ -29,13 +29,13 @@ public class NavigationDrawerItem {
     }
 
     //providerMode switch
-    public NavigationDrawerItem(String itemName, int layoutID){
+    public NavDrawerItem(String itemName, int layoutID){
         this.itemName = itemName;
         this.layoutID = layoutID;
     }
 
     //normal item
-    public NavigationDrawerItem(int imageID, String itemName, boolean indented, boolean blue, int layoutID){
+    public NavDrawerItem(int imageID, String itemName, boolean indented, boolean blue, int layoutID){
         this.imageID = imageID;
         this.itemName = itemName;
         this.indented = indented;
