@@ -1,6 +1,5 @@
 package com.angrychimps.appname;
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
@@ -34,6 +33,7 @@ import com.angrychimps.appname.customer.JsonRequestObjectBuilder;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
 import com.angrychimps.appname.menu.NavDrawerAdapter;
 import com.angrychimps.appname.menu.NavDrawerItem;
+import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     public static FrameLayout container;
     public static MaterialMenuIconToolbar materialMenu; //Manually control the Up Navigation button
     public static String sessionId; //Session ID required for all server calls
+    public static ArrayList<SearchPostResponseResults> searchResults;
+    public static JSONObject currentRequest;
     private static Toolbar toolbar;
     private static View toolbarPadding;
     private DrawerLayout drawerLayout;
@@ -80,20 +82,20 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setBackgroundResource(R.color.primary);
     }
 
-    public static void clearMenu(){
+    public static void clearMenu() {
         toolbar.getMenu().clear();
     }
 
-    public static void setMenu(int resId){
+    public static void setMenu(int resId) {
         clearMenu();
         toolbar.inflateMenu(resId);
     }
 
-    public static void setToolbarTitle(String title){
+    public static void setToolbarTitle(String title) {
         toolbar.setTitle(title);
     }
 
-    public static Location getLocation(Context context){
+    public static Location getLocation(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
     }
@@ -120,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
-            @Override public int getToolbarViewId() {
+            @Override
+            public int getToolbarViewId() {
                 return R.id.toolbar;
             }
         };
@@ -164,8 +167,9 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
-            } },
-                new Response.ErrorListener(){
+            }
+        },
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("VOLLEY ERROR", "error => " + error.toString());
@@ -177,16 +181,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setMode() {
-        if(serviceProviderMode){
+        if (serviceProviderMode) {
             CompanyMainFragment companyMainFragment = new CompanyMainFragment();
             replaceFragmentNoBackStack(companyMainFragment);
-        }else {
+        } else {
             CustomerMainFragment customerMainFragment = new CustomerMainFragment();
             replaceFragmentNoBackStack(customerMainFragment);
         }
     }
+
     private void setMainPageTitle() {
-        setTitle(serviceProviderMode? "Provider Mode" : "Customer Mode");
+        setTitle(serviceProviderMode ? "Provider Mode" : "Customer Mode");
     }
 
     private void replaceFragmentNoBackStack(Fragment fragment) {
@@ -212,12 +217,12 @@ public class MainActivity extends AppCompatActivity {
         mDataList.add(new NavDrawerItem(R.drawable.photo, "Name Nameson", "example@email.com", null, R.layout.navigation_drawer_profile));
         mDataList.add(new NavDrawerItem(R.drawable.ic_explore_blue, "Explore deals near you", false, true, R.layout.navigation_drawer_item));
         mDataList.add(new NavDrawerItem(R.drawable.ic_messages_blue, "Messages", "2", R.layout.navigation_drawer_messages_item));
-        if(serviceProviderMode) {
+        if (serviceProviderMode) {
             mDataList.add(new NavDrawerItem("Provider Mode", R.layout.navigation_drawer_switch_item));
             mDataList.add(new NavDrawerItem(R.drawable.ic_add_dkblue, "Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
             mDataList.add(new NavDrawerItem(R.drawable.ic_avail_dkblue, "Availability Manager", true, true, R.layout.navigation_drawer_item));
             mDataList.add(new NavDrawerItem(R.drawable.ic_company_dkblue, "Company Profile Manager", true, true, R.layout.navigation_drawer_item));
-        } else{
+        } else {
             mDataList.add(new NavDrawerItem("Consumer Mode", R.layout.navigation_drawer_switch_item));
             mDataList.add(new NavDrawerItem(R.drawable.ic_request_blue, "Request a Service", true, true, R.layout.navigation_drawer_item));
             mDataList.add(new NavDrawerItem(R.drawable.ic_notification_blue, "Notification Manager", true, true, R.layout.navigation_drawer_item));
@@ -268,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     JSONObject payload = new JSONObject(object.getJSONObject("payload").toString());
                                     JSONArray jArray = payload.getJSONArray("results");
-                                    for (int i = 0; i < jArray.length(); i++){
+                                    for (int i = 0; i < jArray.length(); i++) {
                                         map.addMarker(new MarkerOptions().position(new LatLng(jArray.getJSONObject(i).getDouble("lat"),
                                                 jArray.getJSONObject(i).getDouble("long"))).icon(BitmapDescriptorFactory.defaultMarker(207)));
                                     }
@@ -277,8 +282,9 @@ public class MainActivity extends AppCompatActivity {
                                     Log.i(null, "JsonObjectRequest error");
                                     e.printStackTrace();
                                 }
-                            } },
-                                new Response.ErrorListener(){
+                            }
+                        },
+                                new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
                                         Log.d("VOLLEY ERROR", "error => " + error.toString());
@@ -287,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                             // Attach headers
                             @Override
                             public Map<String, String> getHeaders() throws AuthFailureError {
-                                Map<String, String>  params = new HashMap<>();
+                                Map<String, String> params = new HashMap<>();
                                 params.put("angrychimps-api-session-token", sessionId);
                                 return params;
                             }
@@ -307,9 +313,9 @@ public class MainActivity extends AppCompatActivity {
                 fragment.show(ft, "dialog");
                 return true;
             case R.id.action_favorite:
-                if(!isFavorite){
+                if (!isFavorite) {
                     item.setIcon(R.drawable.ic_favorite_white);
-                }else item.setIcon(R.drawable.ic_favorite_outline_white);
+                } else item.setIcon(R.drawable.ic_favorite_outline_white);
                 isFavorite = !isFavorite;
                 return true;
         }
@@ -325,12 +331,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
             setMenu(R.menu.menu_main);
-            if(getSupportFragmentManager().getBackStackEntryCount() < 2) setMainPageTitle();
-        } else if(drawerLayout.isDrawerOpen(drawerList)){
+            if (getSupportFragmentManager().getBackStackEntryCount() < 2) setMainPageTitle();
+        } else if (drawerLayout.isDrawerOpen(drawerList)) {
             drawerLayout.closeDrawer(drawerList);
         } else {
             super.onBackPressed();
@@ -340,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
     // Navigation Drawer item selected
     private void selectItem(int position) {
         getSupportFragmentManager().popBackStack();
-        if(serviceProviderMode) {
+        if (serviceProviderMode) {
             switch (position) {
                 case 0:
                     break;
@@ -359,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     break;
             }
-        }else{
+        } else {
             switch (position) {
                 case 0:
                     break;
@@ -398,6 +404,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
-       }
+        }
     }
 }
