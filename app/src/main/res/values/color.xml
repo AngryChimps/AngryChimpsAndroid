@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Colors used are from the Android Material Design color swatches  -->
-
 <resources>
+    <!--Colors from the Android Material Design color swatches  -->
     <color name="primary">#2196F3</color>
     <color name="primary_dark">#1976D2</color>
     <color name="primary_pressed">#1976D2</color>
@@ -15,10 +14,19 @@
     <color name="black">#000000</color>
     <color name="error_red">#D50000</color>
 
-    <!--TODO: check out material text colors-->
+    <!--Default text colors  -->
+    <color name="text_material_primary_light">@color/primary_text_default_material_light</color>
+    <color name="text_material_primary_disabled_light">@color/primary_text_disabled_material_light</color>
+    <color name="text_material_secondary_light">@color/secondary_text_default_material_light</color>
+    <color name="text_material_secondary_disabled_light">@color/secondary_text_disabled_material_light</color>
+
+    <!--Custom text colors  -->
     <color name="text_light_grey">#BBBBBB</color>
     <color name="text_medium_grey">#888</color>
     <color name="text_dark_grey">#555</color>
+
+    <color name="navigation_drawer_switch_background">#f5f5f5</color>
+    <color name="navigation_drawer_mode_background">#fafafa</color>
 
     <color name="separator">#BBB</color>
 

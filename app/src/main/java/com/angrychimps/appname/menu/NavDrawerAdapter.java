@@ -38,10 +38,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(item.getLayoutID(), null);
 
-        int color;
-        if(serviceProviderMode) {
-            color = context.getResources().getColor(R.color.primary_dark);
-        }else color = context.getResources().getColor(R.color.primary);
+        int color = context.getResources().getColor(serviceProviderMode? R.color.primary_dark : R.color.primary);
 
         //Get which xml file is used so we know what we can set
         switch(item.getLayoutID()){
@@ -66,7 +63,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
                 if(item.isIndented()){
                     sideColor.setBackgroundColor(color);
                     itemName.setTextColor(color);
-                    v.setBackgroundColor(0xFFFAFAFA);
+                    v.setBackgroundColor(context.getResources().getColor(R.color.navigation_drawer_mode_background));
                 }else{
                     if(item.isBlue()) itemName.setTextColor(context.getResources().getColor(R.color.primary));
                 }

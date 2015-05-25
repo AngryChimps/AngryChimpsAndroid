@@ -21,6 +21,8 @@
 
     <dimen name="divider">0.7dp</dimen>
 
+    <dimen name="navigation_drawer_profile_image">64dp</dimen>
+
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_size_mini">40dp</dimen>
     <dimen name="fab_shadow_size">12dp</dimen>
