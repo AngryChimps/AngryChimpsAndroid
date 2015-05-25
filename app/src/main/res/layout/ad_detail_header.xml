@@ -42,7 +42,7 @@
         android:paddingRight="16dp"
         android:paddingTop="8dp"/>
 
-    <View style="@style/Line"/>
+    <View style="@style/Divider"/>
 
     <LinearLayout
         android:id="@+id/serviceItem"

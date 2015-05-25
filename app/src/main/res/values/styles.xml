@@ -1,53 +1,38 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/primary_dark</item>
-        <item name="android:icon">@android:color/transparent</item>
-    </style>
+    <style name="ToolBar" parent="ToolBar_Base"/>
 
-    <style name="ToolBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ToolBar_Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 
-    <style name="AppThemeWhite" parent="AppTheme">
-        <item name="android:background">@color/white</item>
-    </style>
-
-    <style name="Subheader">
-        <item name="android:textColor">@color/primary</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:layout_height">48dp</item>
+    <style name="Subheader" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+        <item name="android:layout_height">@dimen/default_subheader_height</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <style name="Caption">
-        <item name="android:textSize">12sp</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:paddingTop">8dp</item>
+    <style name="Caption" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_small_margin</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <style name="TextField">
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
+    <style name="TextField" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
     </style>
 
     <style name="SpinnerButton" parent="android:Widget.Holo.Light.Spinner">
         <item name="android:textSize">16sp</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_small_margin</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
     </style>
@@ -62,85 +47,69 @@
         <item name="android:layout_weight">3</item>
     </style>
 
-    <style name="Separator" parent="Line">
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
+    <style name="Separator" parent="Divider">
+        <item name="android:layout_marginTop">@dimen/default_small_margin</item>
+        <item name="android:layout_marginBottom">@dimen/default_small_margin</item>
     </style>
 
-    <style name="Line">
-        <item name="android:layout_height">1dp</item>
+    <style name="Divider">
+        <item name="android:layout_height">@dimen/divider</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@color/separator</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
-    <style name="FlatButton">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginLeft">4dp</item>
-        <item name="android:layout_marginRight">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+    <style name="FlatButton" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:layout_height">@dimen/default_button_height</item>
+        <item name="android:paddingLeft">@dimen/default_small_margin</item>
+        <item name="android:paddingRight">@dimen/default_small_margin</item>
+        <item name="android:layout_margin">@dimen/default_tiny_margin</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="RaisedButton">
+    <style name="RaisedButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@color/primary</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginLeft">4dp</item>
-        <item name="android:layout_marginRight">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_height">@dimen/default_button_height</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingRight">@dimen/default_margin</item>
+        <item name="android:layout_margin">@dimen/default_tiny_margin</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="drawer_item_base">
+    <style name="DrawerItemBase">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/white</item>
-        <item name="android:minHeight">48dp</item>
+        <item name="android:minHeight">@dimen/default_list_item_height</item>
     </style>
 
-    <style name="drawer_text">
+    <style name="DrawerText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">72dp</item>
+        <item name="android:layout_marginLeft">@dimen/default_keyline</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="drawer_icon">
+    <style name="DrawerIcon">
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginLeft">@dimen/default_margin</item>
     </style>
 
-    <style name="drawer_mode_color">
+    <style name="DrawerModeColorStrip">
         <item name="android:layout_width">6dp</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">@dimen/default_list_item_height</item>
     </style>
 
-    <style name="drawer_switch">
+    <style name="DrawerSwitch">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:clickable">false</item>
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:layout_marginRight">16dp</item>
-    </style>
-
-    <style name="DefaultIndicatorTextAppearance" parent="android:TextAppearance.Small">
-        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
-        <item name="android:padding">6dp</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
     </style>
 
 </resources>

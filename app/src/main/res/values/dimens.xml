@@ -1,13 +1,26 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="actionbar_height">56dp</dimen>
-    <dimen name="diameter">48dp</dimen>
-    <dimen name="elevation_low">1dp</dimen>
-    <dimen name="elevation_high">4dp</dimen>
-    <dimen name="add_button_margin">16dp</dimen>
-    <dimen name="round_button_diameter">56dp</dimen>
+    <!-- Default screen margins per the Android Material Design guidelines -->
+    <dimen name="default_multiline_list_item_height">72dp</dimen>
+    <dimen name="default_keyline">72dp</dimen>
+    <dimen name="default_keyline_padded_layout">56dp</dimen>
+    <dimen name="default_subheader_height">48dp</dimen>
+    <dimen name="default_button_height">48dp</dimen>
+    <dimen name="default_list_item_height">48dp</dimen>
+    <dimen name="default_extra_large_margin">32dp</dimen>
+    <dimen name="default_large_margin">24dp</dimen>
+    <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_icon_padding">12dp</dimen>
+    <dimen name="default_small_margin">8dp</dimen>
+    <dimen name="default_tiny_margin">4dp</dimen>
+
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+
+    <dimen name="app_bar_elevation">4dp</dimen>
+
+    <dimen name="divider">0.7dp</dimen>
+
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_size_mini">40dp</dimen>
     <dimen name="fab_shadow_size">12dp</dimen>

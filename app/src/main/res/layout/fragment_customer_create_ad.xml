@@ -20,8 +20,7 @@
         <EditText
             android:id="@+id/etCustomerCreateAdTitle"
             style="@style/TextField"
-            android:hint="What do you need?"
-            android:textSize="16sp" />
+            android:hint="What do you need?"/>
 
         <TextView
             style="@style/Caption"

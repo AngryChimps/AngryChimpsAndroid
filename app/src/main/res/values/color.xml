@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Colors used are per the Android Material Design color swatches  -->
+<!--Colors used are from the Android Material Design color swatches  -->
 
 <resources>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
     <color name="primary">#2196F3</color>
     <color name="primary_dark">#1976D2</color>
     <color name="primary_pressed">#1976D2</color>
     <color name="primary_translucent">#801976D2</color>
-    <color name="separator">#BBB</color>
-    <color name="ripple">#82B1FF</color>
     <color name="accent">#FF9100</color>
     <color name="accent_pressed">#FF6D00</color>
+    <color name="ripple">#82B1FF</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="error_red">#D50000</color>
+
+    <!--TODO: check out material text colors-->
     <color name="text_light_grey">#BBBBBB</color>
     <color name="text_medium_grey">#888</color>
     <color name="text_dark_grey">#555</color>
-    <color name="error_red">#D50000</color>
+
+    <color name="separator">#BBB</color>
 
 </resources>

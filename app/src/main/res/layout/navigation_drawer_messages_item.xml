@@ -2,16 +2,16 @@
 
 <!--Navigation drawer row with messages indicator -->
 
-<RelativeLayout style="@style/drawer_item_base"
+<RelativeLayout style="@style/DrawerItemBase"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/drawer_icon"
-        style="@style/drawer_icon" />
+        style="@style/DrawerIcon" />
 
     <TextView
         android:id="@+id/drawer_itemName"
-        style="@style/drawer_text" />
+        style="@style/DrawerText" />
 
     <!--Messages indicator -->
     <TextView

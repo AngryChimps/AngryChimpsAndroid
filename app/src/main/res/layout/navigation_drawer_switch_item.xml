@@ -2,7 +2,7 @@
 
 <!--Navigation drawer row with Material Design switch -->
 
-<RelativeLayout style="@style/drawer_item_base"
+<RelativeLayout style="@style/DrawerItemBase"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#f5f5f5"
     android:descendantFocusability="blocksDescendants">
@@ -10,16 +10,16 @@
     <!--The colored strip on the left side of the navigation drawer -->
     <View
         android:id="@+id/drawer_mode_color"
-        style="@style/drawer_mode_color" />
+        style="@style/DrawerModeColorStrip" />
 
     <TextView
         android:id="@+id/drawer_itemName"
-        style="@style/drawer_text"
+        style="@style/DrawerText"
         android:layout_marginLeft="16dp"
         android:textStyle="bold" />
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/drawer_switch"
-        style="@style/drawer_switch" />
+        style="@style/DrawerSwitch" />
 
 </RelativeLayout>
