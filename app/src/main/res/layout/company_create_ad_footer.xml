@@ -2,8 +2,8 @@
 
 <!--Footer for the Company Create Ad screen, everything below the time blocks  -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -11,141 +11,41 @@
     <Button
         android:id="@+id/bAddTimeBlock"
         style="@style/Widget.AppCompat.Button"
-        android:text="@string/add_time_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
         android:background="@color/primary"
-        android:textColor="@color/white"
-        android:layout_margin="@dimen/default_margin"
+        android:text="@string/add_time_block"
         android:textAllCaps="false"
-        android:layout_width="match_parent"
-        android:textSize="16sp"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+
+    <include layout="@layout/card_service_details"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card"
-        android:orientation="vertical">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/metServiceName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:hint="@string/service_name"
-            android:inputType="textCapSentences"
-            app:met_textColorHint="@color/text_material_secondary_light"
-            app:met_underlineColor="@color/text_material_secondary_light"
-            app:met_errorColor="@color/error_red"
-            app:met_floatingLabel="normal"
-            app:met_floatingLabelText="@string/service_name"
-            app:met_maxCharacters="80" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metDiscountedPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:hint="@string/discounted_price"
-                android:inputType="numberDecimal"
-                android:maxLength="7"
-                app:met_textColorHint="@color/text_material_secondary_light"
-                app:met_underlineColor="@color/text_material_secondary_light"
-                app:met_errorColor="@color/error_red"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelText="@string/discounted_price" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metOriginalPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:hint="@string/original_price"
-                android:inputType="numberDecimal"
-                android:maxLength="7"
-                app:met_textColorHint="@color/text_material_secondary_light"
-                app:met_underlineColor="@color/text_material_secondary_light"
-                app:met_errorColor="@color/error_red"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelText="@string/original_price" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metAdDuration"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:hint="@string/service_duration"
-                android:inputType="number"
-                android:lines="2"
-                android:maxLength="4"
-                app:met_textColorHint="@color/text_material_secondary_light"
-                app:met_underlineColor="@color/text_material_secondary_light"
-                app:met_errorColor="@color/error_red"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelText="@string/service_duration" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metAdTimeNotice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:hint="@string/service_time_notice"
-                android:inputType="number"
-                android:lines="2"
-                android:maxLength="4"
-                app:met_textColorHint="@color/text_material_secondary_light"
-                app:met_underlineColor="@color/text_material_secondary_light"
-                app:met_errorColor="@color/error_red"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelText="@string/service_time_notice" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginLeft="@dimen/default_extra_large_margin"
+            android:layout_marginRight="@dimen/default_tiny_margin"
             android:layout_weight="1"
             android:background="@color/white"
-            android:onClick="onCancel"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"/>
 
         <Button
             android:id="@+id/bNext"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginLeft="@dimen/default_tiny_margin"
+            android:layout_marginRight="@dimen/default_extra_large_margin"
             android:layout_weight="1"
             android:background="@color/accent"
             android:text="@string/next"

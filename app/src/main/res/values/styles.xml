@@ -35,6 +35,7 @@
 
     <style name="SpinnerButton" parent="Widget.AppCompat.Spinner.Underlined">
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_material_secondary_light</item>
         <item name="android:layout_marginRight">@dimen/default_small_margin</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>

@@ -2,54 +2,50 @@
 
 <!--Header for the Company Create Ad screen, everything above the time blocks  -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_card"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/metCompanyTitle"
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/title"
-        android:inputType="textCapSentences"
-        app:met_textColorHint="@color/text_material_secondary_light"
-        app:met_underlineColor="@color/text_material_secondary_light"
-        app:met_errorColor="@color/error_red"
-        app:met_floatingLabel="normal"
-        app:met_floatingLabelText="@string/title"
-        app:met_maxCharacters="140" />
+        android:orientation="vertical"
+        android:padding="@dimen/default_margin">
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/metCompanyDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:gravity="bottom|left"
-        android:hint="@string/description"
-        android:inputType="textMultiLine|textCapSentences"
-        android:minLines="4"
-        app:met_textColorHint="@color/text_material_secondary_light"
-        app:met_underlineColor="@color/text_material_secondary_light"
-        app:met_errorColor="@color/error_red"
-        app:met_floatingLabel="normal"
-        app:met_floatingLabelText="@string/description"
-        app:met_maxCharacters="840" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/metCompanyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title"
+            android:inputType="textCapSentences"
+            app:met_errorColor="@color/error_red"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="@string/title"
+            app:met_maxCharacters="140"
+            app:met_textColorHint="@color/text_material_secondary_light"
+            app:met_underlineColor="@color/text_material_secondary_light"/>
 
-    <Button
-        android:id="@+id/bCompanyCategory"
-        style="@style/SpinnerButton"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:text="@string/category"
-        android:textColor="@color/text_material_secondary_light"
-        android:textSize="18sp" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/metCompanyDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|left"
+            android:hint="@string/description"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="4"
+            app:met_errorColor="@color/error_red"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="@string/description"
+            app:met_maxCharacters="840"
+            app:met_textColorHint="@color/text_material_secondary_light"
+            app:met_underlineColor="@color/text_material_secondary_light"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/bCompanyCategory"
+            style="@style/SpinnerButton"
+            android:text="@string/category"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
