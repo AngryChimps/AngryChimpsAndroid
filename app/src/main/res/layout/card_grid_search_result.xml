@@ -64,7 +64,7 @@
             android:layout_toLeftOf="@id/tvCompanyDistance"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_location_grey"/>
+            android:src="@drawable/ic_location_on_grey600_24dp"/>
 
         <!--Company's service tagline -->
         <TextView

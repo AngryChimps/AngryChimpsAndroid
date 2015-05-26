@@ -6,21 +6,21 @@
     <item
         android:id="@+id/action_search"
         android:actionViewClass="android.widget.SearchView"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="1"
         android:title="Search"
         app:showAsAction="collapseActionView|ifRoom"/>
 
     <item
         android:id="@+id/action_map"
-        android:icon="@drawable/ic_location_white"
+        android:icon="@drawable/ic_location_on_white_24dp"
         android:orderInCategory="2"
         android:title="Map"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_filter"
-        android:icon="@drawable/ic_filter_list_white"
+        android:icon="@drawable/ic_filter_list_white_24dp"
         android:orderInCategory="3"
         android:title="Filter"
         app:showAsAction="ifRoom"/>

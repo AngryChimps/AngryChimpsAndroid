@@ -46,7 +46,7 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
         gridView.setOnItemClickListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setImageResource(R.drawable.ic_add_white);
+        fab.setImageResource(R.drawable.ic_add_white_24dp);
         fab.attachToListView(gridView, new ScrollDirectionListener() {
             @Override
             public void onScrollDown() {

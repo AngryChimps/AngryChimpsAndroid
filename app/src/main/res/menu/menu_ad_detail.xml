@@ -7,7 +7,7 @@
     <item
         android:id="@+id/action_favorite"
         android:actionViewClass="android.widget.SearchView"
-        android:icon="@drawable/ic_favorite_outline_white"
+        android:icon="@drawable/ic_favorite_outline_white_24dp"
         android:orderInCategory="1"
         android:title="Favorite"
         app:showAsAction="ifRoom"/>

@@ -214,21 +214,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the drawer's list view with items and onclick listener
         mDataList.add(new NavDrawerItem(R.drawable.photo, "Name Nameson", "example@email.com", null, R.layout.navigation_drawer_profile));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_explore_blue, "Explore deals near you", false, true, R.layout.navigation_drawer_item));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_messages_blue, "Messages", "2", R.layout.navigation_drawer_messages_item));
+        mDataList.add(new NavDrawerItem(R.drawable.ic_explore_blue_24dp, "Explore deals near you", false, true, R.layout.navigation_drawer_item));
+        mDataList.add(new NavDrawerItem(R.drawable.ic_messages_blue_24dp, "Messages", "2", R.layout.navigation_drawer_messages_item));
         if (serviceProviderMode) {
             mDataList.add(new NavDrawerItem("Provider Mode", R.layout.navigation_drawer_switch_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_add_dkblue, "Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_avail_dkblue, "Availability Manager", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_company_dkblue, "Company Profile Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavDrawerItem(R.drawable.ic_add_dkblue_24dp, "Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavDrawerItem(R.drawable.ic_avail_dkblue_24dp, "Availability Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavDrawerItem(R.drawable.ic_company_dkblue_24dp, "Company Profile Manager", true, true, R.layout.navigation_drawer_item));
         } else {
             mDataList.add(new NavDrawerItem("Consumer Mode", R.layout.navigation_drawer_switch_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_request_blue, "Request a Service", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_notification_blue, "Notification Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavDrawerItem(R.drawable.ic_request_blue_24dp, "Request a Service", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new NavDrawerItem(R.drawable.ic_notification_blue_24dp, "Notification Manager", true, true, R.layout.navigation_drawer_item));
         }
-        mDataList.add(new NavDrawerItem(R.drawable.ic_star_grey, "Rate this App", false, false, R.layout.navigation_drawer_item));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_help_grey, "Help!", false, false, R.layout.navigation_drawer_item));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_logout_grey, "Log Out", false, false, R.layout.navigation_drawer_item));
+        mDataList.add(new NavDrawerItem(R.drawable.ic_star_grey600_24dp, "Rate this App", false, false, R.layout.navigation_drawer_item));
+        mDataList.add(new NavDrawerItem(R.drawable.ic_help_grey600_24dp, "Help!", false, false, R.layout.navigation_drawer_item));
+        mDataList.add(new NavDrawerItem(R.drawable.ic_settings_power_grey600_24dp, "Log Out", false, false, R.layout.navigation_drawer_item));
 
         NavDrawerAdapter mAdapter = new NavDrawerAdapter(this, mDataList, serviceProviderMode);
         drawerList.setAdapter(mAdapter);
@@ -313,8 +313,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_favorite:
                 if (!isFavorite) {
-                    item.setIcon(R.drawable.ic_favorite_white);
-                } else item.setIcon(R.drawable.ic_favorite_outline_white);
+                    item.setIcon(R.drawable.ic_favorite_white_24dp);
+                } else item.setIcon(R.drawable.ic_favorite_outline_white_24dp);
                 isFavorite = !isFavorite;
                 return true;
         }

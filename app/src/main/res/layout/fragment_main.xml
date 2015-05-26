@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_request_white"
+        android:src="@drawable/ic_request_white_24dp"
         app:fab_colorNormal="@color/primary"
         app:fab_colorPressed="@color/primary_dark"
         app:fab_colorRipple="@color/ripple" />

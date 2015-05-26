@@ -37,7 +37,7 @@ public class CustomerMainFragment extends Fragment {
 
         //Set up the Floating Action Button
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setImageResource(R.drawable.ic_request_white);
+        fab.setImageResource(R.drawable.ic_request_white_24dp);
         fab.attachToListView(gridView, new ScrollDirectionListener() {
             @Override
             public void onScrollDown() {

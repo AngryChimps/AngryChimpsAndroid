@@ -38,7 +38,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/mapFrame"
             android:background="@drawable/button_outline_grey"
-            android:src="@drawable/ic_call_grey"/>
+            android:src="@drawable/ic_call_grey600_24dp"/>
 
         <TextView
             android:id="@+id/tvCompanyName"
@@ -111,7 +111,7 @@
             android:layout_below="@id/bReviews"
             android:layout_marginTop="@dimen/default_extra_large_margin"
             android:clickable="true"
-            android:drawableLeft="@drawable/ic_flag_grey"
+            android:drawableLeft="@drawable/ic_flag_grey600_24dp"
             android:drawablePadding="@dimen/default_small_margin"
             android:text="@string/ad_detail_flag_listing"
             android:textColor="@color/text_light_grey"
