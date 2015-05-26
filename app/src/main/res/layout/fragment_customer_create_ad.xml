@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/Caption"
+            style="@style/Caption.Padded"
             android:text="Title" />
 
         <EditText
@@ -23,7 +23,7 @@
             android:hint="What do you need?"/>
 
         <TextView
-            style="@style/Caption"
+            style="@style/Caption.Padded"
             android:text="Description" />
 
         <EditText
@@ -69,7 +69,7 @@
             android:visibility="gone">
 
             <TextView
-                style="@style/Caption"
+                style="@style/Caption.Padded"
                 android:text="Street Address" />
 
             <EditText
@@ -78,7 +78,7 @@
                 android:inputType="textPostalAddress" />
 
             <TextView
-                style="@style/Caption"
+                style="@style/Caption.Padded"
                 android:text="Street Address 2 (optional)" />
 
             <EditText
@@ -86,7 +86,7 @@
                 style="@style/TextField" />
 
             <TextView
-                style="@style/Caption"
+                style="@style/Caption.Padded"
                 android:text="Zipcode" />
 
             <EditText
@@ -96,7 +96,7 @@
         </LinearLayout>
 
         <TextView
-            style="@style/Caption"
+            style="@style/Caption.Padded"
             android:text="Available Starting At" />
 
         <LinearLayout
@@ -106,18 +106,18 @@
 
             <Button
                 android:id="@+id/bCustomerCreateAdStartDate"
-                style="@style/SpinnerDateButton"
+                style="@style/SpinnerButton.Date"
                 android:text="Today" />
 
             <Button
                 android:id="@+id/bCustomerCreateAdStartTime"
-                style="@style/SpinnerTimeButton"
+                style="@style/SpinnerButton.Time"
                 android:layout_marginLeft="0dp"
                 android:text="7:00pm" />
         </LinearLayout>
 
         <TextView
-            style="@style/Caption"
+            style="@style/Caption.Padded"
             android:text="Available Ending At" />
 
         <LinearLayout
@@ -127,18 +127,18 @@
 
             <Button
                 android:id="@+id/bCustomerCreateAdEndDate"
-                style="@style/SpinnerDateButton"
+                style="@style/SpinnerButton.Date"
                 android:text="Wed, Dec 31" />
 
             <Button
                 android:id="@+id/bCustomerCreateAdEndTime"
-                style="@style/SpinnerTimeButton"
+                style="@style/SpinnerButton.Time"
                 android:layout_marginLeft="0dp"
                 android:text="7:00pm" />
         </LinearLayout>
 
         <TextView
-            style="@style/Caption"
+            style="@style/Caption.Padded"
             android:text="Category" />
 
         <Button

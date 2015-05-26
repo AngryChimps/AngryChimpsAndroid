@@ -10,7 +10,7 @@
     android:orientation="vertical">
 
     <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/metCompanyCreateAdTitle"
+        android:id="@+id/metCompanyTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -26,7 +26,7 @@
         app:met_maxCharacters="140" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/metCompanyCreateAdDescription"
+        android:id="@+id/metCompanyDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -43,7 +43,7 @@
         app:met_maxCharacters="840" />
 
     <Button
-        android:id="@+id/bCompanyCreateAdCategory"
+        android:id="@+id/bCompanyCategory"
         style="@style/SpinnerButton"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="12dp"

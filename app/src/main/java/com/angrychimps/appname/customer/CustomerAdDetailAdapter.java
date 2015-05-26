@@ -11,17 +11,17 @@ import android.widget.TextView;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.models.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 class CustomerAdDetailAdapter extends ArrayAdapter<Service> {
 
     private final LayoutInflater layoutInflater;
-    private final ArrayList<Service> arrayList;
+    private final List<Service> list;
 
-    public CustomerAdDetailAdapter(Context context, ArrayList<Service> arrayList) {
-        super(context, android.R.layout.simple_list_item_1, arrayList);
+    public CustomerAdDetailAdapter(Context context, List<Service> list) {
+        super(context, android.R.layout.simple_list_item_1, list);
         this.layoutInflater = LayoutInflater.from(context);
-        this.arrayList = arrayList;
+        this.list = list;
     }
 
     @Override
@@ -44,11 +44,12 @@ class CustomerAdDetailAdapter extends ArrayAdapter<Service> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tvAdDetailDescription.setText(arrayList.get(position).getDescription());
-        viewHolder.tvAdDetailTitle.setText(arrayList.get(position).getName());
-        viewHolder.tvAdDetailPrice.setText("" + (int) arrayList.get(position).getDiscounted_price());
-        if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvAdDetailPriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());
-        viewHolder.tvAdDetailDiscount.setText("     " + arrayList.get(position).getDiscount() + "%\ndiscount");
+        viewHolder.tvAdDetailDescription.setText(list.get(position).getDescription());
+        viewHolder.tvAdDetailTitle.setText(list.get(position).getName());
+        viewHolder.tvAdDetailPrice.setText("" + (int) list.get(position).getDiscounted_price());
+        if (list.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvAdDetailPriceDecimal.setText(""
+                + list.get(position).getDiscounted_price_decimal());
+        viewHolder.tvAdDetailDiscount.setText("     " + list.get(position).getDiscount() + "%\ndiscount");
 
         return convertView;
     }

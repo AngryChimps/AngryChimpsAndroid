@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Time block list items for the company create ad screen  -->
+
+<android.support.v7.widget.CardView
+    style="@style/Card.List"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+    <ImageButton
+        android:id="@+id/bRemoveTimeBlock"
+        style="@style/Widget.AppCompat.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_close_grey600_24dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/default_margin">
+
+        <TextView
+            android:id="@+id/tvAvailableTimeBlocks"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/available_time_blocks"
+            android:textColor="@color/primary"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <TextView
+            style="@style/Caption"
+            android:text="@string/from"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bStartDate"
+                style="@style/SpinnerButton.Date"/>
+
+            <Button
+                android:id="@+id/bStartTime"
+                style="@style/SpinnerButton.Time"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/Caption"
+            android:text="@string/to"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bEndDate"
+                style="@style/SpinnerButton.Date"/>
+
+            <Button
+                android:id="@+id/bEndTime"
+                style="@style/SpinnerButton.Time"/>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/textView5"
-                style="@style/Caption"
+                style="@style/Caption.Padded"
                 android:paddingBottom="0dp"
                 android:text="5 Miles" />
 
@@ -64,7 +64,7 @@
 
             <TextView
                 android:id="@+id/textView6"
-                style="@style/Caption"
+                style="@style/Caption.Padded"
                 android:text="Near" />
 
             <Button
@@ -101,7 +101,7 @@
                 android:text="Availability" />
 
             <TextView
-                style="@style/Caption"
+                style="@style/Caption.Padded"
                 android:text="From" />
 
             <LinearLayout
@@ -111,18 +111,18 @@
 
                 <Button
                     android:id="@+id/bFilterFromDate"
-                    style="@style/SpinnerDateButton"
+                    style="@style/SpinnerButton.Date"
                     android:text="Today" />
 
                 <Button
                     android:id="@+id/bFilterFromTime"
-                    style="@style/SpinnerTimeButton"
+                    style="@style/SpinnerButton.Time"
                     android:layout_marginLeft="0dp"
                     android:text="7:00pm" />
             </LinearLayout>
 
             <TextView
-                style="@style/Caption"
+                style="@style/Caption.Padded"
                 android:text="To" />
 
             <LinearLayout
@@ -132,12 +132,12 @@
 
                 <Button
                     android:id="@+id/bFilterToDate"
-                    style="@style/SpinnerDateButton"
+                    style="@style/SpinnerButton.Date"
                     android:text="Sat, Jan 3" />
 
                 <Button
                     android:id="@+id/bFilterToTime"
-                    style="@style/SpinnerTimeButton"
+                    style="@style/SpinnerButton.Time"
                     android:layout_marginLeft="0dp"
                     android:text="7:00pm" />
             </LinearLayout>

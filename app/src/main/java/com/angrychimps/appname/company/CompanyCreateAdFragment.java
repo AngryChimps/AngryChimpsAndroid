@@ -8,17 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.models.Availabilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     First page when the user clicks to create an ad from the company main fragment
  */
 
 public class CompanyCreateAdFragment extends Fragment {
+
+    List<Availabilities> list;
+    CompanyCreateAdTimeBlockListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,26 +39,27 @@ public class CompanyCreateAdFragment extends Fragment {
         listView.addHeaderView(header, null, false);
         listView.addFooterView(footer, null, false);
 
-        final CompanyCreateAdTimeBlockListAdapter adapter = new CompanyCreateAdTimeBlockListAdapter(getActivity());
-        adapter.add("new");
+        list = new ArrayList<>();
+        list.add(new Availabilities());
+        adapter = new CompanyCreateAdTimeBlockListAdapter(getActivity(), list);
         listView.setAdapter(adapter);
 
-        EditText metCompanyCreateAdTitle = (EditText) header.findViewById(R.id.metCompanyCreateAdTitle);
-        EditText metCompanyCreateAdDescription = (EditText) header.findViewById(R.id.metCompanyCreateAdDescription);
-        Button bCompanyCreateAdCategory = (Button) header.findViewById(R.id.bCompanyCreateAdCategory);
+        EditText metCompanyTitle = (EditText) header.findViewById(R.id.metCompanyTitle);
+        EditText metCompanyDescription = (EditText) header.findViewById(R.id.metCompanyDescription);
+        Button bCompanyCategory = (Button) header.findViewById(R.id.bCompanyCategory);
 
-        FrameLayout bCompanyCreateAdTimeBlock = (FrameLayout) footer.findViewById(R.id.bCompanyCreateAdAddTimeBlock);
-        EditText metCompanyCreateAdServiceName = (EditText) footer.findViewById(R.id.metCompanyCreateAdServiceName);
-        EditText metCompanyCreateAdDiscountedPrice = (EditText) footer.findViewById(R.id.metCompanyCreateAdDiscountedPrice);
-        EditText metCompanyCreateAdOriginalPrice = (EditText) footer.findViewById(R.id.metCompanyCreateAdOriginalPrice);
-        EditText metCompanyCreateAdDuration = (EditText) footer.findViewById(R.id.metCompanyCreateAdDuration);
-        EditText metCompanyCreateAdTimeNotice = (EditText) footer.findViewById(R.id.metCompanyCreateAdTimeNotice);
-        Button bCompanyCreateAdNext = (Button) footer.findViewById(R.id.bCompanyCreateAdNext);
+        Button bAddTimeBlock = (Button) footer.findViewById(R.id.bAddTimeBlock);
+        EditText metServiceName = (EditText) footer.findViewById(R.id.metServiceName);
+        EditText metDiscountedPrice = (EditText) footer.findViewById(R.id.metDiscountedPrice);
+        EditText metOriginalPrice = (EditText) footer.findViewById(R.id.metOriginalPrice);
+        EditText metAdDuration = (EditText) footer.findViewById(R.id.metAdDuration);
+        EditText metAdTimeNotice = (EditText) footer.findViewById(R.id.metAdTimeNotice);
+        Button bNext = (Button) footer.findViewById(R.id.bNext);
 
-        bCompanyCreateAdTimeBlock.setOnClickListener(new View.OnClickListener() {
+        bAddTimeBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.add("new");
+                list.add(new Availabilities());
                 adapter.notifyDataSetChanged();
             }
         });

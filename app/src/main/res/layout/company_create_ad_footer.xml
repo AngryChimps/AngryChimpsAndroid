@@ -8,25 +8,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/bCompanyCreateAdAddTimeBlock"
+    <Button
+        android:id="@+id/bAddTimeBlock"
+        style="@style/Widget.AppCompat.Button"
+        android:text="@string/add_time_block"
+        android:background="@color/primary"
+        android:textColor="@color/white"
+        android:layout_margin="@dimen/default_margin"
+        android:textAllCaps="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/bg_card">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawablePadding="8dp"
-            android:drawableRight="@drawable/ic_add_circle_blue"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:text="@string/add_time_block"
-            android:textColor="@color/primary"
-            android:textSize="20sp" />
-    </FrameLayout>
+        android:textSize="16sp"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +27,7 @@
         android:orientation="vertical">
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/metCompanyCreateAdServiceName"
+            android:id="@+id/metServiceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -56,7 +48,7 @@
             android:orientation="horizontal">
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metCompanyCreateAdDiscountedPrice"
+                android:id="@+id/metDiscountedPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -73,7 +65,7 @@
                 app:met_floatingLabelText="@string/discounted_price" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metCompanyCreateAdOriginalPrice"
+                android:id="@+id/metOriginalPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -96,7 +88,7 @@
             android:orientation="horizontal">
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metCompanyCreateAdDuration"
+                android:id="@+id/metAdDuration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -112,7 +104,7 @@
                 app:met_floatingLabelText="@string/service_duration" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/metCompanyCreateAdTimeNotice"
+                android:id="@+id/metAdTimeNotice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -149,7 +141,7 @@
             android:text="@string/cancel" />
 
         <Button
-            android:id="@+id/bCompanyCreateAdNext"
+            android:id="@+id/bNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
