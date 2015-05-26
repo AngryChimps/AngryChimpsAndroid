@@ -8,12 +8,16 @@ public class SignupRegisterProviderAdPostRequestPayload {
 
     @JsonField
     Availabilities availabilities;
+
     @JsonField
     Service services;
+
     @JsonField
     private String ad_title;
+
     @JsonField
     private String ad_description;
+
     @JsonField
     private String category_id;
 

@@ -8,6 +8,7 @@ public class CalendarGetResponsePayload {
 
     @JsonField
     Availabilities availabilities;
+
     @JsonField
     private String name;
 

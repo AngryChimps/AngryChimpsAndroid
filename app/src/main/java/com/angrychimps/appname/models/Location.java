@@ -8,12 +8,16 @@ public class Location {
 
     @JsonField
     Address address;
+
     @JsonField
     private String id;
+
     @JsonField
     private String name;
+
     @JsonField
     private String phone;
+
     @JsonField
     private String is_mobile;
 

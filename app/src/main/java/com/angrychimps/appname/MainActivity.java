@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 return R.id.toolbar;
             }
         };
-        materialMenu.setNeverDrawTouch(true);
 
         initiateNavigationDrawer();
 

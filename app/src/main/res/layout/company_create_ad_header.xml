@@ -18,10 +18,12 @@
         android:layout_marginTop="8dp"
         android:hint="@string/title"
         android:inputType="textCapSentences"
-        app:errorColor="@color/error_red"
-        app:floatingLabel="normal"
-        app:floatingLabelText="@string/title"
-        app:maxCharacters="140" />
+        app:met_textColorHint="@color/text_material_secondary_light"
+        app:met_underlineColor="@color/text_material_secondary_light"
+        app:met_errorColor="@color/error_red"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/title"
+        app:met_maxCharacters="140" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/metCompanyCreateAdDescription"
@@ -33,10 +35,12 @@
         android:hint="@string/description"
         android:inputType="textMultiLine|textCapSentences"
         android:minLines="4"
-        app:errorColor="@color/error_red"
-        app:floatingLabel="normal"
-        app:floatingLabelText="@string/description"
-        app:maxCharacters="840" />
+        app:met_textColorHint="@color/text_material_secondary_light"
+        app:met_underlineColor="@color/text_material_secondary_light"
+        app:met_errorColor="@color/error_red"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelText="@string/description"
+        app:met_maxCharacters="840" />
 
     <Button
         android:id="@+id/bCompanyCreateAdCategory"

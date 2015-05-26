@@ -3,33 +3,31 @@ package com.angrychimps.appname.models;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
-import java.util.Date;
-
 @JsonObject
 public class Availabilities {
 
     @JsonField
-    Date start;
+    private String start;
 
     @JsonField
-    Date end;
+    private String end;
 
     public Availabilities() {
     }
 
-    public Date getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 }

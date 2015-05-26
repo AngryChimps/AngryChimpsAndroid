@@ -43,10 +43,12 @@
             android:layout_marginTop="8dp"
             android:hint="@string/service_name"
             android:inputType="textCapSentences"
-            app:errorColor="@color/error_red"
-            app:floatingLabel="normal"
-            app:floatingLabelText="@string/service_name"
-            app:maxCharacters="80" />
+            app:met_textColorHint="@color/text_material_secondary_light"
+            app:met_underlineColor="@color/text_material_secondary_light"
+            app:met_errorColor="@color/error_red"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="@string/service_name"
+            app:met_maxCharacters="80" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,9 +66,11 @@
                 android:hint="@string/discounted_price"
                 android:inputType="numberDecimal"
                 android:maxLength="7"
-                app:errorColor="@color/error_red"
-                app:floatingLabel="normal"
-                app:floatingLabelText="@string/discounted_price" />
+                app:met_textColorHint="@color/text_material_secondary_light"
+                app:met_underlineColor="@color/text_material_secondary_light"
+                app:met_errorColor="@color/error_red"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/discounted_price" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/metCompanyCreateAdOriginalPrice"
@@ -79,9 +83,11 @@
                 android:hint="@string/original_price"
                 android:inputType="numberDecimal"
                 android:maxLength="7"
-                app:errorColor="@color/error_red"
-                app:floatingLabel="normal"
-                app:floatingLabelText="@string/original_price" />
+                app:met_textColorHint="@color/text_material_secondary_light"
+                app:met_underlineColor="@color/text_material_secondary_light"
+                app:met_errorColor="@color/error_red"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/original_price" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,9 +105,11 @@
                 android:inputType="number"
                 android:lines="2"
                 android:maxLength="4"
-                app:errorColor="@color/error_red"
-                app:floatingLabel="normal"
-                app:floatingLabelText="@string/service_duration" />
+                app:met_textColorHint="@color/text_material_secondary_light"
+                app:met_underlineColor="@color/text_material_secondary_light"
+                app:met_errorColor="@color/error_red"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/service_duration" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/metCompanyCreateAdTimeNotice"
@@ -113,9 +121,11 @@
                 android:inputType="number"
                 android:lines="2"
                 android:maxLength="4"
-                app:errorColor="@color/error_red"
-                app:floatingLabel="normal"
-                app:floatingLabelText="@string/service_time_notice" />
+                app:met_textColorHint="@color/text_material_secondary_light"
+                app:met_underlineColor="@color/text_material_secondary_light"
+                app:met_errorColor="@color/error_red"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/service_time_notice" />
 
         </LinearLayout>
 
