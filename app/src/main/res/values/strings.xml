@@ -5,10 +5,6 @@
 <resources>
 
     <string name="app_name">Angry Chimps</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="open">Open</string>
-    <string name="closed">Closed</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="service_name">Service Name</string>
@@ -19,7 +15,6 @@
 
     <item name="container_id" type="id">12345</item>
 
-    <string name="title_activity_search">SearchActivity</string>
     <string name="dollar_sign">$</string>
     <string name="from">From</string>
     <string name="available_time_blocks">Available Time Blocks</string>
