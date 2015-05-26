@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Ad detail list item  -->
+
+<android.support.v7.widget.CardView
+    style="@style/Card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--Blue strip along left side  -->
+        <View
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:background="@color/primary"/>
+
+        <!--Title and description  -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_small_margin"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvAdDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_small_margin"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
+                tools:text="New patient special"/>
+
+            <TextView
+                android:id="@+id/tvAdDetailDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="This service cleans your teeth and offers x-rays to find cavities"/>
+        </LinearLayout>
+
+        <!--Vertical separator between title + description and price  -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/default_small_margin"
+            android:layout_marginTop="@dimen/default_small_margin"
+            android:background="@color/separator"/>
+
+        <!--Price and discount -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_small_margin"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/PriceText.DollarSign"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/default_tiny_margin"
+                    android:gravity="center_vertical"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tvAdDetailPrice"
+                    style="@style/PriceText.Price"
+                    android:textSize="28sp"
+                    tools:text="79"/>
+
+                <TextView
+                    android:id="@+id/tvAdDetailPriceDecimal"
+                    style="@style/PriceText.Decimal"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    tools:text="95"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAdDetailDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="     30%\ndiscount"/>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

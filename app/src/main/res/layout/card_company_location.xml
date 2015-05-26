@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Company location information -->
+
+<android.support.v7.widget.CardView
+    style="@style/Card.List"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_margin">
+
+        <FrameLayout
+            android:id="@+id/mapFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_large_margin"
+            android:layout_marginTop="@dimen/default_small_margin"
+            android:background="@drawable/map_outline">
+
+            <com.angrychimps.appname.widgets.AnimatedNetworkImageView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/map_height"
+                android:layout_margin="@dimen/map_border"
+                android:scaleType="centerCrop"/>
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/bCallCompany"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/mapFrame"
+            android:background="@drawable/button_outline_grey"
+            android:src="@drawable/ic_call_grey"/>
+
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mapFrame"
+            android:clickable="true"
+            android:textStyle="bold"
+            tools:text="Company Name"/>
+
+        <TextView
+            android:id="@+id/tvCompanyAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCompanyName"
+            android:clickable="true"
+            tools:text="2840 Mission Street\nSuite #326\nSan Francisco, CA 94410"/>
+
+        <TextView
+            android:id="@+id/tvCompanyDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCompanyAddress"
+            android:layout_marginBottom="@dimen/default_small_margin"
+            android:layout_marginLeft="@dimen/text_separation"
+            android:layout_marginTop="@dimen/text_separation"
+            android:textColor="@color/primary"
+            android:textStyle="italic"
+            tools:text="0.9 miles"/>
+
+        <Space
+            android:id="@+id/center"
+            style="@style/CenteredSpace"/>
+
+        <com.angrychimps.appname.widgets.FlexibleRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCompanyDistance"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_toLeftOf="@id/center"
+            android:stepSize="0.5"/>
+
+        <Button
+            android:id="@+id/bReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCompanyDistance"
+            android:layout_toRightOf="@id/center"
+            android:background="@drawable/button_outline"
+            android:minHeight="0dp"
+            android:padding="@dimen/default_small_margin"
+            android:textAllCaps="false"
+            android:textColor="@color/primary"
+            android:textStyle="normal"
+            tools:text="2 Reviews"/>
+
+        <View
+            style="@style/Separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/bReviews"
+            android:layout_marginTop="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/tvFlagListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bReviews"
+            android:layout_marginTop="@dimen/default_extra_large_margin"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_flag_grey"
+            android:drawablePadding="@dimen/default_small_margin"
+            android:text="@string/ad_detail_flag_listing"
+            android:textColor="@color/text_light_grey"
+            android:textStyle="italic"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -6,15 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
+import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
 import java.util.ArrayList;
 
@@ -45,12 +45,12 @@ class StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseResults> {
 
         // Reuse views
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.gridlayout_search_result, parent, false);
+            convertView = layoutInflater.inflate(R.layout.card_grid_search_result, parent, false);
 
             // Configure ViewHolder
             viewHolder = new ViewHolder();
             viewHolder.imageCompanyMain = (AnimatedNetworkImageView) convertView.findViewById(R.id.imageCompanyMain);
-            viewHolder.rbCompany = (RatingBar) convertView.findViewById(R.id.ratingBarCompany);
+            viewHolder.rbCompany = (FlexibleRatingBar) convertView.findViewById(R.id.ratingBar);
             viewHolder.tvCompanyDistance = (TextView) convertView.findViewById(R.id.tvCompanyDistance);
             viewHolder.tvCompanyTitle = (TextView) convertView.findViewById(R.id.tvCompanyTitle);
             viewHolder.tvCompanyServicePrice = (TextView) convertView.findViewById(R.id.tvCompanyServicePrice);
@@ -76,6 +76,6 @@ class StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseResults> {
     static class ViewHolder {
         AnimatedNetworkImageView imageCompanyMain;
         TextView tvCompanyDistance, tvCompanyTitle, tvCompanyServicePrice, tvCompanyServiceDiscount, tvCompanyServicePriceDecimal;
-        RatingBar rbCompany;
+        FlexibleRatingBar rbCompany;
     }
 }

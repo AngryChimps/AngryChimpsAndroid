@@ -14,7 +14,9 @@
     <dimen name="default_tiny_margin">4dp</dimen>
 
     <dimen name="card_padding">16dp</dimen>
-    <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_margin_default">16dp</dimen>
+    <dimen name="card_margin_list">8dp</dimen>
+    <dimen name="card_margin_grid">4dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
 
     <dimen name="app_bar_elevation">4dp</dimen>
@@ -22,6 +24,12 @@
     <dimen name="divider">0.7dp</dimen>
 
     <dimen name="navigation_drawer_profile_image">64dp</dimen>
+
+    <dimen name="text_separation">2dp</dimen>
+    <dimen name="map_padding">20dp</dimen>
+    <dimen name="map_height">160dp</dimen>
+    <dimen name="map_border">2dp</dimen>
+    <dimen name="company_call_button_padding">6dp</dimen>
 
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_size_mini">40dp</dimen>

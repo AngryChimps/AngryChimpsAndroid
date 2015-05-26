@@ -1,180 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Ad Detail screen header -->
+<!--Ad detail screen header -->
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!--Contains company images to swipe between -->
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewPagerAdDetailImage"
+        android:id="@+id/viewPagerCompanyImages"
         android:layout_width="match_parent"
         android:layout_height="250dp"/>
 
+    <!--Indicator visible only if there are multiple images to page between -->
     <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/circleIndicatorAdDetail"
+        android:id="@+id/circleIndicator"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="-30dp"
         android:visibility="invisible"/>
 
+    <!--Company tagline
+    Padding and white background are used here so the background of the rest of the layout can be light grey for cards-->
     <TextView
-        android:id="@+id/tvAdDetailCompanyTagLine"
+        android:id="@+id/tvCompanyTagLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        android:paddingTop="@dimen/default_small_margin"
         android:textColor="@color/primary"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        tools:text="New Customer Special: Basic Cleaning With X-Rays"/>
 
+    <!--Company details. If longer than 3 or 4 lines, it fades out toward the bottom and animates out when clicked  -->
     <TextView
-        android:id="@+id/tvAdDetailCompanyDetails"
+        android:id="@+id/tvCompanyDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:clickable="true"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"/>
+        android:paddingBottom="@dimen/default_margin"
+        android:paddingLeft="@dimen/default_margin"
+        android:paddingRight="@dimen/default_margin"
+        android:paddingTop="@dimen/default_small_margin"
+        tools:text="This is a very long description"/>
 
+    <!--Divider gives the bottom of the card a hard edge -->
     <View style="@style/Divider"/>
 
+    <!--Service item replaced by service cards- TODO: Replace this functionality with a RecyclerView -->
     <LinearLayout
         android:id="@+id/serviceItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="@dimen/default_small_margin"
+        android:layout_marginRight="@dimen/default_small_margin"
+        android:layout_marginTop="@dimen/default_small_margin"
         android:orientation="vertical"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_card"
-        android:paddingBottom="16dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp">
+    <!--Card with company location and contact information and a static map -->
+    <include layout="@layout/card_company_location"/>
 
-        <FrameLayout
-            android:id="@+id/mapFrameAdDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/map_outline">
-
-            <com.angrychimps.appname.widgets.AnimatedNetworkImageView
-                android:id="@+id/mapAdDetail"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_margin="2dp"
-                android:scaleType="centerCrop"/>
-        </FrameLayout>
-
-        <ImageButton
-            android:id="@+id/bAdDetailCall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/mapFrameAdDetail"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/button_outline_grey"
-            android:padding="6dp"
-            android:scaleX="1.2"
-            android:scaleY="1.2"
-            android:src="@drawable/ic_call_grey"/>
-
-        <TextView
-            android:id="@+id/tvAdDetailCompanyName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mapFrameAdDetail"
-            android:clickable="true"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/tvAdDetailCompanyAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvAdDetailCompanyName"
-            android:clickable="true"/>
-
-        <TextView
-            android:id="@+id/tvAdDetailCompanyDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvAdDetailCompanyAddress"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/primary"
-            android:textStyle="italic"/>
-
-        <LinearLayout
-            android:id="@+id/layoutReviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvAdDetailCompanyDistance"
-            android:orientation="horizontal">
-
-            <com.angrychimps.appname.widgets.FlexibleRatingBar
-                android:id="@+id/ratingBarAdDetail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="2"
-                android:stepSize="0.5"/>
-
-            <Button
-                android:id="@+id/bAdDetailReviews"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_weight="3"
-                android:background="@drawable/button_outline"
-                android:minHeight="0dp"
-                android:padding="8dp"
-                android:textAllCaps="false"
-                android:textColor="@color/primary"
-                android:textStyle="normal"/>
-        </LinearLayout>
-
-        <View
-            style="@style/Separator"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/layoutReviews"
-            android:layout_marginTop="16dp"/>
-
-        <TextView
-            android:id="@+id/tvAdDetailFlagListing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layoutReviews"
-            android:layout_marginTop="33dp"
-            android:clickable="true"
-            android:drawableLeft="@drawable/ic_flag_grey"
-            android:drawablePadding="8dp"
-            android:text="@string/ad_detail_flag_listing"
-            android:textColor="@color/text_light_grey"
-            android:textStyle="italic"/>
-    </RelativeLayout>
-
+    <!--Staggered grid below this -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/default_small_margin"
         android:gravity="center_horizontal"
         android:text="@string/popular_deals"
         android:textColor="@color/primary"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Ad detail screen -->
+<!--Ad detail screen TODO: Replace with recyclerview-->
 
 <com.etsy.android.grid.StaggeredGridView
     android:id="@+id/gridViewAdDetail"

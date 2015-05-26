@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -30,6 +29,7 @@ import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
+import com.angrychimps.appname.widgets.FlexibleRatingBar;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.etsy.android.grid.StaggeredGridView;
 
@@ -54,34 +54,33 @@ public class CustomerAdDetailFragment extends Fragment {
 
         MainActivity.setMenu(R.menu.menu_ad_detail);
 
-        final StaggeredGridView gridViewAdDetail = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
-        final ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridViewAdDetail, false);
-        gridViewAdDetail.addHeaderView(header, null, false);
+        final StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
+        final ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridView, false);
+        gridView.addHeaderView(header, null, false);
 
-        final ViewPager pager = (ViewPager) header.findViewById(R.id.viewPagerAdDetailImage);
-        final TextView tvAdDetailCompanyTagLine = (TextView) header.findViewById(R.id.tvAdDetailCompanyTagLine);
-        final TextView tvAdDetailCompanyDetails = (TextView) header.findViewById(R.id.tvAdDetailCompanyDetails);
-        final AnimatedNetworkImageView mapAdDetail = (AnimatedNetworkImageView) header.findViewById(R.id.mapAdDetail);
+        final ViewPager pager = (ViewPager) header.findViewById(R.id.viewPagerCompanyImages);
+        final TextView tvCompanyTagLine = (TextView) header.findViewById(R.id.tvCompanyTagLine);
+        final TextView tvCompanyDetails = (TextView) header.findViewById(R.id.tvCompanyDetails);
+        final AnimatedNetworkImageView map = (AnimatedNetworkImageView) header.findViewById(R.id.map);
 
         String coordinates = getArguments().getDouble("lat")+","+ getArguments().getDouble("lon");
         String color = "0x"+Integer.toHexString(getResources().getColor(R.color.primary)).substring(2);
-        mapAdDetail.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center="+coordinates+
-                "&zoom=15&size=340x200"+"&markers=color:"+color+"%7C"+coordinates+
-                "&scale=2&format=jpeg",VolleySingleton.getInstance().getImageLoader());
-        mapAdDetail.setOnClickListener(new View.OnClickListener() {
+        map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
+                + color + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.getInstance().getImageLoader());
+        map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchNavigation();
             }
         });
 
-        final ImageButton bAdDetailCall = (ImageButton) header.findViewById(R.id.bAdDetailCall);
-        final TextView tvAdDetailCompanyName = (TextView) header.findViewById(R.id.tvAdDetailCompanyName);
-        final TextView tvAdDetailCompanyAddress = (TextView) header.findViewById(R.id.tvAdDetailCompanyAddress);
-        final TextView tvAdDetailCompanyDistance = (TextView) header.findViewById(R.id.tvAdDetailCompanyDistance);
-        final RatingBar ratingBarAdDetail = (RatingBar) header.findViewById(R.id.ratingBarAdDetail);
-        final Button bAdDetailReviews = (Button) header.findViewById(R.id.bAdDetailReviews);
-        final TextView tvAdDetailFlagListing = (TextView) header.findViewById(R.id.tvAdDetailFlagListing);
+        final ImageButton bCallCompany = (ImageButton) header.findViewById(R.id.bCallCompany);
+        final TextView tvCompanyName = (TextView) header.findViewById(R.id.tvCompanyName);
+        final TextView tvCompanyAddress = (TextView) header.findViewById(R.id.tvCompanyAddress);
+        final TextView tvCompanyDistance = (TextView) header.findViewById(R.id.tvCompanyDistance);
+        final FlexibleRatingBar ratingBar = (FlexibleRatingBar) header.findViewById(R.id.ratingBar);
+        final Button bReviews = (Button) header.findViewById(R.id.bReviews);
+        final TextView tvFlagListing = (TextView) header.findViewById(R.id.tvFlagListing);
 
         request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "providerAdImmutable/" +
                 this.getArguments().getString("id"), new Response.Listener<JSONObject>() {
@@ -99,34 +98,34 @@ public class CustomerAdDetailFragment extends Fragment {
                     MainActivity.setToolbarTitle(result.getCompany().getName());
 
                     pager.setAdapter(new ViewPagerAdapter(getActivity(), result.getPhotos()));
-                    CircleIndicator indicator = (CircleIndicator) header.findViewById(R.id.circleIndicatorAdDetail);
+                    CircleIndicator indicator = (CircleIndicator) header.findViewById(R.id.circleIndicator);
                     indicator.setViewPager(pager);
                     if (result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
 
-                    tvAdDetailCompanyTagLine.setText(result.getTitle());
-                    tvAdDetailCompanyDetails.setText(result.getDescription());
+                    tvCompanyTagLine.setText(result.getTitle());
+                    tvCompanyDetails.setText(result.getDescription());
 
                     //Make text fade out if too long. Click to make visible
-                    if (tvAdDetailCompanyDetails.length() > 280) {
+                    if (tvCompanyDetails.length() > 280) {
                         //Shader makes the text fade out toward the bottom
-                        final Shader textShader = new LinearGradient(0, tvAdDetailCompanyDetails.getLineHeight() * 4, 0, 0, new int[]{Color.TRANSPARENT, Color.BLACK},
+                        final Shader textShader = new LinearGradient(0, tvCompanyDetails.getLineHeight() * 4, 0, 0, new int[]{Color.TRANSPARENT, Color.BLACK},
                                 new float[]{0, 1}, Shader.TileMode.CLAMP);
-                        tvAdDetailCompanyDetails.getPaint().setShader(textShader);
-                        tvAdDetailCompanyDetails.setMaxLines(4);
-                        tvAdDetailCompanyDetails.setOnClickListener(new View.OnClickListener() {
+                        tvCompanyDetails.getPaint().setShader(textShader);
+                        tvCompanyDetails.setMaxLines(4);
+                        tvCompanyDetails.setOnClickListener(new View.OnClickListener() {
                             ObjectAnimator animation;
                             boolean isExpanded = false;
 
                             @Override
                             public void onClick(View v) {
                                 if (isExpanded) {
-                                    tvAdDetailCompanyDetails.getPaint().setShader(null);
-                                    animation = ObjectAnimator.ofInt(tvAdDetailCompanyDetails, "maxLines", 30);
+                                    tvCompanyDetails.getPaint().setShader(null);
+                                    animation = ObjectAnimator.ofInt(tvCompanyDetails, "maxLines", 30);
                                     animation.setDuration(100).start();
                                 } else {
-                                    animation = ObjectAnimator.ofInt(tvAdDetailCompanyDetails, "maxLines", 4);
+                                    animation = ObjectAnimator.ofInt(tvCompanyDetails, "maxLines", 4);
                                     animation.setDuration(100).start();
-                                    tvAdDetailCompanyDetails.getPaint().setShader(textShader);
+                                    tvCompanyDetails.getPaint().setShader(textShader);
                                 }
                                 isExpanded = !isExpanded;
                             }
@@ -140,8 +139,8 @@ public class CustomerAdDetailFragment extends Fragment {
                         serviceItem.addView(item);
                     }
                     address = result.getAddress();
-                    tvAdDetailCompanyName.setText(result.getCompany().getName());
-                    tvAdDetailCompanyName.setOnClickListener(new View.OnClickListener() {
+                    tvCompanyName.setText(result.getCompany().getName());
+                    tvCompanyName.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             launchNavigation();
@@ -150,18 +149,18 @@ public class CustomerAdDetailFragment extends Fragment {
 
                     String street2 = "";
                     if (address.getStreet2() != null) street2 = address.getStreet2() + "\n";
-                    tvAdDetailCompanyAddress.setText(address.getStreet1() + "\n" + street2 + address.getCity() +
+                    tvCompanyAddress.setText(address.getStreet1() + "\n" + street2 + address.getCity() +
                             ", " + address.getState() + " " + address.getZip());
-                    tvAdDetailCompanyAddress.setOnClickListener(new View.OnClickListener() {
+                    tvCompanyAddress.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             launchNavigation();
                         }
                     });
-                    tvAdDetailCompanyDistance.setText(String.format("%.1f", getArguments().getDouble("distance")) + " miles");
+                    tvCompanyDistance.setText(String.format("%.1f", getArguments().getDouble("distance")) + " miles");
 
-                    ratingBarAdDetail.setRating(result.getRating());
-                    bAdDetailReviews.setText(result.getRating_count() + " Reviews");
+                    ratingBar.setRating(result.getRating());
+                    bReviews.setText(result.getRating_count() + " Reviews");
 
                 } catch (JSONException e) {
                     Log.i(null, "JsonObjectRequest error");
@@ -189,7 +188,7 @@ public class CustomerAdDetailFragment extends Fragment {
         VolleySingleton.getInstance().addToRequestQueue(request);
 
         JsonRequestObjectBuilder object = new JsonRequestObjectBuilder(getActivity());
-        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridViewAdDetail, object.getJsonObject());
+        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
         builder.getResults();
 
         return rootView;
