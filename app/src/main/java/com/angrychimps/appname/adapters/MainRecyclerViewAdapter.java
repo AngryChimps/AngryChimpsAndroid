@@ -6,16 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
-import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
 import java.util.ArrayList;
@@ -40,18 +39,10 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    //TODO: precache images
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        int imageHeightArrayList = arrayList.get(position).getImageHeight();
-        if(imageHeightArrayList > 0) viewHolder.imageCompanyMain.setMinimumHeight(imageHeightArrayList);
         viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
-        viewHolder.imageCompanyMain.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                arrayList.get(position).setImageHeight(viewHolder.imageCompanyMain.getHeight());
-                return true;
-            }
-        });
         viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
         viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
         viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());
@@ -68,7 +59,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     // Provide a reference to the views for each data item
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        AnimatedNetworkImageView imageCompanyMain;
+        NetworkImageView imageCompanyMain;
         TextView tvCompanyDistance;
         TextView tvCompanyTitle;
         TextView tvCompanyServicePrice;
@@ -79,7 +70,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         public ViewHolder(View itemView) {
             super(itemView);
 
-            imageCompanyMain = (AnimatedNetworkImageView) itemView.findViewById(R.id.imageCompanyMain);
+            imageCompanyMain = (NetworkImageView) itemView.findViewById(R.id.imageCompanyMain);
             rbCompany = (FlexibleRatingBar) itemView.findViewById(R.id.ratingBar);
             tvCompanyDistance = (TextView) itemView.findViewById(R.id.tvCompanyDistance);
             tvCompanyTitle = (TextView) itemView.findViewById(R.id.tvCompanyTitle);

@@ -53,7 +53,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemViewCacheSize(0);
+        recyclerView.setItemViewCacheSize(0); //Default image caching causes gaps to form and image loading failures
         return rootView;
     }
 

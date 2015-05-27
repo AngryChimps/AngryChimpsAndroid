@@ -43,8 +43,6 @@ public class SearchPostResponseResults {
 
     private int discounted_price_decimal;
 
-    private int imageHeight;
-
 
     public SearchPostResponseResults() {
     }
@@ -145,11 +143,4 @@ public class SearchPostResponseResults {
         this.lon = lon;
     }
 
-    public int getImageHeight() {
-        return imageHeight;
-    }
-
-    public void setImageHeight(int imageHeight) {
-        this.imageHeight = imageHeight;
-    }
 }

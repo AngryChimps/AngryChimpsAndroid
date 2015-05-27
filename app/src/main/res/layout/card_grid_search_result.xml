@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <!--NetworkImageView is designed to work with Volley -->
-        <com.angrychimps.appname.widgets.AnimatedNetworkImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/imageCompanyMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
