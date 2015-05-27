@@ -23,7 +23,7 @@ public class VolleySingleton {
 
     private VolleySingleton(){
         requestQueue = getRequestQueue();
-        imageLoader =new ImageLoader(requestQueue,new ImageLoader.ImageCache() {
+        imageLoader = new ImageLoader(requestQueue,new ImageLoader.ImageCache() {
 
             private final LruCache<String, Bitmap> cache=new LruCache<>((int)(Runtime.getRuntime().maxMemory()/1024)/8);
             @Override
@@ -39,17 +39,12 @@ public class VolleySingleton {
     }
 
     public static synchronized VolleySingleton getInstance() {
-        if (instance == null) {
-            instance = new VolleySingleton();
-        }
+        if (instance == null) instance = new VolleySingleton();
         return instance;
     }
 
     private RequestQueue getRequestQueue(){
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(MainApplication.getAppContext());
-        }
-
+        if (requestQueue == null) requestQueue = Volley.newRequestQueue(MainApplication.getAppContext());
         return requestQueue;
     }
 

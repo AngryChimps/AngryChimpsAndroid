@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer;
+package com.angrychimps.appname.utils;
 
 import android.content.Context;
 import android.util.Log;

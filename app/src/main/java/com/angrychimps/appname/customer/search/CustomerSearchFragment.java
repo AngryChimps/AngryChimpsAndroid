@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.customer.JsonRequestObjectBuilder;
+import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 
 import org.json.JSONObject;
 

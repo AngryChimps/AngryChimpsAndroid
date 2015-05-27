@@ -3,7 +3,6 @@ package com.angrychimps.appname.company;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +11,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
-import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.etsy.android.grid.StaggeredGridView;
-import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ScrollDirectionListener;
 
 /*
     Note- nothing in here should be considered correct right now.
@@ -38,40 +32,40 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
-        //mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
-
-        //gridView.setAdapter(adapter);
-        gridView.setOnScrollListener(this);
-        gridView.setOnItemClickListener(this);
-
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setImageResource(R.drawable.ic_add_white_24dp);
-        fab.attachToListView(gridView, new ScrollDirectionListener() {
-            @Override
-            public void onScrollDown() {
-                Log.d("ListViewFragment", "onScrollDown()");
-            }
-
-            @Override
-            public void onScrollUp() {
-                Log.d("ListViewFragment", "onScrollUp()");
-            }
-        });
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                CompanyCreateAdFragment fragment = new CompanyCreateAdFragment();
-                //fragment.setTargetFragment(getParentFragment(), 0);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
-                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
-
-            }
-        });
-
+//        StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
+//        //mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
+//
+//        //gridView.setAdapter(adapter);
+//        gridView.setOnScrollListener(this);
+//        gridView.setOnItemClickListener(this);
+//
+//        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+//        fab.setImageResource(R.drawable.ic_add_white_24dp);
+//        fab.attachToListView(gridView, new ScrollDirectionListener() {
+//            @Override
+//            public void onScrollDown() {
+//                Log.d("ListViewFragment", "onScrollDown()");
+//            }
+//
+//            @Override
+//            public void onScrollUp() {
+//                Log.d("ListViewFragment", "onScrollUp()");
+//            }
+//        });
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                CompanyCreateAdFragment fragment = new CompanyCreateAdFragment();
+//                //fragment.setTargetFragment(getParentFragment(), 0);
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+//                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+//
+//            }
+//        });
+//
 
 
         if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");

@@ -10,7 +10,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 public class AnimatedNetworkImageView extends NetworkImageView {
 
-    private static final int ANIM_DURATION = 400;
+    private static final int ANIM_DURATION = 250;
     private boolean shouldAnimate = false;
 
     public AnimatedNetworkImageView(Context context) {
@@ -28,9 +28,7 @@ public class AnimatedNetworkImageView extends NetworkImageView {
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
-        if(shouldAnimate) {
-            ObjectAnimator.ofFloat(this, "alpha", 0, 1).setDuration(ANIM_DURATION).start();
-        }
+        if(shouldAnimate) ObjectAnimator.ofFloat(this, "alpha", 0, 1).setDuration(ANIM_DURATION).start();
     }
 
     @Override

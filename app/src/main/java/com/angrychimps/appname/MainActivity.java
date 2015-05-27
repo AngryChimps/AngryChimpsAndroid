@@ -29,7 +29,7 @@ import com.angrychimps.appname.company.CompanyCreateAdFragment;
 import com.angrychimps.appname.company.CompanyMainFragment;
 import com.angrychimps.appname.customer.CustomerCreateAdFragment;
 import com.angrychimps.appname.customer.CustomerMainFragment;
-import com.angrychimps.appname.customer.JsonRequestObjectBuilder;
+import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
 import com.angrychimps.appname.menu.NavDrawerAdapter;
 import com.angrychimps.appname.menu.NavDrawerItem;
@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchResults = new ArrayList<>();
+        currentRequest = new JSONObject();
         getSessionId();
 
         // Using Toolbar in place of ActionBar lets us place the Navigation Drawer over the top, as Material Design recommends
