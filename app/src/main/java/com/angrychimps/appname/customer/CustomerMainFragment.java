@@ -33,18 +33,18 @@ import java.io.IOException;
     The main fragment for customer mode.
  */
 
-public class CustomerMainFragment extends Fragment implements OnItemClickedListener, OnVolleyResponseListener{
+public class CustomerMainFragment extends Fragment implements OnItemClickedListener, OnVolleyResponseListener {
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter recyclerViewAdapter;
-    FragmentManager fragmentManager;
+    RecyclerView.Adapter adapter;
+    FragmentManager fm;
     JSONObject requestObject;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        fragmentManager = getFragmentManager();
+        fm = getFragmentManager();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -60,13 +60,13 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
         JsonRequestObjectBuilder build = new JsonRequestObjectBuilder(getActivity());
         build.setLimit(20);
         requestObject = build.getJsonObject();
-        recyclerViewAdapter = new MainRecyclerViewAdapter(this, MainActivity.searchResults);
-        recyclerView.setAdapter(recyclerViewAdapter);
+        adapter = new MainRecyclerViewAdapter(this, MainActivity.searchResults);
+        recyclerView.setAdapter(adapter);
 
         Log.i(null, "requestObject == " + requestObject.toString());
-        Log.i(null, "currentRequest == "+MainActivity.currentRequest.toString());
+        Log.i(null, "currentRequest == " + MainActivity.currentRequest.toString());
 
-        if (MainActivity.searchResults.size() == 0 || !requestObject.toString().equals(MainActivity.currentRequest.toString())){
+        if (MainActivity.searchResults.size() == 0 || !requestObject.toString().equals(MainActivity.currentRequest.toString())) {
             Log.i(null, "Loading data");
             new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
         }
@@ -79,7 +79,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
             @Override
             public void onClick(View v) {
                 CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
-                fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+                fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
                 MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
                 MainActivity.setToolbarTitle("Request Service");
             }
@@ -97,7 +97,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
         bundle.putDouble("lon", MainActivity.searchResults.get(position).getLon());
         bundle.putDouble("distance", MainActivity.searchResults.get(position).getDistance());
         fragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+        fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
         MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 
@@ -107,7 +107,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
             JSONArray jArray = new JSONObject(object.getJSONObject("payload").toString()).getJSONArray("results");
             for (int i = 0; i < jArray.length(); i++) {
                 MainActivity.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
-                recyclerViewAdapter.notifyItemInserted(i);
+                adapter.notifyItemInserted(i);
             }
             MainActivity.currentRequest = requestObject;
 

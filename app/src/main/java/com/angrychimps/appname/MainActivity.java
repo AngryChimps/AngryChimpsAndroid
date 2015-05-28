@@ -57,7 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener{
+public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener {
 
     public static final String url = "http://devvy3.angrychimps.com/api/v1/";
     public static final String mediaUrl = "http://devvy3.angrychimps.com/media/";
@@ -105,11 +105,11 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         fm = getSupportFragmentManager();
 
         //Get current location then grab the sessionId
-        DeviceLocation.LocationResult locationResult = new DeviceLocation.LocationResult(){
+        DeviceLocation.LocationResult locationResult = new DeviceLocation.LocationResult() {
             @Override
-            public void gotLocation(Location location){
+            public void gotLocation(Location location) {
                 currentLocation = location;
-                Log.i(null, "currentLocation latitude == "+currentLocation.getLatitude() + "and longitude == "+currentLocation.getLongitude());
+                Log.i(null, "currentLocation latitude == " + currentLocation.getLatitude() + "and longitude == " + currentLocation.getLongitude());
                 new VolleyRequest(MainActivity.this).getSessionId();
             }
         };

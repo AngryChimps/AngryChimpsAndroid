@@ -1,6 +1,7 @@
 package com.angrychimps.appname.utils;
 
 import android.app.Activity;
+import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -15,6 +16,8 @@ import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 
 import org.json.JSONObject;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +37,11 @@ public class VolleyRequest {
         listener = (OnVolleyResponseListener) fragment;
     }
 
-    public void makeRequest(int method, String urlString, JSONObject requestObject){
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Request.Method.GET, Request.Method.PUT, Request.Method.POST, Request.Method.DELETE})
+    public @interface RequestMethod {}
+
+    public void makeRequest(@RequestMethod int method, String urlString, JSONObject requestObject){
         JsonObjectRequest request = new JsonObjectRequest(method, MainActivity.url + urlString, requestObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
