@@ -12,18 +12,21 @@ import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.viewholders.GridViewHolder;
 import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.models.Service;
 
 import java.util.List;
 
-public class MainRecyclerViewAdapter extends RecyclerView.Adapter<GridViewHolder> {
+public class CustomerAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<GridViewHolder> {
 
     private Fragment fragment;
     private ImageLoader imageLoader;
-    private List<SearchPostResponseResults> arrayList;
+    private List<Service> listService;
+    private List<SearchPostResponseResults> listGrid;
 
-    public MainRecyclerViewAdapter(Fragment fragment, List<SearchPostResponseResults> arrayList) {
+    public CustomerAdDetailRecyclerViewAdapter(Fragment fragment, List<Service> listService, List<SearchPostResponseResults> listGrid) {
         this.fragment = fragment;
-        this.arrayList = arrayList;
+        this.listService = listService;
+        this.listGrid = listGrid;
         imageLoader = VolleySingleton.getInstance().getImageLoader();
     }
 
@@ -38,18 +41,19 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<GridViewHolder
     //TODO: precache images
     @Override
     public void onBindViewHolder(GridViewHolder viewHolder, int position) {
-        viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
-        viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
-        viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
-        viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());
-        viewHolder.tvCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
-        if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());
-        viewHolder.tvCompanyServiceDiscount.setText(arrayList.get(position).getDiscount_percentage() + "% off");
+        viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + listGrid.get(position).getPhoto(), imageLoader);
+        viewHolder.rbCompany.setRating(listGrid.get(position).getRating());
+        viewHolder.tvCompanyDistance.setText(listGrid.get(position).getDistance() + " miles");
+        viewHolder.tvCompanyTitle.setText(listGrid.get(position).getTitle());
+        viewHolder.tvCompanyServicePrice.setText("" + listGrid.get(position).getDiscounted_price());
+        if (listGrid.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + listGrid.get(position).getDiscounted_price_decimal());
+        viewHolder.tvCompanyServiceDiscount.setText(listGrid.get(position).getDiscount_percentage() + "% off");
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return listGrid.size();
     }
+
 }
