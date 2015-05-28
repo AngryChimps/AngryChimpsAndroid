@@ -17,15 +17,15 @@ import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder> {
 
     private static OnItemClickedListener listener;
     private ImageLoader imageLoader;
-    private ArrayList<SearchPostResponseResults> arrayList;
+    private List<SearchPostResponseResults> arrayList;
 
-    public MainRecyclerViewAdapter(Fragment fragment, ArrayList<SearchPostResponseResults> arrayList) {
+    public MainRecyclerViewAdapter(Fragment fragment, List<SearchPostResponseResults> arrayList) {
         listener = (OnItemClickedListener) fragment;
         this.arrayList = arrayList;
         imageLoader = VolleySingleton.getInstance().getImageLoader();

@@ -16,7 +16,7 @@ import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /*
     This adapter handles the StaggeredGridView in Provider Mode
@@ -25,10 +25,10 @@ import java.util.ArrayList;
 class StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseResults> {
 
     private final LayoutInflater layoutInflater;
-    private final ArrayList<SearchPostResponseResults> arrayList;
+    private final List<SearchPostResponseResults> arrayList;
     private final ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
 
-    public StaggeredGridViewAdapter(Context context, ArrayList<SearchPostResponseResults> arrayList) {
+    public StaggeredGridViewAdapter(Context context, List<SearchPostResponseResults> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);
         this.layoutInflater = LayoutInflater.from(context);
         this.arrayList = arrayList;

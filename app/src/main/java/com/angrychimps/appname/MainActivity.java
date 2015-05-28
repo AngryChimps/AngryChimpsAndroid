@@ -18,11 +18,6 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.angrychimps.appname.company.CompanyCreateAdFragment;
 import com.angrychimps.appname.company.CompanyMainFragment;
 import com.angrychimps.appname.customer.CustomerCreateAdFragment;
@@ -34,7 +29,6 @@ import com.angrychimps.appname.menu.NavDrawerItem;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.angrychimps.appname.utils.DeviceLocation;
-import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 import com.angrychimps.appname.utils.VolleyRequest;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
@@ -47,15 +41,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener {
 
@@ -64,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     public static FrameLayout container;
     public static MaterialMenuIconToolbar materialMenu; //Manually control the Up Navigation button
     public static String sessionId; //Session ID required for all server calls
-    public static ArrayList<SearchPostResponseResults> searchResults = new ArrayList<>();
+    public static List<SearchPostResponseResults> searchResults = new ArrayList<>();
     public static JSONObject currentRequest = new JSONObject();
     public static Location currentLocation;
     private static Toolbar toolbar;
@@ -252,39 +243,10 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
                         map.addMarker(new MarkerOptions().position(currentPosition));
 
-                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url + "search",
-                                new JsonRequestObjectBuilder(getApplicationContext()).getJsonObject(), new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject object) {
-                                try {
-                                    JSONObject payload = new JSONObject(object.getJSONObject("payload").toString());
-                                    JSONArray jArray = payload.getJSONArray("results");
-                                    for (int i = 0; i < jArray.length(); i++) {
-                                        map.addMarker(new MarkerOptions().position(new LatLng(jArray.getJSONObject(i).getDouble("lat"),
-                                                jArray.getJSONObject(i).getDouble("long"))).icon(BitmapDescriptorFactory.defaultMarker(207)));
-                                    }
-
-                                } catch (JSONException e) {
-                                    Log.i(null, "JsonObjectRequest error");
-                                    e.printStackTrace();
-                                }
-                            }
-                        },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("VOLLEY ERROR", "error => " + error.toString());
-                                    }
-                                }) {
-                            // Attach headers
-                            @Override
-                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<>();
-                                params.put("angrychimps-api-session-token", sessionId);
-                                return params;
-                            }
-                        };
-                        VolleySingleton.getInstance().addToRequestQueue(request);
+                        for (int i = 0; i < searchResults.size(); i++) {
+                            map.addMarker(new MarkerOptions().position(new LatLng(searchResults.get(i).getLat(),
+                                    searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+                        }
                     }
                 });
                 return true;
