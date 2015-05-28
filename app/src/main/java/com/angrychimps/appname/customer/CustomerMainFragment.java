@@ -10,18 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
+import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
+import com.angrychimps.appname.utils.VolleyRequest;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.melnykov.fab.FloatingActionButton;
@@ -31,18 +28,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /*
     The main fragment for customer mode.
  */
 
-public class CustomerMainFragment extends Fragment implements OnItemClickedListener{
+public class CustomerMainFragment extends Fragment implements OnItemClickedListener, OnVolleyResponseListener{
 
     RecyclerView recyclerView;
     RecyclerView.Adapter recyclerViewAdapter;
     FragmentManager fragmentManager;
+    JSONObject requestObject;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,10 +59,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
 
         JsonRequestObjectBuilder build = new JsonRequestObjectBuilder(getActivity());
         build.setLimit(20);
-        final JSONObject requestObject = build.getJsonObject();
-//        StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
-//        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, requestObject);
-//        builder.getResults();
+        requestObject = build.getJsonObject();
         recyclerViewAdapter = new MainRecyclerViewAdapter(this, MainActivity.searchResults);
         recyclerView.setAdapter(recyclerViewAdapter);
 
@@ -75,48 +68,8 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
 
         if (MainActivity.searchResults.size() == 0 || !requestObject.toString().equals(MainActivity.currentRequest.toString())){
             Log.i(null, "Loading data");
-
-            //Request the data using Volley for the Staggered Grid View and parse it into SearchPostResponseResults objects
-            //TODO- load more data when the user reaches the bottom of the list
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, MainActivity.url + "search", requestObject, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject object) {
-                    Log.i(null, "Response received");
-                    try {
-                        JSONObject payload = new JSONObject(object.getJSONObject("payload").toString());
-                        Log.i("object payload = ", payload.getString("results"));
-                        JSONArray jArray = payload.getJSONArray("results");
-
-                        for (int i = 0; i < jArray.length(); i++) {
-                            MainActivity.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
-                            recyclerViewAdapter.notifyItemInserted(i);
-                        }
-                        Log.i("results size = ", "" + MainActivity.searchResults.size());
-                        MainActivity.currentRequest = requestObject;
-
-                    } catch (IOException | JSONException e) {
-                        Log.i(null, "JsonObjectRequest error");
-                        e.printStackTrace();
-                    }
-                }
-            },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("VOLLEY ERROR", "error => " + error.toString());
-                        }
-                    }) {
-                // Attach headers
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("angrychimps-api-session-token", MainActivity.sessionId);
-                    return params;
-                }
-            };
-            VolleySingleton.getInstance().addToRequestQueue(request);
+            new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
         }
-
 
         //Set up the Floating Action Button
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
@@ -146,6 +99,22 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
         MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+    }
+
+    @Override
+    public void onVolleyResponse(JSONObject object) {
+        try {
+            JSONArray jArray = new JSONObject(object.getJSONObject("payload").toString()).getJSONArray("results");
+            for (int i = 0; i < jArray.length(); i++) {
+                MainActivity.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                recyclerViewAdapter.notifyItemInserted(i);
+            }
+            MainActivity.currentRequest = requestObject;
+
+        } catch (IOException | JSONException e) {
+            Log.i(null, "JsonObjectRequest error");
+            e.printStackTrace();
+        }
     }
 }
 

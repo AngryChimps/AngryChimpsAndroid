@@ -1,9 +1,7 @@
 package com.angrychimps.appname;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,12 +27,15 @@ import com.angrychimps.appname.company.CompanyCreateAdFragment;
 import com.angrychimps.appname.company.CompanyMainFragment;
 import com.angrychimps.appname.customer.CustomerCreateAdFragment;
 import com.angrychimps.appname.customer.CustomerMainFragment;
-import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 import com.angrychimps.appname.customer.search.CustomerSearchFragment;
+import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.menu.NavDrawerAdapter;
 import com.angrychimps.appname.menu.NavDrawerItem;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.models.SessionGetResponsePayload;
+import com.angrychimps.appname.utils.DeviceLocation;
+import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
+import com.angrychimps.appname.utils.VolleyRequest;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.bluelinelabs.logansquare.LoganSquare;
@@ -56,17 +57,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener{
 
     public static final String url = "http://devvy3.angrychimps.com/api/v1/";
     public static final String mediaUrl = "http://devvy3.angrychimps.com/media/";
     public static FrameLayout container;
     public static MaterialMenuIconToolbar materialMenu; //Manually control the Up Navigation button
     public static String sessionId; //Session ID required for all server calls
-    public static ArrayList<SearchPostResponseResults> searchResults;
-    public static JSONObject currentRequest;
+    public static ArrayList<SearchPostResponseResults> searchResults = new ArrayList<>();
+    public static JSONObject currentRequest = new JSONObject();
+    public static Location currentLocation;
     private static Toolbar toolbar;
     private static View toolbarPadding;
+    private FragmentManager fm;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private boolean serviceProviderMode = false;
@@ -95,19 +98,22 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(title);
     }
 
-    public static Location getLocation(Context context) {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fm = getSupportFragmentManager();
 
-        searchResults = new ArrayList<>();
-        currentRequest = new JSONObject();
-        getSessionId();
+        //Get current location then grab the sessionId
+        DeviceLocation.LocationResult locationResult = new DeviceLocation.LocationResult(){
+            @Override
+            public void gotLocation(Location location){
+                currentLocation = location;
+                Log.i(null, "currentLocation latitude == "+currentLocation.getLatitude() + "and longitude == "+currentLocation.getLongitude());
+                new VolleyRequest(MainActivity.this).getSessionId();
+            }
+        };
+        new DeviceLocation().getLocation(this, locationResult);
 
         // Using Toolbar in place of ActionBar lets us place the Navigation Drawer over the top, as Material Design recommends
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -116,11 +122,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-                    onNavigateUp();
-                } else {
-                    drawerLayout.openDrawer(drawerList);
-                }
+                if (fm.getBackStackEntryCount() != 0) onNavigateUp();
+                else drawerLayout.openDrawer(drawerList);
             }
         });
         materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
@@ -132,11 +135,11 @@ public class MainActivity extends AppCompatActivity {
 
         initiateNavigationDrawer();
 
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+        fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                Log.i(null, "back stack contains " + getSupportFragmentManager().getBackStackEntryCount() + " items");
-                if (getSupportFragmentManager().getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
+                Log.i(null, "back stack contains " + fm.getBackStackEntryCount() + " items");
+                if (fm.getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
             }
         });
     }
@@ -154,31 +157,17 @@ public class MainActivity extends AppCompatActivity {
         fragmentContainer.addView(container);
     }
 
-    private void getSessionId() {
+    @Override
+    public void onVolleyResponse(JSONObject object) {
         sessionId = "";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url + "session", new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject object) {
-                try {
-                    SessionGetResponsePayload session = LoganSquare.parse(object.getString("payload"), SessionGetResponsePayload.class);
-                    sessionId = session.getSession_id();
-                    Log.i("sessionId = ", "" + sessionId);
-                    setMainFragment();
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("VOLLEY ERROR", "error => " + error.toString());
-                    }
-                }
-        );
-        VolleySingleton.getInstance().addToRequestQueue(request);
-
+        try {
+            SessionGetResponsePayload session = LoganSquare.parse(object.getString("payload"), SessionGetResponsePayload.class);
+            sessionId = session.getSession_id();
+            Log.i("sessionId = ", "" + sessionId);
+            setMainFragment();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setMode() {
@@ -196,13 +185,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragmentNoBackStack(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(container.getId(), fragment).commit();
+        fm.beginTransaction().replace(container.getId(), fragment).commit();
     }
 
     private void replaceFragmentAddBackStack(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(container.getId(), fragment).addToBackStack(null).commit();
+        fm.beginTransaction().replace(container.getId(), fragment).addToBackStack(null).commit();
         materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 
@@ -254,16 +241,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_map:
                 materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
                 final SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(container.getId(), mapFragment).addToBackStack(null).commit();
+                fm.beginTransaction().replace(container.getId(), mapFragment).addToBackStack(null).commit();
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(final GoogleMap map) {
                         setToolbarTitle("Map");
                         setMenu(R.menu.menu_map);
 
-                        Location location = getLocation(getApplicationContext());
-                        LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                        LatLng currentPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
                         map.addMarker(new MarkerOptions().position(currentPosition));
 
@@ -304,8 +289,8 @@ public class MainActivity extends AppCompatActivity {
                 });
                 return true;
             case R.id.action_filter:
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev = fm.findFragmentByTag("dialog");
                 if (prev != null) ft.remove(prev);
                 ft.addToBackStack(null);
 
@@ -325,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onNavigateUp() {
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         setMenu(R.menu.menu_main);
         setMainPageTitle();
         return super.onNavigateUp();
@@ -333,10 +318,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
             setMenu(R.menu.menu_main);
-            if (getSupportFragmentManager().getBackStackEntryCount() < 2) setMainPageTitle();
+            if (fm.getBackStackEntryCount() < 2) setMainPageTitle();
         } else if (drawerLayout.isDrawerOpen(drawerList)) {
             drawerLayout.closeDrawer(drawerList);
         } else {
@@ -346,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Navigation Drawer item selected
     private void selectItem(int position) {
-        getSupportFragmentManager().popBackStack();
+        fm.popBackStack();
         if (serviceProviderMode) {
             switch (position) {
                 case 0:

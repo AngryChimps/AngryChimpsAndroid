@@ -52,8 +52,8 @@ public class JsonRequestObjectBuilder {
         try {
             if(text != null) payload.put("text", text);
             if(categories != null) payload.put("categories", categories);
-            payload.put("lat", MainActivity.getLocation(context).getLatitude());
-            payload.put("lon", MainActivity.getLocation(context).getLongitude());
+            payload.put("lat", MainActivity.currentLocation.getLatitude());
+            payload.put("lon", MainActivity.currentLocation.getLongitude());
             if(radius_miles != 0) payload.put("radius_miles", radius_miles);
             if(!consumer_travels) payload.put("consumer_travels", false);
             if(starting_at != null) payload.put("starting_at", starting_at);
