@@ -104,7 +104,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
     @Override
     public void onVolleyResponse(JSONObject object) {
         try {
-            JSONArray jArray = new JSONObject(object.getJSONObject("payload").toString()).getJSONArray("results");
+            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
             for (int i = 0; i < jArray.length(); i++) {
                 MainActivity.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
                 adapter.notifyItemInserted(i);

@@ -65,6 +65,10 @@ public class VolleyRequest {
         VolleySingleton.getInstance().addToRequestQueue(request);
     }
 
+    public void makeRequest(@RequestMethod int method, String urlString){
+        makeRequest(method, urlString, null);
+    }
+
     public void getSessionId(){
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "session", new Response.Listener<JSONObject>() {
             @Override

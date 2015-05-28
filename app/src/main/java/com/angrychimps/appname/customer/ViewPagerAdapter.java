@@ -11,15 +11,15 @@ import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 class ViewPagerAdapter extends PagerAdapter {
 
     private final Context context;
-    private final ArrayList<String> images;
+    private final List<String> images;
     private final ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
 
-    public ViewPagerAdapter(Context context, ArrayList<String> images) {
+    public ViewPagerAdapter(Context context, List<String> images) {
         this.context = context;
         this.images = images;
     }
