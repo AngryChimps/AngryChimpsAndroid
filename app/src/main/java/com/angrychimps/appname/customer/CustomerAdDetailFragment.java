@@ -56,12 +56,12 @@ public class CustomerAdDetailFragment extends Fragment implements OnVolleyRespon
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_ad_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_ad_detail, container, false);
 
         MainActivity.setMenu(R.menu.menu_ad_detail);
 
-        final StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
-        final ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridView, false);
+        StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridView, false);
         gridView.addHeaderView(header, null, false);
 
         pager = (ViewPager) header.findViewById(R.id.viewPagerCompanyImages);

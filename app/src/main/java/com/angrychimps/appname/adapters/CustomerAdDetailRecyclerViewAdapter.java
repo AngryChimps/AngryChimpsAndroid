@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.viewholders.GridViewHolder;
@@ -16,7 +15,7 @@ import com.angrychimps.appname.models.Service;
 
 import java.util.List;
 
-public class CustomerAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<GridViewHolder> {
+public class CustomerAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Fragment fragment;
     private ImageLoader imageLoader;
@@ -32,7 +31,7 @@ public class CustomerAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<Gr
 
     // Create new views (invoked by the layout manager)
     @Override
-    public GridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_grid_search_result, parent, false);
         return new GridViewHolder(v, fragment);
     }
@@ -40,14 +39,15 @@ public class CustomerAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<Gr
     // Replace the contents of a view (invoked by the layout manager)
     //TODO: precache images
     @Override
-    public void onBindViewHolder(GridViewHolder viewHolder, int position) {
-        viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + listGrid.get(position).getPhoto(), imageLoader);
-        viewHolder.rbCompany.setRating(listGrid.get(position).getRating());
-        viewHolder.tvCompanyDistance.setText(listGrid.get(position).getDistance() + " miles");
-        viewHolder.tvCompanyTitle.setText(listGrid.get(position).getTitle());
-        viewHolder.tvCompanyServicePrice.setText("" + listGrid.get(position).getDiscounted_price());
-        if (listGrid.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + listGrid.get(position).getDiscounted_price_decimal());
-        viewHolder.tvCompanyServiceDiscount.setText(listGrid.get(position).getDiscount_percentage() + "% off");
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+//        GridViewHolder holder = (GridViewHolder) viewHolder;
+//        holder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + listGrid.get(position).getPhoto(), imageLoader);
+//        viewHolder.rbCompany.setRating(listGrid.get(position).getRating());
+//        viewHolder.tvCompanyDistance.setText(listGrid.get(position).getDistance() + " miles");
+//        viewHolder.tvCompanyTitle.setText(listGrid.get(position).getTitle());
+//        viewHolder.tvCompanyServicePrice.setText("" + listGrid.get(position).getDiscounted_price());
+//        if (listGrid.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + listGrid.get(position).getDiscounted_price_decimal());
+//        viewHolder.tvCompanyServiceDiscount.setText(listGrid.get(position).getDiscount_percentage() + "% off");
     }
 
     // Return the size of your dataset (invoked by the layout manager)

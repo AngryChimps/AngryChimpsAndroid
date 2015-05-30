@@ -50,6 +50,13 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemViewCacheSize(0); //Default image caching causes gaps to form and image loading failures
+//        DefaultItemAnimator animator = new DefaultItemAnimator();
+//        Log.i(null, "animator add duration == "+animator.getAddDuration());
+//        Log.i(null, "animator change duration == "+animator.getChangeDuration());
+//        Log.i(null, "animator move duration == " + animator.getMoveDuration());
+//        Log.i(null, "animator remove duration == " + animator.getRemoveDuration());
+//        recyclerView.setItemAnimator(animator);
+
         return rootView;
     }
 

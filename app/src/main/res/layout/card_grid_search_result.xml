@@ -19,7 +19,7 @@
             android:id="@+id/imageCompanyMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             tools:background="@color/primary"
             tools:layout_height="100dp"/>
 
