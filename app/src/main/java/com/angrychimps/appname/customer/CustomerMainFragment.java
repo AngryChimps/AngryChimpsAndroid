@@ -19,9 +19,7 @@ import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 import com.angrychimps.appname.utils.VolleyRequest;
-import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,18 +77,18 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
         }
 
         //Set up the Floating Action Button
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setImageResource(R.drawable.ic_request_white_24dp);
-        fab.attachToRecyclerView(recyclerView);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
-                fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
-                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
-                MainActivity.setToolbarTitle("Request Service");
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+//        fab.setImageResource(R.drawable.ic_request_white_24dp);
+//        fab.attachToRecyclerView(recyclerView);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
+//                fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+//                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+//                MainActivity.setToolbarTitle("Request Service");
+//            }
+//        });
 
         if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");
     }
@@ -105,7 +103,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
         bundle.putDouble("distance", MainActivity.searchResults.get(position).getDistance());
         fragment.setArguments(bundle);
         fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
-        MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+        //MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 
     @Override

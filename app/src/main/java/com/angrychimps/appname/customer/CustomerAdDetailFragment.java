@@ -14,23 +14,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 import com.angrychimps.appname.utils.VolleyRequest;
-import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.etsy.android.grid.StaggeredGridView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,40 +56,40 @@ public class CustomerAdDetailFragment extends Fragment implements OnVolleyRespon
 
         MainActivity.setMenu(R.menu.menu_ad_detail);
 
-        StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
-        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridView, false);
-        gridView.addHeaderView(header, null, false);
+//        StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
+//        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridView, false);
+//        gridView.addHeaderView(header, null, false);
 
-        pager = (ViewPager) header.findViewById(R.id.viewPagerCompanyImages);
-        indicator = (CircleIndicator) header.findViewById(R.id.circleIndicator);
-        tvCompanyTagLine = (TextView) header.findViewById(R.id.tvCompanyTagLine);
-        tvCompanyDetails = (TextView) header.findViewById(R.id.tvCompanyDetails);
-        serviceItem = (LinearLayout) header.findViewById(R.id.serviceItem);
-        AnimatedNetworkImageView map = (AnimatedNetworkImageView) header.findViewById(R.id.map);
-        ImageButton bCallCompany = (ImageButton) header.findViewById(R.id.bCallCompany);
-        tvCompanyName = (TextView) header.findViewById(R.id.tvCompanyName);
-        tvCompanyAddress = (TextView) header.findViewById(R.id.tvCompanyAddress);
-        tvCompanyDistance = (TextView) header.findViewById(R.id.tvCompanyDistance);
-        ratingBar = (FlexibleRatingBar) header.findViewById(R.id.ratingBar);
-        bReviews = (Button) header.findViewById(R.id.bReviews);
-        TextView tvFlagListing = (TextView) header.findViewById(R.id.tvFlagListing);
+//        pager = (ViewPager) header.findViewById(R.id.viewPagerCompanyImages);
+//        indicator = (CircleIndicator) header.findViewById(R.id.circleIndicator);
+//        tvCompanyTagLine = (TextView) header.findViewById(R.id.tvCompanyTagLine);
+//        tvCompanyDetails = (TextView) header.findViewById(R.id.tvCompanyDetails);
+//        serviceItem = (LinearLayout) header.findViewById(R.id.serviceItem);
+//        AnimatedNetworkImageView map = (AnimatedNetworkImageView) header.findViewById(R.id.map);
+//        ImageButton bCallCompany = (ImageButton) header.findViewById(R.id.bCallCompany);
+//        tvCompanyName = (TextView) header.findViewById(R.id.tvCompanyName);
+//        tvCompanyAddress = (TextView) header.findViewById(R.id.tvCompanyAddress);
+//        tvCompanyDistance = (TextView) header.findViewById(R.id.tvCompanyDistance);
+//        ratingBar = (FlexibleRatingBar) header.findViewById(R.id.ratingBar);
+//        bReviews = (Button) header.findViewById(R.id.bReviews);
+//        TextView tvFlagListing = (TextView) header.findViewById(R.id.tvFlagListing);
 
         String coordinates = getArguments().getDouble("lat")+","+ getArguments().getDouble("lon");
         String color = "0x"+Integer.toHexString(getResources().getColor(R.color.primary)).substring(2);
-        map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
-                + color + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.getInstance().getImageLoader());
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchNavigation();
-            }
-        });
+//        map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
+//                + color + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.getInstance().getImageLoader());
+//        map.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                launchNavigation();
+//            }
+//        });
 
         new VolleyRequest(this).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
 
         JsonRequestObjectBuilder object = new JsonRequestObjectBuilder(getActivity());
-        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
-        builder.getResults();
+//        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
+//        builder.getResults();
 
         return rootView;
     }

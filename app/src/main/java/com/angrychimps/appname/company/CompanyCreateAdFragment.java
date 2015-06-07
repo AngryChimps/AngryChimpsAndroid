@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.angrychimps.appname.MainActivity;
@@ -44,25 +42,25 @@ public class CompanyCreateAdFragment extends Fragment {
         adapter = new CompanyCreateAdTimeBlockListAdapter(getActivity(), list);
         listView.setAdapter(adapter);
 
-        EditText metCompanyTitle = (EditText) header.findViewById(R.id.metCompanyTitle);
-        EditText metCompanyDescription = (EditText) header.findViewById(R.id.metCompanyDescription);
-        Button bCompanyCategory = (Button) header.findViewById(R.id.bCompanyCategory);
+//        EditText metCompanyTitle = (EditText) header.findViewById(R.id.metCompanyTitle);
+//        EditText metCompanyDescription = (EditText) header.findViewById(R.id.metCompanyDescription);
+//        Button bCompanyCategory = (Button) header.findViewById(R.id.bCompanyCategory);
+//
+//        Button bAddTimeBlock = (Button) footer.findViewById(R.id.bAddTimeBlock);
+//        EditText metServiceName = (EditText) footer.findViewById(R.id.metServiceName);
+//        EditText metDiscountedPrice = (EditText) footer.findViewById(R.id.metDiscountedPrice);
+//        EditText metOriginalPrice = (EditText) footer.findViewById(R.id.metOriginalPrice);
+//        EditText metAdDuration = (EditText) footer.findViewById(R.id.metAdDuration);
+//        EditText metAdTimeNotice = (EditText) footer.findViewById(R.id.metAdTimeNotice);
+//        Button bNext = (Button) footer.findViewById(R.id.bNext);
 
-        Button bAddTimeBlock = (Button) footer.findViewById(R.id.bAddTimeBlock);
-        EditText metServiceName = (EditText) footer.findViewById(R.id.metServiceName);
-        EditText metDiscountedPrice = (EditText) footer.findViewById(R.id.metDiscountedPrice);
-        EditText metOriginalPrice = (EditText) footer.findViewById(R.id.metOriginalPrice);
-        EditText metAdDuration = (EditText) footer.findViewById(R.id.metAdDuration);
-        EditText metAdTimeNotice = (EditText) footer.findViewById(R.id.metAdTimeNotice);
-        Button bNext = (Button) footer.findViewById(R.id.bNext);
-
-        bAddTimeBlock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                list.add(new Availabilities());
-                adapter.notifyDataSetChanged();
-            }
-        });
+//        bAddTimeBlock.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                list.add(new Availabilities());
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
 
         return rootView;
     }

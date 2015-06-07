@@ -1,6 +1,5 @@
 package com.angrychimps.appname;
 
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,8 +29,6 @@ import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.angrychimps.appname.utils.DeviceLocation;
 import com.angrychimps.appname.utils.VolleyRequest;
-import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     public static final String url = "http://devvy3.angrychimps.com/api/v1/";
     public static final String mediaUrl = "http://devvy3.angrychimps.com/media/";
     public static FrameLayout container;
-    public static MaterialMenuIconToolbar materialMenu; //Manually control the Up Navigation button
+    //public static MaterialMenuIconToolbar materialMenu; //Manually control the Up Navigation button
     public static String sessionId; //Session ID required for all server calls
     public static List<SearchPostResponseResults> searchResults = new ArrayList<>();
     public static JSONObject currentRequest = new JSONObject();
@@ -117,12 +114,12 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                 else drawerLayout.openDrawer(drawerList);
             }
         });
-        materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
-            @Override
-            public int getToolbarViewId() {
-                return R.id.toolbar;
-            }
-        };
+//        materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+//            @Override
+//            public int getToolbarViewId() {
+//                return R.id.toolbar;
+//            }
+//        };
 
         initiateNavigationDrawer();
 
@@ -130,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
             @Override
             public void onBackStackChanged() {
                 Log.i(null, "back stack contains " + fm.getBackStackEntryCount() + " items");
-                if (fm.getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
+                //if (fm.getBackStackEntryCount() == 0) materialMenu.animateState(MaterialMenuDrawable.IconState.BURGER);
             }
         });
     }
@@ -181,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
 
     private void replaceFragmentAddBackStack(Fragment fragment) {
         fm.beginTransaction().replace(container.getId(), fragment).addToBackStack(null).commit();
-        materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+        //materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 
     private void initiateNavigationDrawer() {
@@ -230,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
             case R.id.action_search:
                 return true;
             case R.id.action_map:
-                materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                //materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
                 final SupportMapFragment mapFragment = SupportMapFragment.newInstance();
                 fm.beginTransaction().replace(container.getId(), mapFragment).addToBackStack(null).commit();
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -340,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        materialMenu.syncState(savedInstanceState);
+        //materialMenu.syncState(savedInstanceState);
     }
 
     public void onCancel(View view) {

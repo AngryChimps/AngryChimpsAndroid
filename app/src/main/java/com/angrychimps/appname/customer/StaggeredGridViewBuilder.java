@@ -1,7 +1,6 @@
 package com.angrychimps.appname.customer;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +14,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.SearchPostResponseResults;
-import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.etsy.android.grid.StaggeredGridView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,30 +25,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickListener {
+class StaggeredGridViewBuilder  {
 
-    private final StaggeredGridView gridView;
+    //private final StaggeredGridView gridView;
     private final Context context;
     private final FragmentManager fragmentManager;
     private final JSONObject requestObjectToSend;
     private StaggeredGridViewAdapter adapter;
 
-    public StaggeredGridViewBuilder(Context context, FragmentManager fragmentManager, StaggeredGridView gridView, JSONObject requestObjectToSend) {
-        this.gridView = gridView;
+    public StaggeredGridViewBuilder(Context context, FragmentManager fragmentManager, View gridView, JSONObject requestObjectToSend) {
+        //this.gridView = gridView;
         this.context = context;
         this.fragmentManager = fragmentManager;
         this.requestObjectToSend = requestObjectToSend;
     }
 
     public void getResults(){
-        gridView.setOnItemClickListener(this);
-        gridView.setEnabled(false);
+//        gridView.setOnItemClickListener(this);
+//        gridView.setEnabled(false);
         if (MainActivity.searchResults!= null && MainActivity.searchResults.size() >0 && MainActivity.currentRequest != null
                 && !requestObjectToSend.toString().equals(MainActivity.currentRequest.toString())){
             Log.i(null, "Used existing data");
             if (adapter == null) adapter = new StaggeredGridViewAdapter(context, MainActivity.searchResults);
-            gridView.setAdapter(adapter);
-            gridView.setEnabled(true);
+//            gridView.setAdapter(adapter);
+//            gridView.setEnabled(true);
         }else {
             MainActivity.searchResults = new ArrayList<>();
 
@@ -71,8 +68,8 @@ class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickListener 
                         }
                         Log.i("results size = ", "" + MainActivity.searchResults.size());
                         if (adapter == null) adapter = new StaggeredGridViewAdapter(context, MainActivity.searchResults);
-                        gridView.setAdapter(adapter);
-                        gridView.setEnabled(true);
+//                        gridView.setAdapter(adapter);
+//                        gridView.setEnabled(true);
                         MainActivity.currentRequest = requestObjectToSend;
 
                     } catch (IOException | JSONException e) {
@@ -99,18 +96,18 @@ class StaggeredGridViewBuilder implements StaggeredGridView.OnItemClickListener 
         }
     }
 
-    @Override
+    //@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        int pos = position - gridView.getHeaderViewsCount();
-        CustomerAdDetailFragment fragment = new CustomerAdDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", MainActivity.searchResults.get(pos).getProvider_ad_immutable_id());
-        bundle.putDouble("lat", MainActivity.searchResults.get(pos).getLat());
-        bundle.putDouble("lon", MainActivity.searchResults.get(pos).getLon());
-        bundle.putDouble("distance", MainActivity.searchResults.get(pos).getDistance());
-        fragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
-        MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+//        int pos = position - gridView.getHeaderViewsCount();
+//        CustomerAdDetailFragment fragment = new CustomerAdDetailFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id", MainActivity.searchResults.get(pos).getProvider_ad_immutable_id());
+//        bundle.putDouble("lat", MainActivity.searchResults.get(pos).getLat());
+//        bundle.putDouble("lon", MainActivity.searchResults.get(pos).getLon());
+//        bundle.putDouble("distance", MainActivity.searchResults.get(pos).getDistance());
+//        fragment.setArguments(bundle);
+//        fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+//        MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 }

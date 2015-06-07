@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/default_tiny_margin"
         android:scrollbars="vertical"/>
-
+<!--
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -24,5 +24,5 @@
         app:fab_colorNormal="@color/primary"
         app:fab_colorPressed="@color/primary_dark"
         app:fab_colorRipple="@color/ripple" />
-
+-->
 </FrameLayout>
