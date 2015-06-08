@@ -1,6 +1,6 @@
 package com.angrychimps.appname.utils;
 
-import android.app.Activity;
+import android.app.Application;
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,7 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.App;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 
@@ -29,8 +29,8 @@ public class VolleyRequest {
 
     OnVolleyResponseListener listener;
 
-    public VolleyRequest(Activity activity) {
-        listener = (OnVolleyResponseListener) activity;
+    public VolleyRequest(Application app) {
+        listener = (OnVolleyResponseListener) app;
     }
 
     public VolleyRequest(Fragment fragment){
@@ -42,7 +42,7 @@ public class VolleyRequest {
     public @interface RequestMethod {}
 
     public void makeRequest(@RequestMethod int method, String urlString, JSONObject requestObject){
-        JsonObjectRequest request = new JsonObjectRequest(method, MainActivity.url + urlString, requestObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(method, App.url + urlString, requestObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
                 listener.onVolleyResponse(object);
@@ -58,7 +58,7 @@ public class VolleyRequest {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("angrychimps-api-session-token", MainActivity.sessionId);
+                params.put("angrychimps-api-session-token", App.getSessionId());
                 return params;
             }
         };
@@ -70,7 +70,7 @@ public class VolleyRequest {
     }
 
     public void getSessionId(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, MainActivity.url + "session", new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, App.url + "session", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject object) {
                 listener.onVolleyResponse(object);

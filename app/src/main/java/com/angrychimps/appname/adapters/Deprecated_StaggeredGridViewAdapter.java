@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.models.SearchPostResponseResults;
@@ -62,7 +62,7 @@ public class Deprecated_StaggeredGridViewAdapter extends ArrayAdapter<SearchPost
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
+        viewHolder.imageCompanyMain.setImageUrl(App.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
         viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
         viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
         viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());

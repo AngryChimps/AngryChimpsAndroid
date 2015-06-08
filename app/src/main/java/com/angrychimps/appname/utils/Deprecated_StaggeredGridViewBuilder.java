@@ -11,7 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.App;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.Deprecated_StaggeredGridViewAdapter;
 import com.angrychimps.appname.models.SearchPostResponseResults;
@@ -44,18 +44,18 @@ class Deprecated_StaggeredGridViewBuilder {
     public void getResults(){
 //        gridView.setOnItemClickListener(this);
 //        gridView.setEnabled(false);
-        if (MainActivity.searchResults!= null && MainActivity.searchResults.size() >0 && MainActivity.currentRequest != null
-                && !requestObjectToSend.toString().equals(MainActivity.currentRequest.toString())){
+        if (App.searchResults!= null && App.searchResults.size() >0 && App.currentRequest != null
+                && !requestObjectToSend.toString().equals(App.currentRequest.toString())){
             Log.i(null, "Used existing data");
-            if (adapter == null) adapter = new Deprecated_StaggeredGridViewAdapter(context, MainActivity.searchResults);
+            if (adapter == null) adapter = new Deprecated_StaggeredGridViewAdapter(context, App.searchResults);
 //            gridView.setAdapter(adapter);
 //            gridView.setEnabled(true);
         }else {
-            MainActivity.searchResults = new ArrayList<>();
+            App.searchResults = new ArrayList<>();
 
             //Request the data using Volley for the Staggered Grid View and parse it into SearchPostResponseResults objects
             //TODO- load more data when the user reaches the bottom of the list
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, MainActivity.url + "search", requestObjectToSend, new Response.Listener<JSONObject>() {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, App.url + "search", requestObjectToSend, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject object) {
                     Log.i(null, "Response received");
@@ -65,13 +65,13 @@ class Deprecated_StaggeredGridViewBuilder {
                         JSONArray jArray = payload.getJSONArray("results");
 
                         for (int i = 0; i < jArray.length(); i++) {
-                            MainActivity.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                            App.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
                         }
-                        Log.i("results size = ", "" + MainActivity.searchResults.size());
-                        if (adapter == null) adapter = new Deprecated_StaggeredGridViewAdapter(context, MainActivity.searchResults);
+                        Log.i("results size = ", "" + App.searchResults.size());
+                        if (adapter == null) adapter = new Deprecated_StaggeredGridViewAdapter(context, App.searchResults);
 //                        gridView.setAdapter(adapter);
 //                        gridView.setEnabled(true);
-                        MainActivity.currentRequest = requestObjectToSend;
+                        App.currentRequest = requestObjectToSend;
 
                     } catch (IOException | JSONException e) {
                         Log.i(null, "JsonObjectRequest error");
@@ -89,7 +89,7 @@ class Deprecated_StaggeredGridViewBuilder {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-                    params.put("angrychimps-api-session-token", MainActivity.sessionId);
+                    params.put("angrychimps-api-session-token", App.sessionId);
                     return params;
                 }
             };

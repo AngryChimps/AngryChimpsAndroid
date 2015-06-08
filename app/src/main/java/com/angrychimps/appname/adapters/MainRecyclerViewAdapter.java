@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.viewholders.DealItemGridViewHolder;
@@ -38,7 +38,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealItemGridVi
     //TODO: precache images
     @Override
     public void onBindViewHolder(DealItemGridViewHolder viewHolder, int position) {
-        viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
+        viewHolder.imageCompanyMain.setImageUrl(App.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
         viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
         viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
         viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());

@@ -3,7 +3,7 @@ package com.angrychimps.appname.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.App;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,8 +52,8 @@ public class JsonRequestObjectBuilder {
         try {
             if(text != null) payload.put("text", text);
             if(categories != null) payload.put("categories", categories);
-            payload.put("lat", MainActivity.currentLocation.getLatitude());
-            payload.put("lon", MainActivity.currentLocation.getLongitude());
+            payload.put("lat", App.getLatitude());
+            payload.put("lon", App.getLongitude());
             if(radius_miles != 0) payload.put("radius_miles", radius_miles);
             if(!consumer_travels) payload.put("consumer_travels", false);
             if(starting_at != null) payload.put("starting_at", starting_at);

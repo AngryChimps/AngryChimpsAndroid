@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Request;
-import com.angrychimps.appname.MainActivity;
+import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
@@ -55,6 +55,7 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
 //        Log.i(null, "animator remove duration == " + animator.getRemoveDuration());
 //        recyclerView.setItemAnimator(animator);
 
+        //((MainActivity) getActivity()).replaceFragmentAddBackStack();
         return rootView;
     }
 
@@ -65,13 +66,13 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
         JsonRequestObjectBuilder build = new JsonRequestObjectBuilder(getActivity());
         build.setLimit(20);
         requestObject = build.getJsonObject();
-        adapter = new MainRecyclerViewAdapter(this, MainActivity.searchResults);
+        adapter = new MainRecyclerViewAdapter(this, App.searchResults);
         recyclerView.setAdapter(adapter);
 
         Log.i(null, "requestObject == " + requestObject.toString());
-        Log.i(null, "currentRequest == " + MainActivity.currentRequest.toString());
+        Log.i(null, "currentRequest == " + App.currentRequest.toString());
 
-        if (MainActivity.searchResults.size() == 0 || !requestObject.toString().equals(MainActivity.currentRequest.toString())) {
+        if (App.searchResults.size() == 0 || !requestObject.toString().equals(App.currentRequest.toString())) {
             Log.i(null, "Loading data");
             new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
         }
@@ -95,14 +96,14 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
 
     @Override
     public void onItemClicked(int position) {
-        CAdDetailFragment fragment = new CAdDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", MainActivity.searchResults.get(position).getProvider_ad_immutable_id());
-        bundle.putDouble("lat", MainActivity.searchResults.get(position).getLat());
-        bundle.putDouble("lon", MainActivity.searchResults.get(position).getLon());
-        bundle.putDouble("distance", MainActivity.searchResults.get(position).getDistance());
-        fragment.setArguments(bundle);
-        fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
+//        CAdDetailFragment fragment = new CAdDetailFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id", App.searchResults.get(position).getProvider_ad_immutable_id());
+//        bundle.putDouble("lat", App.searchResults.get(position).getLat());
+//        bundle.putDouble("lon", App.searchResults.get(position).getLon());
+//        bundle.putDouble("distance", App.searchResults.get(position).getDistance());
+//        fragment.setArguments(bundle);
+//        fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
         //MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
     }
 
@@ -111,10 +112,10 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
         try {
             JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
             for (int i = 0; i < jArray.length(); i++) {
-                MainActivity.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                App.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
                 adapter.notifyItemInserted(i);
             }
-            MainActivity.currentRequest = requestObject;
+            App.currentRequest = requestObject;
 
         } catch (IOException | JSONException e) {
             Log.i(null, "JsonObjectRequest error");
