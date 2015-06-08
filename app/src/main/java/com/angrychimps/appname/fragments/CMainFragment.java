@@ -1,11 +1,13 @@
 package com.angrychimps.appname.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.android.volley.Request;
 import com.angrychimps.appname.App;
+import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
@@ -35,23 +38,32 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /*
     The main fragment for customer mode.
  */
 
 public class CMainFragment extends Fragment implements OnItemClickedListener, OnVolleyResponseListener {
 
-    RecyclerView recyclerView;
+    @InjectView(R.id.recycler_view) RecyclerView recyclerView;
+    @InjectView(R.id.fab) FloatingActionButton fab;
+    @InjectView(R.id.toolbar) Toolbar toolbar;
     RecyclerView.Adapter adapter;
     FragmentManager fm;
     JSONObject requestObject;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
+        ButterKnife.inject(this, rootView);
+        App.getBus().register(this);
         fm = getFragmentManager();
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+
+        toolbar.setTitle("Browse Deals");
+        fab.setImageResource(R.drawable.ic_request_white_24dp);
+
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
@@ -63,7 +75,6 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
 //        Log.i(null, "animator remove duration == " + animator.getRemoveDuration());
 //        recyclerView.setItemAnimator(animator);
 
-        //((MainActivity) getActivity()).replaceFragmentAddBackStack();
         return rootView;
     }
 
@@ -84,22 +95,6 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
             Log.i(null, "Loading data");
             new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
         }
-
-        //Set up the Floating Action Button
-//        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-//        fab.setImageResource(R.drawable.ic_request_white_24dp);
-//        fab.attachToRecyclerView(recyclerView);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Deprecated_CRequestServiceFragment fragment = new Deprecated_CRequestServiceFragment();
-//                fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
-//                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
-//                MainActivity.setToolbarTitle("Request Service");
-//            }
-//        });
-
-        if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");
     }
 
     private void onToolBarMenuItemClicked(int itemId){
@@ -149,15 +144,14 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
 
     @Override
     public void onItemClicked(int position) {
-//        CAdDetailFragment fragment = new CAdDetailFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("id", App.searchResults.get(position).getProvider_ad_immutable_id());
-//        bundle.putDouble("lat", App.searchResults.get(position).getLat());
-//        bundle.putDouble("lon", App.searchResults.get(position).getLon());
-//        bundle.putDouble("distance", App.searchResults.get(position).getDistance());
-//        fragment.setArguments(bundle);
-//        fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
-        //MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+        Fragment fragment = new CAdDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", App.searchResults.get(position).getProvider_ad_immutable_id());
+        bundle.putDouble("lat", App.searchResults.get(position).getLat());
+        bundle.putDouble("lon", App.searchResults.get(position).getLon());
+        bundle.putDouble("distance", App.searchResults.get(position).getDistance());
+        fragment.setArguments(bundle);
+        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
     }
 
     @Override
@@ -174,6 +168,12 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
             Log.i(null, "JsonObjectRequest error");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        App.getBus().unregister(this);
     }
 }
 

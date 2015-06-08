@@ -37,14 +37,14 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealItemGridVi
     // Replace the contents of a view (invoked by the layout manager)
     //TODO: precache images
     @Override
-    public void onBindViewHolder(DealItemGridViewHolder viewHolder, int position) {
-        viewHolder.imageCompanyMain.setImageUrl(App.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
-        viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
-        viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
-        viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());
-        viewHolder.tvCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
-        if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());
-        viewHolder.tvCompanyServiceDiscount.setText(arrayList.get(position).getDiscount_percentage() + "% off");
+    public void onBindViewHolder(DealItemGridViewHolder vh, int position) {
+        vh.imageCompanyMain.setImageUrl(App.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
+        vh.rbCompany.setRating(arrayList.get(position).getRating());
+        vh.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
+        vh.tvCompanyTitle.setText(arrayList.get(position).getTitle());
+        vh.tvCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
+        if (arrayList.get(position).getDiscounted_price_decimal() > 0) vh.tvCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());
+        vh.tvCompanyServiceDiscount.setText(arrayList.get(position).getDiscount_percentage() + "% off");
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -2,100 +2,58 @@ package com.angrychimps.appname.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
+import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
+
+import org.json.JSONObject;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /*
     Note- nothing in here should be considered correct right now.
     TODO- copy CMainFragment over here and adapt it
  */
 
-public class PMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
+public class PMainFragment extends Fragment{
 
-    private static final String TAG = "StaggeredGridActivity";
-    private boolean hasRequestedMore;
+    @InjectView(R.id.recycler_view) RecyclerView recyclerView;
+    @InjectView(R.id.fab) FloatingActionButton fab;
+    @InjectView(R.id.toolbar) Toolbar toolbar;
+    RecyclerView.Adapter adapter;
+    FragmentManager fm;
+    JSONObject requestObject;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
+        ButterKnife.inject(this, rootView);
+        App.getBus().register(this);
+
+        toolbar.setTitle("Browse Deals");
+        fab.setImageResource(R.drawable.ic_add_white_24dp);
+
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-//        StaggeredGridView gridView = (StaggeredGridView) getActivity().findViewById(R.id.gridViewMain);
-//        //mAdapter = new CompanyAdFlowGridArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, getCompanies());
-//
-//        //gridView.setAdapter(adapter);
-//        gridView.setOnScrollListener(this);
-//        gridView.setOnItemClickListener(this);
-//
-//        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-//        fab.setImageResource(R.drawable.ic_add_white_24dp);
-//        fab.attachToListView(gridView, new ScrollDirectionListener() {
-//            @Override
-//            public void onScrollDown() {
-//                Log.d("ListViewFragment", "onScrollDown()");
-//            }
-//
-//            @Override
-//            public void onScrollUp() {
-//                Log.d("ListViewFragment", "onScrollUp()");
-//            }
-//        });
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                PCreateAdFragment fragment = new PCreateAdFragment();
-//                //fragment.setTargetFragment(getParentFragment(), 0);
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
-//                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
-//
-//            }
-//        });
-//
-
-
-        if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");
-
-
-    }
-
-    @Override
-    public void onScrollStateChanged(final AbsListView view, final int scrollState) {
-        Log.d(TAG, "onScrollStateChanged:" + scrollState);
-    }
-    @Override
-    public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
-        Log.d(TAG, "onScroll firstVisibleItem:" + firstVisibleItem +
-                " visibleItemCount:" + visibleItemCount +
-                " totalItemCount:" + totalItemCount);
-        // our handling
-        if (!hasRequestedMore) {
-            int lastInScreen = firstVisibleItem + visibleItemCount;
-            if (lastInScreen >= totalItemCount) {
-                Log.d(TAG, "onScroll lastInScreen - so load more");
-                hasRequestedMore = true;
-            }
         }
-    }
-
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Toast.makeText(getActivity(), "Item Clicked: " + position, Toast.LENGTH_SHORT).show();
+    public void onDestroyView() {
+        super.onDestroyView();
+        App.getBus().unregister(this);
     }
 }
 
