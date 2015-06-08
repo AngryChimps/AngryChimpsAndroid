@@ -24,7 +24,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
     private final boolean serviceProviderMode;
 
 	public DrawerAdapter(Activity context, List<DrawerItem> listItems, boolean serviceProviderMode) {
-		super(context, R.layout.navigation_drawer_item, listItems);
+		super(context, R.layout.drawer_item, listItems);
 		this.context = context;
 		this.drawerItemList = listItems;
         this.serviceProviderMode = serviceProviderMode;
@@ -43,7 +43,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 
         //Get which xml file is used so we know what we can set
         switch(item.getLayoutID()){
-            case R.layout.navigation_drawer_profile:
+            case R.layout.drawer_profile:
                 ImageView imageProfile = (ImageView) v.findViewById(R.id.drawer_profile_image);
                 TextView tvName = (TextView) v.findViewById(R.id.drawer_profile_name);
                 TextView tvEmail = (TextView) v.findViewById(R.id.drawer_profile_email);
@@ -57,7 +57,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 
                 break;
 
-            case R.layout.navigation_drawer_item:
+            case R.layout.drawer_item:
                 View sideColor = v.findViewById(R.id.drawer_mode_color);
                 ImageView icon = (ImageView) v.findViewById(R.id.drawer_icon);
                 TextView itemName = (TextView) v.findViewById(R.id.drawer_itemName);
@@ -72,7 +72,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
                 icon.setImageResource(item.getImageID());
                 break;
 
-            case R.layout.navigation_drawer_messages_item:
+            case R.layout.drawer_item_messages:
                 ImageView iconMessage = (ImageView) v.findViewById(R.id.drawer_icon);
                 TextView itemNameMessage = (TextView) v.findViewById(R.id.drawer_itemName);
                 TextView itemMessage = (TextView) v.findViewById(R.id.drawer_messages);
@@ -83,7 +83,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
                 if(!item.getMessages().equals("0")) itemMessage.setVisibility(View.VISIBLE);
                 break;
 
-            case R.layout.navigation_drawer_switch_item:
+            case R.layout.drawer_item_switch:
                 View side = v.findViewById(R.id.drawer_mode_color);
                 TextView itemModeName = (TextView) v.findViewById(R.id.drawer_itemName);
                 SwitchCompat modeSwitch = (SwitchCompat) v.findViewById(R.id.drawer_switch);

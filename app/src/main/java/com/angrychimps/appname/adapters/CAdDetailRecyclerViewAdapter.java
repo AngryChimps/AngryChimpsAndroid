@@ -32,7 +32,7 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     // Create new views (invoked by the layout manager)
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_grid_search_result, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_deal, parent, false);
         return new DealItemGridViewHolder(v, fragment);
     }
 

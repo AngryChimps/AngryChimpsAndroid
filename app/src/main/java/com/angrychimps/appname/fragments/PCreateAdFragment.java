@@ -27,14 +27,14 @@ public class PCreateAdFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_company_create_ad, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_p_create_ad, container, false);
 
         MainActivity.clearMenu();
         MainActivity.setToolbarTitle("Create an Ad");
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewCompanyCreateAdTimeBlock);
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.company_create_ad_header, listView, false);
-        ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.company_create_ad_footer, listView, false);
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.header_p_create_ad, listView, false);
+        ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.footer_p_create_ad, listView, false);
         listView.addHeaderView(header, null, false);
         listView.addFooterView(footer, null, false);
 

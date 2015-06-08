@@ -54,12 +54,12 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_ad_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_c_ad_detail, container, false);
 
         MainActivity.setMenu(R.menu.menu_ad_detail);
 
 //        StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
-//        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.ad_detail_header, gridView, false);
+//        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header_c_ad_detail, gridView, false);
 //        gridView.addHeaderView(header, null, false);
 
 //        pager = (ViewPager) header.findViewById(R.id.viewPagerCompanyImages);

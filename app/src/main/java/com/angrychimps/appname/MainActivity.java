@@ -190,22 +190,22 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // Set up the drawer's list view with items and onclick listener
-        mDataList.add(new DrawerItem(R.drawable.photo, "Name Nameson", "example@email.com", null, R.layout.navigation_drawer_profile));
-        mDataList.add(new DrawerItem(R.drawable.ic_explore_blue_24dp, "Explore deals near you", false, true, R.layout.navigation_drawer_item));
-        mDataList.add(new DrawerItem(R.drawable.ic_messages_blue_24dp, "Messages", "2", R.layout.navigation_drawer_messages_item));
+        mDataList.add(new DrawerItem(R.drawable.photo, "Name Nameson", "example@email.com", null, R.layout.drawer_profile));
+        mDataList.add(new DrawerItem(R.drawable.ic_explore_blue_24dp, "Explore deals near you", false, true, R.layout.drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_messages_blue_24dp, "Messages", "2", R.layout.drawer_item_messages));
         if (serviceProviderMode) {
-            mDataList.add(new DrawerItem("Provider Mode", R.layout.navigation_drawer_switch_item));
-            mDataList.add(new DrawerItem(R.drawable.ic_add_dkblue_24dp, "Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new DrawerItem(R.drawable.ic_avail_dkblue_24dp, "Availability Manager", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new DrawerItem(R.drawable.ic_company_dkblue_24dp, "Company Profile Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new DrawerItem("Provider Mode", R.layout.drawer_item_switch));
+            mDataList.add(new DrawerItem(R.drawable.ic_add_dkblue_24dp, "Create your 1st Ad", true, true, R.layout.drawer_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_avail_dkblue_24dp, "Availability Manager", true, true, R.layout.drawer_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_company_dkblue_24dp, "Company Profile Manager", true, true, R.layout.drawer_item));
         } else {
-            mDataList.add(new DrawerItem("Consumer Mode", R.layout.navigation_drawer_switch_item));
-            mDataList.add(new DrawerItem(R.drawable.ic_request_blue_24dp, "Request a Service", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new DrawerItem(R.drawable.ic_notification_blue_24dp, "Notification Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new DrawerItem("Consumer Mode", R.layout.drawer_item_switch));
+            mDataList.add(new DrawerItem(R.drawable.ic_request_blue_24dp, "Request a Service", true, true, R.layout.drawer_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_notification_blue_24dp, "Notification Manager", true, true, R.layout.drawer_item));
         }
-        mDataList.add(new DrawerItem(R.drawable.ic_star_grey600_24dp, "Rate this App", false, false, R.layout.navigation_drawer_item));
-        mDataList.add(new DrawerItem(R.drawable.ic_help_grey600_24dp, "Help!", false, false, R.layout.navigation_drawer_item));
-        mDataList.add(new DrawerItem(R.drawable.ic_settings_power_grey600_24dp, "Log Out", false, false, R.layout.navigation_drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_star_grey600_24dp, "Rate this App", false, false, R.layout.drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_help_grey600_24dp, "Help!", false, false, R.layout.drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_settings_power_grey600_24dp, "Log Out", false, false, R.layout.drawer_item));
 
         DrawerAdapter mAdapter = new DrawerAdapter(this, mDataList, serviceProviderMode);
         drawerList.setAdapter(mAdapter);

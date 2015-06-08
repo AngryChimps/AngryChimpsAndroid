@@ -30,7 +30,7 @@ public class CAdDetailAdapter extends ArrayAdapter<Service> {
 
         // Reuse views
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.card_ad_detail_item, parent, false);
+            convertView = layoutInflater.inflate(R.layout.card_service, parent, false);
 
             // Configure ViewHolder
             viewHolder = new ViewHolder();

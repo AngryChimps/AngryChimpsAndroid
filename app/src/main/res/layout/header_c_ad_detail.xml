@@ -64,7 +64,7 @@
         android:orientation="vertical"/>
 
     <!--Card with company location and contact information and a static map -->
-    <include layout="@layout/card_company_location"/>
+    <include layout="@layout/card_map"/>
 
     <!--Staggered grid below this -->
     <TextView

@@ -45,7 +45,7 @@ public class Deprecated_StaggeredGridViewAdapter extends ArrayAdapter<SearchPost
 
         // Reuse views
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.card_grid_search_result, parent, false);
+            convertView = layoutInflater.inflate(R.layout.card_deal, parent, false);
 
             // Configure ViewHolder
             viewHolder = new ViewHolder();
