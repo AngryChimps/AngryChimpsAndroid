@@ -12,6 +12,7 @@ import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.angrychimps.appname.utils.DeviceLocation;
 import com.angrychimps.appname.utils.VolleyRequest;
 import com.bluelinelabs.logansquare.LoganSquare;
+import com.squareup.otto.Bus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +36,7 @@ public class App extends Application implements OnVolleyResponseListener{
     private static Location location;
     private static String sessionId; //Session ID required for all server calls
     private static App instance;
+    private static final Bus bus = new Bus();
 
     public static App getInstance(){
         return instance;
@@ -54,6 +56,10 @@ public class App extends Application implements OnVolleyResponseListener{
 
     public static double getLongitude() {
         return location.getLongitude();
+    }
+
+    public static Bus getBus() {
+        return bus;
     }
 
     @Override
