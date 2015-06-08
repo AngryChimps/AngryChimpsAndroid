@@ -3,6 +3,7 @@ package com.angrychimps.appname.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +19,7 @@ import com.angrychimps.appname.App;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
-import com.angrychimps.appname.events.UpNavigationArrowEvent;
+import com.angrychimps.appname.events.BackPressedEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,35 +46,29 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /*
-    The main fragment for customer mode.
+    The main fragment for Customer Mode.
  */
 
 public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener, OnItemClickedListener, OnVolleyResponseListener {
 
-    @InjectView(R.id.recycler_view) RecyclerView recyclerView;
-    @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.toolbar) Toolbar toolbar;
+    @InjectView(R.id.fab) FloatingActionButton fab;
+    @InjectView(R.id.recycler_view) RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     JSONObject requestObject;
+    FragmentManager fm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
+        //Add RecyclerView to container before injecting views
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
         inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
         App.getBus().register(this);
+        fm = getFragmentManager();
 
-        toolbar.setTitle("Browse Deals");
-        toolbar.setNavigationIcon(R.drawable.ic_menu);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                App.getBus().post(new UpNavigationBurgerEvent());
-            }
-        });
-        toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setOnMenuItemClickListener(this);
+        setToolbar();
 
         fab.setImageResource(R.drawable.ic_request_white_24dp);
 
@@ -107,6 +103,20 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
             Log.i(null, "Loading data");
             new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
         }
+    }
+
+    private void setToolbar() {
+        toolbar.getMenu().clear();
+        toolbar.setTitle("Browse Deals");
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                App.getBus().post(new UpNavigationBurgerEvent());
+            }
+        });
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(this);
     }
 
     @Override
@@ -151,15 +161,17 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                 return true;
             case R.id.action_map:
                 SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-                getFragmentManager().beginTransaction().replace(R.id.innerContainer, mapFragment).addToBackStack(null).commit();
+                fm.beginTransaction().replace(R.id.innerContainer, mapFragment).addToBackStack(null).commit();
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(final GoogleMap map) {
+                        toolbar.getMenu().clear();
                         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
                         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                App.getBus().post(new UpNavigationArrowEvent());
+                                setToolbar();
+                                fm.popBackStack();
                             }
                         });
                         toolbar.setTitle("Map");
@@ -194,6 +206,10 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 //                return true;
         }
         return false;
+    }
+
+    @Subscribe public void onBackPressed(BackPressedEvent event){
+        setToolbar();
     }
 }
 

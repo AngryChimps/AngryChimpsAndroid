@@ -6,11 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.angrychimps.appname.adapters.DrawerAdapter;
+import com.angrychimps.appname.events.BackPressedEvent;
 import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
@@ -40,21 +42,20 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         fm = getSupportFragmentManager();
 
+        App.getBus().register(this); //Register to receive events
+        App.getInstance().initiate();
+
         initiateNavigationDrawer();
     }
 
-    @Override protected void onResume() {
-        super.onResume();
-        App.getBus().register(this); //Register to receive events
-    }
-
-    @Override protected void onPause() {
-        super.onPause();
+    @Override protected void onStop() {
+        super.onStop();
         App.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
     }
 
     @Override
     public void onBackPressed() {
+        App.getBus().post(new BackPressedEvent());
         if (drawerLayout.isDrawerOpen(drawerListView)) drawerLayout.closeDrawer(drawerListView);
         else super.onBackPressed();
     }
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
         //Wait until sessionId has been acquired to set up Main Fragment, because that is required for further communication with the server
+        Log.i(null, "sessionIdReceived");
         setMainFragment();
     }
 

@@ -67,25 +67,37 @@ public class App extends Application implements OnVolleyResponseListener{
     public void onCreate() {
         super.onCreate();
         instance = this;
+    }
 
-        //Get current location then grab the sessionId
-        new DeviceLocation().getLocation(this, new DeviceLocation.LocationResult() {
-            @Override
-            public void gotLocation(Location location) {
-                App.location = location;
-                Log.i(null, "latitude == " + getLatitude() + "and longitude == " + getLongitude());
-                new VolleyRequest(instance).getSessionId();
-            }
-        });
+    public void initiate(){
+        Log.i(null, "initiate called");
+        if(sessionId != null && location != null) {
+            Log.i(null, "SendingSessionIdEvent");
+            bus.post(new SessionIdReceivedEvent());
+        }
+        else {
+            Log.i(null, "initiate else called");
+            //Get current location then grab the sessionId
+            new DeviceLocation().getLocation(this, new DeviceLocation.LocationResult() {
+                @Override
+                public void gotLocation(Location location) {
+                    App.location = location;
+                    Log.i(null, "latitude == " + getLatitude() + "and longitude == " + getLongitude());
+                    new VolleyRequest(instance).getSessionId();
+                }
+            });
+        }
     }
 
     @Override
     public void onVolleyResponse(JSONObject object) {
+        Log.i(null, "Volley Response");
         sessionId = "";
         try {
             sessionId = LoganSquare.parse(object.getString("payload"), SessionGetResponsePayload.class).getSession_id();
             Log.i("sessionId = ", "" + sessionId);
             bus.post(new SessionIdReceivedEvent());
+            Log.i(null, "Volley Response Event sent");
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
