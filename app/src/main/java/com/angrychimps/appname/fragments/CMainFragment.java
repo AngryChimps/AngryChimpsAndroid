@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer;
+package com.angrychimps.appname.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,7 +31,7 @@ import java.io.IOException;
     The main fragment for customer mode.
  */
 
-public class CustomerMainFragment extends Fragment implements OnItemClickedListener, OnVolleyResponseListener {
+public class CMainFragment extends Fragment implements OnItemClickedListener, OnVolleyResponseListener {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -83,7 +83,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                CustomerCreateAdFragment fragment = new CustomerCreateAdFragment();
+//                Deprecated_CRequestServiceFragment fragment = new Deprecated_CRequestServiceFragment();
 //                fm.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();
 //                MainActivity.materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
 //                MainActivity.setToolbarTitle("Request Service");
@@ -95,7 +95,7 @@ public class CustomerMainFragment extends Fragment implements OnItemClickedListe
 
     @Override
     public void onItemClicked(int position) {
-        CustomerAdDetailFragment fragment = new CustomerAdDetailFragment();
+        CAdDetailFragment fragment = new CAdDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putString("id", MainActivity.searchResults.get(position).getProvider_ad_immutable_id());
         bundle.putDouble("lat", MainActivity.searchResults.get(position).getLat());

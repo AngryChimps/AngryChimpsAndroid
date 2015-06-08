@@ -17,14 +17,14 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.angrychimps.appname.company.CompanyCreateAdFragment;
-import com.angrychimps.appname.company.CompanyMainFragment;
-import com.angrychimps.appname.customer.CustomerCreateAdFragment;
-import com.angrychimps.appname.customer.CustomerMainFragment;
-import com.angrychimps.appname.customer.search.CustomerSearchFragment;
+import com.angrychimps.appname.fragments.CMainFragment;
+import com.angrychimps.appname.fragments.Deprecated_CRequestServiceFragment;
+import com.angrychimps.appname.fragments.PCreateAdFragment;
+import com.angrychimps.appname.fragments.PMainFragment;
+import com.angrychimps.appname.fragments.CFilterFragment;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
-import com.angrychimps.appname.menu.NavDrawerAdapter;
-import com.angrychimps.appname.menu.NavDrawerItem;
+import com.angrychimps.appname.adapters.DrawerAdapter;
+import com.angrychimps.appname.models.DrawerItem;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.angrychimps.appname.utils.DeviceLocation;
@@ -160,11 +160,11 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
 
     private void setMode() {
         if (serviceProviderMode) {
-            CompanyMainFragment companyMainFragment = new CompanyMainFragment();
-            replaceFragmentNoBackStack(companyMainFragment);
+            PMainFragment pMainFragment = new PMainFragment();
+            replaceFragmentNoBackStack(pMainFragment);
         } else {
-            CustomerMainFragment customerMainFragment = new CustomerMainFragment();
-            replaceFragmentNoBackStack(customerMainFragment);
+            CMainFragment cMainFragment = new CMainFragment();
+            replaceFragmentNoBackStack(cMainFragment);
         }
     }
 
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     }
 
     private void initiateNavigationDrawer() {
-        List<NavDrawerItem> mDataList = new ArrayList<>();
+        List<DrawerItem> mDataList = new ArrayList<>();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -190,24 +190,24 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // Set up the drawer's list view with items and onclick listener
-        mDataList.add(new NavDrawerItem(R.drawable.photo, "Name Nameson", "example@email.com", null, R.layout.navigation_drawer_profile));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_explore_blue_24dp, "Explore deals near you", false, true, R.layout.navigation_drawer_item));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_messages_blue_24dp, "Messages", "2", R.layout.navigation_drawer_messages_item));
+        mDataList.add(new DrawerItem(R.drawable.photo, "Name Nameson", "example@email.com", null, R.layout.navigation_drawer_profile));
+        mDataList.add(new DrawerItem(R.drawable.ic_explore_blue_24dp, "Explore deals near you", false, true, R.layout.navigation_drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_messages_blue_24dp, "Messages", "2", R.layout.navigation_drawer_messages_item));
         if (serviceProviderMode) {
-            mDataList.add(new NavDrawerItem("Provider Mode", R.layout.navigation_drawer_switch_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_add_dkblue_24dp, "Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_avail_dkblue_24dp, "Availability Manager", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_company_dkblue_24dp, "Company Profile Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new DrawerItem("Provider Mode", R.layout.navigation_drawer_switch_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_add_dkblue_24dp, "Create your 1st Ad", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_avail_dkblue_24dp, "Availability Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_company_dkblue_24dp, "Company Profile Manager", true, true, R.layout.navigation_drawer_item));
         } else {
-            mDataList.add(new NavDrawerItem("Consumer Mode", R.layout.navigation_drawer_switch_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_request_blue_24dp, "Request a Service", true, true, R.layout.navigation_drawer_item));
-            mDataList.add(new NavDrawerItem(R.drawable.ic_notification_blue_24dp, "Notification Manager", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new DrawerItem("Consumer Mode", R.layout.navigation_drawer_switch_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_request_blue_24dp, "Request a Service", true, true, R.layout.navigation_drawer_item));
+            mDataList.add(new DrawerItem(R.drawable.ic_notification_blue_24dp, "Notification Manager", true, true, R.layout.navigation_drawer_item));
         }
-        mDataList.add(new NavDrawerItem(R.drawable.ic_star_grey600_24dp, "Rate this App", false, false, R.layout.navigation_drawer_item));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_help_grey600_24dp, "Help!", false, false, R.layout.navigation_drawer_item));
-        mDataList.add(new NavDrawerItem(R.drawable.ic_settings_power_grey600_24dp, "Log Out", false, false, R.layout.navigation_drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_star_grey600_24dp, "Rate this App", false, false, R.layout.navigation_drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_help_grey600_24dp, "Help!", false, false, R.layout.navigation_drawer_item));
+        mDataList.add(new DrawerItem(R.drawable.ic_settings_power_grey600_24dp, "Log Out", false, false, R.layout.navigation_drawer_item));
 
-        NavDrawerAdapter mAdapter = new NavDrawerAdapter(this, mDataList, serviceProviderMode);
+        DrawerAdapter mAdapter = new DrawerAdapter(this, mDataList, serviceProviderMode);
         drawerList.setAdapter(mAdapter);
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                CustomerSearchFragment fragment = new CustomerSearchFragment();
+                CFilterFragment fragment = new CFilterFragment();
                 fragment.show(ft, "dialog");
                 return true;
             case R.id.action_favorite:
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                     setMode();
                     return;
                 case 4:
-                    replaceFragmentAddBackStack(new CompanyCreateAdFragment());
+                    replaceFragmentAddBackStack(new PCreateAdFragment());
                     setTitle("Create Ad");
                     break;
                 default:
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                     setMode();
                     return;
                 case 4:
-                    replaceFragmentAddBackStack(new CustomerCreateAdFragment());
+                    replaceFragmentAddBackStack(new Deprecated_CRequestServiceFragment());
                     setTitle("Request Service");
                     break;
                 default:

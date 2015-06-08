@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer;
+package com.angrychimps.appname.adapters;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -13,7 +13,7 @@ import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 
 import java.util.List;
 
-class ViewPagerAdapter extends PagerAdapter {
+public class ViewPagerAdapter extends PagerAdapter {
 
     private final Context context;
     private final List<String> images;

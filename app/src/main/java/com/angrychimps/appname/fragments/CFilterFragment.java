@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer.search;
+package com.angrychimps.appname.fragments;
 
 
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 
 import org.json.JSONObject;
 
-public class CustomerSearchFragment extends DialogFragment implements View.OnClickListener{
+public class CFilterFragment extends DialogFragment implements View.OnClickListener{
 
     JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder(getActivity());
-    //TODO- add results to JSONObject and pass back to CustomerMainFragment or implement interface through activity
+    //TODO- add results to JSONObject and pass back to CMainFragment or implement interface through activity
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

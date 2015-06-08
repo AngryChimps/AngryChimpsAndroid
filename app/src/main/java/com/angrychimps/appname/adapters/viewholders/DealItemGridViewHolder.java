@@ -11,7 +11,7 @@ import com.angrychimps.appname.R;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
-public class GridViewHolder extends RecyclerView.ViewHolder {
+public class DealItemGridViewHolder extends RecyclerView.ViewHolder {
 
     private OnItemClickedListener listener;
     public NetworkImageView imageCompanyMain;
@@ -22,7 +22,7 @@ public class GridViewHolder extends RecyclerView.ViewHolder {
     public TextView tvCompanyServicePriceDecimal;
     public FlexibleRatingBar rbCompany;
 
-    public GridViewHolder(View itemView, Fragment fragment) {
+    public DealItemGridViewHolder(View itemView, Fragment fragment) {
         super(itemView);
 
         listener = (OnItemClickedListener) fragment;

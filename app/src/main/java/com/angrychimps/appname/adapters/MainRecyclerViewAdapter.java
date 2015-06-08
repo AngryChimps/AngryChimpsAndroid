@@ -10,12 +10,12 @@ import com.android.volley.toolbox.ImageLoader;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
-import com.angrychimps.appname.adapters.viewholders.GridViewHolder;
+import com.angrychimps.appname.adapters.viewholders.DealItemGridViewHolder;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 
 import java.util.List;
 
-public class MainRecyclerViewAdapter extends RecyclerView.Adapter<GridViewHolder> {
+public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealItemGridViewHolder> {
 
     private Fragment fragment;
     private ImageLoader imageLoader;
@@ -29,15 +29,15 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<GridViewHolder
 
     // Create new views (invoked by the layout manager)
     @Override
-    public GridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DealItemGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_grid_search_result, parent, false);
-        return new GridViewHolder(v, fragment);
+        return new DealItemGridViewHolder(v, fragment);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     //TODO: precache images
     @Override
-    public void onBindViewHolder(GridViewHolder viewHolder, int position) {
+    public void onBindViewHolder(DealItemGridViewHolder viewHolder, int position) {
         viewHolder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
         viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
         viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");

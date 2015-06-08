@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer;
+package com.angrychimps.appname.utils;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.VolleySingleton;
+import com.angrychimps.appname.adapters.Deprecated_StaggeredGridViewAdapter;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.bluelinelabs.logansquare.LoganSquare;
 
@@ -25,15 +26,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-class StaggeredGridViewBuilder  {
+class Deprecated_StaggeredGridViewBuilder {
 
     //private final StaggeredGridView gridView;
     private final Context context;
     private final FragmentManager fragmentManager;
     private final JSONObject requestObjectToSend;
-    private StaggeredGridViewAdapter adapter;
+    private Deprecated_StaggeredGridViewAdapter adapter;
 
-    public StaggeredGridViewBuilder(Context context, FragmentManager fragmentManager, View gridView, JSONObject requestObjectToSend) {
+    public Deprecated_StaggeredGridViewBuilder(Context context, FragmentManager fragmentManager, View gridView, JSONObject requestObjectToSend) {
         //this.gridView = gridView;
         this.context = context;
         this.fragmentManager = fragmentManager;
@@ -46,7 +47,7 @@ class StaggeredGridViewBuilder  {
         if (MainActivity.searchResults!= null && MainActivity.searchResults.size() >0 && MainActivity.currentRequest != null
                 && !requestObjectToSend.toString().equals(MainActivity.currentRequest.toString())){
             Log.i(null, "Used existing data");
-            if (adapter == null) adapter = new StaggeredGridViewAdapter(context, MainActivity.searchResults);
+            if (adapter == null) adapter = new Deprecated_StaggeredGridViewAdapter(context, MainActivity.searchResults);
 //            gridView.setAdapter(adapter);
 //            gridView.setEnabled(true);
         }else {
@@ -67,7 +68,7 @@ class StaggeredGridViewBuilder  {
                             MainActivity.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
                         }
                         Log.i("results size = ", "" + MainActivity.searchResults.size());
-                        if (adapter == null) adapter = new StaggeredGridViewAdapter(context, MainActivity.searchResults);
+                        if (adapter == null) adapter = new Deprecated_StaggeredGridViewAdapter(context, MainActivity.searchResults);
 //                        gridView.setAdapter(adapter);
 //                        gridView.setEnabled(true);
                         MainActivity.currentRequest = requestObjectToSend;
@@ -100,7 +101,7 @@ class StaggeredGridViewBuilder  {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 //        int pos = position - gridView.getHeaderViewsCount();
-//        CustomerAdDetailFragment fragment = new CustomerAdDetailFragment();
+//        CAdDetailFragment fragment = new CAdDetailFragment();
 //        Bundle bundle = new Bundle();
 //        bundle.putString("id", MainActivity.searchResults.get(pos).getProvider_ad_immutable_id());
 //        bundle.putDouble("lat", MainActivity.searchResults.get(pos).getLat());

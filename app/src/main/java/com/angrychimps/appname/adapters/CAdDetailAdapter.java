@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer;
+package com.angrychimps.appname.adapters;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -13,12 +13,12 @@ import com.angrychimps.appname.models.Service;
 
 import java.util.List;
 
-class CustomerAdDetailAdapter extends ArrayAdapter<Service> {
+public class CAdDetailAdapter extends ArrayAdapter<Service> {
 
     private final LayoutInflater layoutInflater;
     private final List<Service> list;
 
-    public CustomerAdDetailAdapter(Context context, List<Service> list) {
+    public CAdDetailAdapter(Context context, List<Service> list) {
         super(context, android.R.layout.simple_list_item_1, list);
         this.layoutInflater = LayoutInflater.from(context);
         this.list = list;

@@ -1,4 +1,4 @@
-package com.angrychimps.appname.company;
+package com.angrychimps.appname.adapters;
 
 
 import android.content.Context;
@@ -19,11 +19,11 @@ import java.util.List;
     This adapter handles the time blocks added in the Company Create Ad screen
  */
 
-class CompanyCreateAdTimeBlockListAdapter extends ArrayAdapter<Availabilities>{
+public class CCreateAdTimeBlockListAdapter extends ArrayAdapter<Availabilities>{
 
     private final LayoutInflater inflater;
 
-    public CompanyCreateAdTimeBlockListAdapter(Context context, List<Availabilities> list) {
+    public CCreateAdTimeBlockListAdapter(Context context, List<Availabilities> list) {
         super(context, android.R.layout.simple_list_item_1, list);
         this.inflater = LayoutInflater.from(context);
     }

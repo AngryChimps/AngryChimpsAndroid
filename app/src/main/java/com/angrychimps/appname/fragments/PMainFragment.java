@@ -1,4 +1,4 @@
-package com.angrychimps.appname.company;
+package com.angrychimps.appname.fragments;
 
 
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import com.angrychimps.appname.R;
 
 /*
     Note- nothing in here should be considered correct right now.
-    TODO- copy CustomerMainFragment over here and adapt it
+    TODO- copy CMainFragment over here and adapt it
  */
 
-public class CompanyMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
+public class PMainFragment extends Fragment implements AbsListView.OnScrollListener, AbsListView.OnItemClickListener{
 
     private static final String TAG = "StaggeredGridActivity";
     private boolean hasRequestedMore;
@@ -57,7 +57,7 @@ public class CompanyMainFragment extends Fragment implements AbsListView.OnScrol
 //            @Override
 //            public void onClick(View v) {
 //
-//                CompanyCreateAdFragment fragment = new CompanyCreateAdFragment();
+//                PCreateAdFragment fragment = new PCreateAdFragment();
 //                //fragment.setTargetFragment(getParentFragment(), 0);
 //                FragmentManager fragmentManager = getFragmentManager();
 //                fragmentManager.beginTransaction().replace(MainActivity.container.getId(), fragment).addToBackStack(null).commit();

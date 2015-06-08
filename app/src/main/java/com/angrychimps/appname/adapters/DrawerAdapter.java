@@ -1,4 +1,4 @@
-package com.angrychimps.appname.menu;
+package com.angrychimps.appname.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,16 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.models.DrawerItem;
 
 import java.util.List;
 
-public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
+public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 
 	private final Activity context;
-	private final List<NavDrawerItem> drawerItemList;
+	private final List<DrawerItem> drawerItemList;
     private final boolean serviceProviderMode;
 
-	public NavDrawerAdapter(Activity context, List<NavDrawerItem> listItems, boolean serviceProviderMode) {
+	public DrawerAdapter(Activity context, List<DrawerItem> listItems, boolean serviceProviderMode) {
 		super(context, R.layout.navigation_drawer_item, listItems);
 		this.context = context;
 		this.drawerItemList = listItems;
@@ -34,7 +35,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavDrawerItem> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-        NavDrawerItem item = drawerItemList.get(position);
+        DrawerItem item = drawerItemList.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(item.getLayoutID(), null);
 

@@ -1,6 +1,6 @@
-package com.angrychimps.appname.menu;
+package com.angrychimps.appname.models;
 
-public class NavDrawerItem {
+public class DrawerItem {
 
 	private final String itemName;
     private final int layoutID; //Identifies which xml layout to use
@@ -12,7 +12,7 @@ public class NavDrawerItem {
     private boolean indented;
 
     //email item
-    public NavDrawerItem(int imagePerson, String itemName, String email, Integer imageBackground, int layoutID){
+    public DrawerItem(int imagePerson, String itemName, String email, Integer imageBackground, int layoutID){
         imageID = imagePerson;
         this.itemName = itemName;
         this.email = email;
@@ -21,7 +21,7 @@ public class NavDrawerItem {
     }
 
     //messages item
-    public NavDrawerItem(int imageID, String itemName, String messages, int layoutID){
+    public DrawerItem(int imageID, String itemName, String messages, int layoutID){
         this.imageID = imageID;
         this.itemName = itemName;
         this.messages = messages;
@@ -29,13 +29,13 @@ public class NavDrawerItem {
     }
 
     //providerMode switch
-    public NavDrawerItem(String itemName, int layoutID){
+    public DrawerItem(String itemName, int layoutID){
         this.itemName = itemName;
         this.layoutID = layoutID;
     }
 
     //normal item
-    public NavDrawerItem(int imageID, String itemName, boolean indented, boolean blue, int layoutID){
+    public DrawerItem(int imageID, String itemName, boolean indented, boolean blue, int layoutID){
         this.imageID = imageID;
         this.itemName = itemName;
         this.indented = indented;

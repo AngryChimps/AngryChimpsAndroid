@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer;
+package com.angrychimps.appname.fragments;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.angrychimps.appname.R;
     Customer Create Ad page, currently not implemented
  */
 
-public class CustomerCreateAdFragment extends Fragment {
+public class Deprecated_CRequestServiceFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

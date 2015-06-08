@@ -1,4 +1,4 @@
-package com.angrychimps.appname.customer;
+package com.angrychimps.appname.fragments;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.adapters.CAdDetailAdapter;
+import com.angrychimps.appname.adapters.ViewPagerAdapter;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
@@ -36,7 +38,7 @@ import java.io.IOException;
 import me.relex.circleindicator.CircleIndicator;
 
 
-public class CustomerAdDetailFragment extends Fragment implements OnVolleyResponseListener{
+public class CAdDetailFragment extends Fragment implements OnVolleyResponseListener{
 
     private Address address;
     private ViewPager pager;
@@ -88,7 +90,7 @@ public class CustomerAdDetailFragment extends Fragment implements OnVolleyRespon
         new VolleyRequest(this).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
 
         JsonRequestObjectBuilder object = new JsonRequestObjectBuilder(getActivity());
-//        StaggeredGridViewBuilder builder = new StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
+//        Deprecated_StaggeredGridViewBuilder builder = new Deprecated_StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
 //        builder.getResults();
 
         return rootView;
@@ -134,7 +136,7 @@ public class CustomerAdDetailFragment extends Fragment implements OnVolleyRespon
                     }
                 });
             }
-            CustomerAdDetailAdapter adapter = new CustomerAdDetailAdapter(getActivity(), result.getServices());
+            CAdDetailAdapter adapter = new CAdDetailAdapter(getActivity(), result.getServices());
             for (int i = 0; i < adapter.getCount(); i++) {
                 View item = adapter.getView(i, null, null);
                 serviceItem.addView(item);

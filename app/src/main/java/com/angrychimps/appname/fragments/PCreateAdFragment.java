@@ -1,4 +1,4 @@
-package com.angrychimps.appname.company;
+package com.angrychimps.appname.fragments;
 
 
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.adapters.CCreateAdTimeBlockListAdapter;
 import com.angrychimps.appname.models.Availabilities;
 
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import java.util.List;
     First page when the user clicks to create an ad from the company main fragment
  */
 
-public class CompanyCreateAdFragment extends Fragment {
+public class PCreateAdFragment extends Fragment {
 
     List<Availabilities> list;
-    CompanyCreateAdTimeBlockListAdapter adapter;
+    CCreateAdTimeBlockListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class CompanyCreateAdFragment extends Fragment {
 
         list = new ArrayList<>();
         list.add(new Availabilities());
-        adapter = new CompanyCreateAdTimeBlockListAdapter(getActivity(), list);
+        adapter = new CCreateAdTimeBlockListAdapter(getActivity(), list);
         listView.setAdapter(adapter);
 
 //        EditText metCompanyTitle = (EditText) header.findViewById(R.id.metCompanyTitle);
