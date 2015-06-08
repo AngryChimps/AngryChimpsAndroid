@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.CAdDetailAdapter;
-import com.angrychimps.appname.adapters.ViewPagerAdapter;
+import com.angrychimps.appname.adapters.ViewPagerPhotoAdapter;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
@@ -103,7 +103,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
 
             //MainActivity.setToolbarTitle(result.getCompany().getName());
 
-            pager.setAdapter(new ViewPagerAdapter(getActivity(), result.getPhotos()));
+            pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
             indicator.setViewPager(pager);
             if (result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
             tvCompanyTagLine.setText(result.getTitle());

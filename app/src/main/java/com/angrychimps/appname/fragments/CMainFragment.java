@@ -3,21 +3,23 @@ package com.angrychimps.appname.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.android.volley.Request;
 import com.angrychimps.appname.App;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
+import com.angrychimps.appname.events.UpNavigationArrowEvent;
+import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
@@ -45,23 +47,33 @@ import butterknife.InjectView;
     The main fragment for customer mode.
  */
 
-public class CMainFragment extends Fragment implements OnItemClickedListener, OnVolleyResponseListener {
+public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener, OnItemClickedListener, OnVolleyResponseListener {
 
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
     @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.toolbar) Toolbar toolbar;
     RecyclerView.Adapter adapter;
-    FragmentManager fm;
     JSONObject requestObject;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
+        FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
+        inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
         App.getBus().register(this);
-        fm = getFragmentManager();
 
         toolbar.setTitle("Browse Deals");
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                App.getBus().post(new UpNavigationBurgerEvent());
+            }
+        });
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(this);
+
         fab.setImageResource(R.drawable.ic_request_white_24dp);
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
@@ -97,51 +109,6 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
         }
     }
 
-    private void onToolBarMenuItemClicked(int itemId){
-        // Handle action bar item clicks here.
-        switch (itemId) {
-            case R.id.action_search:
-                break;
-            case R.id.action_map:
-                //materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
-                SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-                fm.beginTransaction().replace(R.id.container, mapFragment).addToBackStack(null).commit();
-                mapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(final GoogleMap map) {
-//                        setToolbarTitle("Map");
-//                        setMenu(R.menu.menu_map);
-
-                        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
-                        map.addMarker(new MarkerOptions().position(currentPosition));
-
-                        for (int i = 0; i < App.searchResults.size(); i++) {
-                            map.addMarker(new MarkerOptions().position(new LatLng(App.searchResults.get(i).getLat(),
-                                    App.searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
-                        }
-                    }
-                });
-                break;
-            case R.id.action_filter:
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("dialog");
-                if (prev != null) ft.remove(prev);
-                ft.addToBackStack(null);
-
-                // Create and show the dialog.
-                CFilterFragment fragment = new CFilterFragment();
-                fragment.show(ft, "dialog");
-                break;
-            case R.id.action_favorite:
-//                if (!isFavorite) {
-//                    item.setIcon(R.drawable.ic_favorite_white_24dp);
-//                } else item.setIcon(R.drawable.ic_favorite_outline_white_24dp);
-//                isFavorite = !isFavorite;
-                break;
-        }
-    }
-
     @Override
     public void onItemClicked(int position) {
         Fragment fragment = new CAdDetailFragment();
@@ -174,6 +141,59 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
     public void onDestroyView() {
         super.onDestroyView();
         App.getBus().unregister(this);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        // Handle action bar item clicks here.
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+            case R.id.action_map:
+                SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+                getFragmentManager().beginTransaction().replace(R.id.innerContainer, mapFragment).addToBackStack(null).commit();
+                mapFragment.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(final GoogleMap map) {
+                        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                App.getBus().post(new UpNavigationArrowEvent());
+                            }
+                        });
+                        toolbar.setTitle("Map");
+                        toolbar.inflateMenu(R.menu.menu_map);
+
+                        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
+                        map.addMarker(new MarkerOptions().position(currentPosition));
+
+                        for (int i = 0; i < App.searchResults.size(); i++) {
+                            map.addMarker(new MarkerOptions().position(new LatLng(App.searchResults.get(i).getLat(),
+                                    App.searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+                        }
+                    }
+                });
+                return true;
+            case R.id.action_filter:
+//                FragmentTransaction ft = fm.beginTransaction();
+//                Fragment prev = fm.findFragmentByTag("dialog");
+//                if (prev != null) ft.remove(prev);
+//                ft.addToBackStack(null);
+//
+//                // Create and show the dialog.
+//                CFilterFragment fragment = new CFilterFragment();
+//                fragment.show(ft, "dialog");
+                return true;
+//            case R.id.action_favorite:
+//                if (!isFavorite) {
+//                    item.setIcon(R.drawable.ic_favorite_white_24dp);
+//                } else item.setIcon(R.drawable.ic_favorite_outline_white_24dp);
+//                isFavorite = !isFavorite;
+//                return true;
+        }
+        return false;
     }
 }
 
