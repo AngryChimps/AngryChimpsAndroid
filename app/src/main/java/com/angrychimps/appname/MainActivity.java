@@ -107,16 +107,17 @@ public class MainActivity extends AppCompatActivity {
     private void onClickNavigationDrawerItem(int position) {
         if (serviceProviderMode) {
             switch (position) {
-                case 0:
+                case 0: //Profile
                     break;
-                case 1:
+                case 1: //Explore Deals Near You
+                    setMainFragment();
                     break;
-                case 3:
+                case 3: //Customer/Provider Switch
                     serviceProviderMode = false;
                     initiateNavigationDrawer();
                     setMainFragment();
                     return;
-                case 4:
+                case 4: //Create your 1st Ad
                     replaceFragmentAddBackStack(new PCreateAdFragment());
                     break;
                 default:
@@ -124,16 +125,17 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             switch (position) {
-                case 0:
+                case 0: //Profile
                     break;
-                case 1:
+                case 1: //Explore Deals Near You
+                    setMainFragment();
                     break;
-                case 3:
+                case 3:  //Customer/Provider Switch
                     serviceProviderMode = true;
                     initiateNavigationDrawer();
                     setMainFragment();
                     return;
-                case 4:
+                case 4: //Request a Service
                     //replaceFragmentAddBackStack(new Deprecated_CRequestServiceFragment());
                     break;
                 default:
