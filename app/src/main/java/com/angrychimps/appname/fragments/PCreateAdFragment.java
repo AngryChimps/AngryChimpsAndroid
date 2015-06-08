@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.CCreateAdTimeBlockListAdapter;
 import com.angrychimps.appname.models.Availabilities;
@@ -29,8 +28,8 @@ public class PCreateAdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_p_create_ad, container, false);
 
-        MainActivity.clearMenu();
-        MainActivity.setToolbarTitle("Create an Ad");
+//        MainActivity.clearMenu();
+//        MainActivity.setToolbarTitle("Create an Ad");
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewCompanyCreateAdTimeBlock);
         ViewGroup header = (ViewGroup)inflater.inflate(R.layout.header_p_create_ad, listView, false);

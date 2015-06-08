@@ -89,7 +89,7 @@ class Deprecated_StaggeredGridViewBuilder {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-                    params.put("angrychimps-api-session-token", App.sessionId);
+                    params.put("angrychimps-api-session-token", App.getSessionId());
                     return params;
                 }
             };

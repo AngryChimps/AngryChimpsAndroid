@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.CAdDetailAdapter;
 import com.angrychimps.appname.adapters.ViewPagerAdapter;
@@ -56,7 +55,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_c_ad_detail, container, false);
 
-        MainActivity.setMenu(R.menu.menu_ad_detail);
+        //MainActivity.setMenu(R.menu.menu_ad_detail);
 
 //        StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
 //        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header_c_ad_detail, gridView, false);
@@ -102,7 +101,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             ProviderAdImmutableGetResponsePayload result = LoganSquare.parse(object.getJSONObject("payload").getJSONObject("payload").toString(),
                     ProviderAdImmutableGetResponsePayload.class);
 
-            MainActivity.setToolbarTitle(result.getCompany().getName());
+            //MainActivity.setToolbarTitle(result.getCompany().getName());
 
             pager.setAdapter(new ViewPagerAdapter(getActivity(), result.getPhotos()));
             indicator.setViewPager(pager);
@@ -168,18 +167,6 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MainActivity.setToolbarTranslucent();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        MainActivity.setToolbarOpaque();
     }
 
     private void launchNavigation() {

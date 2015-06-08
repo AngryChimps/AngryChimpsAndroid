@@ -3,6 +3,7 @@ package com.angrychimps.appname.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -20,6 +21,13 @@ import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
 import com.angrychimps.appname.utils.VolleyRequest;
 import com.bluelinelabs.logansquare.LoganSquare;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,6 +100,51 @@ public class CMainFragment extends Fragment implements OnItemClickedListener, On
 //        });
 
         if (getActivity().getActionBar() != null) getActivity().getActionBar().setTitle("Browse Deals");
+    }
+
+    private void onToolBarMenuItemClicked(int itemId){
+        // Handle action bar item clicks here.
+        switch (itemId) {
+            case R.id.action_search:
+                break;
+            case R.id.action_map:
+                //materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+                SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+                fm.beginTransaction().replace(R.id.container, mapFragment).addToBackStack(null).commit();
+                mapFragment.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(final GoogleMap map) {
+//                        setToolbarTitle("Map");
+//                        setMenu(R.menu.menu_map);
+
+                        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
+                        map.addMarker(new MarkerOptions().position(currentPosition));
+
+                        for (int i = 0; i < App.searchResults.size(); i++) {
+                            map.addMarker(new MarkerOptions().position(new LatLng(App.searchResults.get(i).getLat(),
+                                    App.searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+                        }
+                    }
+                });
+                break;
+            case R.id.action_filter:
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev = fm.findFragmentByTag("dialog");
+                if (prev != null) ft.remove(prev);
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                CFilterFragment fragment = new CFilterFragment();
+                fragment.show(ft, "dialog");
+                break;
+            case R.id.action_favorite:
+//                if (!isFavorite) {
+//                    item.setIcon(R.drawable.ic_favorite_white_24dp);
+//                } else item.setIcon(R.drawable.ic_favorite_outline_white_24dp);
+//                isFavorite = !isFavorite;
+                break;
+        }
     }
 
     @Override

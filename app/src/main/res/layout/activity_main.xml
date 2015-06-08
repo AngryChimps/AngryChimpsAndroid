@@ -5,42 +5,19 @@
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
+    <!-- Main content-->
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-        <!-- Empty space used to position the main frame below the toolbar when translucent toolbar is not desired-->
-        <Space
-            android:id="@+id/toolbarPadding"
-            android:layout_width="0dp"
-            android:layout_height="?actionBarSize"/>
-
-        <!-- Main content-->
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbarPadding"/>
-
-        <!-- Use a Toolbar so that the drawer can be displayed in front of the action bar -->
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/primary"
-            android:theme="@style/ToolBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-    </RelativeLayout>
-
-    <!--TODO: Replace with recyclerview-->
+    <!--Possibly replace with RecyclerView or NavigationView-->
     <ListView
-        android:id="@+id/left_drawer"
+        android:id="@+id/drawer"
         android:layout_width="304dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

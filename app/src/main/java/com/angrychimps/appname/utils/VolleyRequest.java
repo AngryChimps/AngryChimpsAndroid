@@ -85,4 +85,5 @@ public class VolleyRequest {
         );
         VolleySingleton.getInstance().addToRequestQueue(request);
     }
+
 }
