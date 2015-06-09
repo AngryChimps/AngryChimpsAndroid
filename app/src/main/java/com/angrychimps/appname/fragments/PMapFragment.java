@@ -9,14 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -53,9 +49,9 @@ public class PMapFragment extends Fragment implements OnMapReadyCallback, Toolba
 
     @Override
     public void onMapReady(GoogleMap map) {
-        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
-        map.addMarker(new MarkerOptions().position(currentPosition));
+//        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
+//        map.addMarker(new MarkerOptions().position(currentPosition));
     }
 
     @Override

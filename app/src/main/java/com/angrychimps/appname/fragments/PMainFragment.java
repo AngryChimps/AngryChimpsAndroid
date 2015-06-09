@@ -16,6 +16,7 @@ import com.angrychimps.appname.App;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
+import com.angrychimps.appname.utils.Otto;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -37,7 +38,7 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
         inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
-        App.getBus().register(this);
+        Otto.BUS.getBus().register(this);
 
         toolbar.getMenu().clear();
         toolbar.setTitle("Browse Requests");
@@ -45,7 +46,7 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                App.getBus().post(new UpNavigationBurgerEvent());
+                Otto.BUS.getBus().post(new UpNavigationBurgerEvent());
             }
         });
         toolbar.inflateMenu(R.menu.menu_main);
@@ -75,7 +76,7 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        App.getBus().unregister(this);
+        Otto.BUS.getBus().unregister(this);
     }
 
     @Override

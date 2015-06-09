@@ -16,9 +16,11 @@ import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.fragments.CMainFragment;
+import com.angrychimps.appname.fragments.LocationManagerFragment;
 import com.angrychimps.appname.fragments.PCreateAdFragment;
 import com.angrychimps.appname.fragments.PMainFragment;
 import com.angrychimps.appname.models.DrawerItem;
+import com.angrychimps.appname.utils.Otto;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @InjectView(R.id.drawer) ListView drawerListView;
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
     private boolean serviceProviderMode = false;
@@ -38,18 +41,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Otto.BUS.getBus().register(this); //Register to receive events
         ButterKnife.inject(this);
         fm = getSupportFragmentManager();
 
-        App.getBus().register(this); //Register to receive events
-        App.getInstance().initiate();
-
+        LocationManagerFragment locationManagerFragment = (LocationManagerFragment) fm.findFragmentByTag(TAG_LOCATION_FRAGMENT);
+        if (locationManagerFragment == null) {
+            Log.i(null, "LocationManagerFragment is null");
+            locationManagerFragment = new LocationManagerFragment();
+            fm.beginTransaction().add(locationManagerFragment, TAG_LOCATION_FRAGMENT).commit();
+        }
         initiateNavigationDrawer();
     }
 
     @Override protected void onStop() {
         super.onStop();
-        App.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
+        Otto.BUS.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
     }
 
     @Override
@@ -161,4 +168,5 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe public void upNavigationBurgerPressed(UpNavigationBurgerEvent event){
         drawerLayout.openDrawer(drawerListView);
     }
+
 }

@@ -25,6 +25,7 @@ import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.server.JsonRequestObjectBuilder;
 import com.angrychimps.appname.server.VolleyRequest;
+import com.angrychimps.appname.utils.Otto;
 import com.bluelinelabs.logansquare.LoganSquare;
 
 import org.json.JSONArray;
@@ -56,7 +57,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
         inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
-        App.getBus().register(this);
+        Otto.BUS.getBus().register(this);
         fm = getFragmentManager();
 
         toolbar.getMenu().clear();
@@ -65,7 +66,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                App.getBus().post(new UpNavigationBurgerEvent());
+                Otto.BUS.getBus().post(new UpNavigationBurgerEvent());
             }
         });
         toolbar.inflateMenu(R.menu.menu_main);
@@ -133,7 +134,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        App.getBus().unregister(this);
+        Otto.BUS.getBus().unregister(this);
     }
 
     @Override
