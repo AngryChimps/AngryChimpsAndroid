@@ -62,7 +62,7 @@ public class VolleyRequest {
                 return params;
             }
         };
-        VolleySingleton.getInstance().addToRequestQueue(request);
+        VolleySingleton.INSTANCE.addToRequestQueue(request);
     }
 
     public void makeRequest(@RequestMethod int method, String urlString){
@@ -83,7 +83,7 @@ public class VolleyRequest {
                     }
                 }
         );
-        VolleySingleton.getInstance().addToRequestQueue(request);
+        VolleySingleton.INSTANCE.addToRequestQueue(request);
     }
 
 }

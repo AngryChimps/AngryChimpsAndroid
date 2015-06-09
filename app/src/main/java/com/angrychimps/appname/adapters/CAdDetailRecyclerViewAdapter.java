@@ -26,7 +26,7 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         this.fragment = fragment;
         this.listService = listService;
         this.listGrid = listGrid;
-        imageLoader = VolleySingleton.getInstance().getImageLoader();
+        imageLoader = VolleySingleton.INSTANCE.getImageLoader();
     }
 
     // Create new views (invoked by the layout manager)

@@ -24,7 +24,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealItemGridVi
     public MainRecyclerViewAdapter(Fragment fragment, List<SearchPostResponseResults> arrayList) {
         this.fragment = fragment;
         this.arrayList = arrayList;
-        imageLoader = VolleySingleton.getInstance().getImageLoader();
+        imageLoader = VolleySingleton.INSTANCE.getImageLoader();
     }
 
     // Create new views (invoked by the layout manager)

@@ -93,7 +93,8 @@ class Deprecated_StaggeredGridViewBuilder {
                     return params;
                 }
             };
-            VolleySingleton.getInstance().addToRequestQueue(request);
+            VolleySingleton.INSTANCE.addToRequestQueue(request);
+            //VolleySingleton.getInstance().addToRequestQueue(request);
         }
     }
 

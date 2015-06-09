@@ -26,7 +26,7 @@ public class Deprecated_StaggeredGridViewAdapter extends ArrayAdapter<SearchPost
 
     private final LayoutInflater layoutInflater;
     private final List<SearchPostResponseResults> arrayList;
-    private final ImageLoader imageLoader = VolleySingleton.getInstance().getImageLoader();
+    private final ImageLoader imageLoader = VolleySingleton.INSTANCE.getImageLoader();
 
     public Deprecated_StaggeredGridViewAdapter(Context context, List<SearchPostResponseResults> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);

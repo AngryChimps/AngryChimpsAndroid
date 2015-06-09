@@ -12,48 +12,34 @@ import com.android.volley.toolbox.Volley;
     Volley is an Android library designed by Google which provides very fast and simple server communication optimized for large numbers of requests
     and a small file sizes. Also provides image loading. Not for use with large files or streaming.
 
-    A single instance of Volley sets up a queue for all server communication and handles threading.
+    A single instance of Volley sets up a queue for all server communication and handles threading. Using the enum singleton pattern as recommended
+    by Bloch in Effective Java.
  */
 
-public class VolleySingleton {
+public enum VolleySingleton {
+    INSTANCE;
 
-    private static VolleySingleton instance =null;
-    private final ImageLoader imageLoader;
-    private RequestQueue requestQueue;
+    private final RequestQueue requestQueue = Volley.newRequestQueue(App.getAppContext());
+    private final ImageLoader imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
 
-    private VolleySingleton(){
-        requestQueue = getRequestQueue();
-        imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {
+        private final LruCache<String, Bitmap> cache = new LruCache<>((int) (Runtime.getRuntime().maxMemory() / 1024) / 8);
 
-            private final LruCache<String, Bitmap> cache=new LruCache<>((int)(Runtime.getRuntime().maxMemory()/1024)/8);
-            @Override
-            public Bitmap getBitmap(String url) {
-                return cache.get(url);
-            }
+        @Override
+        public Bitmap getBitmap(String url) {
+            return cache.get(url);
+        }
 
-            @Override
-            public void putBitmap(String url, Bitmap bitmap) {
-                cache.put(url, bitmap);
-            }
-        });
-    }
-
-    public static synchronized VolleySingleton getInstance() {
-        if (instance == null) instance = new VolleySingleton();
-        return instance;
-    }
-
-    private RequestQueue getRequestQueue(){
-        if (requestQueue == null) requestQueue = Volley.newRequestQueue(App.getAppContext());
-        return requestQueue;
-    }
+        @Override
+        public void putBitmap(String url, Bitmap bitmap) {
+            cache.put(url, bitmap);
+        }
+    });
 
     public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
-
+        requestQueue.add(req);
     }
 
-    public ImageLoader getImageLoader(){
+    public ImageLoader getImageLoader() {
         return imageLoader;
     }
 }
