@@ -24,8 +24,8 @@ import com.angrychimps.appname.adapters.ViewPagerPhotoAdapter;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
-import com.angrychimps.appname.utils.JsonRequestObjectBuilder;
-import com.angrychimps.appname.utils.VolleyRequest;
+import com.angrychimps.appname.server.JsonRequestObjectBuilder;
+import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 import com.bluelinelabs.logansquare.LoganSquare;
 

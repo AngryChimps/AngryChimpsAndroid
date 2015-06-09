@@ -3,7 +3,6 @@ package com.angrychimps.appname.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -16,18 +15,7 @@ import android.widget.FrameLayout;
 import com.angrychimps.appname.App;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.events.BackPressedEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.otto.Subscribe;
-
-import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -41,9 +29,6 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    JSONObject requestObject;
-    FragmentManager fm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,9 +38,18 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
         App.getBus().register(this);
-        fm = getFragmentManager();
 
-        setToolbar();
+        toolbar.getMenu().clear();
+        toolbar.setTitle("Browse Requests");
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                App.getBus().post(new UpNavigationBurgerEvent());
+            }
+        });
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(this);
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -84,20 +78,6 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         App.getBus().unregister(this);
     }
 
-    private void setToolbar() {
-        toolbar.getMenu().clear();
-        toolbar.setTitle("Browse Deals");
-        toolbar.setNavigationIcon(R.drawable.ic_menu);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                App.getBus().post(new UpNavigationBurgerEvent());
-            }
-        });
-        toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setOnMenuItemClickListener(this);
-    }
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         // Handle action bar item clicks here.
@@ -105,33 +85,7 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
             case R.id.action_search:
                 return true;
             case R.id.action_map:
-                SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-                fm.beginTransaction().replace(R.id.innerContainer, mapFragment).addToBackStack(null).commit();
-                mapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(final GoogleMap map) {
-                        toolbar.getMenu().clear();
-                        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-                        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                setToolbar();
-                                fm.popBackStack();
-                            }
-                        });
-                        toolbar.setTitle("Map");
-                        toolbar.inflateMenu(R.menu.menu_map);
-
-                        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
-                        map.addMarker(new MarkerOptions().position(currentPosition));
-
-                        for (int i = 0; i < App.searchResults.size(); i++) {
-                            map.addMarker(new MarkerOptions().position(new LatLng(App.searchResults.get(i).getLat(),
-                                    App.searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
-                        }
-                    }
-                });
+                ((MainActivity) getActivity()).replaceFragmentAddBackStack(new PMapFragment());
                 return true;
             case R.id.action_filter:
 //                FragmentTransaction ft = fm.beginTransaction();
@@ -145,11 +99,6 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                 return true;
         }
         return false;
-    }
-
-    @Subscribe
-    public void onBackPressed(BackPressedEvent event){
-        setToolbar();
     }
 }
 

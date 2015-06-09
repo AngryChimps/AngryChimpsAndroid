@@ -1,4 +1,4 @@
-package com.angrychimps.appname.utils;
+package com.angrychimps.appname.server;
 
 import android.app.Application;
 import android.support.annotation.IntDef;

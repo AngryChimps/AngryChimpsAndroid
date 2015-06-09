@@ -11,7 +11,7 @@ import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.angrychimps.appname.utils.DeviceLocation;
-import com.angrychimps.appname.utils.VolleyRequest;
+import com.angrychimps.appname.server.VolleyRequest;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.otto.Bus;
 
@@ -24,7 +24,7 @@ import java.util.List;
 
 /*
     This class is used to give Volley a single instance over the lifetime of the app, ignoring screen rotation, as well as
-    storing static variables
+    storing static variables TODO: consider splitting these into different singleton methods- research best practices
  */
 
 public class App extends Application implements OnVolleyResponseListener{

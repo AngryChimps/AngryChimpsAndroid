@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.angrychimps.appname.adapters.DrawerAdapter;
-import com.angrychimps.appname.events.BackPressedEvent;
 import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        App.getBus().post(new BackPressedEvent());
         if (drawerLayout.isDrawerOpen(drawerListView)) drawerLayout.closeDrawer(drawerListView);
         else super.onBackPressed();
     }
