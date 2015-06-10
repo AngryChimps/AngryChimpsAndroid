@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -16,13 +17,15 @@ import android.widget.FrameLayout;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
-import com.angrychimps.appname.events.SearchResultsUpdatedEvent;
+import com.angrychimps.appname.events.ResultChangedEvent;
+import com.angrychimps.appname.events.ResultInsertedEvent;
+import com.angrychimps.appname.events.ResultMovedEvent;
+import com.angrychimps.appname.events.ResultRemovedEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
+import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.utils.Otto;
 import com.squareup.otto.Subscribe;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -31,12 +34,12 @@ import butterknife.InjectView;
     The main fragment for Customer Mode.
  */
 
-public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
+public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener, OnItemClickedListener {
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
-    List<SearchPostResponseResults> searchResults;
+    SortedList<SearchPostResponseResults> searchResults;
     RecyclerView.Adapter adapter;
     FragmentManager fm;
 
@@ -81,16 +84,32 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 
     }
 
-//    @Override public void onItemClicked(int position) {
-//        Fragment fragment = new CAdDetailFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("id", searchResults.get(position).getProvider_ad_immutable_id());
-//        bundle.putDouble("lat", searchResults.get(position).getLat());
-//        bundle.putDouble("lon", searchResults.get(position).getLon());
-//        bundle.putDouble("distance", searchResults.get(position).getDistance());
-//        fragment.setArguments(bundle);
-//        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
-//    }
+    @Subscribe public void onResultChanged(ResultChangedEvent event){
+        adapter.notifyItemRangeChanged(event.position, event.count);
+    }
+
+    @Subscribe public void onResultInserted(ResultInsertedEvent event){
+        adapter.notifyItemRangeInserted(event.position, event.count);
+    }
+
+    @Subscribe public void onResultMoved(ResultMovedEvent event){
+        adapter.notifyItemMoved(event.fromPosition, event.toPosition);
+    }
+
+    @Subscribe public void onResultRemoved(ResultRemovedEvent event){
+        adapter.notifyItemRangeRemoved(event.position, event.count);
+    }
+
+    @Override public void onItemClicked(int position) {
+        Fragment fragment = new CAdDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", searchResults.get(position).getProvider_ad_immutable_id());
+        bundle.putDouble("lat", searchResults.get(position).getLat());
+        bundle.putDouble("lon", searchResults.get(position).getLon());
+        bundle.putDouble("distance", searchResults.get(position).getDistance());
+        fragment.setArguments(bundle);
+        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
+    }
 
 
     @Override public void onStart() {
@@ -129,10 +148,6 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 //                return true;
         }
         return false;
-    }
-
-    @Subscribe public void searchResultsUpdated(SearchResultsUpdatedEvent event){
-        adapter.notifyDataSetChanged();
     }
 }
 

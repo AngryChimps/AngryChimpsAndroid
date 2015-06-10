@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.SortedList;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +16,10 @@ import android.widget.ListView;
 import com.android.volley.Request;
 import com.angrychimps.appname.adapters.DrawerAdapter;
 import com.angrychimps.appname.events.LocationUpdatedEvent;
-import com.angrychimps.appname.events.SearchResultsUpdatedEvent;
+import com.angrychimps.appname.events.ResultChangedEvent;
+import com.angrychimps.appname.events.ResultInsertedEvent;
+import com.angrychimps.appname.events.ResultMovedEvent;
+import com.angrychimps.appname.events.ResultRemovedEvent;
 import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @InjectView(R.id.drawer) ListView drawerListView;
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    private List<SearchPostResponseResults> searchResults = new ArrayList<>();
+    private SortedList<SearchPostResponseResults> searchResults;
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
@@ -59,6 +63,38 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         ButterKnife.inject(this);
         fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null) fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
+
+        searchResults = new SortedList<>(SearchPostResponseResults.class, new SortedList.Callback<SearchPostResponseResults>() {
+            @Override public int compare(SearchPostResponseResults o1, SearchPostResponseResults o2) {
+                if(o1.getDistance() < o2.getDistance()) return -1;
+                if(o1.getDistance() > o2.getDistance()) return 1;
+                else return 0;
+            }
+
+            @Override public void onInserted(int position, int count) {
+                Otto.BUS.getBus().post(new ResultInsertedEvent(position, count));
+            }
+
+            @Override public void onRemoved(int position, int count) {
+                Otto.BUS.getBus().post(new ResultRemovedEvent(position, count));
+            }
+
+            @Override public void onMoved(int fromPosition, int toPosition) {
+                Otto.BUS.getBus().post(new ResultMovedEvent(fromPosition, toPosition));
+            }
+
+            @Override public void onChanged(int position, int count) {
+                Otto.BUS.getBus().post(new ResultChangedEvent(position, count));
+            }
+
+            @Override public boolean areContentsTheSame(SearchPostResponseResults oldItem, SearchPostResponseResults newItem) {
+                return Math.abs(oldItem.getDistance() - newItem.getDistance()) < 0.1;
+            }
+
+            @Override public boolean areItemsTheSame(SearchPostResponseResults item1, SearchPostResponseResults item2) {
+                return item1.getProvider_ad_id().equals(item2.getProvider_ad_id());
+            }
+        });
 
         setMainFragment();
 
@@ -80,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         else super.onBackPressed();
     }
 
-    public List<SearchPostResponseResults> getSearchResults(){
+    public SortedList<SearchPostResponseResults> getSearchResults(){
         return searchResults;
     }
 
@@ -205,11 +241,11 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     @Override public void onVolleyResponse(JSONObject object) {
         try {
             JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
-            searchResults.clear();
+            searchResults.beginBatchedUpdates();
             for (int i = 0; i < jArray.length(); i++) {
                 searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
             }
-            Otto.BUS.getBus().post(new SearchResultsUpdatedEvent());
+            searchResults.endBatchedUpdates();
 
         } catch (IOException | JSONException e) {
             Log.i(null, "JsonObjectRequest error");
