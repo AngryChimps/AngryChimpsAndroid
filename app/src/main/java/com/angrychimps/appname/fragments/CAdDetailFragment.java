@@ -86,9 +86,9 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
 //            }
 //        });
 
-        new VolleyRequest(this).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
+        new VolleyRequest(getActivity()).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
 
-        JsonRequestObjectBuilder object = new JsonRequestObjectBuilder(getActivity());
+        JsonRequestObjectBuilder object = new JsonRequestObjectBuilder();
 //        Deprecated_StaggeredGridViewBuilder builder = new Deprecated_StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
 //        builder.getResults();
 

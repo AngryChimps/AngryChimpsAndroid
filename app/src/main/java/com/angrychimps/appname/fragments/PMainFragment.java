@@ -37,7 +37,6 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
         inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
-        Otto.BUS.getBus().register(this);
 
         toolbar.getMenu().clear();
         toolbar.setTitle("Browse Requests");
@@ -68,8 +67,14 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onStart() {
+        super.onStart();
+        Otto.BUS.getBus().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
         Otto.BUS.getBus().unregister(this);
     }
 

@@ -42,7 +42,7 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("angrychimps-api-session-token", App.getSessionId());
+                params.put("angrychimps-api-session-token", App.getInstance().getSessionId());
                 return params;
             }
         };
@@ -61,6 +61,7 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.d("VOLLEY ERROR", "error => " + error.toString());
+        //TODO: detect if sessionId is expired and refresh it in that situation
     }
 
     @Retention(RetentionPolicy.SOURCE)

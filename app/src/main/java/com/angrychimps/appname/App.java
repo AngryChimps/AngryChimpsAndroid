@@ -18,14 +18,15 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /*
-    This class is used to give Volley a single instance over the lifetime of the app, ignoring screen rotation
+    This class is used to give Volley a single instance over the lifetime of the app, ignoring screen rotation. It also stores the sessionId,
+    which remains constant once acquired
  */
 
 public class App extends Application implements OnVolleyResponseListener{
 
     public static final String url = "http://devvy3.angrychimps.com/api/v1/";
     public static final String mediaUrl = "http://devvy3.angrychimps.com/media/";
-    private static String sessionId; //Session ID required for all server calls
+    private String sessionId; //Session ID required for all server calls
     private static App instance;
 
     public static App getInstance(){
@@ -36,7 +37,7 @@ public class App extends Application implements OnVolleyResponseListener{
         return instance.getApplicationContext();
     }
 
-    public static String getSessionId() {
+    public String getSessionId() {
         return sessionId;
     }
 

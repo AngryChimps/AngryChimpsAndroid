@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Otto.BUS.getBus().register(this); //Register to receive events
         ButterKnife.inject(this);
         fm = getSupportFragmentManager();
         if(fm.findFragmentByTag(TAG_LOCATION_FRAGMENT)==null) fm.beginTransaction().add(new LocationManagerFragment(),TAG_LOCATION_FRAGMENT).commit();
@@ -63,6 +62,12 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         setMainFragment();
 
         initiateNavigationDrawer();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Otto.BUS.getBus().register(this); //Register to receive events
     }
 
     @Override protected void onStop() {
@@ -116,12 +121,12 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onClickNavigationDrawerItem(position);
+                onClickDrawerItem(position);
             }
         });
     }
 
-    private void onClickNavigationDrawerItem(int position) {
+    private void onClickDrawerItem(int position) {
         if (serviceProviderMode) {
             switch (position) {
                 case 0: //Profile
@@ -166,10 +171,6 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         onBackPressed();
     }
 
-    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
-        if(requestObject != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
-    }
-
     @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event){
         setMainFragment();
     }
@@ -178,13 +179,19 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         drawerLayout.openDrawer(drawerListView);
     }
 
+    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
+        //Both sessionId and location are required for the request. Send request immediately after they become available
+        if(requestObject != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
+    }
+
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
         JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder();
         builder.setLatitude(event.latitude);
         builder.setLongitude(event.longitude);
         builder.setLimit(20);
         requestObject = builder.getJsonObject();
-        if(App.getSessionId() != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
+        //Both sessionId and location are required for the request. Send request immediately after they become available
+        if(App.getInstance().getSessionId() != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
     }
 
     @Override
