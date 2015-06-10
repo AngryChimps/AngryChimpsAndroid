@@ -120,6 +120,10 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         return searchResults;
     }
 
+    public Location getCurrentLocation(){
+        return currentLocation;
+    }
+
     private void setMainFragment() {
         fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         replaceFragmentNoBackStack(serviceProviderMode ? new PMainFragment() : new CMainFragment());

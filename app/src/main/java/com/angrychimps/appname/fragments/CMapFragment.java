@@ -1,18 +1,30 @@
 package com.angrychimps.appname.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.events.ResultInsertedEvent;
+import com.angrychimps.appname.events.ResultRemovedEvent;
+import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.utils.Otto;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -21,6 +33,7 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
+    private GoogleMap map;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,14 +62,40 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
 
     @Override
     public void onMapReady(GoogleMap map) {
-//        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
-//        map.addMarker(new MarkerOptions().position(currentPosition));
+        this.map = map;
+        setMarkers();
+    }
 
-//        for (int i = 0; i < App.searchResults.size(); i++) {
-//            map.addMarker(new MarkerOptions().position(new LatLng(App.searchResults.get(i).getLat(),
-//                    App.searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
-//        }
+    private void setMarkers(){
+        SortedList<SearchPostResponseResults> searchResults = ((MainActivity) getActivity()).getSearchResults();
+        Location location = ((MainActivity) getActivity()).getCurrentLocation();
+        LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
+        map.addMarker(new MarkerOptions().position(currentPosition));
+        for (int i = 0; i < searchResults.size(); i++) {
+            map.addMarker(new MarkerOptions().position(new LatLng(searchResults.get(i).getLat(),
+                    searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+        }
+    }
+
+    @Override public void onStart() {
+        super.onStart();
+        Otto.BUS.getBus().register(this);
+    }
+
+    @Override public void onStop() {
+        super.onStop();
+        Otto.BUS.getBus().unregister(this);
+    }
+
+    @Subscribe public void onResultInserted(ResultInsertedEvent event){
+        map.clear();
+        setMarkers();
+    }
+
+    @Subscribe public void onResultRemoved(ResultRemovedEvent event){
+        map.clear();
+        setMarkers();
     }
 
     @Override
