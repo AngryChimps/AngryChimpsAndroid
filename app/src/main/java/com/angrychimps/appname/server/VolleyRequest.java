@@ -1,7 +1,6 @@
 package com.angrychimps.appname.server;
 
-import android.app.Activity;
-import android.app.Application;
+import android.content.Context;
 import android.support.annotation.IntDef;
 import android.util.Log;
 
@@ -25,35 +24,20 @@ import java.util.Map;
 /*
     This class initiates all Volley requests, returning the respective JsonObject when finished
  */
-public class VolleyRequest {
+public class VolleyRequest implements Response.Listener<JSONObject>, Response.ErrorListener{
 
     OnVolleyResponseListener listener;
 
-    public VolleyRequest(Application app) {
-        listener = (OnVolleyResponseListener) app;
+    public VolleyRequest(Context context) {
+        listener = (OnVolleyResponseListener) context;
     }
 
-    public VolleyRequest(Activity activity){
-        listener = (OnVolleyResponseListener) activity;
+    public void makeRequest(@RequestMethod int method, String urlString){
+        makeRequest(method, urlString, null);
     }
-
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({Request.Method.GET, Request.Method.PUT, Request.Method.POST, Request.Method.DELETE})
-    public @interface RequestMethod {}
 
     public void makeRequest(@RequestMethod int method, String urlString, JSONObject requestObject){
-        JsonObjectRequest request = new JsonObjectRequest(method, App.url + urlString, requestObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject object) {
-                listener.onVolleyResponse(object);
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("VOLLEY ERROR", "error => " + error.toString());
-                    }
-                }) {
+        JsonObjectRequest request = new JsonObjectRequest(method, App.url + urlString, requestObject, this, this) {
             // Attach headers
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -65,25 +49,21 @@ public class VolleyRequest {
         VolleySingleton.INSTANCE.addToRequestQueue(request);
     }
 
-    public void makeRequest(@RequestMethod int method, String urlString){
-        makeRequest(method, urlString, null);
-    }
-
     public void getSessionId(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, App.url + "session", new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject object) {
-                listener.onVolleyResponse(object);
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("VOLLEY ERROR", "error => " + error.toString());
-                    }
-                }
-        );
-        VolleySingleton.INSTANCE.addToRequestQueue(request);
+        VolleySingleton.INSTANCE.addToRequestQueue(new JsonObjectRequest(Request.Method.GET, App.url + "session", this, this));
     }
 
+    @Override
+    public void onResponse(JSONObject object) {
+        listener.onVolleyResponse(object);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.d("VOLLEY ERROR", "error => " + error.toString());
+    }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Request.Method.GET, Request.Method.PUT, Request.Method.POST, Request.Method.DELETE})
+    public @interface RequestMethod {}
 }
