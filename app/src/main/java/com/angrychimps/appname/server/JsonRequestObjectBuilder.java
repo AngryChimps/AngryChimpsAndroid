@@ -1,9 +1,6 @@
 package com.angrychimps.appname.server;
 
-import android.app.Activity;
 import android.util.Log;
-
-import com.angrychimps.appname.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,9 +10,10 @@ import org.json.JSONObject;
  */
 public class JsonRequestObjectBuilder {
 
-    private final MainActivity activity;
     private String text;
     private int[] categories;
+    private double latitude;
+    private double longitude;
     private double radius_miles = 0;
     private boolean consumer_travels = true;
     private String starting_at;
@@ -23,11 +21,6 @@ public class JsonRequestObjectBuilder {
     private String sort;
     private int limit = 0;
     private int offset = 0;
-
-
-    public JsonRequestObjectBuilder(Activity activity) {
-        this.activity = (MainActivity) activity;
-    }
 
     //get the current date and the data 14 days from now
 //        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
@@ -44,16 +37,14 @@ public class JsonRequestObjectBuilder {
 //        Log.i("startDate = ", startDate);
 //        Log.i("endDate = ", endDate);
 
-
-
     public JSONObject getJsonObject(){
         JSONObject object = new JSONObject();
         JSONObject payload = new JSONObject();
         try {
             if(text != null) payload.put("text", text);
             if(categories != null) payload.put("categories", categories);
-            payload.put("lat", activity.getLatitude());
-            payload.put("lon", activity.getLongitude());
+            payload.put("lat", latitude);
+            payload.put("lon", longitude);
             if(radius_miles != 0) payload.put("radius_miles", radius_miles);
             if(!consumer_travels) payload.put("consumer_travels", false);
             if(starting_at != null) payload.put("starting_at", starting_at);
@@ -78,64 +69,40 @@ public class JsonRequestObjectBuilder {
         this.text = text;
     }
 
-    public int[] getCategories() {
-        return categories;
-    }
-
     public void setCategories(int[] categories) {
         this.categories = categories;
     }
 
-    public double getRadius_miles() {
-        return radius_miles;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public void setRadius_miles(double radius_miles) {
         this.radius_miles = radius_miles;
     }
 
-    public boolean isConsumer_travels() {
-        return consumer_travels;
-    }
-
     public void setConsumer_travels(boolean consumer_travels) {
         this.consumer_travels = consumer_travels;
-    }
-
-    public String getStarting_at() {
-        return starting_at;
     }
 
     public void setStarting_at(String starting_at) {
         this.starting_at = starting_at;
     }
 
-    public String getEnding_at() {
-        return ending_at;
-    }
-
     public void setEnding_at(String ending_at) {
         this.ending_at = ending_at;
-    }
-
-    public String getSort() {
-        return sort;
     }
 
     public void setSort(String sort) {
         this.sort = sort;
     }
 
-    public int getLimit() {
-        return limit;
-    }
-
     public void setLimit(int limit) {
         this.limit = limit;
-    }
-
-    public int getOffset() {
-        return offset;
     }
 
     public void setOffset(int offset) {

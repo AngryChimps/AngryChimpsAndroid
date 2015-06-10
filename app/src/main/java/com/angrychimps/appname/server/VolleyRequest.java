@@ -1,8 +1,8 @@
 package com.angrychimps.appname.server;
 
+import android.app.Activity;
 import android.app.Application;
 import android.support.annotation.IntDef;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -33,8 +33,8 @@ public class VolleyRequest {
         listener = (OnVolleyResponseListener) app;
     }
 
-    public VolleyRequest(Fragment fragment){
-        listener = (OnVolleyResponseListener) fragment;
+    public VolleyRequest(Activity activity){
+        listener = (OnVolleyResponseListener) activity;
     }
 
     @Retention(RetentionPolicy.SOURCE)

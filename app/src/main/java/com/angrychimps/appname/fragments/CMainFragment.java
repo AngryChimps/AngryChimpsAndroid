@@ -7,35 +7,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.android.volley.Request;
-import com.angrychimps.appname.App;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
-import com.angrychimps.appname.events.LocationUpdateImmediatelyEvent;
-import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
-import com.angrychimps.appname.interfaces.OnItemClickedListener;
-import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
-import com.angrychimps.appname.models.SearchPostResponseResults;
-import com.angrychimps.appname.server.JsonRequestObjectBuilder;
-import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.utils.Otto;
-import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.otto.Subscribe;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -44,7 +27,7 @@ import butterknife.InjectView;
     The main fragment for Customer Mode.
  */
 
-public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener, OnItemClickedListener, OnVolleyResponseListener {
+public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
@@ -91,63 +74,24 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new MainRecyclerViewAdapter(this, App.searchResults);
-        recyclerView.setAdapter(adapter);
+//        adapter = new MainRecyclerViewAdapter(this, App.searchResults);
+//        recyclerView.setAdapter(adapter);
         //Load data only if the sessionId is currently available
-        if (App.getSessionId() != null) loadDataIfNeeded();
     }
 
-    private void loadDataIfNeeded() {
-        JsonRequestObjectBuilder build = new JsonRequestObjectBuilder(getActivity());
-        build.setLimit(20);
-        requestObject = build.getJsonObject();
-        if (App.searchResults.size() == 0 || !requestObject.toString().equals(App.currentRequest.toString())) {
+//    @Override
+//    public void onItemClicked(int position) {
+//        Fragment fragment = new CAdDetailFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id", App.searchResults.get(position).getProvider_ad_immutable_id());
+//        bundle.putDouble("lat", App.searchResults.get(position).getLat());
+//        bundle.putDouble("lon", App.searchResults.get(position).getLon());
+//        bundle.putDouble("distance", App.searchResults.get(position).getDistance());
+//        fragment.setArguments(bundle);
+//        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
+//    }
 
-            Log.i(null, "requestObject == " + requestObject.toString());
-            Log.i(null, "currentRequest == " + App.currentRequest.toString());
-            Log.i(null, "Loading data");
-            new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
-        }
-    }
 
-    @Override
-    public void onItemClicked(int position) {
-        Fragment fragment = new CAdDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", App.searchResults.get(position).getProvider_ad_immutable_id());
-        bundle.putDouble("lat", App.searchResults.get(position).getLat());
-        bundle.putDouble("lon", App.searchResults.get(position).getLon());
-        bundle.putDouble("distance", App.searchResults.get(position).getDistance());
-        fragment.setArguments(bundle);
-        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
-    }
-
-    //If the sessionId is received after this fragment is created, load data
-    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
-        loadDataIfNeeded();
-    }
-
-    @Subscribe public void locationUpdateImmediately(LocationUpdateImmediatelyEvent event){
-        if(App.getSessionId() != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
-    }
-
-    @Override
-    public void onVolleyResponse(JSONObject object) {
-        try {
-            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
-            App.searchResults.clear();
-            adapter.notifyDataSetChanged();
-            for (int i = 0; i < jArray.length(); i++) {
-                App.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
-                adapter.notifyItemInserted(i);
-            }
-            App.currentRequest = requestObject;
-
-        } catch (IOException | JSONException e) {
-            Log.i(null, "JsonObjectRequest error");
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onDestroyView() {

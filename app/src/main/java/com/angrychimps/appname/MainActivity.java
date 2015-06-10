@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.android.volley.Request;
 import com.angrychimps.appname.adapters.DrawerAdapter;
 import com.angrychimps.appname.events.LocationUpdatedEvent;
 import com.angrychimps.appname.events.SessionIdReceivedEvent;
@@ -20,25 +21,35 @@ import com.angrychimps.appname.fragments.CMainFragment;
 import com.angrychimps.appname.fragments.LocationManagerFragment;
 import com.angrychimps.appname.fragments.PCreateAdFragment;
 import com.angrychimps.appname.fragments.PMainFragment;
+import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.DrawerItem;
+import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.server.JsonRequestObjectBuilder;
+import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.utils.Otto;
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.otto.Subscribe;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener{
 
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @InjectView(R.id.drawer) ListView drawerListView;
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
+    private List<SearchPostResponseResults> searchResults;
+    private JSONObject requestObject;
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
-    private double latitude;
-    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +74,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(drawerListView)) drawerLayout.closeDrawer(drawerListView);
         else super.onBackPressed();
-    }
-
-    public double getLatitude(){
-        return latitude;
-    }
-
-    public double getLongitude(){
-        return longitude;
     }
 
     private void setMainFragment() {
@@ -164,9 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
-        //Wait until sessionId has been acquired to set up Main Fragment, because that is required for further communication with the server
-        Log.i(null, "sessionIdReceived");
-        setMainFragment();
+        if(requestObject != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
     }
 
     @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event){
@@ -178,7 +179,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
-        latitude = event.latitude;
-        longitude = event.longitude;
+        JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder();
+        builder.setLatitude(event.latitude);
+        builder.setLongitude(event.longitude);
+        builder.setLimit(20);
+        requestObject = builder.getJsonObject();
+        if(App.getSessionId() != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
+    }
+
+    @Override
+    public void onVolleyResponse(JSONObject object) {
+        try {
+            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
+            searchResults.clear();
+            //adapter.notifyDataSetChanged();
+            for (int i = 0; i < jArray.length(); i++) {
+                searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                //adapter.notifyItemInserted(i);
+            }
+
+        } catch (IOException | JSONException e) {
+            Log.i(null, "JsonObjectRequest error");
+            e.printStackTrace();
+        }
     }
 }

@@ -13,9 +13,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 
 /*
     Retained fragment which manages current location and broadcasts updates to anyone receiving LocationUpdatedEvent
@@ -25,7 +22,6 @@ public class LocationManagerFragment extends Fragment implements GoogleApiClient
     private Location currentLocation;
     private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
-    private String lastUpdateTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,14 +51,6 @@ public class LocationManagerFragment extends Fragment implements GoogleApiClient
         googleApiClient.disconnect();
     }
 
-    public Location getCurrentLocation(){
-        return currentLocation;
-    }
-
-    public String getLastUpdateTime(){
-        return lastUpdateTime;
-    }
-
     private void startLocationUpdates() {
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
     }
@@ -87,6 +75,5 @@ public class LocationManagerFragment extends Fragment implements GoogleApiClient
         Otto.BUS.getBus().post(new LocationUpdatedEvent(location));
         if(currentLocation.distanceTo(location) > 500) Otto.BUS.getBus().post(new LocationUpdateImmediatelyEvent()); //The location is over 500 meters off- force a refresh
         currentLocation = location;
-        lastUpdateTime = DateFormat.getTimeInstance().format(new Date());
     }
 }
