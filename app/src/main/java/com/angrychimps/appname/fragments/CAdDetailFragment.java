@@ -24,7 +24,7 @@ import com.angrychimps.appname.adapters.ViewPagerPhotoAdapter;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
-import com.angrychimps.appname.server.JsonRequestObjectBuilder;
+import com.angrychimps.appname.server.JsonRequestObject;
 import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 import com.bluelinelabs.logansquare.LoganSquare;
@@ -88,7 +88,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
 
         new VolleyRequest(getActivity()).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
 
-        JsonRequestObjectBuilder object = new JsonRequestObjectBuilder();
+        JsonRequestObject object = new JsonRequestObject();
 //        Deprecated_StaggeredGridViewBuilder builder = new Deprecated_StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
 //        builder.getResults();
 

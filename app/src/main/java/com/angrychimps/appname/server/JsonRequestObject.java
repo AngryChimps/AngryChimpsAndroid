@@ -8,7 +8,7 @@ import org.json.JSONObject;
 /*
     This class builds JSONObjects for search and filtering in the StaggeredGridView
  */
-public class JsonRequestObjectBuilder {
+public class JsonRequestObject {
 
     private String text;
     private int[] categories;
@@ -107,5 +107,74 @@ public class JsonRequestObjectBuilder {
 
     public void setOffset(int offset) {
         this.offset = offset;
+    }
+
+    //Builder allows chaining
+    public static class Builder{
+
+        private final JsonRequestObject object;
+
+        public Builder() {
+            object = new JsonRequestObject();
+        }
+
+        public Builder setText(String text){
+            object.setText(text);
+            return this;
+        }
+
+        public Builder setCategories(int[] categories) {
+            object.setCategories(categories);
+            return this;
+        }
+
+        public Builder setLatitude(double latitude) {
+            object.setLatitude(latitude);
+            return this;
+        }
+
+        public Builder setLongitude(double longitude) {
+            object.setLongitude(longitude);
+            return this;
+        }
+
+        public Builder setRadius_miles(double radius_miles) {
+            object.setRadius_miles(radius_miles);
+            return this;
+        }
+
+        public Builder setConsumer_travels(boolean consumer_travels) {
+            object.setConsumer_travels(consumer_travels);
+            return this;
+        }
+
+        public Builder setStarting_at(String starting_at) {
+            object.setStarting_at(starting_at);
+            return this;
+        }
+
+        public Builder setEnding_at(String ending_at) {
+            object.setEnding_at(ending_at);
+            return this;
+        }
+
+        public Builder setSort(String sort) {
+            object.setSort(sort);
+            return this;
+        }
+
+        public Builder setLimit(int limit) {
+            object.setLimit(limit);
+            return this;
+        }
+
+        public Builder setOffset(int offset) {
+            object.setOffset(offset);
+            return this;
+        }
+
+        public JSONObject create(){
+            return object.getJsonObject();
+        }
     }
 }

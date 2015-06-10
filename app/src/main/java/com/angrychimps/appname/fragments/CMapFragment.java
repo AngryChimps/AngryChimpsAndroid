@@ -9,14 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -57,10 +53,10 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
 //        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
 //        map.addMarker(new MarkerOptions().position(currentPosition));
 
-        for (int i = 0; i < App.searchResults.size(); i++) {
-            map.addMarker(new MarkerOptions().position(new LatLng(App.searchResults.get(i).getLat(),
-                    App.searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
-        }
+//        for (int i = 0; i < App.searchResults.size(); i++) {
+//            map.addMarker(new MarkerOptions().position(new LatLng(App.searchResults.get(i).getLat(),
+//                    App.searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+//        }
     }
 
     @Override

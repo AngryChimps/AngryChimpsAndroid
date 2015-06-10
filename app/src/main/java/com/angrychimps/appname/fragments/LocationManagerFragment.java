@@ -4,7 +4,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.angrychimps.appname.events.LocationUpdateImmediatelyEvent;
 import com.angrychimps.appname.events.LocationUpdatedEvent;
 import com.angrychimps.appname.utils.Otto;
 import com.google.android.gms.common.ConnectionResult;
@@ -73,7 +72,6 @@ public class LocationManagerFragment extends Fragment implements GoogleApiClient
     @Override
     public void onLocationChanged(Location location) {
         Otto.BUS.getBus().post(new LocationUpdatedEvent(location));
-        if(currentLocation.distanceTo(location) > 500) Otto.BUS.getBus().post(new LocationUpdateImmediatelyEvent()); //The location is over 500 meters off- force a refresh
         currentLocation = location;
     }
 }

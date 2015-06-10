@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.server.JsonRequestObjectBuilder;
+import com.angrychimps.appname.server.JsonRequestObject;
 
 import org.json.JSONObject;
 
 public class CFilterFragment extends DialogFragment implements View.OnClickListener{
 
-    JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder(getActivity());
+    JsonRequestObject builder = new JsonRequestObject();
     //TODO- add results to JSONObject and pass back to CMainFragment or implement interface through activity
 
     @Override

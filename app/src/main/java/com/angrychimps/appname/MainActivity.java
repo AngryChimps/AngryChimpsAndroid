@@ -1,5 +1,6 @@
 package com.angrychimps.appname;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import com.android.volley.Request;
 import com.angrychimps.appname.adapters.DrawerAdapter;
 import com.angrychimps.appname.events.LocationUpdatedEvent;
+import com.angrychimps.appname.events.SearchResultsUpdatedEvent;
 import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
@@ -24,7 +26,7 @@ import com.angrychimps.appname.fragments.PMainFragment;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.DrawerItem;
 import com.angrychimps.appname.models.SearchPostResponseResults;
-import com.angrychimps.appname.server.JsonRequestObjectBuilder;
+import com.angrychimps.appname.server.JsonRequestObject;
 import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.utils.Otto;
 import com.bluelinelabs.logansquare.LoganSquare;
@@ -41,31 +43,29 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener{
+public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener {
 
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @InjectView(R.id.drawer) ListView drawerListView;
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    private List<SearchPostResponseResults> searchResults;
-    private JSONObject requestObject;
+    private List<SearchPostResponseResults> searchResults = new ArrayList<>();
+    private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         fm = getSupportFragmentManager();
-        if(fm.findFragmentByTag(TAG_LOCATION_FRAGMENT)==null) fm.beginTransaction().add(new LocationManagerFragment(),TAG_LOCATION_FRAGMENT).commit();
+        if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null) fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
         setMainFragment();
 
         initiateNavigationDrawer();
     }
 
-    @Override
-    protected void onStart() {
+    @Override protected void onStart() {
         super.onStart();
         Otto.BUS.getBus().register(this); //Register to receive events
     }
@@ -75,10 +75,13 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         Otto.BUS.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(drawerListView)) drawerLayout.closeDrawer(drawerListView);
         else super.onBackPressed();
+    }
+
+    public List<SearchPostResponseResults> getSearchResults(){
+        return searchResults;
     }
 
     private void setMainFragment() {
@@ -119,8 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
 
         drawerListView.setAdapter(new DrawerAdapter(this, drawerItems, serviceProviderMode));
         drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 onClickDrawerItem(position);
             }
         });
@@ -171,39 +173,43 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         onBackPressed();
     }
 
-    @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event){
+    @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event) {
         setMainFragment();
     }
 
-    @Subscribe public void upNavigationBurgerPressed(UpNavigationBurgerEvent event){
+    @Subscribe public void upNavigationBurgerPressed(UpNavigationBurgerEvent event) {
         drawerLayout.openDrawer(drawerListView);
     }
 
-    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
-        //Both sessionId and location are required for the request. Send request immediately after they become available
-        if(requestObject != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
+    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event) {
+        updateIfNecessary();
     }
 
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
-        JsonRequestObjectBuilder builder = new JsonRequestObjectBuilder();
-        builder.setLatitude(event.latitude);
-        builder.setLongitude(event.longitude);
-        builder.setLimit(20);
-        requestObject = builder.getJsonObject();
-        //Both sessionId and location are required for the request. Send request immediately after they become available
-        if(App.getInstance().getSessionId() != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
+        currentLocation = event.location;
+        updateIfNecessary();
     }
 
-    @Override
-    public void onVolleyResponse(JSONObject object) {
+    private void updateIfNecessary(){
+        //SessionId and location are required.
+        if(currentLocation == null || App.getInstance().getSessionId() == null) return;
+
+        //Update only if location has changed significantly (>500 meters)
+        if (previousLocation == null || previousLocation.distanceTo(currentLocation) > 500) {
+            new VolleyRequest(this).makeRequest(Request.Method.POST, "search", new JsonRequestObject.Builder()
+                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create());
+            previousLocation = currentLocation;
+        }
+    }
+
+    @Override public void onVolleyResponse(JSONObject object) {
         try {
             JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
             searchResults.clear();
-            //adapter.notifyDataSetChanged();
             for (int i = 0; i < jArray.length(); i++) {
                 searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
-                //adapter.notifyItemInserted(i);
             }
+            Otto.BUS.getBus().post(new SearchResultsUpdatedEvent());
 
         } catch (IOException | JSONException e) {
             Log.i(null, "JsonObjectRequest error");

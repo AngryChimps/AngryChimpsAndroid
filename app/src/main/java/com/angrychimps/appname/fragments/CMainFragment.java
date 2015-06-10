@@ -15,10 +15,14 @@ import android.widget.FrameLayout;
 
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
+import com.angrychimps.appname.events.SearchResultsUpdatedEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
+import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.utils.Otto;
+import com.squareup.otto.Subscribe;
 
-import org.json.JSONObject;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -32,12 +36,11 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
+    List<SearchPostResponseResults> searchResults;
     RecyclerView.Adapter adapter;
-    JSONObject requestObject;
     FragmentManager fm;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
         //Add RecyclerView to container before injecting views
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
@@ -69,42 +72,38 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         return rootView;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    @Override public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        adapter = new MainRecyclerViewAdapter(this, App.searchResults);
-//        recyclerView.setAdapter(adapter);
-        //Load data only if the sessionId is currently available
+        searchResults = ((MainActivity) getActivity()).getSearchResults();
+        adapter = new MainRecyclerViewAdapter(this, searchResults);
+        recyclerView.setAdapter(adapter);
+
     }
 
-//    @Override
-//    public void onItemClicked(int position) {
+//    @Override public void onItemClicked(int position) {
 //        Fragment fragment = new CAdDetailFragment();
 //        Bundle bundle = new Bundle();
-//        bundle.putString("id", App.searchResults.get(position).getProvider_ad_immutable_id());
-//        bundle.putDouble("lat", App.searchResults.get(position).getLat());
-//        bundle.putDouble("lon", App.searchResults.get(position).getLon());
-//        bundle.putDouble("distance", App.searchResults.get(position).getDistance());
+//        bundle.putString("id", searchResults.get(position).getProvider_ad_immutable_id());
+//        bundle.putDouble("lat", searchResults.get(position).getLat());
+//        bundle.putDouble("lon", searchResults.get(position).getLon());
+//        bundle.putDouble("distance", searchResults.get(position).getDistance());
 //        fragment.setArguments(bundle);
 //        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
 //    }
 
 
-    @Override
-    public void onStart() {
+    @Override public void onStart() {
         super.onStart();
         Otto.BUS.getBus().register(this);
     }
 
-    @Override
-    public void onStop() {
+    @Override public void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this);
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
+    @Override public boolean onMenuItemClick(MenuItem item) {
         // Handle action bar item clicks here.
         switch (item.getItemId()) {
             case R.id.action_search:
@@ -130,6 +129,10 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 //                return true;
         }
         return false;
+    }
+
+    @Subscribe public void searchResultsUpdated(SearchResultsUpdatedEvent event){
+        adapter.notifyDataSetChanged();
     }
 }
 
