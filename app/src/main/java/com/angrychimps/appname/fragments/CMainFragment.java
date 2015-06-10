@@ -19,6 +19,8 @@ import com.angrychimps.appname.App;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
+import com.angrychimps.appname.events.LocationUpdateImmediatelyEvent;
+import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
@@ -27,6 +29,7 @@ import com.angrychimps.appname.server.JsonRequestObjectBuilder;
 import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.utils.Otto;
 import com.bluelinelabs.logansquare.LoganSquare;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,16 +91,20 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        adapter = new MainRecyclerViewAdapter(this, App.searchResults);
+        recyclerView.setAdapter(adapter);
+        //Load data only if the sessionId is currently available
+        if (App.getSessionId() != null) loadDataIfNeeded();
+    }
+
+    private void loadDataIfNeeded() {
         JsonRequestObjectBuilder build = new JsonRequestObjectBuilder(getActivity());
         build.setLimit(20);
         requestObject = build.getJsonObject();
-        adapter = new MainRecyclerViewAdapter(this, App.searchResults);
-        recyclerView.setAdapter(adapter);
-
-        Log.i(null, "requestObject == " + requestObject.toString());
-        Log.i(null, "currentRequest == " + App.currentRequest.toString());
-
         if (App.searchResults.size() == 0 || !requestObject.toString().equals(App.currentRequest.toString())) {
+
+            Log.i(null, "requestObject == " + requestObject.toString());
+            Log.i(null, "currentRequest == " + App.currentRequest.toString());
             Log.i(null, "Loading data");
             new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
         }
@@ -115,10 +122,21 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
     }
 
+    //If the sessionId is received after this fragment is created, load data
+    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
+        loadDataIfNeeded();
+    }
+
+    @Subscribe public void locationUpdateImmediately(LocationUpdateImmediatelyEvent event){
+        if(App.getSessionId() != null) new VolleyRequest(this).makeRequest(Request.Method.POST, "search", requestObject);
+    }
+
     @Override
     public void onVolleyResponse(JSONObject object) {
         try {
             JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
+            App.searchResults.clear();
+            adapter.notifyDataSetChanged();
             for (int i = 0; i < jArray.length(); i++) {
                 App.searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
                 adapter.notifyItemInserted(i);

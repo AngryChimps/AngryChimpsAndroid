@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.angrychimps.appname.adapters.DrawerAdapter;
+import com.angrychimps.appname.events.LocationUpdatedEvent;
 import com.angrychimps.appname.events.SessionIdReceivedEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +47,10 @@ public class MainActivity extends AppCompatActivity {
         Otto.BUS.getBus().register(this); //Register to receive events
         ButterKnife.inject(this);
         fm = getSupportFragmentManager();
+        if(fm.findFragmentByTag(TAG_LOCATION_FRAGMENT)==null) fm.beginTransaction().add(new LocationManagerFragment(),TAG_LOCATION_FRAGMENT).commit();
 
-        LocationManagerFragment locationManagerFragment = (LocationManagerFragment) fm.findFragmentByTag(TAG_LOCATION_FRAGMENT);
-        if (locationManagerFragment == null) {
-            Log.i(null, "LocationManagerFragment is null");
-            locationManagerFragment = new LocationManagerFragment();
-            fm.beginTransaction().add(locationManagerFragment, TAG_LOCATION_FRAGMENT).commit();
-        }
+        setMainFragment();
+
         initiateNavigationDrawer();
     }
 
@@ -63,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(drawerListView)) drawerLayout.closeDrawer(drawerListView);
         else super.onBackPressed();
+    }
+
+    public double getLatitude(){
+        return latitude;
+    }
+
+    public double getLongitude(){
+        return longitude;
     }
 
     private void setMainFragment() {
@@ -169,4 +177,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.openDrawer(drawerListView);
     }
 
+    @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
+        latitude = event.latitude;
+        longitude = event.longitude;
+    }
 }

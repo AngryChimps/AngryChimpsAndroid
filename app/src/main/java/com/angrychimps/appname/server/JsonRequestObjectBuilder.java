@@ -1,7 +1,9 @@
 package com.angrychimps.appname.server;
 
-import android.content.Context;
+import android.app.Activity;
 import android.util.Log;
+
+import com.angrychimps.appname.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +13,7 @@ import org.json.JSONObject;
  */
 public class JsonRequestObjectBuilder {
 
-    private final Context context;
+    private final MainActivity activity;
     private String text;
     private int[] categories;
     private double radius_miles = 0;
@@ -23,8 +25,8 @@ public class JsonRequestObjectBuilder {
     private int offset = 0;
 
 
-    public JsonRequestObjectBuilder(Context context) {
-        this.context = context;
+    public JsonRequestObjectBuilder(Activity activity) {
+        this.activity = (MainActivity) activity;
     }
 
     //get the current date and the data 14 days from now
@@ -50,8 +52,8 @@ public class JsonRequestObjectBuilder {
         try {
             if(text != null) payload.put("text", text);
             if(categories != null) payload.put("categories", categories);
-//            payload.put("lat", App.getLatitude());
-//            payload.put("lon", App.getLongitude());
+            payload.put("lat", activity.getLatitude());
+            payload.put("lon", activity.getLongitude());
             if(radius_miles != 0) payload.put("radius_miles", radius_miles);
             if(!consumer_travels) payload.put("consumer_travels", false);
             if(starting_at != null) payload.put("starting_at", starting_at);

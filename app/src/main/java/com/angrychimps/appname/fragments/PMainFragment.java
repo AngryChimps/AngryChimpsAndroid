@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.angrychimps.appname.App;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
@@ -67,11 +66,6 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 
         return rootView;
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        }
 
     @Override
     public void onDestroyView() {
