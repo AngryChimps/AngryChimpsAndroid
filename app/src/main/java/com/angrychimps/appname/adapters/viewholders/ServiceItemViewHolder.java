@@ -1,7 +1,6 @@
 package com.angrychimps.appname.adapters.viewholders;
 
 import android.graphics.Paint;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -9,31 +8,27 @@ import android.widget.TextView;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.interfaces.OnItemClickedListener;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class ServiceItemViewHolder extends RecyclerView.ViewHolder {
 
-    private OnItemClickedListener listener;
-    public TextView tvAdDetailTitle;
-    public TextView tvAdDetailDescription;
-    public TextView tvAdDetailDiscount;
-    public TextView tvAdDetailPrice;
-    public TextView tvAdDetailPriceDecimal;
+    @InjectView(R.id.tvAdDetailTitle) public TextView tvAdDetailTitle;
+    @InjectView(R.id.tvAdDetailDescription) public TextView tvAdDetailDescription;
+    @InjectView(R.id.tvAdDetailDiscount) public TextView tvAdDetailDiscount;
+    @InjectView(R.id.tvAdDetailPrice) public TextView tvAdDetailPrice;
+    @InjectView(R.id.tvAdDetailPriceDecimal) public TextView tvAdDetailPriceDecimal;
 
-    public ServiceItemViewHolder(View itemView, Fragment fragment) {
+    public ServiceItemViewHolder(View itemView, final OnItemClickedListener listener) {
         super(itemView);
+        ButterKnife.inject(this, itemView);
 
-        listener = (OnItemClickedListener) fragment;
-
-        tvAdDetailTitle = (TextView) itemView.findViewById(R.id.tvAdDetailTitle);
-        tvAdDetailDescription = (TextView) itemView.findViewById(R.id.tvAdDetailDescription);
-        tvAdDetailDiscount = (TextView) itemView.findViewById(R.id.tvAdDetailDiscount);
-        tvAdDetailPrice = (TextView) itemView.findViewById(R.id.tvAdDetailPrice);
-        tvAdDetailPriceDecimal = (TextView) itemView.findViewById(R.id.tvAdDetailPriceDecimal);
         tvAdDetailPriceDecimal.setPaintFlags(tvAdDetailPriceDecimal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClicked(getPosition());
+                listener.onItemClicked(getAdapterPosition());
             }
         });
     }
