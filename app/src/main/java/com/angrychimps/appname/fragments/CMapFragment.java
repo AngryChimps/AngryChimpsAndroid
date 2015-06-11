@@ -97,14 +97,14 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
     }
 
     private void setMarkers(){
-        SortedList<SearchPostResponseResults> searchResults = ((MainActivity) getActivity()).getSearchResults();
+        SortedList<SearchPostResponseResults> deals = ((MainActivity) getActivity()).getDeals();
         Location location = ((MainActivity) getActivity()).getCurrentLocation();
         LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
         map.addMarker(new MarkerOptions().position(currentPosition));
-        for (int i = 0; i < searchResults.size(); i++) {
-            map.addMarker(new MarkerOptions().position(new LatLng(searchResults.get(i).getLat(),
-                    searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+        for (int i = 0; i < deals.size(); i++) {
+            map.addMarker(new MarkerOptions().position(new LatLng(deals.get(i).getLat(),
+                    deals.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
         }
     }
 

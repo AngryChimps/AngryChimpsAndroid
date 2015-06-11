@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.android.volley.toolbox.ImageLoader;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
-import com.angrychimps.appname.adapters.viewholders.DealItemGridViewHolder;
+import com.angrychimps.appname.adapters.viewholders.DealGridViewHolder;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.models.Service;
 
@@ -33,14 +33,14 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_deal, parent, false);
-        return new DealItemGridViewHolder(v, fragment);
+        return new DealGridViewHolder(v, fragment);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     //TODO: precache images
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-//        DealItemGridViewHolder holder = (DealItemGridViewHolder) viewHolder;
+//        DealGridViewHolder holder = (DealGridViewHolder) viewHolder;
 //        holder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + listGrid.get(position).getPhoto(), imageLoader);
 //        viewHolder.rbCompany.setRating(listGrid.get(position).getRating());
 //        viewHolder.tvCompanyDistance.setText(listGrid.get(position).getDistance() + " miles");

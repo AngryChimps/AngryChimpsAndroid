@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @InjectView(R.id.drawer) ListView drawerListView;
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    private SortedList<SearchPostResponseResults> searchResults;
+    private SortedList<SearchPostResponseResults> deals;
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null) fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
-        searchResults = new SortedList<>(SearchPostResponseResults.class, new SortedList.Callback<SearchPostResponseResults>() {
+        deals = new SortedList<>(SearchPostResponseResults.class, new SortedList.Callback<SearchPostResponseResults>() {
             @Override public int compare(SearchPostResponseResults o1, SearchPostResponseResults o2) {
                 if(o1.getDistance() < o2.getDistance()) return -1;
                 if(o1.getDistance() > o2.getDistance()) return 1;
@@ -118,11 +118,11 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     @Override public void onVolleyResponse(JSONObject object) {
         try {
             JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
-            searchResults.beginBatchedUpdates();
+            deals.beginBatchedUpdates();
             for (int i = 0; i < jArray.length(); i++) {
-                searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                deals.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
             }
-            searchResults.endBatchedUpdates();
+            deals.endBatchedUpdates();
 
         } catch (IOException | JSONException e) {
             Log.i(null, "JsonObjectRequest error");
@@ -130,8 +130,8 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         }
     }
 
-    public SortedList<SearchPostResponseResults> getSearchResults(){
-        return searchResults;
+    public SortedList<SearchPostResponseResults> getDeals(){
+        return deals;
     }
 
     public Location getCurrentLocation(){

@@ -39,7 +39,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
-    SortedList<SearchPostResponseResults> searchResults;
+    SortedList<SearchPostResponseResults> deals;
     RecyclerView.Adapter adapter;
     FragmentManager fm;
 
@@ -78,8 +78,8 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        searchResults = ((MainActivity) getActivity()).getSearchResults();
-        adapter = new MainRecyclerViewAdapter(searchResults, this);
+        deals = ((MainActivity) getActivity()).getDeals();
+        adapter = new MainRecyclerViewAdapter(deals, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -96,10 +96,10 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override public void onItemClicked(int position) {
         Fragment fragment = new CAdDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("id", searchResults.get(position).getProvider_ad_immutable_id());
-        bundle.putDouble("lat", searchResults.get(position).getLat());
-        bundle.putDouble("lon", searchResults.get(position).getLon());
-        bundle.putDouble("distance", searchResults.get(position).getDistance());
+        bundle.putString("id", deals.get(position).getProvider_ad_immutable_id());
+        bundle.putDouble("lat", deals.get(position).getLat());
+        bundle.putDouble("lon", deals.get(position).getLon());
+        bundle.putDouble("distance", deals.get(position).getDistance());
         fragment.setArguments(bundle);
         ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
     }

@@ -13,7 +13,7 @@ import com.angrychimps.appname.widgets.FlexibleRatingBar;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class DealItemGridViewHolder extends RecyclerView.ViewHolder {
+public class DealGridViewHolder extends RecyclerView.ViewHolder {
 
     @InjectView(R.id.imageCompanyMain) public NetworkImageView imageCompanyMain;
     @InjectView(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
@@ -23,7 +23,7 @@ public class DealItemGridViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.tvCompanyServicePriceDecimal) public TextView tvCompanyServicePriceDecimal;
     @InjectView(R.id.ratingBar) public FlexibleRatingBar rbCompany;
 
-    public DealItemGridViewHolder(View itemView, final OnItemClickedListener listener) {
+    public DealGridViewHolder(View itemView, final OnItemClickedListener listener) {
         super(itemView);
         ButterKnife.inject(this, itemView);
 
