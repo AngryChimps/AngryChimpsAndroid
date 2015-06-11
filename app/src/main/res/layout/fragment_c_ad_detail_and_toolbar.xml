@@ -97,13 +97,4 @@
             android:scrollbars="vertical"/>
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:borderWidth="0dp"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end"/>
-
 </android.support.design.widget.CoordinatorLayout>

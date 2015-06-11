@@ -59,10 +59,19 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     //TODO: precache images
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
-        bindViewHolder(vh, position);
+        switch(vh.getItemViewType()){
+            case 0:
+                bind((ServiceItemViewHolder) vh, position);
+                break;
+            case 1:
+                bind((MapCardViewHolder) vh);
+                break;
+            default:
+                bind((DealGridViewHolder) vh, position);
+        }
     }
 
-    private void bindViewHolder(ServiceItemViewHolder vh, int position) {
+    private void bind(ServiceItemViewHolder vh, int position) {
         vh.tvAdDetailDescription.setText(services.get(position).getDescription());
         vh.tvAdDetailTitle.setText(services.get(position).getName());
         vh.tvAdDetailPrice.setText("" + (int) services.get(position).getDiscounted_price());
@@ -71,7 +80,7 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         vh.tvAdDetailDiscount.setText("     " + services.get(position).getDiscount() + "%\ndiscount");
     }
 
-    private void bindViewHolder(MapCardViewHolder vh, int position) {
+    private void bind(MapCardViewHolder vh) {
         Address address = mapCard.getAddress();
         String street2 = "";
         String coordinates = address.getLat()+","+ address.getLon();
@@ -86,7 +95,7 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         vh.bReviews.setText(mapCard.getRatingCount() + " Reviews");
     }
 
-    private void bindViewHolder(DealGridViewHolder vh, int position) {
+    private void bind(DealGridViewHolder vh, int position) {
         vh.imageCompanyMain.setImageUrl(App.mediaUrl + deals.get(position).getPhoto(), imageLoader);
         vh.rbCompany.setRating(deals.get(position).getRating());
         vh.tvCompanyDistance.setText(deals.get(position).getDistanceMiles());

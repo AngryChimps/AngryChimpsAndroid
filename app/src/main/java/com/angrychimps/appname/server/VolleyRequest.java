@@ -2,6 +2,7 @@ package com.angrychimps.appname.server;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -30,6 +31,10 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
 
     public VolleyRequest(Context context) {
         listener = (OnVolleyResponseListener) context;
+    }
+
+    public VolleyRequest(Fragment fragment) {
+        listener = (OnVolleyResponseListener) fragment;
     }
 
     public void makeRequest(@RequestMethod int method, String urlString){

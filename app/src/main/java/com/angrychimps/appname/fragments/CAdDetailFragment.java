@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -99,8 +100,42 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
                 return false;
             }
         });
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemViewCacheSize(0); //Default image caching causes gaps to form and image loading failures
 
-        new VolleyRequest(getActivity()).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
+        services = new SortedList<>(Service.class, new SortedList.Callback<Service>() {
+            @Override public int compare(Service o1, Service o2) {
+                return 0;
+            }
+
+            @Override public void onInserted(int position, int count) {
+
+            }
+
+            @Override public void onRemoved(int position, int count) {
+
+            }
+
+            @Override public void onMoved(int fromPosition, int toPosition) {
+
+            }
+
+            @Override public void onChanged(int position, int count) {
+
+            }
+
+            @Override public boolean areContentsTheSame(Service oldItem, Service newItem) {
+                return false;
+            }
+
+            @Override public boolean areItemsTheSame(Service item1, Service item2) {
+                return false;
+            }
+        });
+
+        new VolleyRequest(this).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
 
         return rootView;
     }
