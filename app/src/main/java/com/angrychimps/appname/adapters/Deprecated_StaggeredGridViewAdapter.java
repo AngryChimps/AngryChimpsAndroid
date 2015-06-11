@@ -12,7 +12,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
-import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
@@ -22,13 +22,13 @@ import java.util.List;
     This adapter handles the StaggeredGridView in Provider Mode
  */
 
-public class Deprecated_StaggeredGridViewAdapter extends ArrayAdapter<SearchPostResponseResults> {
+public class Deprecated_StaggeredGridViewAdapter extends ArrayAdapter<Deal> {
 
     private final LayoutInflater layoutInflater;
-    private final List<SearchPostResponseResults> arrayList;
+    private final List<Deal> arrayList;
     private final ImageLoader imageLoader = VolleySingleton.INSTANCE.getImageLoader();
 
-    public Deprecated_StaggeredGridViewAdapter(Context context, List<SearchPostResponseResults> arrayList) {
+    public Deprecated_StaggeredGridViewAdapter(Context context, List<Deal> arrayList) {
         super(context, android.R.layout.simple_list_item_1, arrayList);
         this.layoutInflater = LayoutInflater.from(context);
         this.arrayList = arrayList;
@@ -64,7 +64,7 @@ public class Deprecated_StaggeredGridViewAdapter extends ArrayAdapter<SearchPost
 
         viewHolder.imageCompanyMain.setImageUrl(App.mediaUrl + arrayList.get(position).getPhoto(), imageLoader);
         viewHolder.rbCompany.setRating(arrayList.get(position).getRating());
-        viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistance() + " miles");
+        viewHolder.tvCompanyDistance.setText(arrayList.get(position).getDistanceMiles());
         viewHolder.tvCompanyTitle.setText(arrayList.get(position).getTitle());
         viewHolder.tvCompanyServicePrice.setText("" + arrayList.get(position).getDiscounted_price());
         if (arrayList.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + arrayList.get(position).getDiscounted_price_decimal());

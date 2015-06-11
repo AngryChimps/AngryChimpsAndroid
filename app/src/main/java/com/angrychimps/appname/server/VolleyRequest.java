@@ -11,7 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.angrychimps.appname.App;
 import com.angrychimps.appname.VolleySingleton;
-import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
+import com.angrychimps.appname.callbacks.OnVolleyResponseListener;
 
 import org.json.JSONObject;
 

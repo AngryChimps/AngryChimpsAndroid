@@ -17,13 +17,13 @@ import android.widget.FrameLayout;
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.adapters.MainRecyclerViewAdapter;
+import com.angrychimps.appname.events.DealClickedEvent;
 import com.angrychimps.appname.events.ResultChangedEvent;
 import com.angrychimps.appname.events.ResultInsertedEvent;
 import com.angrychimps.appname.events.ResultMovedEvent;
 import com.angrychimps.appname.events.ResultRemovedEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
-import com.angrychimps.appname.interfaces.OnItemClickedListener;
-import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.utils.Otto;
 import com.squareup.otto.Subscribe;
 
@@ -34,12 +34,12 @@ import butterknife.InjectView;
     The main fragment for Customer Mode.
  */
 
-public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener, OnItemClickedListener {
+public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
-    SortedList<SearchPostResponseResults> deals;
+    SortedList<Deal> deals;
     RecyclerView.Adapter adapter;
     FragmentManager fm;
 
@@ -78,7 +78,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         super.onActivityCreated(savedInstanceState);
 
         deals = ((MainActivity) getActivity()).getDeals();
-        adapter = new MainRecyclerViewAdapter(deals, this);
+        adapter = new MainRecyclerViewAdapter(deals);
         recyclerView.setAdapter(adapter);
     }
 
@@ -90,17 +90,6 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override public void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this);
-    }
-
-    @Override public void onItemClicked(int position) {
-        Fragment fragment = new CAdDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", deals.get(position).getProvider_ad_immutable_id());
-        bundle.putDouble("lat", deals.get(position).getLat());
-        bundle.putDouble("lon", deals.get(position).getLon());
-        bundle.putDouble("distance", deals.get(position).getDistance());
-        fragment.setArguments(bundle);
-        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
     }
 
     @Override public boolean onMenuItemClick(MenuItem item) {
@@ -123,6 +112,18 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                 return true;
         }
         return false;
+    }
+
+    @Subscribe public void onDealClicked(DealClickedEvent event){
+        int position = event.position;
+        Fragment fragment = new CAdDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", deals.get(position).getProvider_ad_immutable_id());
+        bundle.putDouble("lat", deals.get(position).getLat());
+        bundle.putDouble("lon", deals.get(position).getLon());
+        bundle.putString("distance", deals.get(position).getDistanceMiles());
+        fragment.setArguments(bundle);
+        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
     }
 
     @Subscribe public void onResultChanged(ResultChangedEvent event){

@@ -6,7 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.angrychimps.appname.events.SessionIdReceivedEvent;
-import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
+import com.angrychimps.appname.callbacks.OnVolleyResponseListener;
 import com.angrychimps.appname.models.SessionGetResponsePayload;
 import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.utils.Otto;

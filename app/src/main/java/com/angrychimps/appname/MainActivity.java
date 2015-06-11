@@ -27,9 +27,9 @@ import com.angrychimps.appname.fragments.CMainFragment;
 import com.angrychimps.appname.fragments.LocationManagerFragment;
 import com.angrychimps.appname.fragments.PCreateAdFragment;
 import com.angrychimps.appname.fragments.PMainFragment;
-import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
+import com.angrychimps.appname.callbacks.OnVolleyResponseListener;
+import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.models.DrawerItem;
-import com.angrychimps.appname.models.SearchPostResponseResults;
 import com.angrychimps.appname.server.JsonRequestObject;
 import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.utils.Otto;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @InjectView(R.id.drawer) ListView drawerListView;
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    private SortedList<SearchPostResponseResults> deals;
+    private SortedList<Deal> deals;
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null) fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
-        deals = new SortedList<>(SearchPostResponseResults.class, new SortedList.Callback<SearchPostResponseResults>() {
-            @Override public int compare(SearchPostResponseResults o1, SearchPostResponseResults o2) {
+        deals = new SortedList<>(Deal.class, new SortedList.Callback<Deal>() {
+            @Override public int compare(Deal o1, Deal o2) {
                 if(o1.getDistance() < o2.getDistance()) return -1;
                 if(o1.getDistance() > o2.getDistance()) return 1;
                 else return 0;
@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                 Otto.BUS.getBus().post(new ResultChangedEvent(position, count));
             }
 
-            @Override public boolean areContentsTheSame(SearchPostResponseResults oldItem, SearchPostResponseResults newItem) {
+            @Override public boolean areContentsTheSame(Deal oldItem, Deal newItem) {
                 return Math.abs(oldItem.getDistance() - newItem.getDistance()) < 0.1;
             }
 
-            @Override public boolean areItemsTheSame(SearchPostResponseResults item1, SearchPostResponseResults item2) {
+            @Override public boolean areItemsTheSame(Deal item1, Deal item2) {
                 return item1.getProvider_ad_id().equals(item2.getProvider_ad_id());
             }
         });
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
             JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
             deals.beginBatchedUpdates();
             for (int i = 0; i < jArray.length(); i++) {
-                deals.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+                deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
             }
             deals.endBatchedUpdates();
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         }
     }
 
-    public SortedList<SearchPostResponseResults> getDeals(){
+    public SortedList<Deal> getDeals(){
         return deals;
     }
 

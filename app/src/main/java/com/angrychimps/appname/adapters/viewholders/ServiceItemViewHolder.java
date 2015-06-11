@@ -6,7 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.interfaces.OnItemClickedListener;
+import com.angrychimps.appname.events.ServiceClickedEvent;
+import com.angrychimps.appname.utils.Otto;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,7 +20,7 @@ public class ServiceItemViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.tvAdDetailPrice) public TextView tvAdDetailPrice;
     @InjectView(R.id.tvAdDetailPriceDecimal) public TextView tvAdDetailPriceDecimal;
 
-    public ServiceItemViewHolder(View itemView, final OnItemClickedListener listener) {
+    public ServiceItemViewHolder(View itemView) {
         super(itemView);
         ButterKnife.inject(this, itemView);
 
@@ -28,7 +29,7 @@ public class ServiceItemViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClicked(getAdapterPosition());
+                Otto.BUS.getBus().post(new ServiceClickedEvent(getAdapterPosition()));
             }
         });
     }

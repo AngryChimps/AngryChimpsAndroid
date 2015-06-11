@@ -7,7 +7,8 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.interfaces.OnItemClickedListener;
+import com.angrychimps.appname.events.DealClickedEvent;
+import com.angrychimps.appname.utils.Otto;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
 import butterknife.ButterKnife;
@@ -23,7 +24,7 @@ public class DealGridViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.tvCompanyServicePriceDecimal) public TextView tvCompanyServicePriceDecimal;
     @InjectView(R.id.ratingBar) public FlexibleRatingBar rbCompany;
 
-    public DealGridViewHolder(View itemView, final OnItemClickedListener listener) {
+    public DealGridViewHolder(View itemView) {
         super(itemView);
         ButterKnife.inject(this, itemView);
 
@@ -32,7 +33,7 @@ public class DealGridViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClicked(getAdapterPosition());
+                Otto.BUS.getBus().post(new DealClickedEvent(getAdapterPosition()));
             }
         });
     }

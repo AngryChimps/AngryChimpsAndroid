@@ -15,7 +15,7 @@ import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.events.ResultInsertedEvent;
 import com.angrychimps.appname.events.ResultRemovedEvent;
-import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.utils.Otto;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -97,7 +97,7 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
     }
 
     private void setMarkers(){
-        SortedList<SearchPostResponseResults> deals = ((MainActivity) getActivity()).getDeals();
+        SortedList<Deal> deals = ((MainActivity) getActivity()).getDeals();
         Location location = ((MainActivity) getActivity()).getCurrentLocation();
         LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));

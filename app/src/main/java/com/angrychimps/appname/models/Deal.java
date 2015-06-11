@@ -3,10 +3,8 @@ package com.angrychimps.appname.models;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
-import java.text.DecimalFormat;
-
 @JsonObject
-public class SearchPostResponseResults {
+public class Deal {
 
     @JsonField
     private String provider_ad_immutable_id;
@@ -44,7 +42,7 @@ public class SearchPostResponseResults {
     private int discounted_price_decimal;
 
 
-    public SearchPostResponseResults() {
+    public Deal() {
     }
 
     public String getProvider_ad_immutable_id() {
@@ -115,8 +113,11 @@ public class SearchPostResponseResults {
     }
 
     public void setDistance(double distance) {
-        DecimalFormat df = new DecimalFormat("#.#");
-        this.distance = Double.parseDouble(df.format(distance));
+        this.distance = distance;
+    }
+
+    public String getDistanceMiles(){
+        return String.format("%.1f miles", distance);
     }
 
     public float getRating() {

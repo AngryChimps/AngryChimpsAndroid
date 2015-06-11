@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Ad detail screen header -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--Card with company location and contact information and a static map -->
+    <include layout="@layout/card_map"/>
+
+    <!--Staggered grid below this -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_small_margin"
+        android:gravity="center_horizontal"
+        android:text="@string/popular_deals"
+        android:textColor="@color/primary"
+        android:textSize="16sp"/>
+
+</LinearLayout>

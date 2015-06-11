@@ -1,59 +1,107 @@
 package com.angrychimps.appname.adapters;
 
-import android.support.v4.app.Fragment;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.viewholders.DealGridViewHolder;
-import com.angrychimps.appname.models.SearchPostResponseResults;
+import com.angrychimps.appname.adapters.viewholders.MapCardViewHolder;
+import com.angrychimps.appname.adapters.viewholders.ServiceItemViewHolder;
+import com.angrychimps.appname.models.Address;
+import com.angrychimps.appname.models.Deal;
+import com.angrychimps.appname.models.MapCard;
 import com.angrychimps.appname.models.Service;
-
-import java.util.List;
 
 public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Fragment fragment;
+    private SortedList<Service> services;
+    private MapCard mapCard;
+    private SortedList<Deal> deals;
     private ImageLoader imageLoader;
-    private List<Service> listService;
-    private List<SearchPostResponseResults> listGrid;
 
-    public CAdDetailRecyclerViewAdapter(Fragment fragment, List<Service> listService, List<SearchPostResponseResults> listGrid) {
-        this.fragment = fragment;
-        this.listService = listService;
-        this.listGrid = listGrid;
+    public CAdDetailRecyclerViewAdapter(SortedList<Service> services, MapCard mapCard, SortedList<Deal> deals) {
+        this.services = services;
+        this.mapCard = mapCard;
+        this.deals = deals;
         imageLoader = VolleySingleton.INSTANCE.getImageLoader();
+    }
+
+    @Override public int getItemViewType(int position) {
+        if (position < services.size()) return 0;
+        if (position == services.size()) return 1;
+        else return 2;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_deal, parent, false);
-        return new DealGridViewHolder(v, fragment);
+        switch (viewType) {
+            case 0:
+                return new ServiceItemViewHolder(inflate(R.layout.card_service, parent));
+            case 1:
+                return new MapCardViewHolder(inflate(R.layout.card_map_with_footer, parent));
+            default:
+                return new DealGridViewHolder(inflate(R.layout.card_deal, parent));
+        }
+    }
+
+    private View inflate(int layoutId, ViewGroup parent) {
+        return LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     //TODO: precache images
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-//        DealGridViewHolder holder = (DealGridViewHolder) viewHolder;
-//        holder.imageCompanyMain.setImageUrl(MainActivity.mediaUrl + listGrid.get(position).getPhoto(), imageLoader);
-//        viewHolder.rbCompany.setRating(listGrid.get(position).getRating());
-//        viewHolder.tvCompanyDistance.setText(listGrid.get(position).getDistance() + " miles");
-//        viewHolder.tvCompanyTitle.setText(listGrid.get(position).getTitle());
-//        viewHolder.tvCompanyServicePrice.setText("" + listGrid.get(position).getDiscounted_price());
-//        if (listGrid.get(position).getDiscounted_price_decimal() > 0) viewHolder.tvCompanyServicePriceDecimal.setText("" + listGrid.get(position).getDiscounted_price_decimal());
-//        viewHolder.tvCompanyServiceDiscount.setText(listGrid.get(position).getDiscount_percentage() + "% off");
+    public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
+        bindViewHolder(vh, position);
     }
+
+    private void bindViewHolder(ServiceItemViewHolder vh, int position) {
+        vh.tvAdDetailDescription.setText(services.get(position).getDescription());
+        vh.tvAdDetailTitle.setText(services.get(position).getName());
+        vh.tvAdDetailPrice.setText("" + (int) services.get(position).getDiscounted_price());
+        if (services.get(position).getDiscounted_price_decimal() > 0) vh.tvAdDetailPriceDecimal.setText(""
+                + services.get(position).getDiscounted_price_decimal());
+        vh.tvAdDetailDiscount.setText("     " + services.get(position).getDiscount() + "%\ndiscount");
+    }
+
+    private void bindViewHolder(MapCardViewHolder vh, int position) {
+        Address address = mapCard.getAddress();
+        String street2 = "";
+        String coordinates = address.getLat()+","+ address.getLon();
+
+        vh.map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
+                + mapCard.getMarkerColor() + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.INSTANCE.getImageLoader());
+        vh.tvCompanyName.setText(mapCard.getCompanyName());
+        if (address.getStreet2() != null) street2 = address.getStreet2() + "\n";
+        vh.tvCompanyAddress.setText(address.getStreet1() + "\n" + street2 + address.getCity() + ", " + address.getState() + " " + address.getZip());
+        vh.tvCompanyDistance.setText(mapCard.getDistance());
+        vh.ratingBar.setRating(mapCard.getRating());
+        vh.bReviews.setText(mapCard.getRatingCount() + " Reviews");
+    }
+
+    private void bindViewHolder(DealGridViewHolder vh, int position) {
+        vh.imageCompanyMain.setImageUrl(App.mediaUrl + deals.get(position).getPhoto(), imageLoader);
+        vh.rbCompany.setRating(deals.get(position).getRating());
+        vh.tvCompanyDistance.setText(deals.get(position).getDistanceMiles());
+        vh.tvCompanyTitle.setText(deals.get(position).getTitle());
+        vh.tvCompanyServicePrice.setText("" + deals.get(position).getDiscounted_price());
+        if (deals.get(position).getDiscounted_price_decimal() > 0)
+            vh.tvCompanyServicePriceDecimal.setText("" + deals.get(position).getDiscounted_price_decimal());
+        vh.tvCompanyServiceDiscount.setText(deals.get(position).getDiscount_percentage() + "% off");
+    }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return listGrid.size();
+        return services.size() + deals.size() + 1;
     }
 
 }

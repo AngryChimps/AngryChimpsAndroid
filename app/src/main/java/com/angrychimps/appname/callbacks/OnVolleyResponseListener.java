@@ -1,4 +1,4 @@
-package com.angrychimps.appname.interfaces;
+package com.angrychimps.appname.callbacks;
 
 import org.json.JSONObject;
 
