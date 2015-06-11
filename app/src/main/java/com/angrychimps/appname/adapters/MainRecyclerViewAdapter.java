@@ -1,6 +1,5 @@
 package com.angrychimps.appname.adapters;
 
-import android.support.v4.app.Fragment;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,16 +11,17 @@ import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.viewholders.DealItemGridViewHolder;
+import com.angrychimps.appname.interfaces.OnItemClickedListener;
 import com.angrychimps.appname.models.SearchPostResponseResults;
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealItemGridViewHolder> {
 
-    private Fragment fragment;
+    private OnItemClickedListener listener;
     private ImageLoader imageLoader;
     private SortedList<SearchPostResponseResults> searchResults;
 
-    public MainRecyclerViewAdapter(Fragment fragment, SortedList<SearchPostResponseResults> searchResults) {
-        this.fragment = fragment;
+    public MainRecyclerViewAdapter(SortedList<SearchPostResponseResults> searchResults, OnItemClickedListener listener) {
+        this.listener = listener;
         this.searchResults = searchResults;
         imageLoader = VolleySingleton.INSTANCE.getImageLoader();
     }
@@ -30,7 +30,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealItemGridVi
     @Override
     public DealItemGridViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_deal, parent, false);
-        return new DealItemGridViewHolder(v, fragment);
+        return new DealItemGridViewHolder(v, listener);
     }
 
     // Replace the contents of a view (invoked by the layout manager)

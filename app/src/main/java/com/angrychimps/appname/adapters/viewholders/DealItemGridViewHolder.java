@@ -1,7 +1,6 @@
 package com.angrychimps.appname.adapters.viewholders;
 
 import android.graphics.Paint;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import butterknife.InjectView;
 
 public class DealItemGridViewHolder extends RecyclerView.ViewHolder {
 
-    private OnItemClickedListener listener;
     @InjectView(R.id.imageCompanyMain) public NetworkImageView imageCompanyMain;
     @InjectView(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
     @InjectView(R.id.tvCompanyTitle) public TextView tvCompanyTitle;
@@ -25,10 +23,9 @@ public class DealItemGridViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.tvCompanyServicePriceDecimal) public TextView tvCompanyServicePriceDecimal;
     @InjectView(R.id.ratingBar) public FlexibleRatingBar rbCompany;
 
-    public DealItemGridViewHolder(View itemView, Fragment fragment) {
+    public DealItemGridViewHolder(View itemView, final OnItemClickedListener listener) {
         super(itemView);
         ButterKnife.inject(this, itemView);
-        listener = (OnItemClickedListener) fragment;
 
         tvCompanyServicePriceDecimal.setPaintFlags(tvCompanyServicePriceDecimal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 

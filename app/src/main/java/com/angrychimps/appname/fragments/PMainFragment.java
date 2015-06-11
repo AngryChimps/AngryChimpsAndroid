@@ -88,14 +88,6 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
                 ((MainActivity) getActivity()).replaceFragmentAddBackStack(new PMapFragment());
                 return true;
             case R.id.action_filter:
-//                FragmentTransaction ft = fm.beginTransaction();
-//                Fragment prev = fm.findFragmentByTag("dialog");
-//                if (prev != null) ft.remove(prev);
-//                ft.addToBackStack(null);
-//
-//                // Create and show the dialog.
-//                CFilterFragment fragment = new CFilterFragment();
-//                fragment.show(ft, "dialog");
                 return true;
         }
         return false;

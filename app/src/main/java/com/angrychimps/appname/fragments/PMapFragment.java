@@ -1,5 +1,6 @@
 package com.angrychimps.appname.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.utils.Otto;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -21,6 +27,7 @@ public class PMapFragment extends Fragment implements OnMapReadyCallback, Toolba
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
+    private GoogleMap map;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,11 +54,14 @@ public class PMapFragment extends Fragment implements OnMapReadyCallback, Toolba
         return rootView;
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-//        LatLng currentPosition = new LatLng(App.getLatitude(), App.getLongitude());
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
-//        map.addMarker(new MarkerOptions().position(currentPosition));
+    @Override public void onStart() {
+        super.onStart();
+        Otto.BUS.getBus().register(this);
+    }
+
+    @Override public void onStop() {
+        super.onStop();
+        Otto.BUS.getBus().unregister(this);
     }
 
     @Override
@@ -73,5 +83,18 @@ public class PMapFragment extends Fragment implements OnMapReadyCallback, Toolba
         }
         return false;
     }
-}
 
+    @Override
+    public void onMapReady(GoogleMap map) {
+        this.map = map;
+        setMarkers();
+    }
+
+    private void setMarkers(){
+        Location location = ((MainActivity) getActivity()).getCurrentLocation();
+        LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
+        map.addMarker(new MarkerOptions().position(currentPosition));
+
+    }
+}

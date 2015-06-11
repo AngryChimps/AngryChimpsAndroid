@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         });
 
         setMainFragment();
-
         initiateNavigationDrawer();
     }
 
@@ -116,6 +115,21 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         else super.onBackPressed();
     }
 
+    @Override public void onVolleyResponse(JSONObject object) {
+        try {
+            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
+            searchResults.beginBatchedUpdates();
+            for (int i = 0; i < jArray.length(); i++) {
+                searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
+            }
+            searchResults.endBatchedUpdates();
+
+        } catch (IOException | JSONException e) {
+            Log.i(null, "JsonObjectRequest error");
+            e.printStackTrace();
+        }
+    }
+
     public SortedList<SearchPostResponseResults> getSearchResults(){
         return searchResults;
     }
@@ -124,17 +138,17 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         return currentLocation;
     }
 
-    private void setMainFragment() {
-        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        replaceFragmentNoBackStack(serviceProviderMode ? new PMainFragment() : new CMainFragment());
-    }
-
     public void replaceFragmentNoBackStack(Fragment fragment) {
         fm.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     public void replaceFragmentAddBackStack(Fragment fragment) {
         fm.beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+    }
+
+    private void setMainFragment() {
+        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        replaceFragmentNoBackStack(serviceProviderMode ? new PMainFragment() : new CMainFragment());
     }
 
     private void initiateNavigationDrawer() {
@@ -209,8 +223,16 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         drawerLayout.closeDrawer(drawerListView);
     }
 
-    public void onCancel(View view) {
-        onBackPressed();
+    private void updateIfNecessary(){
+        //SessionId and location are required.
+        if(currentLocation == null || App.getInstance().getSessionId() == null) return;
+
+        //Update only if location has changed significantly (>500 meters)
+        if (previousLocation == null || previousLocation.distanceTo(currentLocation) > 500) {
+            new VolleyRequest(this).makeRequest(Request.Method.POST, "search", new JsonRequestObject.Builder()
+                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create());
+            previousLocation = currentLocation;
+        }
     }
 
     @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event) {
@@ -228,32 +250,5 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
         currentLocation = event.location;
         updateIfNecessary();
-    }
-
-    private void updateIfNecessary(){
-        //SessionId and location are required.
-        if(currentLocation == null || App.getInstance().getSessionId() == null) return;
-
-        //Update only if location has changed significantly (>500 meters)
-        if (previousLocation == null || previousLocation.distanceTo(currentLocation) > 500) {
-            new VolleyRequest(this).makeRequest(Request.Method.POST, "search", new JsonRequestObject.Builder()
-                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create());
-            previousLocation = currentLocation;
-        }
-    }
-
-    @Override public void onVolleyResponse(JSONObject object) {
-        try {
-            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
-            searchResults.beginBatchedUpdates();
-            for (int i = 0; i < jArray.length(); i++) {
-                searchResults.add(LoganSquare.parse(jArray.get(i).toString(), SearchPostResponseResults.class));
-            }
-            searchResults.endBatchedUpdates();
-
-        } catch (IOException | JSONException e) {
-            Log.i(null, "JsonObjectRequest error");
-            e.printStackTrace();
-        }
     }
 }

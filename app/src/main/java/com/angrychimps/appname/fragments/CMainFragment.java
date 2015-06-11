@@ -79,25 +79,18 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         super.onActivityCreated(savedInstanceState);
 
         searchResults = ((MainActivity) getActivity()).getSearchResults();
-        adapter = new MainRecyclerViewAdapter(this, searchResults);
+        adapter = new MainRecyclerViewAdapter(searchResults, this);
         recyclerView.setAdapter(adapter);
-
     }
 
-    @Subscribe public void onResultChanged(ResultChangedEvent event){
-        adapter.notifyItemRangeChanged(event.position, event.count);
+    @Override public void onStart() {
+        super.onStart();
+        Otto.BUS.getBus().register(this);
     }
 
-    @Subscribe public void onResultInserted(ResultInsertedEvent event){
-        adapter.notifyItemRangeInserted(event.position, event.count);
-    }
-
-    @Subscribe public void onResultMoved(ResultMovedEvent event){
-        adapter.notifyItemMoved(event.fromPosition, event.toPosition);
-    }
-
-    @Subscribe public void onResultRemoved(ResultRemovedEvent event){
-        adapter.notifyItemRangeRemoved(event.position, event.count);
+    @Override public void onStop() {
+        super.onStop();
+        Otto.BUS.getBus().unregister(this);
     }
 
     @Override public void onItemClicked(int position) {
@@ -109,17 +102,6 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         bundle.putDouble("distance", searchResults.get(position).getDistance());
         fragment.setArguments(bundle);
         ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
-    }
-
-
-    @Override public void onStart() {
-        super.onStart();
-        Otto.BUS.getBus().register(this);
-    }
-
-    @Override public void onStop() {
-        super.onStop();
-        Otto.BUS.getBus().unregister(this);
     }
 
     @Override public boolean onMenuItemClick(MenuItem item) {
@@ -148,6 +130,22 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 //                return true;
         }
         return false;
+    }
+
+    @Subscribe public void onResultChanged(ResultChangedEvent event){
+        adapter.notifyItemRangeChanged(event.position, event.count);
+    }
+
+    @Subscribe public void onResultInserted(ResultInsertedEvent event){
+        adapter.notifyItemRangeInserted(event.position, event.count);
+    }
+
+    @Subscribe public void onResultMoved(ResultMovedEvent event){
+        adapter.notifyItemMoved(event.fromPosition, event.toPosition);
+    }
+
+    @Subscribe public void onResultRemoved(ResultRemovedEvent event){
+        adapter.notifyItemRangeRemoved(event.position, event.count);
     }
 }
 

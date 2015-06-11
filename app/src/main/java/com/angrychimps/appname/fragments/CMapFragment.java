@@ -60,24 +60,6 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
         return rootView;
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        this.map = map;
-        setMarkers();
-    }
-
-    private void setMarkers(){
-        SortedList<SearchPostResponseResults> searchResults = ((MainActivity) getActivity()).getSearchResults();
-        Location location = ((MainActivity) getActivity()).getCurrentLocation();
-        LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
-        map.addMarker(new MarkerOptions().position(currentPosition));
-        for (int i = 0; i < searchResults.size(); i++) {
-            map.addMarker(new MarkerOptions().position(new LatLng(searchResults.get(i).getLat(),
-                    searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
-        }
-    }
-
     @Override public void onStart() {
         super.onStart();
         Otto.BUS.getBus().register(this);
@@ -86,16 +68,6 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
     @Override public void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this);
-    }
-
-    @Subscribe public void onResultInserted(ResultInsertedEvent event){
-        map.clear();
-        setMarkers();
-    }
-
-    @Subscribe public void onResultRemoved(ResultRemovedEvent event){
-        map.clear();
-        setMarkers();
     }
 
     @Override
@@ -117,4 +89,33 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
         }
         return false;
     }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        this.map = map;
+        setMarkers();
+    }
+
+    private void setMarkers(){
+        SortedList<SearchPostResponseResults> searchResults = ((MainActivity) getActivity()).getSearchResults();
+        Location location = ((MainActivity) getActivity()).getCurrentLocation();
+        LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
+        map.addMarker(new MarkerOptions().position(currentPosition));
+        for (int i = 0; i < searchResults.size(); i++) {
+            map.addMarker(new MarkerOptions().position(new LatLng(searchResults.get(i).getLat(),
+                    searchResults.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+        }
+    }
+
+    @Subscribe public void onResultInserted(ResultInsertedEvent event){
+        map.clear();
+        setMarkers();
+    }
+
+    @Subscribe public void onResultRemoved(ResultRemovedEvent event){
+        map.clear();
+        setMarkers();
+    }
+
 }
