@@ -8,24 +8,34 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.VolleySingleton;
 import com.angrychimps.appname.adapters.CAdDetailAdapter;
 import com.angrychimps.appname.adapters.ViewPagerPhotoAdapter;
+import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.interfaces.OnVolleyResponseListener;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.angrychimps.appname.server.JsonRequestObject;
 import com.angrychimps.appname.server.VolleyRequest;
+import com.angrychimps.appname.utils.Otto;
+import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 import com.bluelinelabs.logansquare.LoganSquare;
 
@@ -34,63 +44,66 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import me.relex.circleindicator.CircleIndicator;
 
 
-public class CAdDetailFragment extends Fragment implements OnVolleyResponseListener{
+public class CAdDetailFragment extends Fragment implements Toolbar.OnMenuItemClickListener, OnVolleyResponseListener{
 
     private Address address;
-    private ViewPager pager;
-    private CircleIndicator indicator;
-    private TextView tvCompanyTagLine;
-    private TextView tvCompanyDetails;
-    private LinearLayout serviceItem;
-    private TextView tvCompanyName;
-    private TextView tvCompanyAddress;
-    private TextView tvCompanyDistance;
-    private FlexibleRatingBar ratingBar;
-    private Button bReviews;
+    @InjectView(R.id.toolbar) Toolbar toolbar;
+    @InjectView(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
+    @InjectView(R.id.viewPagerCompanyImages) ViewPager pager;
+    @InjectView(R.id.circleIndicator) CircleIndicator indicator;
+    @InjectView(R.id.tvCompanyTagLine) TextView tvCompanyTagLine;
+    @InjectView(R.id.tvCompanyDetails) TextView tvCompanyDetails;
+    @InjectView(R.id.map) AnimatedNetworkImageView map;
+    @InjectView(R.id.bCallCompany) ImageButton bCallCompany;
+    @InjectView(R.id.tvCompanyName) TextView tvCompanyName;
+    @InjectView(R.id.tvCompanyAddress) TextView tvCompanyAddress;
+    @InjectView(R.id.tvCompanyDistance) TextView tvCompanyDistance;
+    @InjectView(R.id.ratingBar) FlexibleRatingBar ratingBar;
+    @InjectView(R.id.bReviews) Button bReviews;
+    @InjectView(R.id.tvFlagListing) TextView tvFlagListing;
+    RecyclerView.Adapter adapter;
+    FragmentManager fm;
+    boolean isFavorite;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_c_ad_detail, container, false);
+        View rootView = inflater.inflate(R.layout.toolbar_collapsing, container, false);
 
-        //MainActivity.setMenu(R.menu.menu_ad_detail);
+        //Add RecyclerView to container before injecting views
+        FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
+        inflater.inflate(R.layout.recycler_view, innerContainer);
+        ButterKnife.inject(this, rootView);
+        fm = getFragmentManager();
 
-//        StaggeredGridView gridView = (StaggeredGridView) rootView.findViewById(R.id.gridViewAdDetail);
-//        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header_c_ad_detail, gridView, false);
-//        gridView.addHeaderView(header, null, false);
-
-//        pager = (ViewPager) header.findViewById(R.id.viewPagerCompanyImages);
-//        indicator = (CircleIndicator) header.findViewById(R.id.circleIndicator);
-//        tvCompanyTagLine = (TextView) header.findViewById(R.id.tvCompanyTagLine);
-//        tvCompanyDetails = (TextView) header.findViewById(R.id.tvCompanyDetails);
+        toolbar.getMenu().clear();
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Otto.BUS.getBus().post(new UpNavigationBurgerEvent());
+            }
+        });
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(this);
 //        serviceItem = (LinearLayout) header.findViewById(R.id.serviceItem);
-//        AnimatedNetworkImageView map = (AnimatedNetworkImageView) header.findViewById(R.id.map);
-//        ImageButton bCallCompany = (ImageButton) header.findViewById(R.id.bCallCompany);
-//        tvCompanyName = (TextView) header.findViewById(R.id.tvCompanyName);
-//        tvCompanyAddress = (TextView) header.findViewById(R.id.tvCompanyAddress);
-//        tvCompanyDistance = (TextView) header.findViewById(R.id.tvCompanyDistance);
-//        ratingBar = (FlexibleRatingBar) header.findViewById(R.id.ratingBar);
-//        bReviews = (Button) header.findViewById(R.id.bReviews);
-//        TextView tvFlagListing = (TextView) header.findViewById(R.id.tvFlagListing);
 
         String coordinates = getArguments().getDouble("lat")+","+ getArguments().getDouble("lon");
         String color = "0x"+Integer.toHexString(getResources().getColor(R.color.primary)).substring(2);
-//        map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
-//                + color + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.getInstance().getImageLoader());
-//        map.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                launchNavigation();
-//            }
-//        });
+        map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
+                + color + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.INSTANCE.getImageLoader());
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchNavigation();
+            }
+        });
 
         new VolleyRequest(getActivity()).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
-
-        JsonRequestObject object = new JsonRequestObject();
-//        Deprecated_StaggeredGridViewBuilder builder = new Deprecated_StaggeredGridViewBuilder(getActivity(), getFragmentManager(), gridView, object.getJsonObject());
-//        builder.getResults();
 
         return rootView;
     }
@@ -101,7 +114,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             ProviderAdImmutableGetResponsePayload result = LoganSquare.parse(object.getJSONObject("payload").getJSONObject("payload").toString(),
                     ProviderAdImmutableGetResponsePayload.class);
 
-            //MainActivity.setToolbarTitle(result.getCompany().getName());
+            cToolbar.setTitle(result.getCompany().getName());
 
             pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
             indicator.setViewPager(pager);
@@ -189,6 +202,16 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             catch(PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override public boolean onMenuItemClick(MenuItem item) {
+        if(item.getItemId() == R.id.action_favorite){
+            if (!isFavorite) {
+                item.setIcon(R.drawable.ic_favorite_white_24dp);
+            } else item.setIcon(R.drawable.ic_favorite_outline_white_24dp);
+            isFavorite = !isFavorite;
+            return true;
         }
     }
 }

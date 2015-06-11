@@ -51,7 +51,6 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         ButterKnife.inject(this, rootView);
         fm = getFragmentManager();
 
-        toolbar.getMenu().clear();
         toolbar.setTitle("Browse Deals");
         toolbar.setNavigationIcon(R.drawable.ic_menu);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -122,12 +121,6 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
 //                CFilterFragment fragment = new CFilterFragment();
 //                fragment.show(ft, "dialog");
                 return true;
-//            case R.id.action_favorite:
-//                if (!isFavorite) {
-//                    item.setIcon(R.drawable.ic_favorite_white_24dp);
-//                } else item.setIcon(R.drawable.ic_favorite_outline_white_24dp);
-//                isFavorite = !isFavorite;
-//                return true;
         }
         return false;
     }

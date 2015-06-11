@@ -38,7 +38,6 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
 
-        toolbar.getMenu().clear();
         toolbar.setTitle("Browse Requests");
         toolbar.setNavigationIcon(R.drawable.ic_menu);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
