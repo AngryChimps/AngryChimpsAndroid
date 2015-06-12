@@ -3,7 +3,7 @@
 <!--Navigation drawer row, standard -->
 
 <RelativeLayout
-    style="@style/DrawerItemBase"
+    style="@style/DrawerItem"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--Colored strip to indicate ServiceProviderMode status -->

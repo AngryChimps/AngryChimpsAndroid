@@ -71,7 +71,7 @@
 
         <Space
             android:id="@+id/center"
-            style="@style/CenteredSpace"/>
+            style="@style/CenterHorizontal"/>
 
         <com.angrychimps.appname.widgets.FlexibleRatingBar
             android:id="@+id/ratingBar"

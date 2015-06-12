@@ -3,7 +3,7 @@
 <!--Navigation drawer row with messages indicator -->
 
 <RelativeLayout
-    style="@style/DrawerItemBase"
+    style="@style/DrawerItem"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView

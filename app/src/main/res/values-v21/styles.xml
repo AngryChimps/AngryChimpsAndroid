@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="ToolBar" parent="ToolBar_Base">
-        <item name="android:elevation">@dimen/app_bar_elevation</item>
-    </style>
-</resources>

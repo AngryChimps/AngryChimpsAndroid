@@ -1,13 +1,5 @@
 <resources>
 
-    <style name="ToolBar" parent="ToolBar_Base"/>
-
-    <style name="ToolBar_Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:windowActionBarOverlay">true</item>
-    </style>
-
     <style name="Subheader" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:layout_marginLeft">@dimen/default_margin</item>
         <item name="android:paddingTop">@dimen/default_margin</item>
@@ -120,7 +112,7 @@
     </style>
 
     <!--Navigation Drawer styles-->
-    <style name="DrawerItemBase">
+    <style name="DrawerItem">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/white</item>
@@ -156,7 +148,7 @@
         <item name="android:layout_marginRight">@dimen/default_margin</item>
     </style>
 
-    <style name="CenteredSpace">
+    <style name="CenterHorizontal">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_centerHorizontal">true</item>
