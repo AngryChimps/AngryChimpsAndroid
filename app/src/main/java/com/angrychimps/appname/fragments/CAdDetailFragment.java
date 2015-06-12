@@ -88,9 +88,9 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             }
         });
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
-        //layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setItemViewCacheSize(0);
+        recyclerView.setItemViewCacheSize(0);
 
         services = new SortedList<>(Service.class, new SortedList.Callback<Service>() {
             @Override public int compare(Service o1, Service o2) {
@@ -144,7 +144,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             cToolbar.setTitle(result.getCompany().getName());
             pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
             indicator.setViewPager(pager);
-            if (result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
+            if(result.getPhotos().size() < 2) indicator.setVisibility(View.GONE);
             for (Service service : result.getServices()) services.add(service);
             address = result.getAddress();
             adapter = new CAdDetailRecyclerViewAdapter(new CompanyDetails(result, getArguments().getString("distance"), String.format("0x%06X",

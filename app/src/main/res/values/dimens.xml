@@ -27,5 +27,7 @@
     <dimen name="map_border">2dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
+
     <dimen name="collapsing_backdrop_height">250dp</dimen>
+    <dimen name="circle_indicator_height">32dp</dimen>
 </resources>
