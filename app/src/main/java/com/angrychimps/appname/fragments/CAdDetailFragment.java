@@ -6,12 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,9 +35,8 @@ import com.angrychimps.appname.events.ShowReviewsEvent;
 import com.angrychimps.appname.events.StartNavigationEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.models.Address;
+import com.angrychimps.appname.models.CAdDetail;
 import com.angrychimps.appname.models.CompanyDetails;
-import com.angrychimps.appname.models.Deal;
-import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.angrychimps.appname.models.Service;
 import com.angrychimps.appname.server.VolleyRequest;
 import com.angrychimps.appname.utils.Otto;
@@ -54,7 +53,7 @@ import butterknife.InjectView;
 import me.relex.circleindicator.CircleIndicator;
 
 
-public class CAdDetailFragment extends Fragment implements OnVolleyResponseListener{
+public class CAdDetailFragment extends Fragment implements OnVolleyResponseListener {
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
@@ -62,17 +61,14 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
     @InjectView(R.id.circleIndicator) CircleIndicator indicator;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
     SortedList<Service> services;
-    SortedList<Deal> deals;
     RecyclerView.Adapter adapter;
     Address address;
-    FragmentManager fm;
     boolean isFavorite;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_c_ad_detail_and_toolbar, container, false);
         ButterKnife.inject(this, rootView);
-        fm = getFragmentManager();
 
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -84,8 +80,8 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
         toolbar.inflateMenu(R.menu.menu_ad_detail);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                if(item.getItemId() == R.id.action_favorite){
-                    item.setIcon(isFavorite? R.drawable.ic_favorite_outline_white_24dp : R.drawable.ic_favorite_white_24dp);
+                if (item.getItemId() == R.id.action_favorite) {
+                    item.setIcon(isFavorite ? R.drawable.ic_favorite_outline_white_24dp : R.drawable.ic_favorite_white_24dp);
                     isFavorite = !isFavorite;
                     return true;
                 }
@@ -93,9 +89,9 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             }
         });
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        //layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemViewCacheSize(0); //Default image caching causes gaps to form and image loading failures
+        //recyclerView.setItemViewCacheSize(0);
 
         services = new SortedList<>(Service.class, new SortedList.Callback<Service>() {
             @Override public int compare(Service o1, Service o2) {
@@ -145,30 +141,17 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
     @Override
     public void onVolleyResponse(JSONObject object) {
         try {
-            ProviderAdImmutableGetResponsePayload result = LoganSquare.parse(object.getJSONObject("payload").getJSONObject("payload").toString(),
-                    ProviderAdImmutableGetResponsePayload.class);
-
+            CAdDetail result = LoganSquare.parse(object.getJSONObject("payload").getJSONObject("payload").toString(), CAdDetail.class);
             cToolbar.setTitle(result.getCompany().getName());
             pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
             indicator.setViewPager(pager);
             if (result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
-
-            for(Service service : result.getServices()) services.add(service);
-
+            for (Service service : result.getServices()) services.add(service);
             address = result.getAddress();
-            CompanyDetails companyDetails = new CompanyDetails();
-            companyDetails.setCompanyName(result.getCompany().getName());
-            companyDetails.setCompanyTagline(result.getTitle());
-            companyDetails.setCompanyDescription(result.getDescription());
-            companyDetails.setAddress(address);
-            companyDetails.setDistance(getArguments().getString("distance"));
-            companyDetails.setMarkerColor("0x"+Integer.toHexString(getResources().getColor(R.color.primary)).substring(2));
-            companyDetails.setRating(result.getRating());
-            companyDetails.setRatingCount(result.getRating_count());
-
-            deals = ((MainActivity) getActivity()).getDeals();
-
-            adapter = new CAdDetailRecyclerViewAdapter(companyDetails, services, deals);
+            Log.i(null, "color == "+String.format("0x%06X", (0xFFFFFF & getResources().getColor(R.color.primary))));
+            Log.i(null, "colorint == "+"0x" + Integer.toHexString(getResources().getColor(R.color.primary)).substring(2));
+            adapter = new CAdDetailRecyclerViewAdapter(new CompanyDetails(result, getArguments().getString("distance"), String.format("0x%06X",
+                    (0xFFFFFF & getResources().getColor(R.color.primary)))), services, ((MainActivity) getActivity()).getDeals());
             recyclerView.setAdapter(adapter);
 
         } catch (JSONException | IOException e) {
@@ -176,62 +159,58 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
         }
     }
 
-    @Subscribe public void onCallCompany(CallCompanyEvent event){
+    @Subscribe public void onCallCompany(CallCompanyEvent event) {
 
     }
 
-    @Subscribe public void onDealClicked(DealClickedEvent event){
+    @Subscribe public void onDealClicked(DealClickedEvent event) {
 
     }
 
-    @Subscribe public void onFlagListing(FlagListingEvent event){
+    @Subscribe public void onFlagListing(FlagListingEvent event) {
 
     }
 
-    @Subscribe public void onServiceClicked(ServiceClickedEvent event){
+    @Subscribe public void onServiceClicked(ServiceClickedEvent event) {
 
     }
 
-    @Subscribe public void onShowReviews(ShowReviewsEvent event){
+    @Subscribe public void onShowReviews(ShowReviewsEvent event) {
 
     }
 
-    @Subscribe public void onStartNavigation(StartNavigationEvent event){
-        if(address != null) {
+    @Subscribe public void onStartNavigation(StartNavigationEvent event) {
+        if (address != null) {
             try {
                 //If google maps is not installed on the device, throw exception
                 getActivity().getPackageManager().getApplicationInfo("com.google.android.apps.maps", 0);
 
-                // Create a Uri from an intent string. Use the result to create an Intent.
-                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + address.getStreet1() + " " + address.getCity() +
-                        ", " + address.getState() + " " + address.getZip());
-
-                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                // Build Uri from the address and create the intent
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + address.getStreet1() + " " + address.getCity() +
+                        ", " + address.getState() + " " + address.getZip()));
 
                 // Make the Intent explicit by setting the Google Maps package
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
-            }
-            catch(PackageManager.NameNotFoundException e) {
+            } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace(); //No need to do anything- there is no promise that clicking will launch navigation.
             }
         }
     }
 
-    @Subscribe public void onResultChanged(ResultChangedEvent event){
+    @Subscribe public void onResultChanged(ResultChangedEvent event) {
         adapter.notifyItemRangeChanged(event.position, event.count);
     }
 
-    @Subscribe public void onResultInserted(ResultInsertedEvent event){
+    @Subscribe public void onResultInserted(ResultInsertedEvent event) {
         adapter.notifyItemRangeInserted(event.position, event.count);
     }
 
-    @Subscribe public void onResultMoved(ResultMovedEvent event){
+    @Subscribe public void onResultMoved(ResultMovedEvent event) {
         adapter.notifyItemMoved(event.fromPosition, event.toPosition);
     }
 
-    @Subscribe public void onResultRemoved(ResultRemovedEvent event){
+    @Subscribe public void onResultRemoved(ResultRemovedEvent event) {
         adapter.notifyItemRangeRemoved(event.position, event.count);
     }
 }

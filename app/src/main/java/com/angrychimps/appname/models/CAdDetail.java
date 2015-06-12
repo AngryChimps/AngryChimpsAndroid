@@ -5,8 +5,11 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 
 import java.util.List;
 
+/*
+    Model for ProviderAdImmutable response payload
+ */
 @JsonObject
-public class ProviderAdImmutableGetResponsePayload {
+public class CAdDetail {
 
     @JsonField
     Provider_ad_immutable provider_ad_immutable;
@@ -38,7 +41,7 @@ public class ProviderAdImmutableGetResponsePayload {
     @JsonField
     private int rating_count;
 
-    public ProviderAdImmutableGetResponsePayload() {
+    public CAdDetail() {
     }
 
     public Provider_ad_immutable getProvider_ad_immutable() {

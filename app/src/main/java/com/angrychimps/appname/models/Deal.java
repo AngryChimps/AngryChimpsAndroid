@@ -3,6 +3,9 @@ package com.angrychimps.appname.models;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
+/*
+    Model for Search response payload
+ */
 @JsonObject
 public class Deal {
 

@@ -65,7 +65,6 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    //TODO: precache images
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
         StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) vh.itemView.getLayoutParams();

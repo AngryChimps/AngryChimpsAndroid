@@ -4,13 +4,35 @@ public class CompanyDetails {
     private String companyName;
     private String companyTagline;
     private String companyDescription;
-    private String markerColor;
     private Address address;
+    private String distance;
+    private String markerColor;
     private float rating;
     private int ratingCount;
-    private String distance;
 
     public CompanyDetails() {
+    }
+
+    public CompanyDetails(CAdDetail result, String distance, String markerColor){
+        companyName = result.getCompany().getName();
+        companyTagline = result.getTitle();
+        companyDescription = result.getDescription();
+        address = result.getAddress();
+        this.distance = distance;
+        this.markerColor = markerColor;
+        rating = result.getRating();
+        ratingCount = result.getRating_count();
+    }
+
+    public CompanyDetails(String companyName, String companyTagline, String companyDescription, Address address, String distance, String markerColor, float rating, int ratingCount) {
+        this.companyName = companyName;
+        this.companyTagline = companyTagline;
+        this.companyDescription = companyDescription;
+        this.address = address;
+        this.distance = distance;
+        this.markerColor = markerColor;
+        this.rating = rating;
+        this.ratingCount = ratingCount;
     }
 
     public String getCompanyName() {
