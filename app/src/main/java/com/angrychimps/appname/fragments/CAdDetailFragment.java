@@ -11,7 +11,6 @@ import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -148,8 +147,6 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             if (result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
             for (Service service : result.getServices()) services.add(service);
             address = result.getAddress();
-            Log.i(null, "color == "+String.format("0x%06X", (0xFFFFFF & getResources().getColor(R.color.primary))));
-            Log.i(null, "colorint == "+"0x" + Integer.toHexString(getResources().getColor(R.color.primary)).substring(2));
             adapter = new CAdDetailRecyclerViewAdapter(new CompanyDetails(result, getArguments().getString("distance"), String.format("0x%06X",
                     (0xFFFFFF & getResources().getColor(R.color.primary)))), services, ((MainActivity) getActivity()).getDeals());
             recyclerView.setAdapter(adapter);

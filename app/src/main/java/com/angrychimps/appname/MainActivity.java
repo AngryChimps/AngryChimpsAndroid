@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.angrychimps.appname.adapters.DrawerAdapter;
+import com.angrychimps.appname.callbacks.OnVolleyResponseListener;
 import com.angrychimps.appname.events.LocationUpdatedEvent;
 import com.angrychimps.appname.events.ResultChangedEvent;
 import com.angrychimps.appname.events.ResultInsertedEvent;
@@ -27,7 +28,6 @@ import com.angrychimps.appname.fragments.CMainFragment;
 import com.angrychimps.appname.fragments.LocationManagerFragment;
 import com.angrychimps.appname.fragments.PCreateAdFragment;
 import com.angrychimps.appname.fragments.PMainFragment;
-import com.angrychimps.appname.callbacks.OnVolleyResponseListener;
 import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.models.DrawerItem;
 import com.angrychimps.appname.server.JsonRequestObject;
@@ -62,12 +62,13 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         fm = getSupportFragmentManager();
-        if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null) fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
+        if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null)
+            fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
         deals = new SortedList<>(Deal.class, new SortedList.Callback<Deal>() {
             @Override public int compare(Deal o1, Deal o2) {
-                if(o1.getDistance() < o2.getDistance()) return -1;
-                if(o1.getDistance() > o2.getDistance()) return 1;
+                if (o1.getDistance() < o2.getDistance()) return -1;
+                if (o1.getDistance() > o2.getDistance()) return 1;
                 else return 0;
             }
 
@@ -95,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                 return item1.getProvider_ad_id().equals(item2.getProvider_ad_id());
             }
         });
-
         setMainFragment();
         initiateNavigationDrawer();
     }
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     @Override protected void onStart() {
         super.onStart();
         Otto.BUS.getBus().register(this); //Register to receive events
+        updateIfNecessary();
     }
 
     @Override protected void onStop() {
@@ -119,22 +120,19 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         try {
             JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
             deals.beginBatchedUpdates();
-            for (int i = 0; i < jArray.length(); i++) {
-                deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
-            }
+            for (int i = 0; i < jArray.length(); i++) deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
             deals.endBatchedUpdates();
-
         } catch (IOException | JSONException e) {
             Log.i(null, "JsonObjectRequest error");
             e.printStackTrace();
         }
     }
 
-    public SortedList<Deal> getDeals(){
+    public SortedList<Deal> getDeals() {
         return deals;
     }
 
-    public Location getCurrentLocation(){
+    public Location getCurrentLocation() {
         return currentLocation;
     }
 
@@ -223,12 +221,12 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         drawerLayout.closeDrawer(drawerListView);
     }
 
-    private void updateIfNecessary(){
+    private void updateIfNecessary() {
         //SessionId and location are required.
-        if(currentLocation == null || App.getInstance().getSessionId() == null) return;
+        if (currentLocation == null || App.getInstance().getSessionId() == null) return;
 
-        //Update only if location has changed significantly (>500 meters)
-        if (previousLocation == null || previousLocation.distanceTo(currentLocation) > 500) {
+        //Update only if location has changed significantly (>250 meters)
+        if (previousLocation == null || deals.size() == 0 || previousLocation.distanceTo(currentLocation) > 250) {
             new VolleyRequest(this).makeRequest(Request.Method.POST, "search", new JsonRequestObject.Builder()
                     .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create());
             previousLocation = currentLocation;

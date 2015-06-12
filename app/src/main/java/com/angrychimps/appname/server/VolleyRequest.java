@@ -66,7 +66,7 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.d("VOLLEY ERROR", "error => " + error.toString());
-        //TODO: detect if sessionId is expired and refresh it in that situation
+        if(error.networkResponse.statusCode == 403) App.getInstance().getNewSessionId();
     }
 
     @Retention(RetentionPolicy.SOURCE)

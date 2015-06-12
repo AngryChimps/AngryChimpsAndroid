@@ -41,11 +41,15 @@ public class App extends Application implements OnVolleyResponseListener{
         return sessionId;
     }
 
+    public void getNewSessionId(){
+        new VolleyRequest(this).getSessionId();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-        new VolleyRequest(this).getSessionId();
+        getNewSessionId();
     }
 
     @Override

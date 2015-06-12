@@ -1,7 +1,5 @@
 package com.angrychimps.appname.server;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,8 +51,6 @@ public class JsonRequestObject {
             if(limit != 0) payload.put("limit", limit);
             if(offset != 0) payload.put("offset", offset);
             object.put("payload", payload);
-            Log.i("object = ", payload.toString());
-            Log.i("object2 = ", object.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
