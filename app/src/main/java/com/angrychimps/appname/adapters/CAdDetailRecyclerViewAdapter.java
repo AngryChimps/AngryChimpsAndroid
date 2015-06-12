@@ -1,7 +1,12 @@
 package com.angrychimps.appname.adapters;
 
+import android.animation.ObjectAnimator;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,32 +15,34 @@ import com.android.volley.toolbox.ImageLoader;
 import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
+import com.angrychimps.appname.adapters.viewholders.AdDetailHeaderViewHolder;
 import com.angrychimps.appname.adapters.viewholders.DealGridViewHolder;
 import com.angrychimps.appname.adapters.viewholders.MapCardViewHolder;
 import com.angrychimps.appname.adapters.viewholders.ServiceItemViewHolder;
 import com.angrychimps.appname.models.Address;
 import com.angrychimps.appname.models.Deal;
-import com.angrychimps.appname.models.MapCard;
+import com.angrychimps.appname.models.CompanyDetails;
 import com.angrychimps.appname.models.Service;
 
 public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private CompanyDetails companyDetails;
     private SortedList<Service> services;
-    private MapCard mapCard;
     private SortedList<Deal> deals;
     private ImageLoader imageLoader;
 
-    public CAdDetailRecyclerViewAdapter(SortedList<Service> services, MapCard mapCard, SortedList<Deal> deals) {
+    public CAdDetailRecyclerViewAdapter(CompanyDetails companyDetails, SortedList<Service> services, SortedList<Deal> deals) {
+        this.companyDetails = companyDetails;
         this.services = services;
-        this.mapCard = mapCard;
         this.deals = deals;
         imageLoader = VolleySingleton.INSTANCE.getImageLoader();
     }
 
     @Override public int getItemViewType(int position) {
-        if (position < services.size()) return 0;
-        if (position == services.size()) return 1;
-        else return 2;
+        if (position == 0) return 0;
+        if (position < services.size() +1) return 1;
+        if (position == services.size() +1) return 2;
+        else return 3;
     }
 
     // Create new views (invoked by the layout manager)
@@ -43,8 +50,10 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case 0:
-                return new ServiceItemViewHolder(inflate(R.layout.card_service, parent));
+                return new AdDetailHeaderViewHolder(inflate(R.layout.header_c_ad_detail, parent));
             case 1:
+                return new ServiceItemViewHolder(inflate(R.layout.card_service, parent));
+            case 2:
                 return new MapCardViewHolder(inflate(R.layout.card_map_with_footer, parent));
             default:
                 return new DealGridViewHolder(inflate(R.layout.card_deal, parent));
@@ -59,15 +68,51 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     //TODO: precache images
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
+        StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) vh.itemView.getLayoutParams();
         switch(vh.getItemViewType()){
             case 0:
-                bind((ServiceItemViewHolder) vh, position);
+                layoutParams.setFullSpan(true);
+                bind((AdDetailHeaderViewHolder) vh);
                 break;
             case 1:
+                layoutParams.setFullSpan(true);
+                bind((ServiceItemViewHolder) vh, position -1);
+                break;
+            case 2:
+                layoutParams.setFullSpan(true);
                 bind((MapCardViewHolder) vh);
                 break;
             default:
-                bind((DealGridViewHolder) vh, position);
+                bind((DealGridViewHolder) vh, position - services.size() -2);
+        }
+    }
+    private void bind(final AdDetailHeaderViewHolder vh) {
+        vh.tvCompanyTagLine.setText(companyDetails.getCompanyTagline());
+        vh.tvCompanyDetails.setText(companyDetails.getCompanyDescription());
+
+        //Make text fade out if too long. Click to make visible
+        if (vh.tvCompanyDetails.length() > 280) {
+            //Shader makes the text fade out toward the bottom
+            final Shader textShader = new LinearGradient(0, vh.tvCompanyDetails.getLineHeight() * 4, 0, 0, new int[]{Color.TRANSPARENT, Color.BLACK},
+                    new float[]{0, 1}, Shader.TileMode.CLAMP);
+            vh.tvCompanyDetails.getPaint().setShader(textShader);
+            vh.tvCompanyDetails.setMaxLines(4);
+            vh.tvCompanyDetails.setOnClickListener(new View.OnClickListener() {
+                boolean isExpanded = false;
+                ObjectAnimator animator;
+                @Override
+                public void onClick(View v) {
+                    animator = ObjectAnimator.ofInt(vh.tvCompanyDetails, "maxLines", isExpanded? 30 : 4).setDuration(100);
+                    if (isExpanded) {
+                        vh.tvCompanyDetails.getPaint().setShader(null);
+                        animator.start();
+                    } else {
+                        animator.start();
+                        vh.tvCompanyDetails.getPaint().setShader(textShader);
+                    }
+                    isExpanded = !isExpanded;
+                }
+            });
         }
     }
 
@@ -81,18 +126,18 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     private void bind(MapCardViewHolder vh) {
-        Address address = mapCard.getAddress();
+        Address address = companyDetails.getAddress();
         String street2 = "";
         String coordinates = address.getLat()+","+ address.getLon();
 
         vh.map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
-                + mapCard.getMarkerColor() + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.INSTANCE.getImageLoader());
-        vh.tvCompanyName.setText(mapCard.getCompanyName());
+                + companyDetails.getMarkerColor() + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.INSTANCE.getImageLoader());
+        vh.tvCompanyName.setText(companyDetails.getCompanyName());
         if (address.getStreet2() != null) street2 = address.getStreet2() + "\n";
         vh.tvCompanyAddress.setText(address.getStreet1() + "\n" + street2 + address.getCity() + ", " + address.getState() + " " + address.getZip());
-        vh.tvCompanyDistance.setText(mapCard.getDistance());
-        vh.ratingBar.setRating(mapCard.getRating());
-        vh.bReviews.setText(mapCard.getRatingCount() + " Reviews");
+        vh.tvCompanyDistance.setText(companyDetails.getDistance());
+        vh.ratingBar.setRating(companyDetails.getRating());
+        vh.bReviews.setText(companyDetails.getRatingCount() + " Reviews");
     }
 
     private void bind(DealGridViewHolder vh, int position) {
@@ -106,11 +151,9 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         vh.tvCompanyServiceDiscount.setText(deals.get(position).getDiscount_percentage() + "% off");
     }
 
-
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return services.size() + deals.size() + 1;
+        return services.size() + deals.size() + 2;
     }
-
 }

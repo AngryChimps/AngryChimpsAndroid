@@ -1,14 +1,16 @@
 package com.angrychimps.appname.models;
 
-public class MapCard {
+public class CompanyDetails {
     private String companyName;
+    private String companyTagline;
+    private String companyDescription;
     private String markerColor;
     private Address address;
     private float rating;
     private int ratingCount;
     private String distance;
 
-    public MapCard() {
+    public CompanyDetails() {
     }
 
     public String getCompanyName() {
@@ -17,6 +19,22 @@ public class MapCard {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getCompanyTagline() {
+        return companyTagline;
+    }
+
+    public void setCompanyTagline(String companyTagline) {
+        this.companyTagline = companyTagline;
+    }
+
+    public String getCompanyDescription() {
+        return companyDescription;
+    }
+
+    public void setCompanyDescription(String companyDescription) {
+        this.companyDescription = companyDescription;
     }
 
     public String getMarkerColor() {

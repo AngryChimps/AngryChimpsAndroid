@@ -1,11 +1,7 @@
 package com.angrychimps.appname.fragments;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -20,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.angrychimps.appname.MainActivity;
@@ -40,8 +35,8 @@ import com.angrychimps.appname.events.ShowReviewsEvent;
 import com.angrychimps.appname.events.StartNavigationEvent;
 import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.models.Address;
+import com.angrychimps.appname.models.CompanyDetails;
 import com.angrychimps.appname.models.Deal;
-import com.angrychimps.appname.models.MapCard;
 import com.angrychimps.appname.models.ProviderAdImmutableGetResponsePayload;
 import com.angrychimps.appname.models.Service;
 import com.angrychimps.appname.server.VolleyRequest;
@@ -65,8 +60,6 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
     @InjectView(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
     @InjectView(R.id.viewPagerCompanyImages) ViewPager pager;
     @InjectView(R.id.circleIndicator) CircleIndicator indicator;
-    @InjectView(R.id.tvCompanyTagLine) TextView tvCompanyTagLine;
-    @InjectView(R.id.tvCompanyDetails) TextView tvCompanyDetails;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
     SortedList<Service> services;
     SortedList<Deal> deals;
@@ -81,7 +74,6 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
         ButterKnife.inject(this, rootView);
         fm = getFragmentManager();
 
-        toolbar.getMenu().clear();
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,48 +152,23 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
             indicator.setViewPager(pager);
             if (result.getPhotos().size() > 1) indicator.setVisibility(View.VISIBLE);
-            tvCompanyTagLine.setText(result.getTitle());
-            tvCompanyDetails.setText(result.getDescription());
-
-            //Make text fade out if too long. Click to make visible
-            if (tvCompanyDetails.length() > 280) {
-                //Shader makes the text fade out toward the bottom
-                final Shader textShader = new LinearGradient(0, tvCompanyDetails.getLineHeight() * 4, 0, 0, new int[]{Color.TRANSPARENT, Color.BLACK},
-                        new float[]{0, 1}, Shader.TileMode.CLAMP);
-                tvCompanyDetails.getPaint().setShader(textShader);
-                tvCompanyDetails.setMaxLines(4);
-                tvCompanyDetails.setOnClickListener(new View.OnClickListener() {
-                    boolean isExpanded = false;
-                    ObjectAnimator animator;
-                    @Override
-                    public void onClick(View v) {
-                        animator = ObjectAnimator.ofInt(tvCompanyDetails, "maxLines", isExpanded? 30 : 4).setDuration(100);
-                        if (isExpanded) {
-                            tvCompanyDetails.getPaint().setShader(null);
-                            animator.start();
-                        } else {
-                            animator.start();
-                            tvCompanyDetails.getPaint().setShader(textShader);
-                        }
-                        isExpanded = !isExpanded;
-                    }
-                });
-            }
 
             for(Service service : result.getServices()) services.add(service);
 
             address = result.getAddress();
-            MapCard mapCard = new MapCard();
-            mapCard.setCompanyName(result.getCompany().getName());
-            mapCard.setAddress(address);
-            mapCard.setDistance(getArguments().getString("distance"));
-            mapCard.setMarkerColor("0x"+Integer.toHexString(getResources().getColor(R.color.primary)).substring(2));
-            mapCard.setRating(result.getRating());
-            mapCard.setRatingCount(result.getRating_count());
+            CompanyDetails companyDetails = new CompanyDetails();
+            companyDetails.setCompanyName(result.getCompany().getName());
+            companyDetails.setCompanyTagline(result.getTitle());
+            companyDetails.setCompanyDescription(result.getDescription());
+            companyDetails.setAddress(address);
+            companyDetails.setDistance(getArguments().getString("distance"));
+            companyDetails.setMarkerColor("0x"+Integer.toHexString(getResources().getColor(R.color.primary)).substring(2));
+            companyDetails.setRating(result.getRating());
+            companyDetails.setRatingCount(result.getRating_count());
 
             deals = ((MainActivity) getActivity()).getDeals();
 
-            adapter = new CAdDetailRecyclerViewAdapter(services, mapCard, deals);
+            adapter = new CAdDetailRecyclerViewAdapter(companyDetails, services, deals);
             recyclerView.setAdapter(adapter);
 
         } catch (JSONException | IOException e) {

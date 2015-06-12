@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -51,50 +50,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <!--Company tagline
-    Padding and white background are used here so the background of the rest of the layout can be light grey for cards-->
-        <TextView
-            android:id="@+id/tvCompanyTagLine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/default_margin"
-            android:paddingRight="@dimen/default_margin"
-            android:paddingTop="@dimen/default_small_margin"
-            android:textColor="@color/primary"
-            android:textSize="20sp"
-            tools:text="New Customer Special: Basic Cleaning With X-Rays"/>
-
-        <!--Company details. If longer than 3 or 4 lines, it fades out toward the bottom and animates out when clicked  -->
-        <TextView
-            android:id="@+id/tvCompanyDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:clickable="true"
-            android:paddingBottom="@dimen/default_margin"
-            android:paddingLeft="@dimen/default_margin"
-            android:paddingRight="@dimen/default_margin"
-            android:paddingTop="@dimen/default_small_margin"
-            tools:text="This is a very long description"/>
-
-        <!--Divider gives the bottom of the card a hard edge -->
-        <View style="@style/Divider"/>
-
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/default_tiny_margin"
-            android:scrollbars="vertical"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
