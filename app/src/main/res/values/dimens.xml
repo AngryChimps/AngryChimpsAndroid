@@ -16,8 +16,6 @@
     <dimen name="card_margin_small">4dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
 
-    <dimen name="app_bar_elevation">4dp</dimen>
-
     <dimen name="divider">0.7dp</dimen>
 
     <dimen name="navigation_drawer_profile_image">64dp</dimen>
@@ -30,4 +28,5 @@
 
     <dimen name="collapsing_backdrop_height">250dp</dimen>
     <dimen name="circle_indicator_height">32dp</dimen>
+    <dimen name="elevation_card">8dp</dimen>
 </resources>

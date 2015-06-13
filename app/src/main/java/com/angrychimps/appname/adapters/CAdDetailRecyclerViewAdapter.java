@@ -1,6 +1,7 @@
 package com.angrychimps.appname.adapters;
 
 import android.animation.ObjectAnimator;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -20,8 +21,8 @@ import com.angrychimps.appname.adapters.viewholders.DealGridViewHolder;
 import com.angrychimps.appname.adapters.viewholders.MapCardViewHolder;
 import com.angrychimps.appname.adapters.viewholders.ServiceItemViewHolder;
 import com.angrychimps.appname.models.Address;
-import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.models.CompanyDetails;
+import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.models.Service;
 
 public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -30,11 +31,13 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private SortedList<Service> services;
     private SortedList<Deal> deals;
     private ImageLoader imageLoader;
+    private Resources resources;
 
-    public CAdDetailRecyclerViewAdapter(CompanyDetails companyDetails, SortedList<Service> services, SortedList<Deal> deals) {
+    public CAdDetailRecyclerViewAdapter(Resources resources, CompanyDetails companyDetails, SortedList<Service> services, SortedList<Deal> deals) {
         this.companyDetails = companyDetails;
         this.services = services;
         this.deals = deals;
+        this.resources = resources;
         imageLoader = VolleySingleton.INSTANCE.getImageLoader();
     }
 
@@ -75,16 +78,25 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
             case 1:
                 layoutParams.setFullSpan(true);
-                bind((ServiceItemViewHolder) vh, position -1);
+                bind((ServiceItemViewHolder) vh, position - 1);
                 break;
             case 2:
                 layoutParams.setFullSpan(true);
                 bind((MapCardViewHolder) vh);
                 break;
             default:
-                bind((DealGridViewHolder) vh, position - services.size() -2);
+                //Margins on grid cannot be set on the RecyclerView because it forces the header to have margins. Set them manually here
+                boolean isLeft = (position - services.size() - 2) % 2 == 0;
+                layoutParams.setMargins(getDimen(isLeft? R.dimen.card_margin_medium : R.dimen.card_margin_small),getDimen(R.dimen.card_margin_small),
+                        getDimen(isLeft? R.dimen.card_margin_small : R.dimen.card_margin_medium),getDimen(R.dimen.card_margin_small));
+                bind((DealGridViewHolder) vh, position - services.size() - 2);
         }
     }
+
+    private int getDimen(int dimenId){
+        return resources.getDimensionPixelSize(dimenId);
+    }
+
     private void bind(final AdDetailHeaderViewHolder vh) {
         vh.tvCompanyTagLine.setText(companyDetails.getCompanyTagline());
         vh.tvCompanyDetails.setText(companyDetails.getCompanyDescription());

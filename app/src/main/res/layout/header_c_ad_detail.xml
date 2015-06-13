@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/default_tiny_margin">
 
     <!--Company tagline
     Padding and white background are used here so the background of the rest of the layout can be light grey for cards-->

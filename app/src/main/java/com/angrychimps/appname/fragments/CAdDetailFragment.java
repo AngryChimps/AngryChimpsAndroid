@@ -147,8 +147,8 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             if(result.getPhotos().size() < 2) indicator.setVisibility(View.GONE);
             for (Service service : result.getServices()) services.add(service);
             address = result.getAddress();
-            adapter = new CAdDetailRecyclerViewAdapter(new CompanyDetails(result, getArguments().getString("distance"), String.format("0x%06X",
-                    (0xFFFFFF & getResources().getColor(R.color.primary)))), services, ((MainActivity) getActivity()).getDeals());
+            adapter = new CAdDetailRecyclerViewAdapter(getResources(), new CompanyDetails(result, getArguments().getString("distance"),
+                    String.format("0x%06X", (0xFFFFFF & getResources().getColor(R.color.primary)))), services, ((MainActivity) getActivity()).getDeals());
             recyclerView.setAdapter(adapter);
 
         } catch (JSONException | IOException e) {
