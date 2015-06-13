@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="180dp"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="@dimen/card_corner_radius">
 
@@ -74,7 +74,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/tvCompanyTitle"
             android:layout_marginRight="@dimen/default_small_margin"
-            android:textSize="20sp"
+            android:textSize="18sp"
             tools:text="95"/>
 
         <TextView
@@ -83,7 +83,7 @@
             android:layout_below="@id/tvCompanyTitle"
             android:layout_toLeftOf="@+id/tvCompanyServicePriceDecimal"
             android:layout_marginBottom="0dp"
-            android:textSize="34sp"
+            android:textSize="30sp"
             tools:text="79"/>
 
         <TextView
@@ -91,7 +91,7 @@
             android:layout_alignTop="@id/tvCompanyServicePrice"
             android:layout_marginTop="7dp"
             android:layout_toLeftOf="@id/tvCompanyServicePrice"
-            android:textSize="22sp"/>
+            android:textSize="20sp"/>
 
         <!--Discount percentage -->
         <TextView
@@ -101,14 +101,17 @@
             android:layout_alignBaseline="@id/tvCompanyServicePrice"
             android:layout_marginLeft="@dimen/default_small_margin"
             android:textColor="@color/text_dark_grey"
-            android:textSize="18sp"
+            android:textSize="16sp"
             tools:text="30% off"/>
 
         <Button
+            android:layout_height="32dp"
             android:layout_width="match_parent"
             android:layout_below="@id/tvCompanyServicePrice"
+            android:layout_margin="@dimen/default_small_margin"
+            android:textColor="@color/white"
             android:text="View deal"
-            style="@style/RaisedButton"
+            style="@style/Widget.AppCompat.Button"
             android:background="@color/accent"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
