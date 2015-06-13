@@ -110,7 +110,7 @@
             android:layout_below="@id/tvCompanyServicePrice"
             android:layout_margin="@dimen/default_small_margin"
             android:textColor="@color/white"
-            android:text="View deal"
+            android:text="@string/view_deal"
             style="@style/Widget.AppCompat.Button"
             android:background="@color/accent"/>
     </RelativeLayout>

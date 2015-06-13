@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
@@ -33,18 +35,20 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
+    private LayoutInflater inflater;
     private GoogleMap map;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
         ButterKnife.inject(this, rootView);
+        this.inflater = inflater;
 
         SupportMapFragment mapFragment = SupportMapFragment.newInstance();
         getFragmentManager().beginTransaction().replace(R.id.innerContainer, mapFragment).commit();
         mapFragment.getMapAsync(this);
 
-        toolbar.setTitle("Map");
+        toolbar.setTitle(getString(R.string.title_map));
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +98,12 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
     public void onMapReady(GoogleMap map) {
         this.map = map;
         setMarkers();
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override public boolean onMarkerClick(Marker marker) {
+
+                return false;
+            }
+        });
     }
 
     private void setMarkers(){
@@ -105,6 +115,18 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
         for (int i = 0; i < deals.size(); i++) {
             map.addMarker(new MarkerOptions().position(new LatLng(deals.get(i).getLat(),
                     deals.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
+            map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                @Override public View getInfoWindow(Marker marker) {
+
+                    View v = inflater.inflate(R.layout.card_deal_map, null);
+                    v.findViewById(R.id.)
+                    return null;
+                }
+
+                @Override public View getInfoContents(Marker marker) {
+                    return null;
+                }
+            });
         }
     }
 
