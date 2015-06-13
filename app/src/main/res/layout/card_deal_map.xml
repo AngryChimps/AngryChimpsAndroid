@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Standard layout for the StaggeredGridView results when highlighted on the map -->
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Used to find the center -->
+        <Space
+            android:id="@+id/center"
+            style="@style/CenterHorizontal"/>
+
+        <!--Rating bar -->
+        <com.angrychimps.appname.widgets.FlexibleRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/default_small_margin"
+            android:layout_marginRight="@dimen/default_tiny_margin"
+            android:layout_marginTop="@dimen/default_small_margin"
+            android:layout_toLeftOf="@id/center"
+            android:stepSize="0.5"/>
+
+        <!--Distance from user -->
+        <TextView
+            android:id="@+id/tvCompanyDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/default_small_margin"
+            android:layout_marginTop="@dimen/default_small_margin"
+            android:textColor="@color/text_medium_grey"
+            android:textStyle="italic"
+            tools:text="0.9 miles"/>
+
+        <!--Location icon -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tvCompanyDistance"
+            android:layout_marginTop="@dimen/default_small_margin"
+            android:layout_toLeftOf="@id/tvCompanyDistance"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_location_on_grey600_24dp"/>
+
+        <!--Company's service tagline -->
+        <TextView
+            android:id="@+id/tvCompanyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginLeft="@dimen/default_small_margin"
+            android:layout_marginRight="@dimen/default_small_margin"
+            android:layout_marginTop="@dimen/default_small_margin"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            tools:text="New patient special with x-rays"/>
+
+        <!--Price -->
+        <TextView
+            android:id="@+id/tvCompanyServicePriceDecimal"
+            style="@style/PriceText.Decimal"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tvCompanyTitle"
+            android:layout_marginRight="@dimen/default_small_margin"
+            android:textSize="20sp"
+            tools:text="95"/>
+
+        <TextView
+            android:id="@+id/tvCompanyServicePrice"
+            style="@style/PriceText.Price"
+            android:layout_below="@id/tvCompanyTitle"
+            android:layout_toLeftOf="@+id/tvCompanyServicePriceDecimal"
+            android:layout_marginBottom="0dp"
+            android:textSize="34sp"
+            tools:text="79"/>
+
+        <TextView
+            style="@style/PriceText.DollarSign"
+            android:layout_alignTop="@id/tvCompanyServicePrice"
+            android:layout_marginTop="7dp"
+            android:layout_toLeftOf="@id/tvCompanyServicePrice"
+            android:textSize="22sp"/>
+
+        <!--Discount percentage -->
+        <TextView
+            android:id="@+id/tvCompanyServiceDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tvCompanyServicePrice"
+            android:layout_marginLeft="@dimen/default_small_margin"
+            android:textColor="@color/text_dark_grey"
+            android:textSize="18sp"
+            tools:text="30% off"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_below="@id/tvCompanyServicePrice"
+            android:text="View deal"
+            style="@style/RaisedButton"
+            android:background="@color/accent"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

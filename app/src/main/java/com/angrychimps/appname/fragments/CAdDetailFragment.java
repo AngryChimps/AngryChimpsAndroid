@@ -145,6 +145,14 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
             indicator.setViewPager(pager);
             if(result.getPhotos().size() < 2) indicator.setVisibility(View.GONE);
+
+            Service example = new Service();
+            example.setName("Example second service");
+            example.setDescription("Description of service looks like this, and can go on to multiple lines.");
+            example.setDiscounted_price(49.99);
+            example.setOriginal_price(69.99);
+            services.add(example);
+
             for (Service service : result.getServices()) services.add(service);
             address = result.getAddress();
             adapter = new CAdDetailRecyclerViewAdapter(getResources(), new CompanyDetails(result, getArguments().getString("distance"),

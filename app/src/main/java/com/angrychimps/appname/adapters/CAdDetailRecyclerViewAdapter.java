@@ -86,9 +86,10 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
             default:
                 //Margins on grid cannot be set on the RecyclerView because it forces the header to have margins. Set them manually here
-                boolean isLeft = (position - services.size() - 2) % 2 == 0;
-                layoutParams.setMargins(getDimen(isLeft? R.dimen.card_margin_medium : R.dimen.card_margin_small),getDimen(R.dimen.card_margin_small),
-                        getDimen(isLeft? R.dimen.card_margin_small : R.dimen.card_margin_medium),getDimen(R.dimen.card_margin_small));
+                //Edit: this doesn't actually work once the staggered grid moves items. Disable for now. Item Decorator?
+//                boolean isLeft = (position - services.size() - 2) % 2 == 0;
+//                layoutParams.setMargins(getDimen(isLeft? R.dimen.card_margin_medium : R.dimen.card_margin_small),getDimen(R.dimen.card_margin_small),
+//                        getDimen(isLeft? R.dimen.card_margin_small : R.dimen.card_margin_medium),getDimen(R.dimen.card_margin_small));
                 bind((DealGridViewHolder) vh, position - services.size() - 2);
         }
     }
