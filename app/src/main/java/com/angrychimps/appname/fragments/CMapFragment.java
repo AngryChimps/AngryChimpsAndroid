@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.angrychimps.appname.MainActivity;
 import com.angrychimps.appname.R;
+import com.angrychimps.appname.adapters.MapWindowAdapter;
 import com.angrychimps.appname.events.ResultInsertedEvent;
 import com.angrychimps.appname.events.ResultRemovedEvent;
 import com.angrychimps.appname.models.Deal;
@@ -35,6 +35,7 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
+    private SortedList<Deal> deals;
     private LayoutInflater inflater;
     private GoogleMap map;
 
@@ -98,36 +99,33 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
     public void onMapReady(GoogleMap map) {
         this.map = map;
         setMarkers();
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override public boolean onMarkerClick(Marker marker) {
-
-                return false;
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override public void onInfoWindowClick(Marker marker) {
+                if(marker.getTitle() == null) return;
+                int position = Integer.parseInt(marker.getTitle());
+                Fragment fragment = new CAdDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", deals.get(position).getProvider_ad_immutable_id());
+                bundle.putDouble("lat", deals.get(position).getLat());
+                bundle.putDouble("lon", deals.get(position).getLon());
+                bundle.putString("distance", deals.get(position).getDistanceMiles());
+                fragment.setArguments(bundle);
+                ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
             }
         });
     }
 
     private void setMarkers(){
-        SortedList<Deal> deals = ((MainActivity) getActivity()).getDeals();
+        deals = ((MainActivity) getActivity()).getDeals();
         Location location = ((MainActivity) getActivity()).getCurrentLocation();
         LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 13));
         map.addMarker(new MarkerOptions().position(currentPosition));
         for (int i = 0; i < deals.size(); i++) {
-            map.addMarker(new MarkerOptions().position(new LatLng(deals.get(i).getLat(),
-                    deals.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
-            map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                @Override public View getInfoWindow(Marker marker) {
-
-                    View v = inflater.inflate(R.layout.card_deal_map, null);
-                    v.findViewById(R.id.)
-                    return null;
-                }
-
-                @Override public View getInfoContents(Marker marker) {
-                    return null;
-                }
-            });
+            map.addMarker(new MarkerOptions().title(i+"").position(new LatLng(deals.get(i).getLat(),
+                        deals.get(i).getLon())).icon(BitmapDescriptorFactory.defaultMarker(207)));
         }
+        map.setInfoWindowAdapter(new MapWindowAdapter(inflater.inflate(R.layout.card_deal_map, null), deals));
     }
 
     @Subscribe public void onResultInserted(ResultInsertedEvent event){
