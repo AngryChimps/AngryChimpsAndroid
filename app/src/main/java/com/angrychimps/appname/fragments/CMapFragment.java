@@ -2,7 +2,6 @@ package com.angrychimps.appname.fragments;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.Toolbar;
@@ -34,14 +33,13 @@ import butterknife.InjectView;
 public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolbar.OnMenuItemClickListener {
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
-    @InjectView(R.id.fab) FloatingActionButton fab;
     private SortedList<Deal> deals;
     private LayoutInflater inflater;
     private GoogleMap map;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
+        View rootView = inflater.inflate(R.layout.toolbar_default, container, false);
         ButterKnife.inject(this, rootView);
         this.inflater = inflater;
 
@@ -59,8 +57,6 @@ public class CMapFragment extends Fragment implements OnMapReadyCallback, Toolba
         });
         toolbar.inflateMenu(R.menu.menu_map);
         toolbar.setOnMenuItemClickListener(this);
-
-        fab.setImageResource(R.drawable.ic_request_white_24dp);
 
         return rootView;
     }
