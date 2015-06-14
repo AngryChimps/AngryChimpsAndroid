@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_explore"
+            android:checked="true"
+            android:icon="@drawable/ic_explore_blue_24dp"
+            android:title="Explore deals near you"
+            app:itemTextColor="@color/primary"/>
+        <item
+            android:id="@+id/nav_messages"
+            android:actionLayout="@layout/drawer_item_messages"
+            android:title="Messages"
+            app:itemTextColor="@color/primary"/>
+        <item
+            android:id="@+id/nav_mode"
+            android:actionLayout="@layout/drawer_item_switch"
+            android:checkable="false"
+            android:title="Consumer mode"
+            app:itemTextColor="@color/primary"/>
+        <item
+            android:id="@+id/nav_service_request"
+            android:actionLayout="@layout/drawer_item"
+            android:icon="@drawable/ic_request_blue_24dp"
+            android:title="Request a service"
+            app:itemTextColor="@color/primary"/>
+        <item
+            android:id="@+id/nav_notifications"
+            android:actionLayout="@layout/drawer_item"
+            android:icon="@drawable/ic_notification_blue_24dp"
+            android:title="Notification manager"
+            app:itemTextColor="@color/primary"/>
+        <item
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_star_grey600_24dp"
+            android:title="Rate this app"/>
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help_grey600_24dp"
+            android:title="Help"/>
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_settings_power_grey600_24dp"
+            android:title="Log out"/>
+    </group>
+
+</menu>
