@@ -20,7 +20,6 @@
         style="@style/FlatButton"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/bSearch"
-        android:onClick="onCancel"
         android:text="CANCEL"/>
 
     <ScrollView

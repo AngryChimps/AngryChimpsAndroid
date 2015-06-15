@@ -3,14 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/drawer_shared_top"/>
+    <include layout="@layout/drawer_shared_above"/>
 
     <FrameLayout
         style="@style/DrawerItem"
-        android:background="@color/navigation_drawer_switch_background">
+        android:background="@color/drawer_switch_background">
 
         <!--The colored strip on the left side of the navigation drawer -->
         <View style="@style/DrawerModeColorStrip.Blue"/>
@@ -18,7 +17,7 @@
         <TextView
             style="@style/DrawerText.Blue"
             android:layout_marginLeft="@dimen/default_margin"
-            android:text="Consumer mode"
+            android:text="@string/drawer_consumer_mode"
             android:textStyle="bold"/>
 
         <android.support.v7.widget.SwitchCompat
@@ -33,7 +32,7 @@
     <FrameLayout
         android:id="@+id/drawer_request"
         style="@style/DrawerItem"
-        android:background="@color/navigation_drawer_mode_background"
+        android:background="@color/drawer_mode_background"
         android:onClick="onDrawerItemClicked">
 
         <View style="@style/DrawerModeColorStrip.Blue"/>
@@ -44,13 +43,13 @@
 
         <TextView
             style="@style/DrawerText.Blue"
-            android:text="Request a service"/>
+            android:text="@string/drawer_consumer_request_service"/>
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/drawer_notifications"
         style="@style/DrawerItem"
-        android:background="@color/navigation_drawer_mode_background"
+        android:background="@color/drawer_mode_background"
         android:onClick="onDrawerItemClicked">
 
         <View style="@style/DrawerModeColorStrip.Blue"/>
@@ -61,8 +60,8 @@
 
         <TextView
             style="@style/DrawerText.Blue"
-            android:text="Notification manager"/>
+            android:text="@string/drawer_consumer_notification_manager"/>
     </FrameLayout>
 
-    <include layout="@layout/drawer_shared_bottom"/>
+    <include layout="@layout/drawer_shared_below"/>
 </LinearLayout>

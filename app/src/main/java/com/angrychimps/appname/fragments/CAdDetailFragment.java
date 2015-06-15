@@ -59,10 +59,10 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
     @InjectView(R.id.viewPagerCompanyImages) ViewPager pager;
     @InjectView(R.id.circleIndicator) CircleIndicator indicator;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
-    SortedList<Service> services;
-    RecyclerView.Adapter adapter;
-    Address address;
-    boolean isFavorite;
+    private SortedList<Service> services;
+    private RecyclerView.Adapter adapter;
+    private Address address;
+    private boolean isFavorite;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -21,8 +21,8 @@ import java.util.List;
 
 public class PCreateAdFragment extends Fragment {
 
-    List<Availabilities> list;
-    CCreateAdTimeBlockListAdapter adapter;
+    private List<Availabilities> list;
+    private CCreateAdTimeBlockListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

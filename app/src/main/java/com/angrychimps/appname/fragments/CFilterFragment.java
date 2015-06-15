@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 public class CFilterFragment extends DialogFragment implements View.OnClickListener{
 
-    JsonRequestObject builder = new JsonRequestObject();
+    private final JsonRequestObject builder = new JsonRequestObject();
     //TODO- add results to JSONObject and pass back to CMainFragment or implement interface through activity
 
     @Override

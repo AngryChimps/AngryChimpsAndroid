@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/DrawerText"
-            android:text="Rate this app"/>
+            android:text="@string/drawer_rate_app"/>
     </FrameLayout>
 
     <FrameLayout
@@ -27,7 +27,7 @@
 
         <TextView
             style="@style/DrawerText"
-            android:text="Help"/>
+            android:text="@string/drawer_help"/>
     </FrameLayout>
 
     <FrameLayout
@@ -41,7 +41,7 @@
 
         <TextView
             style="@style/DrawerText"
-            android:text="Logout"/>
+            android:text="@string/drawer_logout"/>
     </FrameLayout>
 
 </merge>

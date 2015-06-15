@@ -27,11 +27,11 @@ import com.angrychimps.appname.models.Service;
 
 public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private CompanyDetails companyDetails;
-    private SortedList<Service> services;
-    private SortedList<Deal> deals;
-    private ImageLoader imageLoader;
-    private Resources resources;
+    private final CompanyDetails companyDetails;
+    private final SortedList<Service> services;
+    private final SortedList<Deal> deals;
+    private final ImageLoader imageLoader;
+    private final Resources resources;
 
     public CAdDetailRecyclerViewAdapter(Resources resources, CompanyDetails companyDetails, SortedList<Service> services, SortedList<Deal> deals) {
         this.companyDetails = companyDetails;

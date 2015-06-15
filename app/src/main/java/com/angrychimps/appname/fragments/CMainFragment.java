@@ -3,7 +3,6 @@ package com.angrychimps.appname.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -39,9 +38,8 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.fab) FloatingActionButton fab;
     @InjectView(R.id.recycler_view) RecyclerView recyclerView;
-    SortedList<Deal> deals;
-    RecyclerView.Adapter adapter;
-    FragmentManager fm;
+    private SortedList<Deal> deals;
+    private RecyclerView.Adapter adapter;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar_with_fab, container, false);
@@ -49,7 +47,6 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
         inflater.inflate(R.layout.recycler_view, innerContainer);
         ButterKnife.inject(this, rootView);
-        fm = getFragmentManager();
 
         toolbar.setTitle("Browse Deals");
         toolbar.setNavigationIcon(R.drawable.ic_menu);

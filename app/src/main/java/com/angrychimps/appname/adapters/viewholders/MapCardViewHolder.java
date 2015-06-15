@@ -21,13 +21,13 @@ import butterknife.InjectView;
 public class MapCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     @InjectView(R.id.map) public AnimatedNetworkImageView map;
-    @InjectView(R.id.bCallCompany) public ImageButton bCallCompany;
+    @InjectView(R.id.bCallCompany) ImageButton bCallCompany;
     @InjectView(R.id.tvCompanyName) public TextView tvCompanyName;
     @InjectView(R.id.tvCompanyAddress) public TextView tvCompanyAddress;
     @InjectView(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
     @InjectView(R.id.ratingBar) public FlexibleRatingBar ratingBar;
     @InjectView(R.id.bReviews) public Button bReviews;
-    @InjectView(R.id.tvFlagListing) public TextView tvFlagListing;
+    @InjectView(R.id.tvFlagListing) TextView tvFlagListing;
 
     public MapCardViewHolder(View itemView) {
         super(itemView);

@@ -50,7 +50,7 @@
 
         <TextView
             style="@style/DrawerText.Blue"
-            android:text="Explore deals near you"/>
+            android:text="@string/drawer_explore"/>
     </FrameLayout>
 
     <FrameLayout
@@ -64,7 +64,7 @@
 
         <TextView
             style="@style/DrawerText.Blue"
-            android:text="Messages"/>
+            android:text="@string/drawer_messages"/>
 
         <!--Messages indicator -->
         <TextView

@@ -61,47 +61,47 @@ public class JsonRequestObject {
         return text;
     }
 
-    public void setText(String text) {
+    private void setText(String text) {
         this.text = text;
     }
 
-    public void setCategories(int[] categories) {
+    private void setCategories(int[] categories) {
         this.categories = categories;
     }
 
-    public void setLatitude(double latitude) {
+    private void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    private void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public void setRadius_miles(double radius_miles) {
+    private void setRadius_miles(double radius_miles) {
         this.radius_miles = radius_miles;
     }
 
-    public void setConsumer_travels(boolean consumer_travels) {
+    private void setConsumer_travels(boolean consumer_travels) {
         this.consumer_travels = consumer_travels;
     }
 
-    public void setStarting_at(String starting_at) {
+    private void setStarting_at(String starting_at) {
         this.starting_at = starting_at;
     }
 
-    public void setEnding_at(String ending_at) {
+    private void setEnding_at(String ending_at) {
         this.ending_at = ending_at;
     }
 
-    public void setSort(String sort) {
+    private void setSort(String sort) {
         this.sort = sort;
     }
 
-    public void setLimit(int limit) {
+    private void setLimit(int limit) {
         this.limit = limit;
     }
 
-    public void setOffset(int offset) {
+    private void setOffset(int offset) {
         this.offset = offset;
     }
 

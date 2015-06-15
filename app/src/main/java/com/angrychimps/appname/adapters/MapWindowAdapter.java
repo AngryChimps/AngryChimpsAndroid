@@ -18,13 +18,13 @@ import butterknife.InjectView;
  */
 public class MapWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-    @InjectView(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
-    @InjectView(R.id.tvCompanyTitle) public TextView tvCompanyTitle;
-    @InjectView(R.id.tvCompanyServicePrice) public TextView tvCompanyServicePrice;
-    @InjectView(R.id.tvCompanyServiceDiscount) public TextView tvCompanyServiceDiscount;
-    @InjectView(R.id.tvCompanyServicePriceDecimal) public TextView tvCompanyServicePriceDecimal;
-    @InjectView(R.id.ratingBar) public FlexibleRatingBar rbCompany;
-    private SortedList<Deal> deals;
+    @InjectView(R.id.tvCompanyDistance) TextView tvCompanyDistance;
+    @InjectView(R.id.tvCompanyTitle) TextView tvCompanyTitle;
+    @InjectView(R.id.tvCompanyServicePrice) TextView tvCompanyServicePrice;
+    @InjectView(R.id.tvCompanyServiceDiscount) TextView tvCompanyServiceDiscount;
+    @InjectView(R.id.tvCompanyServicePriceDecimal) TextView tvCompanyServicePriceDecimal;
+    @InjectView(R.id.ratingBar) FlexibleRatingBar rbCompany;
+    private final SortedList<Deal> deals;
     private final View view;
 
     public MapWindowAdapter(View view, SortedList<Deal> deals) {

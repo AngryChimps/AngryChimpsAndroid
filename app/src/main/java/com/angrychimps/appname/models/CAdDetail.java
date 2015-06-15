@@ -8,7 +8,7 @@ import java.util.List;
 /*
     Model for ProviderAdImmutable response payload
  */
-@JsonObject
+@SuppressWarnings("WeakerAccess") @JsonObject
 public class CAdDetail {
 
     @JsonField

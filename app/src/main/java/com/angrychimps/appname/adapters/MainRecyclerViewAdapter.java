@@ -15,8 +15,8 @@ import com.angrychimps.appname.models.Deal;
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHolder> {
 
-    private ImageLoader imageLoader;
-    private SortedList<Deal> deals;
+    private final ImageLoader imageLoader;
+    private final SortedList<Deal> deals;
 
     public MainRecyclerViewAdapter(SortedList<Deal> deals) {
         this.deals = deals;

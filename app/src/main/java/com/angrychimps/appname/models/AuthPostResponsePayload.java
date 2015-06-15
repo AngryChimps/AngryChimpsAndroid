@@ -4,7 +4,7 @@ package com.angrychimps.appname.models;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
-@JsonObject
+@SuppressWarnings("WeakerAccess") @JsonObject
 public class AuthPostResponsePayload {
 
     @JsonField

@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class VolleyRequest implements Response.Listener<JSONObject>, Response.ErrorListener{
 
-    OnVolleyResponseListener listener;
+    private final OnVolleyResponseListener listener;
 
     public VolleyRequest(Context context) {
         listener = (OnVolleyResponseListener) context;

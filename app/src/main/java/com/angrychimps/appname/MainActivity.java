@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @InjectView(R.id.nav_view) NavigationView navigationView;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private SortedList<Deal> deals;
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         return currentLocation;
     }
 
-    public void replaceFragmentNoBackStack(Fragment fragment) {
+    private void replaceFragmentNoBackStack(Fragment fragment) {
         fm.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                         initiateNavigationDrawer();
                         setMainFragment();
                     }
-                }, 250);
+                }, 280);
                 break;
             //Customer mode only
             case R.id.drawer_request:
@@ -194,81 +194,6 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         }
         drawerLayout.closeDrawer(navigationView);
     }
-
-//    private void initiateNavigationDrawer() {
-//        List<DrawerItem> drawerItems = new ArrayList<>();
-//
-
-//        List<DrawerItem> drawerItems = new ArrayList<>();
-//        // Set a custom shadow that overlays the main content when the drawer opens
-//        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-//
-//        // Set up the drawer's list view with items and onclick listener
-//        drawerItems.add(new DrawerItem(R.drawable.photo, "Name Nameson", "example@email.com", null, R.layout.drawer_profile));
-//        drawerItems.add(new DrawerItem(R.drawable.ic_explore_blue_24dp, "Explore deals near you", false, true, R.layout.drawer_item));
-//        drawerItems.add(new DrawerItem(R.drawable.ic_messages_blue_24dp, "Messages", "2", R.layout.drawer_item_messages));
-//        if (serviceProviderMode) {
-//            drawerItems.add(new DrawerItem("Provider Mode", R.layout.drawer_item_switch));
-//            drawerItems.add(new DrawerItem(R.drawable.ic_add_dkblue_24dp, "Create your 1st Ad", true, true, R.layout.drawer_item));
-//            drawerItems.add(new DrawerItem(R.drawable.ic_avail_dkblue_24dp, "Availability Manager", true, true, R.layout.drawer_item));
-//            drawerItems.add(new DrawerItem(R.drawable.ic_company_dkblue_24dp, "Company Profile Manager", true, true, R.layout.drawer_item));
-//        } else {
-//            drawerItems.add(new DrawerItem("Consumer Mode", R.layout.drawer_item_switch));
-//            drawerItems.add(new DrawerItem(R.drawable.ic_request_blue_24dp, "Request a Service", true, true, R.layout.drawer_item));
-//            drawerItems.add(new DrawerItem(R.drawable.ic_notification_blue_24dp, "Notification Manager", true, true, R.layout.drawer_item));
-//        }
-//        drawerItems.add(new DrawerItem(R.drawable.ic_star_grey600_24dp, "Rate this App", false, false, R.layout.drawer_item));
-//        drawerItems.add(new DrawerItem(R.drawable.ic_help_grey600_24dp, "Help!", false, false, R.layout.drawer_item));
-//        drawerItems.add(new DrawerItem(R.drawable.ic_settings_power_grey600_24dp, "Log Out", false, false, R.layout.drawer_item));
-//
-//        drawerListView.setAdapter(new DrawerAdapter(this, drawerItems, serviceProviderMode));
-//        drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                onClickDrawerItem(position);
-//            }
-//        });
-//    }
-
-//    private void onClickDrawerItem(int position) {
-//        if (serviceProviderMode) {
-//            switch (position) {
-//                case 0: //Profile
-//                    break;
-//                case 1: //Explore Deals Near You
-//                    setMainFragment();
-//                    break;
-//                case 3: //Customer/Provider Switch
-//                    serviceProviderMode = false;
-//                    initiateNavigationDrawer();
-//                    setMainFragment();
-//                    return;
-//                case 4: //Create your 1st Ad
-//                    replaceFragmentAddBackStack(new PCreateAdFragment());
-//                    break;
-//                default:
-//                    break;
-//            }
-//        } else {
-//            switch (position) {
-//                case 0: //Profile
-//                    break;
-//                case 1: //Explore Deals Near You
-//                    setMainFragment();
-//                    break;
-//                case 3:  //Customer/Provider Switch
-//                    serviceProviderMode = true;
-//                    initiateNavigationDrawer();
-//                    setMainFragment();
-//                    return;
-//                case 4: //Request a Service
-//                    //replaceFragmentAddBackStack(new Deprecated_CRequestServiceFragment());
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//        drawerLayout.closeDrawer(drawerListView);
-//    }
 
     private void updateIfNecessary() {
         //SessionId and location are required.

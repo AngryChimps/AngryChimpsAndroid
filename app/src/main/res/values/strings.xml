@@ -13,8 +13,6 @@
     <string name="service_duration">Minutes Required\nfor Service</string>
     <string name="service_time_notice">Minutes Notice\nRequired to Book</string>
 
-    <item name="container_id" type="id">12345</item>
-
     <string name="dollar_sign">$</string>
     <string name="from">From</string>
     <string name="available_time_blocks">Available Time Blocks</string>
@@ -27,5 +25,19 @@
     <string name="popular_deals">Most Popular Deals Near You:</string>
     <string name="view_deal">View deal</string>
     <string name="title_map">Map</string>
+
+    <string name="drawer_explore">Explore deals near you</string>
+    <string name="drawer_messages">Messages</string>
+    <string name="drawer_provider_mode">Provider mode</string>
+    <string name="drawer_provider_create_ad_first">Create your 1st ad</string>
+    <string name="drawer_provider_availability">Availability manager</string>
+    <string name="drawer_provider_company_manager">Company profile manager</string>
+    <string name="drawer_consumer_mode">Consumer mode</string>
+    <string name="drawer_consumer_request_service">Request a service</string>
+    <string name="drawer_consumer_notification_manager">Notification manager</string>
+    <string name="drawer_rate_app">Rate this app</string>
+    <string name="drawer_help">Help</string>
+    <string name="drawer_logout">Logout</string>
+
 
 </resources>
