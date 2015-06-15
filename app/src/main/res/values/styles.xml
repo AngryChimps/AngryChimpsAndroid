@@ -116,7 +116,6 @@
     <style name="DrawerItem">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/white</item>
         <item name="android:minHeight">@dimen/default_list_item_height</item>
     </style>
 
@@ -124,12 +123,20 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/default_keyline</item>
-        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="DrawerText.Blue">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="DrawerText.DkBlue">
+        <item name="android:textColor">@color/primary_dark</item>
+    </style>
+
     <style name="DrawerIcon">
-        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/default_margin</item>
@@ -140,13 +147,12 @@
         <item name="android:layout_height">@dimen/default_list_item_height</item>
     </style>
 
-    <style name="DrawerSwitch">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:clickable">false</item>
-        <item name="android:layout_alignParentRight">true</item>
-        <item name="android:layout_marginRight">@dimen/default_margin</item>
+    <style name="DrawerModeColorStrip.Blue">
+        <item name="android:background">@color/primary</item>
+    </style>
+
+    <style name="DrawerModeColorStrip.DkBlue">
+        <item name="android:background">@color/primary_dark</item>
     </style>
 
     <style name="CenterHorizontal">

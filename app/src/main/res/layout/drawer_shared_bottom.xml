@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:id="@+id/drawer_rate"
+        style="@style/DrawerItem"
+        android:onClick="onDrawerItemClicked">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_star_grey600_24dp"/>
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="Rate this app"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_help"
+        style="@style/DrawerItem"
+        android:onClick="onDrawerItemClicked">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_help_grey600_24dp"/>
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="Help"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_logout"
+        style="@style/DrawerItem"
+        android:onClick="onDrawerItemClicked">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_settings_power_grey600_24dp"/>
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="Logout"/>
+    </FrameLayout>
+
+</merge>

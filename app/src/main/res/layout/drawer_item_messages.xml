@@ -3,6 +3,7 @@
 <!--Navigation drawer row with messages indicator -->
 
 <RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/DrawerItem"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -30,5 +31,5 @@
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:visibility="invisible"/>
+        tools:ignore="RelativeOverlap"/>
 </RelativeLayout>

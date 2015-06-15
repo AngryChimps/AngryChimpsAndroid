@@ -2,6 +2,7 @@ package com.angrychimps.appname;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.util.SortedList;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.angrychimps.appname.callbacks.OnVolleyResponseListener;
@@ -23,6 +24,7 @@ import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.fragments.CMainFragment;
 import com.angrychimps.appname.fragments.LocationManagerFragment;
+import com.angrychimps.appname.fragments.PCreateAdFragment;
 import com.angrychimps.appname.fragments.PMainFragment;
 import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.server.JsonRequestObject;
@@ -43,9 +45,9 @@ import butterknife.InjectView;
 public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener {
 
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
-    //@InjectView(R.id.drawer) ListView drawerListView;
     @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @InjectView(R.id.nav_view) NavigationView navigationView;
+    private Handler handler = new Handler();
     private SortedList<Deal> deals;
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null)
             fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
-        setupDrawerContent(navigationView);
         deals = new SortedList<>(Deal.class, new SortedList.Callback<Deal>() {
             @Override public int compare(Deal o1, Deal o2) {
                 if (o1.getDistance() < o2.getDistance()) return -1;
@@ -91,20 +92,9 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                 return item1.getProvider_ad_id().equals(item2.getProvider_ad_id());
             }
         });
-        setMainFragment();
-        //initiateNavigationDrawer();
-    }
 
-    private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        drawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
+        initiateNavigationDrawer();
+        setMainFragment();
     }
 
     @Override protected void onStart() {
@@ -156,7 +146,59 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         replaceFragmentNoBackStack(serviceProviderMode ? new PMainFragment() : new CMainFragment());
     }
 
+    private void initiateNavigationDrawer(){
+        navigationView.removeAllViews();
+        getLayoutInflater().inflate(serviceProviderMode? R.layout.drawer_p : R.layout.drawer_c, navigationView);
+    }
+
+    public void onDrawerItemClicked(View view) {
+        switch (view.getId()){
+            //Shared
+            case R.id.drawer_profile:
+                break;
+            case R.id.drawer_explore:
+                if(fm.getBackStackEntryCount() != 0) setMainFragment();
+                break;
+            case R.id.drawer_messages:
+                break;
+            case R.id.drawer_switch:
+                serviceProviderMode = !serviceProviderMode;
+                drawerLayout.closeDrawer(navigationView);
+                handler.postDelayed(new Runnable() {
+                    @Override public void run() {
+                        initiateNavigationDrawer();
+                        setMainFragment();
+                    }
+                }, 250);
+                break;
+            //Customer mode only
+            case R.id.drawer_request:
+                break;
+            case R.id.drawer_notifications:
+                break;
+            //Provider mode only
+            case R.id.drawer_create_ad:
+                replaceFragmentAddBackStack(new PCreateAdFragment());
+                break;
+            case R.id.drawer_availability:
+                break;
+            case R.id.drawer_company_profile:
+                break;
+            //Shared
+            case R.id.drawer_rate:
+                break;
+            case R.id.drawer_help:
+                break;
+            case R.id.drawer_logout:
+                break;
+        }
+        drawerLayout.closeDrawer(navigationView);
+    }
+
 //    private void initiateNavigationDrawer() {
+//        List<DrawerItem> drawerItems = new ArrayList<>();
+//
+
 //        List<DrawerItem> drawerItems = new ArrayList<>();
 //        // Set a custom shadow that overlays the main content when the drawer opens
 //        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -256,4 +298,5 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         currentLocation = event.location;
         updateIfNecessary();
     }
+
 }

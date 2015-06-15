@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/drawer_shared_top"/>
+
+    <FrameLayout
+        style="@style/DrawerItem"
+        android:background="@color/navigation_drawer_switch_background">
+
+        <!--The colored strip on the left side of the navigation drawer -->
+        <View style="@style/DrawerModeColorStrip.DkBlue"/>
+
+        <TextView
+            style="@style/DrawerText.DkBlue"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:text="Provider mode"
+            android:textStyle="bold"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/drawer_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/default_margin"
+            android:checked="true"
+            android:onClick="onDrawerItemClicked"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_create_ad"
+        style="@style/DrawerItem"
+        android:background="@color/navigation_drawer_mode_background"
+        android:onClick="onDrawerItemClicked">
+
+        <View style="@style/DrawerModeColorStrip.DkBlue"/>
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_request_blue_24dp"/>
+
+        <TextView
+            android:id="@+id/tv_drawer_create_ad"
+            style="@style/DrawerText.DkBlue"
+            android:text="Create your 1st ad"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_availability"
+        style="@style/DrawerItem"
+        android:background="@color/navigation_drawer_mode_background"
+        android:onClick="onDrawerItemClicked">
+
+        <View style="@style/DrawerModeColorStrip.DkBlue"/>
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_notification_blue_24dp"/>
+
+        <TextView
+            style="@style/DrawerText.DkBlue"
+            android:text="Availability manager"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_company_profile"
+        style="@style/DrawerItem"
+        android:background="@color/navigation_drawer_mode_background"
+        android:onClick="onDrawerItemClicked">
+
+        <View style="@style/DrawerModeColorStrip.DkBlue"/>
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_notification_blue_24dp"/>
+
+        <TextView
+            style="@style/DrawerText.DkBlue"
+            android:text="CompanyProfile manager"/>
+    </FrameLayout>
+
+    <include layout="@layout/drawer_shared_bottom"/>
+
+</LinearLayout>

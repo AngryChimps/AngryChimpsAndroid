@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:checkableBehavior="single">
+    <group>
         <item
             android:id="@+id/nav_explore"
             android:checked="true"
@@ -10,27 +10,32 @@
             app:itemTextColor="@color/primary"/>
         <item
             android:id="@+id/nav_messages"
-            android:actionLayout="@layout/drawer_item_messages"
+            android:checked="true"
+            android:icon="@drawable/ic_messages_blue_24dp"
             android:title="Messages"
             app:itemTextColor="@color/primary"/>
+    </group>
+    <group>
         <item
             android:id="@+id/nav_mode"
-            android:actionLayout="@layout/drawer_item_switch"
-            android:checkable="false"
+            android:checked="true"
             android:title="Consumer mode"
+            app:itemBackground="@color/primary"
             app:itemTextColor="@color/primary"/>
         <item
             android:id="@+id/nav_service_request"
-            android:actionLayout="@layout/drawer_item"
             android:icon="@drawable/ic_request_blue_24dp"
+            android:checked="true"
             android:title="Request a service"
             app:itemTextColor="@color/primary"/>
         <item
             android:id="@+id/nav_notifications"
-            android:actionLayout="@layout/drawer_item"
+            android:checked="true"
             android:icon="@drawable/ic_notification_blue_24dp"
             android:title="Notification manager"
             app:itemTextColor="@color/primary"/>
+    </group>
+    <group >
         <item
             android:id="@+id/nav_rate"
             android:icon="@drawable/ic_star_grey600_24dp"

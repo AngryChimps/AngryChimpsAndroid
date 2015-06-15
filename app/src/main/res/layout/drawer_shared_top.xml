@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:id="@+id/drawer_profile"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/drawer_profile_height"
+        android:layout_marginBottom="@dimen/default_small_margin"
+        android:background="@color/primary"
+        android:onClick="onDrawerItemClicked"
+        android:padding="@dimen/default_margin"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <ImageView
+            android:id="@+id/drawer_profile_image"
+            android:layout_width="@dimen/navigation_drawer_profile_image"
+            android:layout_height="@dimen/navigation_drawer_profile_image"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/drawer_profile_image_margin_bottom"
+            android:src="@drawable/photo"/>
+
+        <TextView
+            android:id="@+id/drawer_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/drawer_profile_name_margin_bottom"
+            android:text="Name Nameson"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+        <TextView
+            android:id="@+id/drawer_profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="example@email.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_explore"
+        style="@style/DrawerItem"
+        android:onClick="onDrawerItemClicked">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_explore_blue_24dp"/>
+
+        <TextView
+            style="@style/DrawerText.Blue"
+            android:text="Explore deals near you"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/drawer_messages"
+        style="@style/DrawerItem"
+        android:onClick="onDrawerItemClicked">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_messages_blue_24dp"/>
+
+        <TextView
+            style="@style/DrawerText.Blue"
+            android:text="Messages"/>
+
+        <!--Messages indicator -->
+        <TextView
+            android:id="@+id/tv_drawer_messages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"
+            android:background="@color/accent"
+            android:paddingBottom="1dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:paddingTop="1dp"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+    </FrameLayout>
+</merge>

@@ -1,4 +1,4 @@
-package com.angrychimps.appname.models;
+package com.angrychimps.appname.models.drawer;
 
 public class DrawerItem {
 

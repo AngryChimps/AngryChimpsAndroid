@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.angrychimps.appname.R;
-import com.angrychimps.appname.models.DrawerItem;
+import com.angrychimps.appname.models.drawer.DrawerItem;
 
 import java.util.List;
 
