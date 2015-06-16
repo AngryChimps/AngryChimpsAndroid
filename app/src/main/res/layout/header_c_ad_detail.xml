@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/default_small_margin"
     android:paddingLeft="@dimen/default_margin"
     android:paddingRight="@dimen/default_margin"
-    android:paddingBottom="@dimen/default_small_margin"
+    android:paddingBottom="@dimen/default_margin"
     android:background="@color/cardview_light_background"
     android:elevation="@dimen/elevation_card"
     android:layout_marginBottom="@dimen/default_tiny_margin">

@@ -33,9 +33,9 @@
 
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Subhead"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="@string/availability_select_a_time"
                 android:textColor="@color/primary"/>
 
