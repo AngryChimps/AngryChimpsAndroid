@@ -13,10 +13,10 @@ public class AnimationUtils {
 
         Interpolator decelInterpolator = new DecelerateInterpolator();
 
-        Animator translateY=ObjectAnimator.ofFloat(holder.itemView, "translationY", scrollDown? 900:-400,0).setDuration(scrollDown ? 600 : 200);
+        Animator translateY=ObjectAnimator.ofFloat(holder.itemView, "translationY", scrollDown? 900:-400,0).setDuration(scrollDown ? 600 : 300);
         translateY.setInterpolator(decelInterpolator);
 
-        Animator rotateY = ObjectAnimator.ofFloat(holder.itemView,"rotation",scrollDown? -10 : 0 ,0).setDuration(450);
+        Animator rotateY = ObjectAnimator.ofFloat(holder.itemView,"rotation",scrollDown? -12 : 0 ,0).setDuration(450);
         rotateY.setInterpolator(decelInterpolator);
 
         AnimatorSet animatorSet = new AnimatorSet();
