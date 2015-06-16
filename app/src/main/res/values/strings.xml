@@ -39,6 +39,10 @@
     <string name="drawer_rate_app">Rate this app</string>
     <string name="drawer_help">Help</string>
     <string name="drawer_logout">Logout</string>
+    <string name="availability_set_notification">Set up a notification</string>
+    <string name="availability_time_you_need">Don\'t see the time you need?</string>
+    <string name="availability_select_notification_type">Select SMS, email, or push notifications</string>
+    <string name="availability_select_a_time">Select a Time</string>
 
 
 </resources>

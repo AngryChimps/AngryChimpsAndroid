@@ -5,18 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingTop="@dimen/default_small_margin"
+    android:paddingLeft="@dimen/default_margin"
+    android:paddingRight="@dimen/default_margin"
+    android:paddingBottom="@dimen/default_small_margin"
+    android:background="@color/cardview_light_background"
+    android:elevation="@dimen/elevation_card"
     android:layout_marginBottom="@dimen/default_tiny_margin">
 
-    <!--Company tagline
-    Padding and white background are used here so the background of the rest of the layout can be light grey for cards-->
+    <!--Company tagline-->
     <TextView
         android:id="@+id/tvCompanyTagLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/default_margin"
-        android:paddingRight="@dimen/default_margin"
-        android:paddingTop="@dimen/default_small_margin"
         android:textColor="@color/primary"
         android:textSize="20sp"
         tools:text="New Customer Special: Basic Cleaning With X-Rays"/>
@@ -26,15 +27,8 @@
         android:id="@+id/tvCompanyDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:clickable="true"
-        android:paddingBottom="@dimen/default_margin"
-        android:paddingLeft="@dimen/default_margin"
-        android:paddingRight="@dimen/default_margin"
         android:paddingTop="@dimen/default_small_margin"
         tools:text="This is a very long description"/>
-
-    <!--Divider gives the bottom of the card a hard edge -->
-    <View style="@style/Divider"/>
 
 </LinearLayout>
