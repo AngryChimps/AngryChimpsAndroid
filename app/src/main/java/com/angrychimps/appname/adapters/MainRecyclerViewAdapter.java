@@ -10,6 +10,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
+import com.angrychimps.appname.adapters.animators.AnimationUtils;
 import com.angrychimps.appname.adapters.viewholders.DealGridViewHolder;
 import com.angrychimps.appname.models.Deal;
 
@@ -17,6 +18,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
 
     private final ImageLoader imageLoader;
     private final SortedList<Deal> deals;
+    private int previousPosition = 0;
 
     public MainRecyclerViewAdapter(SortedList<Deal> deals) {
         this.deals = deals;
@@ -41,6 +43,9 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
         vh.tvCompanyServicePrice.setText("" + deals.get(position).getDiscounted_price());
         if (deals.get(position).getDiscounted_price_decimal() > 0) vh.tvCompanyServicePriceDecimal.setText("" + deals.get(position).getDiscounted_price_decimal());
         vh.tvCompanyServiceDiscount.setText(deals.get(position).getDiscount_percentage() + "% off");
+
+        AnimationUtils.animateIn(vh, position > previousPosition);
+        previousPosition = position;
     }
 
     // Return the size of your dataset (invoked by the layout manager)
