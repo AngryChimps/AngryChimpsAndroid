@@ -15,11 +15,10 @@
         android:layout_height="wrap_content">
 
         <!--NetworkImageView is designed to work with Volley -->
-        <com.android.volley.toolbox.NetworkImageView
+        <com.angrychimps.appname.widgets.AnimatedFixedNetworkImageView
             android:id="@+id/imageCompanyMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
             tools:background="@color/primary"
             tools:layout_height="100dp"/>
 

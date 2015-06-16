@@ -9,24 +9,31 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 /*
-    NetworkImageView with animated fade-in
+    NetworkImageView providing fade-in of images and a fixed 4/3 aspect ratio
  */
 
-public class AnimatedNetworkImageView extends NetworkImageView {
+public class AnimatedFixedNetworkImageView extends NetworkImageView {
 
     private static final int ANIM_DURATION = 200;
     private boolean shouldAnimate = false;
 
-    public AnimatedNetworkImageView(Context context) {
+    public AnimatedFixedNetworkImageView(Context context) {
         super(context);
     }
 
-    public AnimatedNetworkImageView(Context context, AttributeSet attrs) {
+    public AnimatedFixedNetworkImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AnimatedNetworkImageView(Context context, AttributeSet attrs, int defStyle) {
+    public AnimatedFixedNetworkImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = width /4 *3;
+        setMeasuredDimension(width, height);
     }
 
     @Override

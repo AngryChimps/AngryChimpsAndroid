@@ -64,10 +64,6 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL); //columns,orientation
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemViewCacheSize(0); //Default image caching causes gaps to form and image loading failures
-//        DefaultItemAnimator animator = new DefaultItemAnimator();
-//        recyclerView.setItemAnimator(animator);
-
         return rootView;
     }
 
@@ -75,7 +71,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         super.onActivityCreated(savedInstanceState);
 
         deals = ((MainActivity) getActivity()).getDeals();
-        adapter = new MainRecyclerViewAdapter(deals);
+        adapter = new MainRecyclerViewAdapter(getActivity(), deals);
         recyclerView.setAdapter(adapter);
     }
 

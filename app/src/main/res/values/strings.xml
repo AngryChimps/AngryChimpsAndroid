@@ -20,6 +20,7 @@
     <string name="category">Category</string>
     <string name="add_time_block">Add Another Time Block</string>
     <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="ad_detail_flag_listing">Flag this listing for review</string>
     <string name="popular_deals">Most Popular Deals Near You:</string>

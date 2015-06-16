@@ -1,12 +1,14 @@
 package com.angrychimps.appname.adapters;
 
-import android.media.ExifInterface;
+import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.angrychimps.appname.App;
@@ -21,11 +23,19 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
     private final ImageLoader imageLoader;
     private final SortedList<Deal> deals;
     private int previousPosition = 0;
-    ExifInterface exif;
+    private String imageSize;
 
-    public MainRecyclerViewAdapter(SortedList<Deal> deals) {
+    public MainRecyclerViewAdapter(Context context, SortedList<Deal> deals) {
         this.deals = deals;
         imageLoader = VolleySingleton.INSTANCE.getImageLoader();
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int imageWidth = size.x /240 * 113;
+        int imageHeight = imageWidth / 4 * 3;
+        imageSize = "?height="+imageHeight+"&width="+imageWidth;
     }
 
     // Create new views (invoked by the layout manager)
@@ -39,9 +49,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
     //TODO: get image height and width from the server and adjust images to appropriate sizes before loading. Set the imageView dimensions to match
     @Override
     public void onBindViewHolder(DealGridViewHolder vh, int position) {
-        Log.i(null, "image url == "+App.mediaUrl+deals.get(position).getPhoto()+"\n");
-
-        vh.imageCompanyMain.setImageUrl(App.mediaUrl + deals.get(position).getPhoto(), imageLoader);
+        vh.imageCompanyMain.setImageUrl(App.mediaUrl + deals.get(position).getPhoto()+imageSize, imageLoader);
         vh.rbCompany.setRating(deals.get(position).getRating());
         vh.tvCompanyDistance.setText(deals.get(position).getDistanceMiles());
         vh.tvCompanyTitle.setText(deals.get(position).getTitle());
@@ -49,7 +57,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
         if (deals.get(position).getDiscounted_price_decimal() > 0) vh.tvCompanyServicePriceDecimal.setText("" + deals.get(position).getDiscounted_price_decimal());
         vh.tvCompanyServiceDiscount.setText(deals.get(position).getDiscount_percentage() + "% off");
 
-        AnimationUtils.animateIn(vh, position > previousPosition);
+        AnimationUtils.animateIn(vh, position >= previousPosition);
         previousPosition = position;
     }
 

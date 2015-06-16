@@ -9,18 +9,25 @@ import android.view.animation.Interpolator;
 
 public class AnimationUtils {
 
-    public static void animateIn(RecyclerView.ViewHolder holder, boolean scrollDown){
+    public static void animateIn(RecyclerView.ViewHolder holder, boolean scrollDown) {
 
         Interpolator decelInterpolator = new DecelerateInterpolator();
+        Animator translateY;
 
-        Animator translateY=ObjectAnimator.ofFloat(holder.itemView, "translationY", scrollDown? 900:-400,0).setDuration(scrollDown ? 600 : 300);
-        translateY.setInterpolator(decelInterpolator);
+        if (scrollDown) {
+            translateY = ObjectAnimator.ofFloat(holder.itemView, "translationY", 800, 0).setDuration(500);
+            translateY.setInterpolator(decelInterpolator);
 
-        Animator rotateY = ObjectAnimator.ofFloat(holder.itemView,"rotation",scrollDown? -12 : 0 ,0).setDuration(450);
-        rotateY.setInterpolator(decelInterpolator);
+            Animator rotateY = ObjectAnimator.ofFloat(holder.itemView, "rotation", -8, 0).setDuration(400);
+            rotateY.setInterpolator(decelInterpolator);
 
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(translateY, rotateY);
-        animatorSet.start();
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(translateY, rotateY);
+            animatorSet.start();
+        } else {
+            translateY = ObjectAnimator.ofFloat(holder.itemView, "translationY", -400, 0).setDuration(300);
+            translateY.setInterpolator(decelInterpolator);
+            translateY.start();
+        }
     }
 }

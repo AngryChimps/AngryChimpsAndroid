@@ -5,10 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.events.DealClickedEvent;
 import com.angrychimps.appname.utils.Otto;
+import com.angrychimps.appname.widgets.AnimatedFixedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
 import butterknife.ButterKnife;
@@ -16,7 +16,7 @@ import butterknife.InjectView;
 
 public class DealGridViewHolder extends RecyclerView.ViewHolder {
 
-    @InjectView(R.id.imageCompanyMain) public NetworkImageView imageCompanyMain;
+    @InjectView(R.id.imageCompanyMain) public AnimatedFixedNetworkImageView imageCompanyMain;
     @InjectView(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
     @InjectView(R.id.tvCompanyTitle) public TextView tvCompanyTitle;
     @InjectView(R.id.tvCompanyServicePrice) public TextView tvCompanyServicePrice;

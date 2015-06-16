@@ -16,6 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.angrychimps.appname.App;
 import com.angrychimps.appname.R;
 import com.angrychimps.appname.VolleySingleton;
+import com.angrychimps.appname.adapters.animators.AnimationUtils;
 import com.angrychimps.appname.adapters.viewholders.AdDetailHeaderViewHolder;
 import com.angrychimps.appname.adapters.viewholders.DealGridViewHolder;
 import com.angrychimps.appname.adapters.viewholders.MapCardViewHolder;
@@ -32,6 +33,7 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private final SortedList<Deal> deals;
     private final ImageLoader imageLoader;
     private final Resources resources;
+    private int previousPosition = 0;
 
     public CAdDetailRecyclerViewAdapter(Resources resources, CompanyDetails companyDetails, SortedList<Service> services, SortedList<Deal> deals) {
         this.companyDetails = companyDetails;
@@ -94,9 +96,9 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         }
     }
 
-    private int getDimen(int dimenId){
-        return resources.getDimensionPixelSize(dimenId);
-    }
+//    private int getDimen(int dimenId){
+//        return resources.getDimensionPixelSize(dimenId);
+//    }
 
     private void bind(final AdDetailHeaderViewHolder vh) {
         vh.tvCompanyTagLine.setText(companyDetails.getCompanyTagline());
@@ -161,6 +163,9 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         if (deals.get(position).getDiscounted_price_decimal() > 0)
             vh.tvCompanyServicePriceDecimal.setText("" + deals.get(position).getDiscounted_price_decimal());
         vh.tvCompanyServiceDiscount.setText(deals.get(position).getDiscount_percentage() + "% off");
+
+        AnimationUtils.animateIn(vh, position >= previousPosition);
+        previousPosition = position;
     }
 
     // Return the size of your dataset (invoked by the layout manager)
