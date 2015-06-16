@@ -24,7 +24,6 @@ import com.angrychimps.appname.events.UpNavigationArrowEvent;
 import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.fragments.CMainFragment;
 import com.angrychimps.appname.fragments.LocationManagerFragment;
-import com.angrychimps.appname.fragments.PCreateAdFragment;
 import com.angrychimps.appname.fragments.PMainFragment;
 import com.angrychimps.appname.models.Deal;
 import com.angrychimps.appname.server.JsonRequestObject;
@@ -163,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                 break;
             case R.id.drawer_switch:
                 serviceProviderMode = !serviceProviderMode;
+                //Wait until the drawer is closed to change its contents and the main fragment, otherwise you get stuttering
                 drawerLayout.closeDrawer(navigationView);
                 handler.postDelayed(new Runnable() {
                     @Override public void run() {
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
                 break;
             //Provider mode only
             case R.id.drawer_create_ad:
-                replaceFragmentAddBackStack(new PCreateAdFragment());
+                //replaceFragmentAddBackStack(new PCreateAdFragment());
                 break;
             case R.id.drawer_availability:
                 break;

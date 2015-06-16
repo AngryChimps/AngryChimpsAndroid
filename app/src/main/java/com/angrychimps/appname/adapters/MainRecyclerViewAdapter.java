@@ -1,7 +1,9 @@
 package com.angrychimps.appname.adapters;
 
+import android.media.ExifInterface;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
     private final ImageLoader imageLoader;
     private final SortedList<Deal> deals;
     private int previousPosition = 0;
+    ExifInterface exif;
 
     public MainRecyclerViewAdapter(SortedList<Deal> deals) {
         this.deals = deals;
@@ -33,9 +36,11 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    //TODO: precache images
+    //TODO: get image height and width from the server and adjust images to appropriate sizes before loading. Set the imageView dimensions to match
     @Override
     public void onBindViewHolder(DealGridViewHolder vh, int position) {
+        Log.i(null, "image url == "+App.mediaUrl+deals.get(position).getPhoto()+"\n");
+
         vh.imageCompanyMain.setImageUrl(App.mediaUrl + deals.get(position).getPhoto(), imageLoader);
         vh.rbCompany.setRating(deals.get(position).getRating());
         vh.tvCompanyDistance.setText(deals.get(position).getDistanceMiles());
