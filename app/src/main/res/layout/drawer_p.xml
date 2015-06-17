@@ -9,6 +9,7 @@
 
     <FrameLayout
         style="@style/DrawerItem"
+        android:clickable="true"
         android:background="@color/drawer_switch_background">
 
         <!--The colored strip on the left side of the navigation drawer -->
