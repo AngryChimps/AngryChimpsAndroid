@@ -1,4 +1,4 @@
-package com.angrychimps.appname.server;
+package com.angrychimps.citizenvet.server;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
@@ -10,10 +10,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.angrychimps.appname.App;
-import com.angrychimps.appname.VolleySingleton;
-import com.angrychimps.appname.callbacks.OnVolleyResponseListener;
+import com.angrychimps.citizenvet.App;
+import com.angrychimps.citizenvet.VolleySingleton;
+import com.angrychimps.citizenvet.callbacks.OnVolleyResponseListener;
+import com.angrychimps.citizenvet.models.SessionAPI;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.annotation.Retention;
@@ -21,9 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.android.volley.Request.Method.POST;
+import static com.angrychimps.citizenvet.App.PAYLOAD;
+import static com.angrychimps.citizenvet.App.URL;
+
 
 /*
-    This class initiates all Volley requests, returning the respective JsonObject when finished
+    This class initiates all Volley requests, returning the respective JsonObject, unpacked from its payload, when finished
  */
 public class VolleyRequest implements Response.Listener<JSONObject>, Response.ErrorListener{
 
@@ -42,7 +48,7 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
     }
 
     public void makeRequest(@RequestMethod int method, String urlString, JSONObject requestObject){
-        JsonObjectRequest request = new JsonObjectRequest(method, App.url + urlString, requestObject, this, this) {
+        JsonObjectRequest request = new JsonObjectRequest(method, URL + urlString, requestObject, this, this) {
             // Attach headers
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -54,13 +60,17 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
         VolleySingleton.INSTANCE.addToRequestQueue(request);
     }
 
-    public void getSessionId(){
-        VolleySingleton.INSTANCE.addToRequestQueue(new JsonObjectRequest(Request.Method.GET, App.url + "session", this, this));
+    public void requestSessionId(){
+        VolleySingleton.INSTANCE.addToRequestQueue(new JsonObjectRequest(POST, URL + "session", SessionAPI.getRequestObject(), this, this));
     }
 
     @Override
     public void onResponse(JSONObject object) {
-        listener.onVolleyResponse(object);
+        try {
+            listener.onVolleyResponse(object.getJSONObject(PAYLOAD));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -70,6 +80,6 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({Request.Method.GET, Request.Method.PUT, Request.Method.POST, Request.Method.DELETE})
+    @IntDef({Request.Method.GET, Request.Method.PUT, POST, Request.Method.PATCH, Request.Method.DELETE})
     public @interface RequestMethod {}
 }
