@@ -51,7 +51,7 @@ public class App extends Application implements OnVolleyResponseListener{
 
     @Override
     public void onVolleyResponse(JSONObject object) {
-        sessionId = SessionAPI.getSessionId(object);
+        sessionId = new SessionAPI().getSessionId(object);
         Log.i("sessionId = ", "" + sessionId);
         Otto.BUS.getBus().post(new SessionIdReceivedEvent());
     }

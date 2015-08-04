@@ -61,7 +61,7 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
     }
 
     public void requestSessionId(){
-        VolleySingleton.INSTANCE.addToRequestQueue(new JsonObjectRequest(POST, URL + "session", SessionAPI.getRequestObject(), this, this));
+        VolleySingleton.INSTANCE.addToRequestQueue(new JsonObjectRequest(POST, URL + "session", new SessionAPI().getRequestObject(), this, this));
     }
 
     @Override
