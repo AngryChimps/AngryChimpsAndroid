@@ -1,6 +1,7 @@
 package com.angrychimps.citizenvet.models;
 
 import android.os.Build;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,7 @@ public class SessionAPI {
             payload.put("push_token", ""); //TODO: Add push notification token
             payload.put("description", "Android " + Build.VERSION.RELEASE + " API " + Build.VERSION.SDK_INT + " Device: " + getDeviceName());
             object.put(PAYLOAD, payload);
+            Log.i(null, "object = "+object.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

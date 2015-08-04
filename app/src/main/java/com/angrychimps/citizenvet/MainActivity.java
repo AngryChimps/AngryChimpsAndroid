@@ -25,18 +25,16 @@ import com.angrychimps.citizenvet.events.UpNavigationBurgerEvent;
 import com.angrychimps.citizenvet.fragments.CMainFragment;
 import com.angrychimps.citizenvet.fragments.LocationManagerFragment;
 import com.angrychimps.citizenvet.fragments.PMainFragment;
+import com.angrychimps.citizenvet.models.Member;
+import com.angrychimps.citizenvet.models.MemberAPI;
 import com.angrychimps.citizenvet.models_old.Deal;
 import com.angrychimps.citizenvet.server.JsonRequestObject;
 import com.angrychimps.citizenvet.server.VolleyRequest;
 import com.angrychimps.citizenvet.utils.Otto;
-import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.otto.Subscribe;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
+    private int num = 0;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     @Override protected void onStart() {
         super.onStart();
         Otto.BUS.getBus().register(this); //Register to receive events
-        updateIfNecessary();
+        //updateIfNecessary();
     }
 
     @Override protected void onStop() {
@@ -118,15 +117,40 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     }
 
     @Override public void onVolleyResponse(JSONObject object) {
+        Log.i(null, "received "+object.toString());
+//        num++;
+//        Member member = new Member();
+//        member.setFirstName("Jim");
+//        member.setLastName("Pekarek "+num);
+//        member.setTitle("Android dev "+num);
+//        member.setEmail("amagi"+num+"@gmail.com");
+//        member.setPassword("password");
+//        new VolleyRequest(this).makeRequest(Request.Method.POST, "member", new MemberAPI().postMember(member));
+
         try {
-            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
-            deals.beginBatchedUpdates();
-            for (int i = 0; i < jArray.length(); i++) deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
-            deals.endBatchedUpdates();
-        } catch (IOException | JSONException e) {
-            Log.i(null, "JsonObjectRequest error");
+            if(object.getJSONObject("member").getString("id") != null){
+                String id = object.getJSONObject("member").getString("id");
+//                Member member = new Member();
+//                //member.setId(id);
+//                member.setFirstName("James");
+//                member.setLastName("Pekarek");
+//                member.setTitle("Android developer");
+//                member.setEmail("amagi82@gmail.com");
+//                member.setPassword("password");
+//                new VolleyRequest(this).makeRequest(Request.Method.POST, "member", new MemberAPI().postMember(member));
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+//        try {
+//            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
+//            deals.beginBatchedUpdates();
+//            for (int i = 0; i < jArray.length(); i++) deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
+//            deals.endBatchedUpdates();
+//        } catch (IOException | JSONException e) {
+//            Log.i(null, "JsonObjectRequest error");
+//            e.printStackTrace();
+//        }
     }
 
     public SortedList<Deal> getDeals() {
@@ -221,12 +245,37 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     }
 
     @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event) {
-        updateIfNecessary();
+        //updateIfNecessary();
+
+        //TESTING
+        Member member = new Member();
+        member.setFirstName("Jim");
+        member.setLastName("Pekarek");
+        member.setTitle("Android dev");
+        member.setEmail("amagi82@gmail.com");
+        member.setPassword("password");
+        new VolleyRequest(this).makeRequest(Request.Method.POST, "member", new MemberAPI().postMember(member));
+
+        Member member2 = new Member();
+        member2.setFirstName("Jim2");
+        member2.setLastName("Pekarek2");
+        member2.setTitle("Android dev2");
+        member2.setEmail("amagi822@gmail.com");
+        member2.setPassword("password2");
+        new VolleyRequest(this).makeRequest(Request.Method.POST, "member", new MemberAPI().postMember(member2));
+
+        Member member3 = new Member();
+        member3.setFirstName("Jim3");
+        member3.setLastName("Pekarek3");
+        member3.setTitle("Android dev3");
+        member3.setEmail("amagi82@gmail.com3");
+        member3.setPassword("password3");
+        new VolleyRequest(this).makeRequest(Request.Method.POST, "member", new MemberAPI().postMember(member3));
     }
 
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
         currentLocation = event.location;
-        updateIfNecessary();
+        //updateIfNecessary();
     }
 
 }
