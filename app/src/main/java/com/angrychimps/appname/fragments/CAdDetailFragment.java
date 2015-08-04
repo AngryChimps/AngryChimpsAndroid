@@ -47,18 +47,18 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.relex.circleindicator.CircleIndicator;
 
 
 public class CAdDetailFragment extends Fragment implements OnVolleyResponseListener {
 
-    @InjectView(R.id.toolbar) Toolbar toolbar;
-    @InjectView(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
-    @InjectView(R.id.viewPagerCompanyImages) ViewPager pager;
-    @InjectView(R.id.circleIndicator) CircleIndicator indicator;
-    @InjectView(R.id.recycler_view) RecyclerView recyclerView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
+    @Bind(R.id.viewPagerCompanyImages) ViewPager pager;
+    @Bind(R.id.circleIndicator) CircleIndicator indicator;
+    @Bind(R.id.recycler_view) RecyclerView recyclerView;
     private SortedList<Service> services;
     private RecyclerView.Adapter adapter;
     private Address address;
@@ -67,7 +67,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_c_ad_detail_and_toolbar, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -135,6 +135,11 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
     @Override public void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this);
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override

@@ -18,7 +18,7 @@ import com.angrychimps.appname.events.UpNavigationBurgerEvent;
 import com.angrychimps.appname.utils.Otto;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /*
     The main fragment for Provider Mode
@@ -26,9 +26,9 @@ import butterknife.InjectView;
 
 public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener{
 
-    @InjectView(R.id.toolbar) Toolbar toolbar;
-    @InjectView(R.id.fab) FloatingActionButton fab;
-    @InjectView(R.id.recycler_view) RecyclerView recyclerView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.fab) FloatingActionButton fab;
+    @Bind(R.id.recycler_view) RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         //Add RecyclerView to container before injecting views
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
         inflater.inflate(R.layout.recycler_view, innerContainer);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         toolbar.setTitle("Browse Requests");
         toolbar.setNavigationIcon(R.drawable.ic_menu);
@@ -75,6 +75,11 @@ public class PMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     public void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this);
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override

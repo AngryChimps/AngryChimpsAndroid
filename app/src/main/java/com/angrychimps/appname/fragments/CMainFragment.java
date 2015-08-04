@@ -27,7 +27,7 @@ import com.angrychimps.appname.utils.Otto;
 import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /*
     The main fragment for Customer Mode.
@@ -35,9 +35,9 @@ import butterknife.InjectView;
 
 public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
-    @InjectView(R.id.toolbar) Toolbar toolbar;
-    @InjectView(R.id.fab) FloatingActionButton fab;
-    @InjectView(R.id.recycler_view) RecyclerView recyclerView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.fab) FloatingActionButton fab;
+    @Bind(R.id.recycler_view) RecyclerView recyclerView;
     private SortedList<Deal> deals;
     private RecyclerView.Adapter adapter;
 
@@ -46,7 +46,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         //Add RecyclerView to container before injecting views
         FrameLayout innerContainer = (FrameLayout) rootView.findViewById(R.id.innerContainer);
         inflater.inflate(R.layout.recycler_view, innerContainer);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         toolbar.setTitle("Browse Deals");
         toolbar.setNavigationIcon(R.drawable.ic_menu);
@@ -83,6 +83,11 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override public void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this);
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override public boolean onMenuItemClick(MenuItem item) {

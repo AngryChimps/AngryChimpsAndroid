@@ -16,22 +16,22 @@ import com.angrychimps.appname.widgets.AnimatedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 public class MapCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    @InjectView(R.id.map) public AnimatedNetworkImageView map;
-    @InjectView(R.id.bCallCompany) ImageButton bCallCompany;
-    @InjectView(R.id.tvCompanyName) public TextView tvCompanyName;
-    @InjectView(R.id.tvCompanyAddress) public TextView tvCompanyAddress;
-    @InjectView(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
-    @InjectView(R.id.ratingBar) public FlexibleRatingBar ratingBar;
-    @InjectView(R.id.bReviews) public Button bReviews;
-    @InjectView(R.id.tvFlagListing) TextView tvFlagListing;
+    @Bind(R.id.map) public AnimatedNetworkImageView map;
+    @Bind(R.id.bCallCompany) ImageButton bCallCompany;
+    @Bind(R.id.tvCompanyName) public TextView tvCompanyName;
+    @Bind(R.id.tvCompanyAddress) public TextView tvCompanyAddress;
+    @Bind(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
+    @Bind(R.id.ratingBar) public FlexibleRatingBar ratingBar;
+    @Bind(R.id.bReviews) public Button bReviews;
+    @Bind(R.id.tvFlagListing) TextView tvFlagListing;
 
     public MapCardViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.inject(this, itemView);
+        ButterKnife.bind(this, itemView);
 
         map.setOnClickListener(this);
         bCallCompany.setOnClickListener(this);

@@ -12,21 +12,21 @@ import com.angrychimps.appname.widgets.AnimatedFixedNetworkImageView;
 import com.angrychimps.appname.widgets.FlexibleRatingBar;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 public class DealGridViewHolder extends RecyclerView.ViewHolder {
 
-    @InjectView(R.id.imageCompanyMain) public AnimatedFixedNetworkImageView imageCompanyMain;
-    @InjectView(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
-    @InjectView(R.id.tvCompanyTitle) public TextView tvCompanyTitle;
-    @InjectView(R.id.tvCompanyServicePrice) public TextView tvCompanyServicePrice;
-    @InjectView(R.id.tvCompanyServiceDiscount) public TextView tvCompanyServiceDiscount;
-    @InjectView(R.id.tvCompanyServicePriceDecimal) public TextView tvCompanyServicePriceDecimal;
-    @InjectView(R.id.ratingBar) public FlexibleRatingBar rbCompany;
+    @Bind(R.id.imageCompanyMain) public AnimatedFixedNetworkImageView imageCompanyMain;
+    @Bind(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
+    @Bind(R.id.tvCompanyTitle) public TextView tvCompanyTitle;
+    @Bind(R.id.tvCompanyServicePrice) public TextView tvCompanyServicePrice;
+    @Bind(R.id.tvCompanyServiceDiscount) public TextView tvCompanyServiceDiscount;
+    @Bind(R.id.tvCompanyServicePriceDecimal) public TextView tvCompanyServicePriceDecimal;
+    @Bind(R.id.ratingBar) public FlexibleRatingBar rbCompany;
 
     public DealGridViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.inject(this, itemView);
+        ButterKnife.bind(this, itemView);
 
         tvCompanyServicePriceDecimal.setPaintFlags(tvCompanyServicePriceDecimal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 

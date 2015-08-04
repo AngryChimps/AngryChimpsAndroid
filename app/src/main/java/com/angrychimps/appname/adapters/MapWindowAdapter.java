@@ -10,20 +10,20 @@ import com.angrychimps.appname.widgets.FlexibleRatingBar;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /*
     Displays the marker popup info windows in the map
  */
 public class MapWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-    @InjectView(R.id.tvCompanyDistance) TextView tvCompanyDistance;
-    @InjectView(R.id.tvCompanyTitle) TextView tvCompanyTitle;
-    @InjectView(R.id.tvCompanyServicePrice) TextView tvCompanyServicePrice;
-    @InjectView(R.id.tvCompanyServiceDiscount) TextView tvCompanyServiceDiscount;
-    @InjectView(R.id.tvCompanyServicePriceDecimal) TextView tvCompanyServicePriceDecimal;
-    @InjectView(R.id.ratingBar) FlexibleRatingBar rbCompany;
+    @Bind(R.id.tvCompanyDistance) TextView tvCompanyDistance;
+    @Bind(R.id.tvCompanyTitle) TextView tvCompanyTitle;
+    @Bind(R.id.tvCompanyServicePrice) TextView tvCompanyServicePrice;
+    @Bind(R.id.tvCompanyServiceDiscount) TextView tvCompanyServiceDiscount;
+    @Bind(R.id.tvCompanyServicePriceDecimal) TextView tvCompanyServicePriceDecimal;
+    @Bind(R.id.ratingBar) FlexibleRatingBar rbCompany;
     private final SortedList<Deal> deals;
     private final View view;
 
@@ -40,7 +40,7 @@ public class MapWindowAdapter implements GoogleMap.InfoWindowAdapter {
         if(marker.getTitle() == null) return null; //The home location marker will not have a window
         int position = Integer.parseInt(marker.getTitle()); //We put the position of the marker as Title because there wasn't a better place for it
 
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         rbCompany.setRating(deals.get(position).getRating());
         tvCompanyDistance.setText(deals.get(position).getDistanceMiles());
         tvCompanyTitle.setText(deals.get(position).getTitle());

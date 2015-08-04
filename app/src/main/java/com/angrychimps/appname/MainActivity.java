@@ -38,14 +38,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener {
 
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
-    @InjectView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @InjectView(R.id.nav_view) NavigationView navigationView;
+    @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
+    @Bind(R.id.nav_view) NavigationView navigationView;
     private final Handler handler = new Handler();
     private SortedList<Deal> deals;
     private Location currentLocation, previousLocation; //Update only if the user has moved
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null)
             fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
@@ -105,6 +105,11 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     @Override protected void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
+    }
+
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     @Override public void onBackPressed() {

@@ -19,18 +19,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class PMapFragment extends Fragment implements OnMapReadyCallback, Toolbar.OnMenuItemClickListener {
 
-    @InjectView(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     private GoogleMap map;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.toolbar_default, container, false);
-        ButterKnife.inject(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         SupportMapFragment mapFragment = SupportMapFragment.newInstance();
         getFragmentManager().beginTransaction().replace(R.id.innerContainer, mapFragment).commit();
@@ -58,6 +58,11 @@ public class PMapFragment extends Fragment implements OnMapReadyCallback, Toolba
     @Override public void onStop() {
         super.onStop();
         Otto.BUS.getBus().unregister(this);
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override

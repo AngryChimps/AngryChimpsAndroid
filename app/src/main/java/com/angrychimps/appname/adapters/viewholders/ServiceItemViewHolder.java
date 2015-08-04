@@ -9,20 +9,20 @@ import com.angrychimps.appname.R;
 import com.angrychimps.appname.events.ServiceClickedEvent;
 import com.angrychimps.appname.utils.Otto;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class ServiceItemViewHolder extends RecyclerView.ViewHolder {
 
-    @InjectView(R.id.tvAdDetailTitle) public TextView tvAdDetailTitle;
-    @InjectView(R.id.tvAdDetailDescription) public TextView tvAdDetailDescription;
-    @InjectView(R.id.tvAdDetailDiscount) public TextView tvAdDetailDiscount;
-    @InjectView(R.id.tvAdDetailPrice) public TextView tvAdDetailPrice;
-    @InjectView(R.id.tvAdDetailPriceDecimal) public TextView tvAdDetailPriceDecimal;
+    @Bind(R.id.tvAdDetailTitle) public TextView tvAdDetailTitle;
+    @Bind(R.id.tvAdDetailDescription) public TextView tvAdDetailDescription;
+    @Bind(R.id.tvAdDetailDiscount) public TextView tvAdDetailDiscount;
+    @Bind(R.id.tvAdDetailPrice) public TextView tvAdDetailPrice;
+    @Bind(R.id.tvAdDetailPriceDecimal) public TextView tvAdDetailPriceDecimal;
 
     public ServiceItemViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.inject(this, itemView);
+        ButterKnife.bind(this, itemView);
 
         tvAdDetailPriceDecimal.setPaintFlags(tvAdDetailPriceDecimal.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
