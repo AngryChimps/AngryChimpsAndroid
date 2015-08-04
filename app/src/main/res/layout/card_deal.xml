@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <!--NetworkImageView is designed to work with Volley -->
-        <com.angrychimps.appname.widgets.AnimatedFixedNetworkImageView
+        <com.angrychimps.citizenvet.widgets.AnimatedFixedNetworkImageView
             android:id="@+id/imageCompanyMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             style="@style/CenterHorizontal"/>
 
         <!--Rating bar -->
-        <com.angrychimps.appname.widgets.FlexibleRatingBar
+        <com.angrychimps.citizenvet.widgets.FlexibleRatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

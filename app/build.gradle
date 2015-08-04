@@ -21,7 +21,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.angrychimps.appname"
+        applicationId "com.angrychimps.citizenvet"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

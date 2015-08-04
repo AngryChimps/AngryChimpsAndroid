@@ -1,5 +1,5 @@
 <menu
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.angrychimps.appname.customer.search.SearchActivity">
+    tools:context="com.angrychimps.citizenvet.customer.search.SearchActivity">
      
 </menu>
