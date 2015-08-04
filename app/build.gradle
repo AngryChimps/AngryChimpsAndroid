@@ -47,17 +47,17 @@ dependencies {
     apt 'com.bluelinelabs:logansquare-compiler:1.0.1'
     apt 'com.google.dagger:dagger-compiler:2.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
-    compile 'com.android.support:cardview-v7:22.2.0'
-    compile 'com.android.support:design:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
     compile 'com.google.android.gms:play-services:7.5.0'
-    compile 'com.jakewharton:butterknife:6.1.0'
-    compile 'com.squareup:otto:1.3.7'
-    compile 'com.facebook.android:facebook-android-sdk:4.1.2'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.squareup:otto:1.3.8'
+    compile 'com.facebook.android:facebook-android-sdk:4.3.0'
     compile 'com.bluelinelabs:logansquare:1.1.0' //Super fast JSON parsing/serializing
-    compile 'com.mcxiaoke.volley:library:1.0.16' //Fast and clean networking
-    compile 'me.relex:circleindicator:1.1.3@aar' //Circle indicator for ViewPager
+    compile 'com.mcxiaoke.volley:library:1.0.18' //Fast and clean networking
+    compile 'me.relex:circleindicator:1.1.5@aar' //Circle indicator for ViewPager
     compile 'io.card:android-sdk:5.0.1' //Credit card scanning
     provided 'org.glassfish:javax.annotation:10.0-b28'
 }
