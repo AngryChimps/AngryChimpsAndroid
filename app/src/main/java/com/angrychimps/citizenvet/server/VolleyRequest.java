@@ -75,7 +75,17 @@ public class VolleyRequest implements Response.Listener<JSONObject>, Response.Er
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.d("VOLLEY ERROR", "error => " + error.toString());
+        Log.d("Volley Error", "error: "+error.toString());
+        JSONObject jsonError = null;
+        try {
+            String message = new String(error.networkResponse.data);
+            Log.d("Volley Error", "message = "+message);
+            jsonError = new JSONObject(message);
+            Log.d("Volley Error", "error message: "+jsonError.getString("error"));
+            Log.d("Volley Error", "debug message: "+jsonError.getString("debug"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if(error.networkResponse.statusCode == 403) App.getInstance().getNewSessionId();
     }
 
