@@ -27,7 +27,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<DealGridViewHo
 
     public MainRecyclerViewAdapter(Context context, SortedList<Deal> deals) {
         this.deals = deals;
-        imageLoader = VolleySingleton.INSTANCE.getImageLoader();
+        imageLoader = VolleySingleton.VOLLEY.getImageLoader();
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();

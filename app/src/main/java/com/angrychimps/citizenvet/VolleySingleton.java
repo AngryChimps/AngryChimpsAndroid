@@ -17,7 +17,7 @@ import com.android.volley.toolbox.Volley;
  */
 
 public enum VolleySingleton {
-    INSTANCE;
+    VOLLEY;
 
     private final RequestQueue requestQueue = Volley.newRequestQueue(App.getAppContext());
     private final ImageLoader imageLoader = new ImageLoader(requestQueue, new ImageLoader.ImageCache() {

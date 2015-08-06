@@ -40,7 +40,7 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         this.services = services;
         this.deals = deals;
         this.resources = resources;
-        imageLoader = VolleySingleton.INSTANCE.getImageLoader();
+        imageLoader = VolleySingleton.VOLLEY.getImageLoader();
     }
 
     @Override public int getItemViewType(int position) {
@@ -145,7 +145,7 @@ public class CAdDetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         String coordinates = address.getLat()+","+ address.getLon();
 
         vh.map.setImageUrl("https://maps.googleapis.com/maps/api/staticmap?center=" + coordinates + "&zoom=15&size=340x200" + "&markers=color:"
-                + companyDetails.getMarkerColor() + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.INSTANCE.getImageLoader());
+                + companyDetails.getMarkerColor() + "%7C" + coordinates + "&scale=2&format=jpeg", VolleySingleton.VOLLEY.getImageLoader());
         vh.tvCompanyName.setText(companyDetails.getCompanyName());
         if (address.getStreet2() != null) street2 = address.getStreet2() + "\n";
         vh.tvCompanyAddress.setText(address.getStreet1() + "\n" + street2 + address.getCity() + ", " + address.getState() + " " + address.getZip());

@@ -12,8 +12,8 @@ import android.support.v7.util.SortedList;
 import android.util.Log;
 import android.view.View;
 
-import com.android.volley.Request;
-import com.angrychimps.citizenvet.callbacks.OnVolleyResponseListener;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.angrychimps.citizenvet.events.LocationUpdatedEvent;
 import com.angrychimps.citizenvet.events.ResultChangedEvent;
 import com.angrychimps.citizenvet.events.ResultInsertedEvent;
@@ -30,16 +30,25 @@ import com.angrychimps.citizenvet.models.MemberAPI;
 import com.angrychimps.citizenvet.models_old.Deal;
 import com.angrychimps.citizenvet.server.JsonRequestObject;
 import com.angrychimps.citizenvet.server.VolleyRequest;
-import com.angrychimps.citizenvet.utils.Otto;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements OnVolleyResponseListener {
+import static com.android.volley.Request.Method.GET;
+import static com.android.volley.Request.Method.PATCH;
+import static com.android.volley.Request.Method.POST;
+import static com.angrychimps.citizenvet.App.PAYLOAD;
+import static com.angrychimps.citizenvet.VolleySingleton.VOLLEY;
+import static com.angrychimps.citizenvet.utils.Otto.BUS;
+
+public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -49,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
+    private int pass = 0;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +76,19 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
             }
 
             @Override public void onInserted(int position, int count) {
-                Otto.BUS.getBus().post(new ResultInsertedEvent(position, count));
+                BUS.getBus().post(new ResultInsertedEvent(position, count));
             }
 
             @Override public void onRemoved(int position, int count) {
-                Otto.BUS.getBus().post(new ResultRemovedEvent(position, count));
+                BUS.getBus().post(new ResultRemovedEvent(position, count));
             }
 
             @Override public void onMoved(int fromPosition, int toPosition) {
-                Otto.BUS.getBus().post(new ResultMovedEvent(fromPosition, toPosition));
+                BUS.getBus().post(new ResultMovedEvent(fromPosition, toPosition));
             }
 
             @Override public void onChanged(int position, int count) {
-                Otto.BUS.getBus().post(new ResultChangedEvent(position, count));
+                BUS.getBus().post(new ResultChangedEvent(position, count));
             }
 
             @Override public boolean areContentsTheSame(Deal oldItem, Deal newItem) {
@@ -96,13 +106,13 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
 
     @Override protected void onStart() {
         super.onStart();
-        Otto.BUS.getBus().register(this); //Register to receive events
+        BUS.getBus().register(this); //Register to receive events
         //updateIfNecessary();
     }
 
     @Override protected void onStop() {
         super.onStop();
-        Otto.BUS.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
+        BUS.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
     }
 
     @Override protected void onDestroy() {
@@ -115,23 +125,32 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         else super.onBackPressed();
     }
 
-    @Override public void onVolleyResponse(JSONObject object) {
-        Log.i(null, "received "+object.toString());
+    @Override public void onResponse(JSONObject response) {
+        Log.i(null, "received "+response.toString());
+        pass++;
+        Log.i(null, "pass = "+pass);
 
         try {
-            if(object.getJSONObject("member").getString("id") != null){
-                String id = object.getJSONObject("member").getString("id");
+            if(response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id") != null){
+                String id = response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id");
 
-                new VolleyRequest(this).makeRequest(Request.Method.GET, "member/"+id);
-
-//                Member member = new Member();
-//                //member.setId(id);
-//                member.setFirstName("James");
-//                member.setLastName("Pekarek");
-//                member.setTitle("Android developer");
-//                member.setEmail("amagi82@gmail.com");
-//                member.setPassword("password");
-//                new VolleyRequest(this).makeRequest(Request.Method.PATCH, "member", new MemberAPI().patchMember(member));
+                if(pass <=1){
+                    Log.i(null, "Member GET request");
+                    Map<String, String> map = new HashMap<>();
+                    map.put("userId", id);
+                    VOLLEY.addToRequestQueue(new VolleyRequest(GET, "member/" + id, map, this, this));
+                }else if(pass <=2){
+                    Log.i(null, "Member PATCH request");
+                    Map<String, String> map = new HashMap<>();
+                    map.put("userId", id);
+                    Member member = new Member();
+                    member.setFirstName("James");
+                    member.setLastName("Pekarek");
+                    member.setTitle("Android developer");
+                    member.setEmail("amagi82@gmail.com");
+                    member.setPassword("password");
+                    VOLLEY.addToRequestQueue(new VolleyRequest(PATCH, "member/" + id, map, new MemberAPI().patchMember(member), this, this));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -145,6 +164,9 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
 //            Log.i(null, "JsonObjectRequest error");
 //            e.printStackTrace();
 //        }
+    }
+
+    @Override public void onErrorResponse(VolleyError error) {
     }
 
     public SortedList<Deal> getDeals() {
@@ -224,8 +246,8 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
 
         //Update only if location has changed significantly (>250 meters)
         if (previousLocation == null || deals.size() == 0 || previousLocation.distanceTo(currentLocation) > 250) {
-            new VolleyRequest(this).makeRequest(Request.Method.POST, "search", new JsonRequestObject.Builder()
-                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create());
+            VOLLEY.addToRequestQueue(new VolleyRequest(POST, "search", new JsonRequestObject.Builder()
+                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create(), this, this));
             previousLocation = currentLocation;
         }
     }
@@ -248,12 +270,11 @@ public class MainActivity extends AppCompatActivity implements OnVolleyResponseL
         member.setTitle("Android dev");
         member.setEmail("amagi82@gmail.com");
         member.setPassword("password");
-        new VolleyRequest(this).makeRequest(Request.Method.POST, "member", new MemberAPI().postMember(member));
+        VOLLEY.addToRequestQueue(new VolleyRequest(POST, "member", new MemberAPI().postMember(member), this, this));
     }
 
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
         currentLocation = event.location;
         //updateIfNecessary();
     }
-
 }

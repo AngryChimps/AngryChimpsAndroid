@@ -12,7 +12,7 @@ public class SessionAPI {
 
     public String getSessionId(JSONObject object) {
         try {
-            return object.getJSONObject("session").getString("id");
+            return object.getJSONObject(PAYLOAD).getJSONObject("session").getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

@@ -17,7 +17,7 @@ public class ViewPagerPhotoAdapter extends PagerAdapter {
 
     private final Context context;
     private final List<String> images;
-    private final ImageLoader imageLoader = VolleySingleton.INSTANCE.getImageLoader();
+    private final ImageLoader imageLoader = VolleySingleton.VOLLEY.getImageLoader();
 
     public ViewPagerPhotoAdapter(Context context, List<String> images) {
         this.context = context;

@@ -16,12 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.angrychimps.citizenvet.MainActivity;
 import com.angrychimps.citizenvet.R;
 import com.angrychimps.citizenvet.adapters.CAdDetailRecyclerViewAdapter;
 import com.angrychimps.citizenvet.adapters.ViewPagerPhotoAdapter;
-import com.angrychimps.citizenvet.callbacks.OnVolleyResponseListener;
 import com.angrychimps.citizenvet.events.CallCompanyEvent;
 import com.angrychimps.citizenvet.events.DealClickedEvent;
 import com.angrychimps.citizenvet.events.FlagListingEvent;
@@ -38,7 +38,6 @@ import com.angrychimps.citizenvet.models_old.CAdDetail;
 import com.angrychimps.citizenvet.models_old.CompanyDetails;
 import com.angrychimps.citizenvet.models_old.Service;
 import com.angrychimps.citizenvet.server.VolleyRequest;
-import com.angrychimps.citizenvet.utils.Otto;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.otto.Subscribe;
 
@@ -51,8 +50,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.relex.circleindicator.CircleIndicator;
 
+import static com.android.volley.Request.Method.GET;
+import static com.angrychimps.citizenvet.VolleySingleton.VOLLEY;
+import static com.angrychimps.citizenvet.utils.Otto.BUS;
 
-public class CAdDetailFragment extends Fragment implements OnVolleyResponseListener {
+
+public class CAdDetailFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener  {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout cToolbar;
@@ -73,7 +76,7 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Otto.BUS.getBus().post(new UpNavigationArrowEvent());
+                BUS.getBus().post(new UpNavigationArrowEvent());
             }
         });
         toolbar.inflateMenu(R.menu.menu_ad_detail);
@@ -122,51 +125,24 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
             }
         });
 
-        new VolleyRequest(this).makeRequest(Request.Method.GET, "providerAdImmutable/" + this.getArguments().getString("id"));
+        VOLLEY.addToRequestQueue(new VolleyRequest(GET, "providerAdImmutable/" + this.getArguments().getString("id"), this, this));
 
         return rootView;
     }
 
     @Override public void onStart() {
         super.onStart();
-        Otto.BUS.getBus().register(this);
+        BUS.getBus().register(this);
     }
 
     @Override public void onStop() {
         super.onStop();
-        Otto.BUS.getBus().unregister(this);
+        BUS.getBus().unregister(this);
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onVolleyResponse(JSONObject object) {
-        try {
-            CAdDetail result = LoganSquare.parse(object.getJSONObject("payload").getJSONObject("payload").toString(), CAdDetail.class);
-            cToolbar.setTitle(result.getCompany().getName());
-            pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
-            indicator.setViewPager(pager);
-            if(result.getPhotos().size() < 2) indicator.setVisibility(View.GONE);
-
-            Service example = new Service();
-            example.setName("Example second service");
-            example.setDescription("Description of service looks like this, and can go on to multiple lines.");
-            example.setDiscounted_price(49.99);
-            example.setOriginal_price(69.99);
-            services.add(example);
-
-            for (Service service : result.getServices()) services.add(service);
-            address = result.getAddress();
-            adapter = new CAdDetailRecyclerViewAdapter(getResources(), new CompanyDetails(result, getArguments().getString("distance"),
-                    String.format("0x%06X", (0xFFFFFF & getResources().getColor(R.color.primary)))), services, ((MainActivity) getActivity()).getDeals());
-            recyclerView.setAdapter(adapter);
-
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Subscribe public void onCallCompany(CallCompanyEvent event) {
@@ -222,5 +198,35 @@ public class CAdDetailFragment extends Fragment implements OnVolleyResponseListe
 
     @Subscribe public void onResultRemoved(ResultRemovedEvent event) {
         adapter.notifyItemRangeRemoved(event.position, event.count);
+    }
+
+    @Override public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override public void onResponse(JSONObject response) {
+        try {
+            CAdDetail result = LoganSquare.parse(response.getJSONObject("payload").getJSONObject("payload").toString(), CAdDetail.class);
+            cToolbar.setTitle(result.getCompany().getName());
+            pager.setAdapter(new ViewPagerPhotoAdapter(getActivity(), result.getPhotos()));
+            indicator.setViewPager(pager);
+            if(result.getPhotos().size() < 2) indicator.setVisibility(View.GONE);
+
+            Service example = new Service();
+            example.setName("Example second service");
+            example.setDescription("Description of service looks like this, and can go on to multiple lines.");
+            example.setDiscounted_price(49.99);
+            example.setOriginal_price(69.99);
+            services.add(example);
+
+            for (Service service : result.getServices()) services.add(service);
+            address = result.getAddress();
+            adapter = new CAdDetailRecyclerViewAdapter(getResources(), new CompanyDetails(result, getArguments().getString("distance"),
+                    String.format("0x%06X", (0xFFFFFF & getResources().getColor(R.color.primary)))), services, ((MainActivity) getActivity()).getDeals());
+            recyclerView.setAdapter(adapter);
+
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
