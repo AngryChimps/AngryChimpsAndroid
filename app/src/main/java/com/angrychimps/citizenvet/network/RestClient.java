@@ -38,7 +38,7 @@ public enum RestClient {
             public void intercept(RequestFacade request) {
                 Log.i(null, "sessionId = " + sessionId);
                 if(sessionId != null) request.addHeader("angrychimps-api-session-token", sessionId);
-                if(userId != null) request.addQueryParam("userId", userId);
+                //if(userId != null) request.addQueryParam("userId", userId);
             }
         };
 

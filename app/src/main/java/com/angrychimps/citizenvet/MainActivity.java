@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity  {
                 member.setEmail("amagi82@gmail.com");
                 member.setPassword("pw");
                 member.setTitle("Android developer");
-                RestClient.API.member().post(member, new Callback<Member>() {
+                RestClient.API.member().post(session.getSessionId(), member, new Callback<Member>() {
                     @Override public void success(Member member, retrofit.client.Response response) {
                         Log.i(null, "Success! members = " + member.toString());
                         RestClient.API.member().get(member.getId(), member.getId(), new Callback<Member>() {

@@ -10,13 +10,10 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.angrychimps.citizenvet.R;
-import com.angrychimps.citizenvet.network.JsonRequestObject;
-
-import org.json.JSONObject;
 
 public class CFilterFragment extends DialogFragment implements View.OnClickListener{
 
-    private final JsonRequestObject builder = new JsonRequestObject();
+    //private final JsonRequestObject builder = new JsonRequestObject();
     //TODO- add results to JSONObject and pass back to CMainFragment or implement interface through activity
 
     @Override
@@ -39,9 +36,9 @@ public class CFilterFragment extends DialogFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bSearch:
-                JSONObject object = builder.getJsonObject();
-                Bundle bundle = new Bundle();
-                bundle.putString("JsonObject", object.toString());
+//                JSONObject object = builder.getJsonObject();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("JsonObject", object.toString());
                 //TODO finish this
                 break;
             case R.id.bFilterFromDate:

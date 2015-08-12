@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models;
+package com.angrychimps.citizenvet.models.receive;
 
 public class Animal {
     private int id;

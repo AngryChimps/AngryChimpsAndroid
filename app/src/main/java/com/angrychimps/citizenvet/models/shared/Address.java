@@ -1,5 +1,9 @@
-package com.angrychimps.citizenvet.models;
+package com.angrychimps.citizenvet.models.shared;
 
+/*
+    Used in Company API, inside Company
+    Used in Location API, inside CompanyLocation
+ */
 public class Address {
     private String street1;
     private String street2;
@@ -7,8 +11,7 @@ public class Address {
     private String state;
     private int zip;
     private String phone;
-    private float lat;
-    private float lon;
+    private Location location;
 
     public Address() {
     }
@@ -61,19 +64,40 @@ public class Address {
         this.phone = phone;
     }
 
-    public float getLat() {
-        return lat;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLat(float lat) {
-        this.lat = lat;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public float getLon() {
-        return lon;
-    }
+    public static class Location{
+        private float lat;
+        private float lon;
 
-    public void setLon(float lon) {
-        this.lon = lon;
+        public Location() {
+        }
+
+        public Location(float lat, float lon) {
+            this.lat = lat;
+            this.lon = lon;
+        }
+
+        public float getLat() {
+            return lat;
+        }
+
+        public void setLat(float lat) {
+            this.lat = lat;
+        }
+
+        public float getLon() {
+            return lon;
+        }
+
+        public void setLon(float lon) {
+            this.lon = lon;
+        }
     }
 }

@@ -1,22 +1,25 @@
-package com.angrychimps.citizenvet.models;
+package com.angrychimps.citizenvet.models.send;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Auth {
+/*
+    Used in Auth API. Supply either email+password, OR facebookId+facebookAuthToken, not both.
+ */
+public class UserLogin {
     private String email;
     private String password;
-    @SerializedName("fb_id") private int facebookId;
+    @SerializedName("fb_id") private String facebookId;
     @SerializedName("fb_auth_token") private String facebookAuthToken;
 
-    public Auth() {
+    public UserLogin() {
     }
 
-    public Auth(String email, String password) {
+    public void email(String email, String password){
         this.email = email;
         this.password = password;
     }
 
-    public Auth(int facebookId, String facebookAuthToken) {
+    public void facebook(String facebookId, String facebookAuthToken){
         this.facebookId = facebookId;
         this.facebookAuthToken = facebookAuthToken;
     }
@@ -37,11 +40,11 @@ public class Auth {
         this.password = password;
     }
 
-    public int getFacebookId() {
+    public String getFacebookId() {
         return facebookId;
     }
 
-    public void setFacebookId(int facebookId) {
+    public void setFacebookId(String facebookId) {
         this.facebookId = facebookId;
     }
 
