@@ -10,10 +10,6 @@ import android.widget.ListView;
 
 import com.angrychimps.citizenvet.R;
 import com.angrychimps.citizenvet.adapters.CCreateAdTimeBlockListAdapter;
-import com.angrychimps.citizenvet.models_old.Availabilities;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
     First page when the user clicks to create an ad from the company main fragment
@@ -21,7 +17,7 @@ import java.util.List;
 
 public class PCreateAdFragment extends Fragment {
 
-    private List<Availabilities> list;
+    //private List<Availabilities> list;
     private CCreateAdTimeBlockListAdapter adapter;
 
     @Override
@@ -37,10 +33,10 @@ public class PCreateAdFragment extends Fragment {
         listView.addHeaderView(header, null, false);
         listView.addFooterView(footer, null, false);
 
-        list = new ArrayList<>();
-        list.add(new Availabilities());
-        adapter = new CCreateAdTimeBlockListAdapter(getActivity(), list);
-        listView.setAdapter(adapter);
+//        list = new ArrayList<>();
+//        list.add(new Availabilities());
+//        adapter = new CCreateAdTimeBlockListAdapter(getActivity(), list);
+//        listView.setAdapter(adapter);
 
 //        EditText metCompanyTitle = (EditText) header.findViewById(R.id.metCompanyTitle);
 //        EditText metCompanyDescription = (EditText) header.findViewById(R.id.metCompanyDescription);

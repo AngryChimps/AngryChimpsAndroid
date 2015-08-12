@@ -1,8 +1,5 @@
 package com.angrychimps.citizenvet.models;
 
-import org.parceler.Parcel;
-
-@Parcel
 public class Members {
     private String id;
     private String first;

@@ -8,15 +8,14 @@ import android.widget.TextView;
 import com.angrychimps.citizenvet.R;
 import com.angrychimps.citizenvet.events.DealClickedEvent;
 import com.angrychimps.citizenvet.utils.Otto;
-import com.angrychimps.citizenvet.widgets.AnimatedFixedNetworkImageView;
 import com.angrychimps.citizenvet.widgets.FlexibleRatingBar;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class DealGridViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.imageCompanyMain) public AnimatedFixedNetworkImageView imageCompanyMain;
+    //@Bind(R.id.imageCompanyMain) public AnimatedFixedNetworkImageView imageCompanyMain;
     @Bind(R.id.tvCompanyDistance) public TextView tvCompanyDistance;
     @Bind(R.id.tvCompanyTitle) public TextView tvCompanyTitle;
     @Bind(R.id.tvCompanyServicePrice) public TextView tvCompanyServicePrice;

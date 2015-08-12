@@ -12,15 +12,14 @@ import com.angrychimps.citizenvet.events.FlagListingEvent;
 import com.angrychimps.citizenvet.events.ShowReviewsEvent;
 import com.angrychimps.citizenvet.events.StartNavigationEvent;
 import com.angrychimps.citizenvet.utils.Otto;
-import com.angrychimps.citizenvet.widgets.AnimatedNetworkImageView;
 import com.angrychimps.citizenvet.widgets.FlexibleRatingBar;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MapCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    @Bind(R.id.map) public AnimatedNetworkImageView map;
+    //@Bind(R.id.map) public AnimatedNetworkImageView map;
     @Bind(R.id.bCallCompany) ImageButton bCallCompany;
     @Bind(R.id.tvCompanyName) public TextView tvCompanyName;
     @Bind(R.id.tvCompanyAddress) public TextView tvCompanyAddress;
@@ -33,7 +32,7 @@ public class MapCardViewHolder extends RecyclerView.ViewHolder implements View.O
         super(itemView);
         ButterKnife.bind(this, itemView);
 
-        map.setOnClickListener(this);
+        //map.setOnClickListener(this);
         bCallCompany.setOnClickListener(this);
         tvCompanyName.setOnClickListener(this);
         tvCompanyAddress.setOnClickListener(this);

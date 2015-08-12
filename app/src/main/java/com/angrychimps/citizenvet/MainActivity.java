@@ -1,6 +1,7 @@
 package com.angrychimps.citizenvet;
 
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -8,53 +9,36 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.util.SortedList;
 import android.util.Log;
 import android.view.View;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.angrychimps.citizenvet.events.LocationUpdatedEvent;
-import com.angrychimps.citizenvet.events.ResultChangedEvent;
-import com.angrychimps.citizenvet.events.ResultInsertedEvent;
-import com.angrychimps.citizenvet.events.ResultMovedEvent;
-import com.angrychimps.citizenvet.events.ResultRemovedEvent;
 import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
 import com.angrychimps.citizenvet.events.UpNavigationArrowEvent;
 import com.angrychimps.citizenvet.events.UpNavigationBurgerEvent;
 import com.angrychimps.citizenvet.fragments.CMainFragment;
 import com.angrychimps.citizenvet.fragments.LocationManagerFragment;
 import com.angrychimps.citizenvet.fragments.PMainFragment;
-import com.angrychimps.citizenvet.models_old.Deal;
-import com.angrychimps.citizenvet.models_volley.Member;
-import com.angrychimps.citizenvet.models_volley.MemberAPI;
-import com.angrychimps.citizenvet.server.JsonRequestObject;
-import com.angrychimps.citizenvet.server.VolleyRequest;
+import com.angrychimps.citizenvet.models.Members;
+import com.angrychimps.citizenvet.models.Sessions;
+import com.angrychimps.citizenvet.server.RestClient;
 import com.squareup.otto.Subscribe;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-import static com.android.volley.Request.Method.GET;
-import static com.android.volley.Request.Method.PATCH;
-import static com.android.volley.Request.Method.POST;
-import static com.angrychimps.citizenvet.App.PAYLOAD;
-import static com.angrychimps.citizenvet.VolleySingleton.VOLLEY;
 import static com.angrychimps.citizenvet.utils.Otto.BUS;
 
-public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class MainActivity extends AppCompatActivity  {
 
     private static final String TAG_LOCATION_FRAGMENT = "location_fragment";
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.nav_view) NavigationView navigationView;
     private final Handler handler = new Handler();
-    private SortedList<Deal> deals;
+    //private SortedList<Deal> deals;
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
@@ -68,40 +52,94 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null)
             fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
-        deals = new SortedList<>(Deal.class, new SortedList.Callback<Deal>() {
-            @Override public int compare(Deal o1, Deal o2) {
-                if (o1.getDistance() < o2.getDistance()) return -1;
-                if (o1.getDistance() > o2.getDistance()) return 1;
-                else return 0;
-            }
-
-            @Override public void onInserted(int position, int count) {
-                BUS.getBus().post(new ResultInsertedEvent(position, count));
-            }
-
-            @Override public void onRemoved(int position, int count) {
-                BUS.getBus().post(new ResultRemovedEvent(position, count));
-            }
-
-            @Override public void onMoved(int fromPosition, int toPosition) {
-                BUS.getBus().post(new ResultMovedEvent(fromPosition, toPosition));
-            }
-
-            @Override public void onChanged(int position, int count) {
-                BUS.getBus().post(new ResultChangedEvent(position, count));
-            }
-
-            @Override public boolean areContentsTheSame(Deal oldItem, Deal newItem) {
-                return Math.abs(oldItem.getDistance() - newItem.getDistance()) < 0.1;
-            }
-
-            @Override public boolean areItemsTheSame(Deal item1, Deal item2) {
-                return item1.getProvider_ad_id().equals(item2.getProvider_ad_id());
-            }
-        });
+//        deals = new SortedList<>(Deal.class, new SortedList.Callback<Deal>() {
+//            @Override public int compare(Deal o1, Deal o2) {
+//                if (o1.getDistance() < o2.getDistance()) return -1;
+//                if (o1.getDistance() > o2.getDistance()) return 1;
+//                else return 0;
+//            }
+//
+//            @Override public void onInserted(int position, int count) {
+//                BUS.getBus().post(new ResultInsertedEvent(position, count));
+//            }
+//
+//            @Override public void onRemoved(int position, int count) {
+//                BUS.getBus().post(new ResultRemovedEvent(position, count));
+//            }
+//
+//            @Override public void onMoved(int fromPosition, int toPosition) {
+//                BUS.getBus().post(new ResultMovedEvent(fromPosition, toPosition));
+//            }
+//
+//            @Override public void onChanged(int position, int count) {
+//                BUS.getBus().post(new ResultChangedEvent(position, count));
+//            }
+//
+//            @Override public boolean areContentsTheSame(Deal oldItem, Deal newItem) {
+//                return Math.abs(oldItem.getDistance() - newItem.getDistance()) < 0.1;
+//            }
+//
+//            @Override public boolean areItemsTheSame(Deal item1, Deal item2) {
+//                return item1.getProvider_ad_id().equals(item2.getProvider_ad_id());
+//            }
+//        });
 
         initiateNavigationDrawer();
         setMainFragment();
+
+        Sessions session = new Sessions();
+        session.setDeviceType(3);
+        session.setPushToken(""); //TODO: Add push notification token
+        session.setDescription("Android " + Build.VERSION.RELEASE + " API " + Build.VERSION.SDK_INT + " Device: " + getDeviceName());
+        RestClient.API.session().post(session, new Callback<Sessions>() {
+            @Override public void success(Sessions sessions, Response response) {
+                Log.i(null, "received session id: "+ sessions.getSessionId());
+                RestClient.API.setSessionId(sessions.getSessionId());
+
+                Members member = new Members();
+                member.setFirst("Jim");
+                member.setLast("Pekarek");
+                member.setEmail("amagi82@gmail.com");
+                member.setPassword("pw");
+                member.setTitle("Android developer");
+                RestClient.API.member().post(member, new Callback<Members>() {
+                    @Override public void success(Members members, retrofit.client.Response response) {
+                        Log.i(null, "Success! members = " + members.toString());
+                        RestClient.API.member().get(members.getId(), members.getId(), new Callback<Members>() {
+                            @Override public void success(Members members, retrofit.client.Response response) {
+                                Log.i(null, "Successfully retrieved member with id: " + members.getId() + " and name: " + members.getFirst() + " " + members.getLast());
+                            }
+
+                            @Override public void failure(RetrofitError error) {
+                                Log.i(null, "Failure on GET " + error.toString());
+                            }
+                        });
+                    }
+
+                    @Override public void failure(RetrofitError error) {
+                        Log.i(null, "Retrofit error " + error.toString());
+                    }
+                });
+            }
+
+            @Override public void failure(RetrofitError error) {
+                Log.i(null, "FAILURE TO GET SESSION ID");
+            }
+        });
+    }
+
+    private String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) return capitalize(model);
+        else return capitalize(manufacturer) + " " + model;
+    }
+
+    private String capitalize(String s) {
+        if (s == null || s.length() == 0) return "";
+        char first = s.charAt(0);
+        if (Character.isUpperCase(first)) return s;
+        else return Character.toUpperCase(first) + s.substring(1);
     }
 
     @Override protected void onStart() {
@@ -125,53 +163,53 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         else super.onBackPressed();
     }
 
-    @Override public void onResponse(JSONObject response) {
-        Log.i(null, "received "+response.toString());
-        pass++;
-        Log.i(null, "pass = "+pass);
-
-        try {
-            if(response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id") != null){
-                String id = response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id");
-
-                if(pass <=1){
-                    Log.i(null, "Member GET request");
-                    Map<String, String> map = new HashMap<>();
-                    map.put("userId", id);
-                    VOLLEY.addToRequestQueue(new VolleyRequest(GET, "member/" + id, map, this, this));
-                }else if(pass <=2){
-                    Log.i(null, "Member PATCH request");
-                    Map<String, String> map = new HashMap<>();
-                    map.put("userId", id);
-                    Member member = new Member();
-                    member.setFirstName("James");
-                    member.setLastName("Pekarek");
-                    member.setTitle("Android developer");
-                    member.setEmail("amagi82@gmail.com");
-                    member.setPassword("password");
-                    VOLLEY.addToRequestQueue(new VolleyRequest(PATCH, "member/" + id, map, new MemberAPI().patchMember(member), this, this));
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//    @Override public void onResponse(JSONObject response) {
+//        Log.i(null, "received "+response.toString());
+//        pass++;
+//        Log.i(null, "pass = "+pass);
+//
 //        try {
-//            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
-//            deals.beginBatchedUpdates();
-//            for (int i = 0; i < jArray.length(); i++) deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
-//            deals.endBatchedUpdates();
-//        } catch (IOException | JSONException e) {
-//            Log.i(null, "JsonObjectRequest error");
+//            if(response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id") != null){
+//                String id = response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id");
+//
+//                if(pass <=1){
+//                    Log.i(null, "Member GET request");
+//                    Map<String, String> map = new HashMap<>();
+//                    map.put("userId", id);
+//                    //VOLLEY.addToRequestQueue(new VolleyRequest(GET, "member/" + id, map, this, this));
+//                }else if(pass <=2){
+//                    Log.i(null, "Member PATCH request");
+//                    Map<String, String> map = new HashMap<>();
+//                    map.put("userId", id);
+//                    Member member = new Member();
+//                    member.setFirstName("James");
+//                    member.setLastName("Pekarek");
+//                    member.setTitle("Android developer");
+//                    member.setEmail("amagi82@gmail.com");
+//                    member.setPassword("password");
+//                    //VOLLEY.addToRequestQueue(new VolleyRequest(PATCH, "member/" + id, map, new MemberAPI().patchMember(member), this, this));
+//                }
+//            }
+//        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
-    }
+////        try {
+////            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
+////            deals.beginBatchedUpdates();
+////            for (int i = 0; i < jArray.length(); i++) deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
+////            deals.endBatchedUpdates();
+////        } catch (IOException | JSONException e) {
+////            Log.i(null, "JsonObjectRequest error");
+////            e.printStackTrace();
+////        }
+//    }
 
-    @Override public void onErrorResponse(VolleyError error) {
-    }
+//    @Override public void onErrorResponse(VolleyError error) {
+//    }
 
-    public SortedList<Deal> getDeals() {
-        return deals;
-    }
+//    public SortedList<Deal> getDeals() {
+//        return deals;
+//    }
 
     public Location getCurrentLocation() {
         return currentLocation;
@@ -245,11 +283,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         if (currentLocation == null || App.getInstance().getSessionId() == null) return;
 
         //Update only if location has changed significantly (>250 meters)
-        if (previousLocation == null || deals.size() == 0 || previousLocation.distanceTo(currentLocation) > 250) {
-            VOLLEY.addToRequestQueue(new VolleyRequest(POST, "search", new JsonRequestObject.Builder()
-                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create(), this, this));
-            previousLocation = currentLocation;
-        }
+//        if (previousLocation == null || deals.size() == 0 || previousLocation.distanceTo(currentLocation) > 250) {
+////            VOLLEY.addToRequestQueue(new VolleyRequest(POST, "search", new JsonRequestObject.Builder()
+////                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create(), this, this));
+//            previousLocation = currentLocation;
+//        }
     }
 
     @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event) {
@@ -264,13 +302,13 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         //updateIfNecessary();
 
         //TESTING
-        Member member = new Member();
-        member.setFirstName("Jim");
-        member.setLastName("Pekarek");
-        member.setTitle("Android dev");
-        member.setEmail("amagi82@gmail.com");
-        member.setPassword("password");
-        VOLLEY.addToRequestQueue(new VolleyRequest(POST, "member", new MemberAPI().postMember(member), this, this));
+//        Member member = new Member();
+//        member.setFirstName("Jim");
+//        member.setLastName("Pekarek");
+//        member.setTitle("Android dev");
+//        member.setEmail("amagi82@gmail.com");
+//        member.setPassword("password");
+        //VOLLEY.addToRequestQueue(new VolleyRequest(POST, "member", new MemberAPI().postMember(member), this, this));
     }
 
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {

@@ -1,16 +1,47 @@
 package com.angrychimps.citizenvet.models;
 
-import org.parceler.Parcel;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 
-@Parcel
 public class Sessions {
-    private String sessionId;
+    @SerializedName("device_type") private int deviceType;
+    @SerializedName("push_token") private String pushToken;
+    private String description;
+    private JsonObject session;
 
-    public String getSessionId() {
-        return sessionId;
+    public JsonObject getSession() {
+        return session;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setSession(JsonObject session) {
+        this.session = session;
+    }
+
+    public int getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(int deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public String getPushToken() {
+        return pushToken;
+    }
+
+    public void setPushToken(String pushToken) {
+        this.pushToken = pushToken;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSessionId(){
+        return session.get("id").toString();
     }
 }

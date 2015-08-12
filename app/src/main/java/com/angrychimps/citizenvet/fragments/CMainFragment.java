@@ -3,7 +3,6 @@ package com.angrychimps.citizenvet.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -15,19 +14,16 @@ import android.widget.FrameLayout;
 
 import com.angrychimps.citizenvet.MainActivity;
 import com.angrychimps.citizenvet.R;
-import com.angrychimps.citizenvet.adapters.MainRecyclerViewAdapter;
-import com.angrychimps.citizenvet.events.DealClickedEvent;
 import com.angrychimps.citizenvet.events.ResultChangedEvent;
 import com.angrychimps.citizenvet.events.ResultInsertedEvent;
 import com.angrychimps.citizenvet.events.ResultMovedEvent;
 import com.angrychimps.citizenvet.events.ResultRemovedEvent;
 import com.angrychimps.citizenvet.events.UpNavigationBurgerEvent;
-import com.angrychimps.citizenvet.models_old.Deal;
 import com.angrychimps.citizenvet.utils.Otto;
 import com.squareup.otto.Subscribe;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /*
     The main fragment for Customer Mode.
@@ -38,7 +34,7 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
     @Bind(R.id.recycler_view) RecyclerView recyclerView;
-    private SortedList<Deal> deals;
+    //private SortedList<Deal> deals;
     private RecyclerView.Adapter adapter;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,8 +66,8 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
     @Override public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        deals = ((MainActivity) getActivity()).getDeals();
-        adapter = new MainRecyclerViewAdapter(getActivity(), deals);
+//        deals = ((MainActivity) getActivity()).getDeals();
+//        adapter = new MainRecyclerViewAdapter(getActivity(), deals);
         recyclerView.setAdapter(adapter);
     }
 
@@ -112,17 +108,17 @@ public class CMainFragment extends Fragment implements Toolbar.OnMenuItemClickLi
         return false;
     }
 
-    @Subscribe public void onDealClicked(DealClickedEvent event){
-        int position = event.position;
-        Fragment fragment = new CAdDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("id", deals.get(position).getProvider_ad_immutable_id());
-        bundle.putDouble("lat", deals.get(position).getLat());
-        bundle.putDouble("lon", deals.get(position).getLon());
-        bundle.putString("distance", deals.get(position).getDistanceMiles());
-        fragment.setArguments(bundle);
-        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
-    }
+//    @Subscribe public void onDealClicked(DealClickedEvent event){
+//        int position = event.position;
+//        Fragment fragment = new CAdDetailFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id", deals.get(position).getProvider_ad_immutable_id());
+//        bundle.putDouble("lat", deals.get(position).getLat());
+//        bundle.putDouble("lon", deals.get(position).getLon());
+//        bundle.putString("distance", deals.get(position).getDistanceMiles());
+//        fragment.setArguments(bundle);
+//        ((MainActivity) getActivity()).replaceFragmentAddBackStack(fragment);
+//    }
 
     @Subscribe public void onResultChanged(ResultChangedEvent event){
         adapter.notifyItemRangeChanged(event.position, event.count);
