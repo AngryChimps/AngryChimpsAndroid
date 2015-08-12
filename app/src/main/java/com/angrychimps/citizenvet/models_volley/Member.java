@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models;
+package com.angrychimps.citizenvet.models_volley;
 
 import android.util.Log;
 

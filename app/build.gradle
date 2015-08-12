@@ -54,10 +54,13 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup:otto:1.3.8'
-    compile 'com.facebook.android:facebook-android-sdk:4.3.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.5.0'
     compile 'com.bluelinelabs:logansquare:1.1.0' //Super fast JSON parsing/serializing
     compile 'com.mcxiaoke.volley:library:1.0.18' //Fast and clean networking
     compile 'me.relex:circleindicator:1.1.5@aar' //Circle indicator for ViewPager
     compile 'io.card:android-sdk:5.0.1' //Credit card scanning
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'org.parceler:parceler:1.0.3'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 }

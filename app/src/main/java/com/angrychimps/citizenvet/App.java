@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
-import com.angrychimps.citizenvet.models.SessionAPI;
+import com.angrychimps.citizenvet.models_volley.SessionAPI;
 
 import org.json.JSONException;
 import org.json.JSONObject;
