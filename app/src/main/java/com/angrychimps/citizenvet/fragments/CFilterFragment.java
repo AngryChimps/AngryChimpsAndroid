@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.angrychimps.citizenvet.R;
-import com.angrychimps.citizenvet.server.JsonRequestObject;
+import com.angrychimps.citizenvet.network.JsonRequestObject;
 
 import org.json.JSONObject;
 

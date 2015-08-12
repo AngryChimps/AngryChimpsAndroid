@@ -1,12 +1,12 @@
-package com.angrychimps.citizenvet.server;
+package com.angrychimps.citizenvet.network;
 
 import android.util.Log;
 
-import com.angrychimps.citizenvet.models.Members;
-import com.angrychimps.citizenvet.models.Sessions;
-import com.angrychimps.citizenvet.network.MemberAPIs;
-import com.angrychimps.citizenvet.network.SessionAPIs;
-import com.angrychimps.citizenvet.utils.PayloadSerializer;
+import com.angrychimps.citizenvet.models.Member;
+import com.angrychimps.citizenvet.models.Session;
+import com.angrychimps.citizenvet.network.api.MemberAPI;
+import com.angrychimps.citizenvet.network.api.SessionAPI;
+import com.angrychimps.citizenvet.network.utils.PayloadSerializer;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,8 +27,8 @@ public enum RestClient {
     RestClient(){
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(Sessions.class, new PayloadSerializer<Sessions>())
-                .registerTypeAdapter(Members.class, new PayloadSerializer<Members>())
+                .registerTypeAdapter(Session.class, new PayloadSerializer<Session>())
+                .registerTypeAdapter(Member.class, new PayloadSerializer<Member>())
                 .registerTypeAdapter(Date.class, new DateTypeAdapter())
                 .create();
 
@@ -48,12 +48,12 @@ public enum RestClient {
                 .build();
     }
 
-    public SessionAPIs session(){
-        return restAdapter.create(SessionAPIs.class);
+    public SessionAPI session(){
+        return restAdapter.create(SessionAPI.class);
     }
 
-    public MemberAPIs member(){
-        return restAdapter.create(MemberAPIs.class);
+    public MemberAPI member(){
+        return restAdapter.create(MemberAPI.class);
     }
 
     public void setSessionId(String sessionId){

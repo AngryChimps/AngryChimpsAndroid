@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.models;
 
-public class Members {
+public class Member {
     private String id;
     private String first;
     private String last;
@@ -9,7 +9,7 @@ public class Members {
     private String password;
     private String photo;
 
-    public Members() {
+    public Member() {
     }
 
     public String getId() {

@@ -3,7 +3,7 @@ package com.angrychimps.citizenvet.models;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-public class Sessions {
+public class Session {
     @SerializedName("device_type") private int deviceType;
     @SerializedName("push_token") private String pushToken;
     private String description;

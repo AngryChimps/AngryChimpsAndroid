@@ -13,15 +13,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.angrychimps.citizenvet.events.LocationUpdatedEvent;
-import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
 import com.angrychimps.citizenvet.events.UpNavigationArrowEvent;
 import com.angrychimps.citizenvet.events.UpNavigationBurgerEvent;
 import com.angrychimps.citizenvet.fragments.CMainFragment;
 import com.angrychimps.citizenvet.fragments.LocationManagerFragment;
 import com.angrychimps.citizenvet.fragments.PMainFragment;
-import com.angrychimps.citizenvet.models.Members;
-import com.angrychimps.citizenvet.models.Sessions;
-import com.angrychimps.citizenvet.server.RestClient;
+import com.angrychimps.citizenvet.models.Member;
+import com.angrychimps.citizenvet.models.Session;
+import com.angrychimps.citizenvet.network.RestClient;
 import com.squareup.otto.Subscribe;
 
 import butterknife.Bind;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity  {
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
-    private int pass = 0;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,27 +85,27 @@ public class MainActivity extends AppCompatActivity  {
         initiateNavigationDrawer();
         setMainFragment();
 
-        Sessions session = new Sessions();
+        Session session = new Session();
         session.setDeviceType(3);
         session.setPushToken(""); //TODO: Add push notification token
         session.setDescription("Android " + Build.VERSION.RELEASE + " API " + Build.VERSION.SDK_INT + " Device: " + getDeviceName());
-        RestClient.API.session().post(session, new Callback<Sessions>() {
-            @Override public void success(Sessions sessions, Response response) {
-                Log.i(null, "received session id: "+ sessions.getSessionId());
-                RestClient.API.setSessionId(sessions.getSessionId());
+        RestClient.API.session().post(session, new Callback<Session>() {
+            @Override public void success(Session session, Response response) {
+                Log.i(null, "received session id: "+ session.getSessionId());
+                RestClient.API.setSessionId(session.getSessionId());
 
-                Members member = new Members();
+                Member member = new Member();
                 member.setFirst("Jim");
                 member.setLast("Pekarek");
                 member.setEmail("amagi82@gmail.com");
                 member.setPassword("pw");
                 member.setTitle("Android developer");
-                RestClient.API.member().post(member, new Callback<Members>() {
-                    @Override public void success(Members members, retrofit.client.Response response) {
-                        Log.i(null, "Success! members = " + members.toString());
-                        RestClient.API.member().get(members.getId(), members.getId(), new Callback<Members>() {
-                            @Override public void success(Members members, retrofit.client.Response response) {
-                                Log.i(null, "Successfully retrieved member with id: " + members.getId() + " and name: " + members.getFirst() + " " + members.getLast());
+                RestClient.API.member().post(member, new Callback<Member>() {
+                    @Override public void success(Member member, retrofit.client.Response response) {
+                        Log.i(null, "Success! members = " + member.toString());
+                        RestClient.API.member().get(member.getId(), member.getId(), new Callback<Member>() {
+                            @Override public void success(Member member, retrofit.client.Response response) {
+                                Log.i(null, "Successfully retrieved member with id: " + member.getId() + " and name: " + member.getFirst() + " " + member.getLast());
                             }
 
                             @Override public void failure(RetrofitError error) {
@@ -150,7 +148,7 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override protected void onStop() {
         super.onStop();
-        BUS.getBus().unregister(this); //Always unregister when an object no longer should be on the bus.
+        BUS.getBus().unregister(this);
     }
 
     @Override protected void onDestroy() {
@@ -162,54 +160,6 @@ public class MainActivity extends AppCompatActivity  {
         if (drawerLayout.isDrawerOpen(navigationView)) drawerLayout.closeDrawer(navigationView);
         else super.onBackPressed();
     }
-
-//    @Override public void onResponse(JSONObject response) {
-//        Log.i(null, "received "+response.toString());
-//        pass++;
-//        Log.i(null, "pass = "+pass);
-//
-//        try {
-//            if(response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id") != null){
-//                String id = response.getJSONObject(PAYLOAD).getJSONObject("member").getString("id");
-//
-//                if(pass <=1){
-//                    Log.i(null, "Member GET request");
-//                    Map<String, String> map = new HashMap<>();
-//                    map.put("userId", id);
-//                    //VOLLEY.addToRequestQueue(new VolleyRequest(GET, "member/" + id, map, this, this));
-//                }else if(pass <=2){
-//                    Log.i(null, "Member PATCH request");
-//                    Map<String, String> map = new HashMap<>();
-//                    map.put("userId", id);
-//                    Member member = new Member();
-//                    member.setFirstName("James");
-//                    member.setLastName("Pekarek");
-//                    member.setTitle("Android developer");
-//                    member.setEmail("amagi82@gmail.com");
-//                    member.setPassword("password");
-//                    //VOLLEY.addToRequestQueue(new VolleyRequest(PATCH, "member/" + id, map, new MemberAPI().patchMember(member), this, this));
-//                }
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-////        try {
-////            JSONArray jArray = object.getJSONObject("payload").getJSONArray("results");
-////            deals.beginBatchedUpdates();
-////            for (int i = 0; i < jArray.length(); i++) deals.add(LoganSquare.parse(jArray.get(i).toString(), Deal.class));
-////            deals.endBatchedUpdates();
-////        } catch (IOException | JSONException e) {
-////            Log.i(null, "JsonObjectRequest error");
-////            e.printStackTrace();
-////        }
-//    }
-
-//    @Override public void onErrorResponse(VolleyError error) {
-//    }
-
-//    public SortedList<Deal> getDeals() {
-//        return deals;
-//    }
 
     public Location getCurrentLocation() {
         return currentLocation;
@@ -230,7 +180,7 @@ public class MainActivity extends AppCompatActivity  {
 
     private void initiateNavigationDrawer(){
         navigationView.removeAllViews();
-        getLayoutInflater().inflate(serviceProviderMode? R.layout.drawer_p : R.layout.drawer_c, navigationView);
+        getLayoutInflater().inflate(serviceProviderMode ? R.layout.drawer_p : R.layout.drawer_c, navigationView);
     }
 
     public void onDrawerItemClicked(View view) {
@@ -280,7 +230,7 @@ public class MainActivity extends AppCompatActivity  {
 
     private void updateIfNecessary() {
         //SessionId and location are required.
-        if (currentLocation == null || App.getInstance().getSessionId() == null) return;
+        //if (currentLocation == null || App.getInstance().getSessionId() == null) return;
 
         //Update only if location has changed significantly (>250 meters)
 //        if (previousLocation == null || deals.size() == 0 || previousLocation.distanceTo(currentLocation) > 250) {
@@ -296,19 +246,6 @@ public class MainActivity extends AppCompatActivity  {
 
     @Subscribe public void upNavigationBurgerPressed(UpNavigationBurgerEvent event) {
         drawerLayout.openDrawer(navigationView);
-    }
-
-    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event) {
-        //updateIfNecessary();
-
-        //TESTING
-//        Member member = new Member();
-//        member.setFirstName("Jim");
-//        member.setLastName("Pekarek");
-//        member.setTitle("Android dev");
-//        member.setEmail("amagi82@gmail.com");
-//        member.setPassword("password");
-        //VOLLEY.addToRequestQueue(new VolleyRequest(POST, "member", new MemberAPI().postMember(member), this, this));
     }
 
     @Subscribe public void locationUpdated(LocationUpdatedEvent event) {

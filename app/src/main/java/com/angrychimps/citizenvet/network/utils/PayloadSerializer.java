@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.utils;
+package com.angrychimps.citizenvet.network.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
