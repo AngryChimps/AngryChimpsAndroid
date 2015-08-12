@@ -9,6 +9,9 @@ public class Session {
     private String description;
     private JsonObject session;
 
+    public Session() {
+    }
+
     public JsonObject getSession() {
         return session;
     }

@@ -23,6 +23,7 @@ public enum RestClient {
 
     private final RestAdapter restAdapter;
     private String sessionId;
+    private String userId;
 
     RestClient(){
         Gson gson = new GsonBuilder()
@@ -37,6 +38,7 @@ public enum RestClient {
             public void intercept(RequestFacade request) {
                 Log.i(null, "sessionId = " + sessionId);
                 if(sessionId != null) request.addHeader("angrychimps-api-session-token", sessionId);
+                if(userId != null) request.addQueryParam("userId", userId);
             }
         };
 

@@ -15,5 +15,5 @@ public interface MemberAPI {
 
     @POST("/member") void post(@Body Member member, Callback<Member> callback);
 
-    @PATCH("/member/{id}") void patch(@Path("id") String user, @Query("userId") String userId, @Body Member member);
+    @PATCH("/member/{id}") void patch(@Path("id") String user, @Query("userId") String userId, @Body Member member, Callback callback);
 }
