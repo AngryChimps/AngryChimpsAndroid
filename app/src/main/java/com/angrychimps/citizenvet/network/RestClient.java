@@ -3,9 +3,29 @@ package com.angrychimps.citizenvet.network;
 import android.util.Log;
 
 import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
+import com.angrychimps.citizenvet.models.receive.Animal;
+import com.angrychimps.citizenvet.models.receive.CompanyLocationDetail;
+import com.angrychimps.citizenvet.models.receive.MessageDetail;
+import com.angrychimps.citizenvet.models.receive.Messages;
+import com.angrychimps.citizenvet.models.receive.ReviewDetail;
+import com.angrychimps.citizenvet.models.receive.SearchResults;
+import com.angrychimps.citizenvet.models.receive.Service;
 import com.angrychimps.citizenvet.models.receive.SessionId;
+import com.angrychimps.citizenvet.models.receive.UserLoginResponse;
+import com.angrychimps.citizenvet.models.send.Inquiry;
+import com.angrychimps.citizenvet.models.send.MessageSend;
+import com.angrychimps.citizenvet.models.send.MessageStatus;
+import com.angrychimps.citizenvet.models.send.MessagesRequest;
+import com.angrychimps.citizenvet.models.send.ReviewPost;
+import com.angrychimps.citizenvet.models.send.SearchRequest;
 import com.angrychimps.citizenvet.models.send.SessionRequest;
+import com.angrychimps.citizenvet.models.send.UserLogin;
+import com.angrychimps.citizenvet.models.shared.Address;
+import com.angrychimps.citizenvet.models.shared.Company;
+import com.angrychimps.citizenvet.models.shared.CompanyLocation;
 import com.angrychimps.citizenvet.models.shared.Member;
+import com.angrychimps.citizenvet.models.shared.StaffMember;
+import com.angrychimps.citizenvet.models.shared.UserLoginReset;
 import com.angrychimps.citizenvet.network.api.MemberAPI;
 import com.angrychimps.citizenvet.network.api.SessionAPI;
 import com.angrychimps.citizenvet.network.utils.PayloadSerializer;
@@ -31,10 +51,31 @@ public enum RestClient {
     private String sessionId;
     //private String userId;
 
-    RestClient(){
+    RestClient() {
         Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Animal.class, new PayloadSerializer<Animal>())
+                .registerTypeAdapter(CompanyLocationDetail.class, new PayloadSerializer<CompanyLocationDetail>())
+                .registerTypeAdapter(MessageDetail.class, new PayloadSerializer<MessageDetail>())
+                .registerTypeAdapter(Messages.class, new PayloadSerializer<Messages>())
+                .registerTypeAdapter(ReviewDetail.class, new PayloadSerializer<ReviewDetail>())
+                .registerTypeAdapter(SearchResults.class, new PayloadSerializer<SearchResults>())
+                .registerTypeAdapter(Service.class, new PayloadSerializer<Service>())
+                .registerTypeAdapter(SessionId.class, new PayloadSerializer<SessionId>())
+                .registerTypeAdapter(UserLoginResponse.class, new PayloadSerializer<UserLoginResponse>())
+                .registerTypeAdapter(Inquiry.class, new PayloadSerializer<Inquiry>())
+                .registerTypeAdapter(MessageSend.class, new PayloadSerializer<MessageSend>())
+                .registerTypeAdapter(MessagesRequest.class, new PayloadSerializer<MessagesRequest>())
+                .registerTypeAdapter(MessageStatus.class, new PayloadSerializer<MessageStatus>())
+                .registerTypeAdapter(ReviewPost.class, new PayloadSerializer<ReviewPost>())
+                .registerTypeAdapter(SearchRequest.class, new PayloadSerializer<SearchRequest>())
                 .registerTypeAdapter(SessionRequest.class, new PayloadSerializer<SessionRequest>())
+                .registerTypeAdapter(UserLogin.class, new PayloadSerializer<UserLogin>())
+                .registerTypeAdapter(Address.class, new PayloadSerializer<Address>())
+                .registerTypeAdapter(Company.class, new PayloadSerializer<Company>())
+                .registerTypeAdapter(CompanyLocation.class, new PayloadSerializer<CompanyLocation>())
                 .registerTypeAdapter(Member.class, new PayloadSerializer<Member>())
+                .registerTypeAdapter(StaffMember.class, new PayloadSerializer<StaffMember>())
+                .registerTypeAdapter(UserLoginReset.class, new PayloadSerializer<UserLoginReset>())
                 .registerTypeAdapter(Date.class, new DateTypeAdapter())
                 .create();
 
@@ -42,7 +83,7 @@ public enum RestClient {
             @Override
             public void intercept(RequestFacade request) {
                 Log.i(null, "sessionId = " + sessionId);
-                if(sessionId != null) request.addHeader("angrychimps-api-session-token", sessionId);
+                if (sessionId != null) request.addHeader("angrychimps-api-session-token", sessionId);
                 //if(userId != null) request.addQueryParam("userId", userId);
             }
         };
@@ -66,7 +107,7 @@ public enum RestClient {
         });
     }
 
-    public MemberAPI member(){
+    public MemberAPI member() {
         return restAdapter.create(MemberAPI.class);
     }
 
