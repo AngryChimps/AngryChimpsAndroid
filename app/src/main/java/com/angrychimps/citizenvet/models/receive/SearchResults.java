@@ -1,5 +1,7 @@
 package com.angrychimps.citizenvet.models.receive;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /*
@@ -29,8 +31,8 @@ public class SearchResults {
     }
 
     public static class SearchResult{
-        private String locationId;
-        private String companyName;
+        @SerializedName("location_id") private String locationId;
+        @SerializedName("company_name") private String companyName;
         private String photo;
         private float rating;
         private double distance;

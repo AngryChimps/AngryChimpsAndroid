@@ -1,15 +1,17 @@
 package com.angrychimps.citizenvet.models.send;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /*
     Usedin Review API to post a new review
  */
 public class ReviewPost {
-    private String locationId;
+    @SerializedName("location_id") private String locationId;
     private float rating;
     private String body;
-    private List<String> staffIds;
+    @SerializedName("staff_ids") private List<String> staffIds;
 
     public ReviewPost() {
     }

@@ -1,13 +1,15 @@
 package com.angrychimps.citizenvet.models.send;
 
+import com.google.gson.annotations.SerializedName;
+
 /*
     Used in Messages API to request a list of messages
  */
 public class MessagesRequest {
-    private String locationId;
-    private String memberId;
-    private String companyId;
-    private boolean includeArchived;
+    @SerializedName("location_id") private String locationId;
+    @SerializedName("member_id") private String memberId;
+    @SerializedName("company_id") private String companyId;
+    @SerializedName("include_archived") private boolean includeArchived;
     private int limit;
     private int offset;
 

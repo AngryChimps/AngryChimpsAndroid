@@ -1,12 +1,14 @@
 package com.angrychimps.citizenvet.models.send;
 
+import com.google.gson.annotations.SerializedName;
+
 /*
     Used in Message API, sent from POST
  */
 public class MessageSend {
-    private String locationId;
-    private String sendingMemberId;
-    private String repliedMemberId;
+    @SerializedName("location_id") private String locationId;
+    @SerializedName("sending_member_id") private String sendingMemberId;
+    @SerializedName("replied_member_id") private String repliedMemberId;
     private String body;
 
     public MessageSend() {

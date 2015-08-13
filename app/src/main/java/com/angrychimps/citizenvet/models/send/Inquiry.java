@@ -8,22 +8,22 @@ import java.util.Date;
     This is NOT ready on the server side. Expect changes.
  */
 public class Inquiry {
-    private String locationId;
+    @SerializedName("location_id") private String locationId;
     private String first;
     private String last;
     private String phone;
-    private String bestTime;
+    @SerializedName("best_time") private String bestTime;
     private String email;
     private String password;
     @SerializedName("fb_id") private String facebookId;
     @SerializedName("fb_auth_token") private String facebookAuthToken;
-    private String petName;
-    private String preferredProviderStaffId;
+    @SerializedName("pet_name") private String petName;
+    @SerializedName("preferred_provider_staff_id") private String preferredProviderStaffId;
     private String description;
-    private Date firstTime;
-    private Date secondTime;
-    private Date thirdTime;
-    private boolean newPatient;
+    @SerializedName("first_time") private Date firstTime;
+    @SerializedName("second_time") private Date secondTime;
+    @SerializedName("third_time") private Date thirdTime;
+    @SerializedName("new_patient") private boolean newPatient;
 
     public Inquiry() {
     }

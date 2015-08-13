@@ -4,14 +4,13 @@ import android.util.Log;
 
 import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
 import com.angrychimps.citizenvet.models.receive.SessionId;
-import com.angrychimps.citizenvet.models.shared.Member;
 import com.angrychimps.citizenvet.models.send.SessionRequest;
+import com.angrychimps.citizenvet.models.shared.Member;
 import com.angrychimps.citizenvet.network.api.MemberAPI;
 import com.angrychimps.citizenvet.network.api.SessionAPI;
 import com.angrychimps.citizenvet.network.utils.PayloadSerializer;
 import com.angrychimps.citizenvet.utils.Device;
 import com.angrychimps.citizenvet.utils.Otto;
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
@@ -34,7 +33,6 @@ public enum RestClient {
 
     RestClient(){
         Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(SessionRequest.class, new PayloadSerializer<SessionRequest>())
                 .registerTypeAdapter(Member.class, new PayloadSerializer<Member>())
                 .registerTypeAdapter(Date.class, new DateTypeAdapter())

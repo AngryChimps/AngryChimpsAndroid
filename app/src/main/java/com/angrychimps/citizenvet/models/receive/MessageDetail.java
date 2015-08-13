@@ -1,5 +1,7 @@
 package com.angrychimps.citizenvet.models.receive;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /*
@@ -7,14 +9,14 @@ import java.util.Date;
     Used in Messages API, received after POST
  */
 public class MessageDetail {
-    private String messageId;
-    private String locationId;
-    private String consumerMessageId;
-    private String repliedMessageId;
-    private String senderName;
+    @SerializedName("message_id") private String messageId;
+    @SerializedName("location_id") private String locationId;
+    @SerializedName("consumer_message_id") private String consumerMessageId;
+    @SerializedName("replied_message_id") private String repliedMessageId;
+    @SerializedName("sender_name") private String senderName;
     private String body;
     private String status;
-    private Date createdAt;
+    @SerializedName("created_at") private Date createdAt;
 
     public MessageDetail() {
     }

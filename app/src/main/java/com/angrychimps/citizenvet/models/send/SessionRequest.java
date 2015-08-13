@@ -1,8 +1,10 @@
 package com.angrychimps.citizenvet.models.send;
 
+import com.google.gson.annotations.SerializedName;
+
 public class SessionRequest {
-    private int deviceType = 3;
-    private String pushToken;
+    @SerializedName("device_type") private int deviceType = 3;
+    @SerializedName("push_token") private String pushToken;
     private String description;
 
     public SessionRequest() {

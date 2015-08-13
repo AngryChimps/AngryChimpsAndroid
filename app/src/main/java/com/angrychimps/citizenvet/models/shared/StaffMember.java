@@ -1,5 +1,7 @@
 package com.angrychimps.citizenvet.models.shared;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /*
@@ -8,7 +10,7 @@ import java.util.List;
  */
 public class StaffMember {
     private String id; //receive only
-    private String companyId; //send only
+    @SerializedName("company_id") private String companyId; //send only
     private String first;
     private String last;
     private String title;
@@ -17,7 +19,7 @@ public class StaffMember {
     private String email;
     private String description;
     private String photo;
-    private List<String> locationIds;
+    @SerializedName("location_ids") private List<String> locationIds;
     private int role;
 
     public StaffMember() {

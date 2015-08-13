@@ -1,5 +1,7 @@
 package com.angrychimps.citizenvet.models.shared;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,14 +14,14 @@ public class CompanyLocation {
     private String id; //This may be named company_id in parts?
     private String name;
     private Address address;
-    private boolean isMobile;
-    private float mobileRadiusMiles;
+    @SerializedName("is_mobile") private boolean isMobile;
+    @SerializedName("mobile_radius_miles") private float mobileRadiusMiles;
     private List<String> photos;
     private int[] services;
-    private boolean walkIns;
+    @SerializedName("walk_ins") private boolean walkIns;
     private boolean emergencies;
     private int[] animals;
-    private List<String> staffIds;
+    @SerializedName("staff_ids") private List<String> staffIds;
     private Hours hours;
     private int status;
 

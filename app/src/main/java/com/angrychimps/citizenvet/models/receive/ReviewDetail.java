@@ -1,5 +1,7 @@
 package com.angrychimps.citizenvet.models.receive;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,12 +11,12 @@ import java.util.List;
  */
 public class ReviewDetail {
     private String id;
-    private String reviewerName;
-    private String reviewerPhoto;
+    @SerializedName("reviewer_name") private String reviewerName;
+    @SerializedName("reviewer_photo") private String reviewerPhoto;
     private float rating;
     private String body;
-    private List<String> staffIds;
-    private Date createdAt;
+    @SerializedName("staff_ids") private List<String> staffIds;
+    @SerializedName("created_at") private Date createdAt;
 
     public ReviewDetail() {
     }

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Messages {
     private int count;
-    private int countUnread;
+    @SerializedName("count_unread") private int countUnread;
     @SerializedName("results") private List<MessageDetail> messages;
 
     public Messages() {

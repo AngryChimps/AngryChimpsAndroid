@@ -1,6 +1,7 @@
 package com.angrychimps.citizenvet.models.send;
 
 import com.angrychimps.citizenvet.models.shared.Address;
+import com.google.gson.annotations.SerializedName;
 
 /*
     Used by Search API to request relevant search results
@@ -10,9 +11,9 @@ public class SearchRequest {
     private float lat;
     private float lon;
     private int animal;
-    private boolean mobileLocation;
+    @SerializedName("mobile_location") private boolean mobileLocation;
     private boolean emergency;
-    private boolean walkIn;
+    @SerializedName("walk_in") private boolean walkIn;
     private int limit;
     private int offset;
 

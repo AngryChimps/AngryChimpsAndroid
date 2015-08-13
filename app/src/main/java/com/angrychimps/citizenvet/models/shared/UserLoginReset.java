@@ -1,5 +1,7 @@
 package com.angrychimps.citizenvet.models.shared;
 
+import com.google.gson.annotations.SerializedName;
+
 /*
     Used in Auth API
     send: start: provide only email  finish: provide all
@@ -8,7 +10,7 @@ package com.angrychimps.citizenvet.models.shared;
 public class UserLoginReset {
     private String email;
     private String password;
-    private String resetCode;
+    @SerializedName("reset_code") private String resetCode;
 
     public UserLoginReset() {
     }

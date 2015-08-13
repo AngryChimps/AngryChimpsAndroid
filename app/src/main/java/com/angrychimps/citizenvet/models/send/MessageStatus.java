@@ -1,10 +1,12 @@
 package com.angrychimps.citizenvet.models.send;
 
+import com.google.gson.annotations.SerializedName;
+
 /*
     Used in Message API, sent from PATCH to change message status
  */
 public class MessageStatus {
-    private String messageId;
+    @SerializedName("message_id") private String messageId;
     private String status;
 
     public MessageStatus() {
