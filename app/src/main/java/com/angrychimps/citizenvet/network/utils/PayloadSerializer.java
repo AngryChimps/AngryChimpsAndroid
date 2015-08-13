@@ -15,9 +15,15 @@ import java.lang.reflect.Type;
 
 public class PayloadSerializer<T> implements JsonSerializer, JsonDeserializer<T> {
 
+    private String[] containers;
+
+    public PayloadSerializer(String...containers) {
+        this.containers = containers;
+    }
+
     @Override
     public JsonElement serialize(Object src, Type type, JsonSerializationContext context) {
-        Log.i(null, "serializing "+new Gson().toJson(src));
+        Log.i(null, "serializing " + new Gson().toJson(src));
         JsonObject payload = new JsonObject();
         payload.add("payload", new Gson().toJsonTree(src, type));
 
@@ -29,9 +35,13 @@ public class PayloadSerializer<T> implements JsonSerializer, JsonDeserializer<T>
     public T deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException {
         Log.i(null, "deserializing "+je.toString());
         // Get the "payload" element from the parsed JSON
-        JsonElement payload = je.getAsJsonObject().get("payload");
-        Log.i(null, "deserialized to "+new Gson().fromJson(payload, type));
+        JsonElement element = je.getAsJsonObject().get("payload");
+        //Unpack from each container
+        for(String container : containers){
+            element = element.getAsJsonObject().get(container);
+        }
+        Log.i(null, "deserialized to "+new Gson().fromJson(element, type));
         // Deserialize it. You use a new instance of Gson to avoid infinite recursion to this deserializer
-        return new Gson().fromJson(payload, type);
+        return new Gson().fromJson(element, type);
     }
 }

@@ -10,7 +10,7 @@ import com.angrychimps.citizenvet.models.receive.Messages;
 import com.angrychimps.citizenvet.models.receive.ReviewDetail;
 import com.angrychimps.citizenvet.models.receive.SearchResults;
 import com.angrychimps.citizenvet.models.receive.Service;
-import com.angrychimps.citizenvet.models.receive.SessionId;
+import com.angrychimps.citizenvet.models.receive.Session;
 import com.angrychimps.citizenvet.models.receive.UserLoginResponse;
 import com.angrychimps.citizenvet.models.send.Inquiry;
 import com.angrychimps.citizenvet.models.send.MessageSend;
@@ -60,7 +60,7 @@ public enum RestClient {
                 .registerTypeAdapter(ReviewDetail.class, new PayloadSerializer<ReviewDetail>())
                 .registerTypeAdapter(SearchResults.class, new PayloadSerializer<SearchResults>())
                 .registerTypeAdapter(Service.class, new PayloadSerializer<Service>())
-                .registerTypeAdapter(SessionId.class, new PayloadSerializer<SessionId>())
+                .registerTypeAdapter(Session.class, new PayloadSerializer<Session>("session"))
                 .registerTypeAdapter(UserLoginResponse.class, new PayloadSerializer<UserLoginResponse>())
                 .registerTypeAdapter(Inquiry.class, new PayloadSerializer<Inquiry>())
                 .registerTypeAdapter(MessageSend.class, new PayloadSerializer<MessageSend>())
@@ -73,7 +73,7 @@ public enum RestClient {
                 .registerTypeAdapter(Address.class, new PayloadSerializer<Address>())
                 .registerTypeAdapter(Company.class, new PayloadSerializer<Company>())
                 .registerTypeAdapter(CompanyLocation.class, new PayloadSerializer<CompanyLocation>())
-                .registerTypeAdapter(Member.class, new PayloadSerializer<Member>())
+                .registerTypeAdapter(Member.class, new PayloadSerializer<Member>("member"))
                 .registerTypeAdapter(StaffMember.class, new PayloadSerializer<StaffMember>())
                 .registerTypeAdapter(UserLoginReset.class, new PayloadSerializer<UserLoginReset>())
                 .registerTypeAdapter(Date.class, new DateTypeAdapter())
@@ -95,9 +95,9 @@ public enum RestClient {
                 .setRequestInterceptor(requestInterceptor)
                 .build();
 
-        restAdapter.create(SessionAPI.class).post(new SessionRequest("", new Device().getDescription()), new Callback<SessionId>() {
-            @Override public void success(SessionId sessionId, Response response) {
-                RestClient.this.sessionId = sessionId.get();
+        restAdapter.create(SessionAPI.class).post(new SessionRequest("", new Device().getDescription()), new Callback<Session>() {
+            @Override public void success(Session session, Response response) {
+                RestClient.this.sessionId = session.getId();
                 Otto.BUS.getBus().post(new SessionIdReceivedEvent());
             }
 
