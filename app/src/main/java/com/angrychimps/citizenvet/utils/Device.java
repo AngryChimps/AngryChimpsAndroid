@@ -4,13 +4,13 @@ import android.os.Build;
 
 /*
     Provides a description of the user's device, in the format:
-    "Android 5.1 Lollipop, API 22, Device: Nexus 6"
+    "Android 5.1.1, API 22, Device: Motorola Nexus 6"
  */
 public class Device {
     private String description;
 
     public Device() {
-        description = "Android " + Build.VERSION.RELEASE + ", "+ Build.VERSION.CODENAME + " API " + Build.VERSION.SDK_INT + ", Device: " + getDeviceName();
+        description = "Android " + Build.VERSION.RELEASE + ", API " + Build.VERSION.SDK_INT + ", Device: " + getDeviceName();
     }
 
     public String getDescription() {
