@@ -3,6 +3,7 @@ package com.angrychimps.citizenvet.network.api;
 import com.angrychimps.citizenvet.models.shared.Company;
 
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.PATCH;
@@ -14,5 +15,5 @@ public interface CompaniAPI {
 
     @POST("/company") void post(@Body Company company, Callback<Company> callback);
 
-    @PATCH("/company/{id}") void patch(@Path("id") String companyId, @Body Company company, Callback callback);
+    @PATCH("/company/{id}") void patch(@Path("id") String companyId, @Body Company company, Callback<Response> callback);
 }

@@ -40,7 +40,6 @@ public class PayloadSerializer<T> implements JsonSerializer, JsonDeserializer<T>
         for(String container : containers){
             element = element.getAsJsonObject().get(container);
         }
-        Log.i(null, "deserialized to "+new Gson().fromJson(element, type));
         // Deserialize it. You use a new instance of Gson to avoid infinite recursion to this deserializer
         return new Gson().fromJson(element, type);
     }

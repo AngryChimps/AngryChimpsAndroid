@@ -26,6 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static com.angrychimps.citizenvet.utils.Otto.BUS;
 
@@ -204,6 +205,19 @@ public class MainActivity extends AppCompatActivity  {
                 restClient.member().get(member.getId(), member.getId(), new Callback<Member>() {
                     @Override public void success(Member member, retrofit.client.Response response) {
                         Log.i(null, "Successfully retrieved member with id: " + member.getId() + " and name: " + member.getFirst() + " " + member.getLast());
+
+                        Member memberPatch = new Member();
+                        memberPatch.setFirst("James");
+                        memberPatch.setPassword("pass");
+                        restClient.member().patch(member.getId(), member.getId(), memberPatch, new Callback<Response>() {
+                            @Override public void success(Response response, Response response2) {
+                                Log.i(null, "Patch success!");
+                            }
+
+                            @Override public void failure(RetrofitError error) {
+
+                            }
+                        });
                     }
 
                     @Override public void failure(RetrofitError error) {

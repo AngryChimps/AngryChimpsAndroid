@@ -5,6 +5,7 @@ import com.angrychimps.citizenvet.models.shared.StaffMember;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.PATCH;
@@ -18,5 +19,5 @@ public interface StaffAPI {
 
     @POST("/staff") void post(@Body StaffMember staff, Callback<StaffMember> callback);
 
-    @PATCH("/staff/{id}") void patch(@Path("id") String staffId, @Body StaffMember staff, Callback callback);
+    @PATCH("/staff/{id}") void patch(@Path("id") String staffId, @Body StaffMember staff, Callback<Response> callback);
 }
