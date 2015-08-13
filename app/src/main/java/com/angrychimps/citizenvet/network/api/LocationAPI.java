@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.receive.CompanyLocationDetail;
+import com.angrychimps.citizenvet.models.received.CompanyLocationDetail;
 import com.angrychimps.citizenvet.models.shared.CompanyLocation;
 
 import retrofit.Callback;

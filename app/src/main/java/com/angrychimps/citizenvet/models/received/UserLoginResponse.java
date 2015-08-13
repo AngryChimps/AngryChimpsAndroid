@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models.receive;
+package com.angrychimps.citizenvet.models.received;
 
 import com.angrychimps.citizenvet.models.shared.Company;
 import com.angrychimps.citizenvet.models.shared.Member;

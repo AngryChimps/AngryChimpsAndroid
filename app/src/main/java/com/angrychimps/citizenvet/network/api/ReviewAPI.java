@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.receive.ReviewDetail;
+import com.angrychimps.citizenvet.models.received.ReviewDetail;
 import com.angrychimps.citizenvet.models.send.ReviewPost;
 
 import java.util.List;

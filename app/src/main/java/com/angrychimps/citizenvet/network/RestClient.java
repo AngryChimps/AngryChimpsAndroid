@@ -3,15 +3,15 @@ package com.angrychimps.citizenvet.network;
 import android.util.Log;
 
 import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
-import com.angrychimps.citizenvet.models.receive.Animal;
-import com.angrychimps.citizenvet.models.receive.CompanyLocationDetail;
-import com.angrychimps.citizenvet.models.receive.MessageDetail;
-import com.angrychimps.citizenvet.models.receive.Messages;
-import com.angrychimps.citizenvet.models.receive.ReviewDetail;
-import com.angrychimps.citizenvet.models.receive.SearchResults;
-import com.angrychimps.citizenvet.models.receive.Service;
-import com.angrychimps.citizenvet.models.receive.Session;
-import com.angrychimps.citizenvet.models.receive.UserLoginResponse;
+import com.angrychimps.citizenvet.models.received.Animal;
+import com.angrychimps.citizenvet.models.received.CompanyLocationDetail;
+import com.angrychimps.citizenvet.models.received.MessageDetail;
+import com.angrychimps.citizenvet.models.received.Messages;
+import com.angrychimps.citizenvet.models.received.ReviewDetail;
+import com.angrychimps.citizenvet.models.received.SearchResults;
+import com.angrychimps.citizenvet.models.received.Service;
+import com.angrychimps.citizenvet.models.received.Session;
+import com.angrychimps.citizenvet.models.received.UserLoginResponse;
 import com.angrychimps.citizenvet.models.send.Inquiry;
 import com.angrychimps.citizenvet.models.send.MessageSend;
 import com.angrychimps.citizenvet.models.send.MessageStatus;
@@ -28,7 +28,7 @@ import com.angrychimps.citizenvet.models.shared.StaffMember;
 import com.angrychimps.citizenvet.models.shared.UserLoginReset;
 import com.angrychimps.citizenvet.network.api.MemberAPI;
 import com.angrychimps.citizenvet.network.api.SessionAPI;
-import com.angrychimps.citizenvet.network.utils.PayloadSerializer;
+import com.angrychimps.citizenvet.network.json_utils.PayloadSerializer;
 import com.angrychimps.citizenvet.utils.Device;
 import com.angrychimps.citizenvet.utils.Otto;
 import com.google.gson.Gson;
@@ -110,5 +110,4 @@ public enum RestClient {
     public MemberAPI member() {
         return restAdapter.create(MemberAPI.class);
     }
-
 }

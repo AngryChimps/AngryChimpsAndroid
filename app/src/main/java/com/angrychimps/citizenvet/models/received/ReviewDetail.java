@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models.receive;
+package com.angrychimps.citizenvet.models.received;
 
 import com.google.gson.annotations.SerializedName;
 

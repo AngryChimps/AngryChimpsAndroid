@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.network.utils;
+package com.angrychimps.citizenvet.network.json_utils;
 
 import android.util.Log;
 

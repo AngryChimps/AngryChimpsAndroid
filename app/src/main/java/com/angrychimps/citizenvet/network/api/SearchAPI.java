@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.receive.SearchResults;
+import com.angrychimps.citizenvet.models.received.SearchResults;
 import com.angrychimps.citizenvet.models.send.SearchRequest;
 
 import retrofit.Callback;

@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.receive.UserLoginResponse;
+import com.angrychimps.citizenvet.models.received.UserLoginResponse;
 import com.angrychimps.citizenvet.models.send.UserLogin;
 import com.angrychimps.citizenvet.models.shared.UserLoginReset;
 

@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.receive.MessageDetail;
+import com.angrychimps.citizenvet.models.received.MessageDetail;
 import com.angrychimps.citizenvet.models.send.MessageSend;
 import com.angrychimps.citizenvet.models.send.MessageStatus;
 

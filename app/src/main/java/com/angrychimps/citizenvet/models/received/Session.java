@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models.receive;
+package com.angrychimps.citizenvet.models.received;
 
 public class Session {
 

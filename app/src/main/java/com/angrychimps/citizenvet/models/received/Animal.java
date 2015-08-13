@@ -1,13 +1,13 @@
-package com.angrychimps.citizenvet.models.receive;
+package com.angrychimps.citizenvet.models.received;
 
 /*
-    Used in Service API
+    Received from Animal API GET
  */
-public class Service {
+public class Animal {
     private int id;
     private String name;
 
-    public Service() {
+    public Animal() {
     }
 
     public int getId() {

@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.receive.Service;
+import com.angrychimps.citizenvet.models.received.Service;
 
 import java.util.List;
 

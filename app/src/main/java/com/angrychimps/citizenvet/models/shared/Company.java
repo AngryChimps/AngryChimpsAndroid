@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.models.shared;
 
-import com.angrychimps.citizenvet.models.receive.Messages;
+import com.angrychimps.citizenvet.models.received.Messages;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
