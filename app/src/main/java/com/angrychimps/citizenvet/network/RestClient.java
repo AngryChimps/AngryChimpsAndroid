@@ -26,8 +26,19 @@ import com.angrychimps.citizenvet.models.shared.CompanyLocation;
 import com.angrychimps.citizenvet.models.shared.Member;
 import com.angrychimps.citizenvet.models.shared.StaffMember;
 import com.angrychimps.citizenvet.models.shared.UserLoginReset;
+import com.angrychimps.citizenvet.network.api.AnimalAPI;
+import com.angrychimps.citizenvet.network.api.AuthAPI;
+import com.angrychimps.citizenvet.network.api.CompanyAPI;
+import com.angrychimps.citizenvet.network.api.InquiryAPI;
+import com.angrychimps.citizenvet.network.api.LocationAPI;
 import com.angrychimps.citizenvet.network.api.MemberAPI;
+import com.angrychimps.citizenvet.network.api.MessageAPI;
+import com.angrychimps.citizenvet.network.api.MessagesAPI;
+import com.angrychimps.citizenvet.network.api.ReviewAPI;
+import com.angrychimps.citizenvet.network.api.SearchAPI;
+import com.angrychimps.citizenvet.network.api.ServiceAPI;
 import com.angrychimps.citizenvet.network.api.SessionAPI;
+import com.angrychimps.citizenvet.network.api.StaffAPI;
 import com.angrychimps.citizenvet.network.json_utils.PayloadSerializer;
 import com.angrychimps.citizenvet.utils.Device;
 import com.angrychimps.citizenvet.utils.Otto;
@@ -107,7 +118,51 @@ public enum RestClient {
         });
     }
 
+    public AnimalAPI animal() {
+        return restAdapter.create(AnimalAPI.class);
+    }
+
+    public AuthAPI auth() {
+        return restAdapter.create(AuthAPI.class);
+    }
+
+    public CompanyAPI company() {
+        return restAdapter.create(CompanyAPI.class);
+    }
+
+    public InquiryAPI inquiry() {
+        return restAdapter.create(InquiryAPI.class);
+    }
+
+    public LocationAPI location() {
+        return restAdapter.create(LocationAPI.class);
+    }
+
     public MemberAPI member() {
         return restAdapter.create(MemberAPI.class);
+    }
+
+    public MessageAPI message() {
+        return restAdapter.create(MessageAPI.class);
+    }
+
+    public MessagesAPI messages() {
+        return restAdapter.create(MessagesAPI.class);
+    }
+
+    public ReviewAPI review() {
+        return restAdapter.create(ReviewAPI.class);
+    }
+
+    public SearchAPI search() {
+        return restAdapter.create(SearchAPI.class);
+    }
+
+    public ServiceAPI service() {
+        return restAdapter.create(ServiceAPI.class);
+    }
+
+    public StaffAPI staff() {
+        return restAdapter.create(StaffAPI.class);
     }
 }

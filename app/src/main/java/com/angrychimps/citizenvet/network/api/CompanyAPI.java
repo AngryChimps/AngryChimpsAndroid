@@ -10,7 +10,7 @@ import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
-public interface CompaniAPI {
+public interface CompanyAPI {
     @GET("/company/{id}") void get(@Path("id") String companyId, Callback<Company> callback);
 
     @POST("/company") void post(@Body Company company, Callback<Company> callback);
