@@ -1,8 +1,8 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.Auth;
-import com.angrychimps.citizenvet.models.Member;
-import com.angrychimps.citizenvet.models.Password;
+import com.angrychimps.citizenvet.models.receive.UserLoginResponse;
+import com.angrychimps.citizenvet.models.send.UserLogin;
+import com.angrychimps.citizenvet.models.shared.UserLoginReset;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -10,11 +10,11 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 
 public interface AuthAPI {
-    @POST("/auth/login") void login(@Body Auth auth, Callback<Member> callback); //This is incomplete- also contains companies
+    @POST("/auth/login") void login(@Body UserLogin userLogin, Callback<UserLoginResponse> callback);
 
     @GET("/auth/logout") void logout(Callback callback);
 
-    @POST("/auth/reset-password-start") void resetPasswordStart(@Body Password pw, Callback<Password> callback);
+    @POST("/auth/reset-password-start") void resetPasswordStart(@Body UserLoginReset userLoginReset, Callback<UserLoginReset> callback);
 
-    @POST("/auth/reset-password-finish") void resetPasswordFinish(@Body Password pw, Callback callback);
+    @POST("/auth/reset-password-finish") void resetPasswordFinish(@Body UserLoginReset userLoginReset, Callback callback);
 }

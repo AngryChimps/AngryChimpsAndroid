@@ -2,11 +2,15 @@ package com.angrychimps.citizenvet.network;
 
 import android.util.Log;
 
-import com.angrychimps.citizenvet.models.Member;
-import com.angrychimps.citizenvet.models.Session;
+import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
+import com.angrychimps.citizenvet.models.receive.SessionId;
+import com.angrychimps.citizenvet.models.shared.Member;
+import com.angrychimps.citizenvet.models.send.SessionRequest;
 import com.angrychimps.citizenvet.network.api.MemberAPI;
 import com.angrychimps.citizenvet.network.api.SessionAPI;
 import com.angrychimps.citizenvet.network.utils.PayloadSerializer;
+import com.angrychimps.citizenvet.utils.Device;
+import com.angrychimps.citizenvet.utils.Otto;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,8 +18,11 @@ import com.google.gson.internal.bind.DateTypeAdapter;
 
 import java.util.Date;
 
+import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 public enum RestClient {
@@ -23,12 +30,12 @@ public enum RestClient {
 
     private final RestAdapter restAdapter;
     private String sessionId;
-    private String userId;
+    //private String userId;
 
     RestClient(){
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(Session.class, new PayloadSerializer<Session>())
+                .registerTypeAdapter(SessionRequest.class, new PayloadSerializer<SessionRequest>())
                 .registerTypeAdapter(Member.class, new PayloadSerializer<Member>())
                 .registerTypeAdapter(Date.class, new DateTypeAdapter())
                 .create();
@@ -48,17 +55,21 @@ public enum RestClient {
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(requestInterceptor)
                 .build();
-    }
 
-    public SessionAPI session(){
-        return restAdapter.create(SessionAPI.class);
+        restAdapter.create(SessionAPI.class).post(new SessionRequest("", new Device().getDescription()), new Callback<SessionId>() {
+            @Override public void success(SessionId sessionId, Response response) {
+                RestClient.this.sessionId = sessionId.get();
+                Otto.BUS.getBus().post(new SessionIdReceivedEvent());
+            }
+
+            @Override public void failure(RetrofitError error) {
+                Log.i(null, "FAILURE TO GET SESSION ID");
+            }
+        });
     }
 
     public MemberAPI member(){
         return restAdapter.create(MemberAPI.class);
     }
 
-    public void setSessionId(String sessionId){
-        this.sessionId = sessionId;
-    }
 }

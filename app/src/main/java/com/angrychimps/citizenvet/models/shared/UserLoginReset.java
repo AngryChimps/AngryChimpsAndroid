@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models.send;
+package com.angrychimps.citizenvet.models.shared;
 
 /*
     Used in Auth API

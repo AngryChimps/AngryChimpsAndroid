@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 /*
-    Used in Company API, both for send and inside LocationDetail in GET receive
+    Used in Auth API, received as part of login response
+    Used in Company API??
+    Used in Location API, both for send and inside LocationDetail in GET receive
  */
 public class CompanyLocation {
     private String id; //This may be named company_id in parts?

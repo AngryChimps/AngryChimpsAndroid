@@ -1,7 +1,6 @@
 package com.angrychimps.citizenvet;
 
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -13,13 +12,13 @@ import android.util.Log;
 import android.view.View;
 
 import com.angrychimps.citizenvet.events.LocationUpdatedEvent;
+import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
 import com.angrychimps.citizenvet.events.UpNavigationArrowEvent;
 import com.angrychimps.citizenvet.events.UpNavigationBurgerEvent;
 import com.angrychimps.citizenvet.fragments.CMainFragment;
 import com.angrychimps.citizenvet.fragments.LocationManagerFragment;
 import com.angrychimps.citizenvet.fragments.PMainFragment;
-import com.angrychimps.citizenvet.models.Member;
-import com.angrychimps.citizenvet.models.Session;
+import com.angrychimps.citizenvet.models.shared.Member;
 import com.angrychimps.citizenvet.network.RestClient;
 import com.squareup.otto.Subscribe;
 
@@ -27,7 +26,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import static com.angrychimps.citizenvet.utils.Otto.BUS;
 
@@ -41,11 +39,15 @@ public class MainActivity extends AppCompatActivity  {
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private boolean serviceProviderMode = false;
     private FragmentManager fm;
+    private RestClient restClient;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        restClient = RestClient.API;
+
         fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null)
             fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
@@ -84,61 +86,9 @@ public class MainActivity extends AppCompatActivity  {
 
         initiateNavigationDrawer();
         setMainFragment();
-
-        Session session = new Session();
-        session.setDeviceType(3);
-        session.setPushToken(""); //TODO: Add push notification token
-        session.setDescription("Android " + Build.VERSION.RELEASE + " API " + Build.VERSION.SDK_INT + " Device: " + getDeviceName());
-        RestClient.API.session().post(session, new Callback<Session>() {
-            @Override public void success(Session session, Response response) {
-                Log.i(null, "received session id: "+ session.getSessionId());
-                RestClient.API.setSessionId(session.getSessionId());
-
-                Member member = new Member();
-                member.setFirst("Jim");
-                member.setLast("Pekarek");
-                member.setEmail("amagi82@gmail.com");
-                member.setPassword("pw");
-                member.setTitle("Android developer");
-                RestClient.API.member().post(session.getSessionId(), member, new Callback<Member>() {
-                    @Override public void success(Member member, retrofit.client.Response response) {
-                        Log.i(null, "Success! members = " + member.toString());
-                        RestClient.API.member().get(member.getId(), member.getId(), new Callback<Member>() {
-                            @Override public void success(Member member, retrofit.client.Response response) {
-                                Log.i(null, "Successfully retrieved member with id: " + member.getId() + " and name: " + member.getFirst() + " " + member.getLast());
-                            }
-
-                            @Override public void failure(RetrofitError error) {
-                                Log.i(null, "Failure on GET " + error.toString());
-                            }
-                        });
-                    }
-
-                    @Override public void failure(RetrofitError error) {
-                        Log.i(null, "Retrofit error " + error.toString());
-                    }
-                });
-            }
-
-            @Override public void failure(RetrofitError error) {
-                Log.i(null, "FAILURE TO GET SESSION ID");
-            }
-        });
     }
 
-    private String getDeviceName() {
-        String manufacturer = Build.MANUFACTURER;
-        String model = Build.MODEL;
-        if (model.startsWith(manufacturer)) return capitalize(model);
-        else return capitalize(manufacturer) + " " + model;
-    }
 
-    private String capitalize(String s) {
-        if (s == null || s.length() == 0) return "";
-        char first = s.charAt(0);
-        if (Character.isUpperCase(first)) return s;
-        else return Character.toUpperCase(first) + s.substring(1);
-    }
 
     @Override protected void onStart() {
         super.onStart();
@@ -238,6 +188,34 @@ public class MainActivity extends AppCompatActivity  {
 ////                    .setLatitude(currentLocation.getLatitude()).setLongitude(currentLocation.getLongitude()).setLimit(20).create(), this, this));
 //            previousLocation = currentLocation;
 //        }
+    }
+
+    @Subscribe public void sessionIdReceived(SessionIdReceivedEvent event){
+        Member member = new Member();
+        member.setFirst("Jim");
+        member.setLast("Pekarek");
+        member.setEmail("amagi82@gmail.com");
+        member.setPassword("pw");
+        member.setTitle("Android developer");
+        restClient.member().post(member, new Callback<Member>() {
+            @Override public void success(Member member, retrofit.client.Response response) {
+                Log.i(null, "Success! member = " + member.toString());
+
+                restClient.member().get(member.getId(), member.getId(), new Callback<Member>() {
+                    @Override public void success(Member member, retrofit.client.Response response) {
+                        Log.i(null, "Successfully retrieved member with id: " + member.getId() + " and name: " + member.getFirst() + " " + member.getLast());
+                    }
+
+                    @Override public void failure(RetrofitError error) {
+                        Log.i(null, "Failure on GET " + error.toString());
+                    }
+                });
+            }
+
+            @Override public void failure(RetrofitError error) {
+                Log.i(null, "Failure on POST");
+            }
+        });
     }
 
     @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event) {

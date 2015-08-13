@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.Member;
+import com.angrychimps.citizenvet.models.shared.Member;
 
 import retrofit.Callback;
 import retrofit.http.Body;

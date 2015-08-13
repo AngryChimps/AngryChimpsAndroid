@@ -1,15 +1,31 @@
-package com.angrychimps.citizenvet.models;
+package com.angrychimps.citizenvet.models.shared;
 
+/*
+    Used in Member API, for both send and receive
+ */
 public class Member {
-    private String id;
+    private String id; //receive only
     private String first;
     private String last;
     private String title;
     private String email;
-    private String password;
+    private String password; //send only
     private String photo;
 
     public Member() {
+    }
+
+    public Member(String first, String last, String title, String email, String password) {
+        this(first, last, title, email, password, null);
+    }
+
+    public Member(String first, String last, String title, String email, String password, String photo) {
+        this.first = first;
+        this.last = last;
+        this.title = title;
+        this.email = email;
+        this.password = password;
+        this.photo = photo;
     }
 
     public String getId() {
