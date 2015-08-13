@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <!--Colors from the Android Material Design color swatches  -->
-    <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
-    <color name="primary_translucent">#801976D2</color>
-    <color name="accent">#FF9100</color>
-    <color name="ripple">#82B1FF</color>
+    <color name="primary">@color/aqua400</color>
+    <color name="primary_dark">@color/slate700</color>
+    <color name="accent">@color/brown800</color>
+
+    <!--Colors from Citizen Vet palette-->
+    <color name="aqua100">#F5FCF9</color>
+    <color name="aqua200">#DFF4ED</color>
+    <color name="aqua300">#AEDED1</color>
+    <color name="aqua400">#88C3B3</color>
+    <color name="slate500">#9AA5A2</color>
+    <color name="slate700">#5B6864</color>
+    <color name="brown800">#594A42</color>
+    <color name="red500">#E84035</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="error_red">#D50000</color>
 
     <!--Default text colors  -->
     <color name="text_material_primary_light">@color/primary_text_default_material_light</color>
