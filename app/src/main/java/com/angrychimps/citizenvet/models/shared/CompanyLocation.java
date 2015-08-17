@@ -13,6 +13,7 @@ import java.util.List;
 public class CompanyLocation {
     private String id; //This may be named company_id in parts?
     private String name;
+    private String description;
     private Address address;
     @SerializedName("is_mobile") private boolean isMobile;
     @SerializedName("mobile_radius_miles") private float mobileRadiusMiles;
@@ -38,6 +39,14 @@ public class CompanyLocation {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setName(String name) {
