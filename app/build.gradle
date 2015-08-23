@@ -45,12 +45,12 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'frankiesardo:icepick:3.1.0' //Save/load instance state with a simple annotation
-    compile 'com.github.frankiesardo:auto-parcel:0.3.1'
+    compile 'me.tatarka:auto-parcel-gson:0.1'
     //compile 'com.facebook.android:facebook-android-sdk:4.5.0'
     //compile 'me.relex:circleindicator:1.1.5@aar' //Circle indicator for ViewPager
     //compile 'io.card:android-sdk:5.0.1' //Credit card scanning
     provided 'javax.annotation:jsr250-api:1.0'
     apt 'com.google.dagger:dagger-compiler:2.0.1'
     apt 'frankiesardo:icepick-processor:3.1.0'
-    apt 'com.github.frankiesardo:auto-parcel-processor:0.3.1'
+    apt 'me.tatarka:auto-parcel-gson-processor:0.1'
 }

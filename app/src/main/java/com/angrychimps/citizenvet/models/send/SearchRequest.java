@@ -1,103 +1,53 @@
 package com.angrychimps.citizenvet.models.send;
 
+import android.support.annotation.Nullable;
+
 import com.angrychimps.citizenvet.models.shared.Address;
-import com.google.gson.annotations.SerializedName;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Used by Search API to request relevant search results
  */
-public class SearchRequest {
-    private Address address;
-    private float lat;
-    private float lon;
-    private int animal;
-    @SerializedName("mobile_location") private boolean mobileLocation;
-    private boolean emergency;
-    @SerializedName("walk_in") private boolean walkIn;
-    private int limit;
-    private int offset;
+@AutoParcelGson
+public abstract class SearchRequest {
+    @Nullable public abstract Address address();
+    public abstract float lat();
+    public abstract float lon();
+    public abstract int animal();
+    @SerializedName("mobile_location") public abstract boolean mobileLocation();
+    public abstract boolean emergency();
+    @SerializedName("walk_in") public abstract boolean walkIn();
+    public abstract int limit();
+    public abstract int offset();
 
-    public SearchRequest() {
+    SearchRequest() {
     }
 
-    public SearchRequest(Address address) {
-        this.address = address;
+    @AutoParcelGson.Builder
+    public abstract static class Builder {
+        public abstract Builder address(Address address);
+        public abstract Builder lat(float lat);
+        public abstract Builder lon(float lon);
+        public abstract Builder animal(int animal);
+        public abstract Builder mobileLocation(boolean mobileLocation);
+        public abstract Builder emergency(boolean emergency);
+        public abstract Builder walkIn(boolean walkIn);
+        public abstract Builder limit(int limit);
+        public abstract Builder offset(int offset);
+        public abstract SearchRequest build();
+
+        Builder() {
+        }
     }
 
-    public SearchRequest(float lat, float lon) {
-        this.lat = lat;
-        this.lon = lon;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public float getLat() {
-        return lat;
-    }
-
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLon() {
-        return lon;
-    }
-
-    public void setLon(float lon) {
-        this.lon = lon;
-    }
-
-    public int getAnimal() {
-        return animal;
-    }
-
-    public void setAnimal(int animal) {
-        this.animal = animal;
-    }
-
-    public boolean isMobileLocation() {
-        return mobileLocation;
-    }
-
-    public void setMobileLocation(boolean mobileLocation) {
-        this.mobileLocation = mobileLocation;
-    }
-
-    public boolean isEmergency() {
-        return emergency;
-    }
-
-    public void setEmergency(boolean emergency) {
-        this.emergency = emergency;
-    }
-
-    public boolean isWalkIn() {
-        return walkIn;
-    }
-
-    public void setWalkIn(boolean walkIn) {
-        this.walkIn = walkIn;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public static Builder builder() {
+        return new AutoParcelGson_SearchRequest.Builder()
+                .mobileLocation(false)
+                .emergency(false)
+                .walkIn(false)
+                .limit(20)
+                .offset(0);
     }
 }

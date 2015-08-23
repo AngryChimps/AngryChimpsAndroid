@@ -1,80 +1,31 @@
 package com.angrychimps.citizenvet.models.received;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcelable;
 
 import java.util.Date;
 import java.util.List;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Used in Location API inside CompanyLocationDetail
     Used in Review API as response from GET
  */
-public class ReviewDetail {
-    private String id;
-    @SerializedName("reviewer_name") private String reviewerName;
-    @SerializedName("reviewer_photo") private String reviewerPhoto;
-    private float rating;
-    private String body;
-    @SerializedName("staff_ids") private List<String> staffIds;
-    @SerializedName("created_at") private Date createdAt;
+@AutoParcelGson
+public abstract class ReviewDetail implements Parcelable {
+    public abstract String id();
+    @SerializedName("reviewer_name") public abstract String reviewerName();
+    @SerializedName("reviewer_photo") public abstract String reviewerPhoto();
+    public abstract float rating();
+    public abstract String body();
+    @SerializedName("staff_ids") public abstract List<String> staffIds();
+    @SerializedName("created_at") public abstract Date createdAt();
 
-    public ReviewDetail() {
+    ReviewDetail() {
     }
 
-    public String getId() {
-        return id;
+    public static ReviewDetail create(String id, String reviewerName, String reviewerPhoto, float rating, String body, List<String> staffIds, Date createdAt){
+        return new AutoParcelGson_ReviewDetail(id, reviewerName, reviewerPhoto, rating, body, staffIds, createdAt);
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getReviewerName() {
-        return reviewerName;
-    }
-
-    public void setReviewerName(String reviewerName) {
-        this.reviewerName = reviewerName;
-    }
-
-    public String getReviewerPhoto() {
-        return reviewerPhoto;
-    }
-
-    public void setReviewerPhoto(String reviewerPhoto) {
-        this.reviewerPhoto = reviewerPhoto;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public List<String> getStaffIds() {
-        return staffIds;
-    }
-
-    public void setStaffIds(List<String> staffIds) {
-        this.staffIds = staffIds;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
 }

@@ -46,6 +46,7 @@ import com.google.gson.internal.bind.DateTypeAdapter;
 
 import java.util.Date;
 
+import auto.parcelgson.gson.AutoParcelGsonTypeAdapterFactory;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -62,6 +63,7 @@ public enum RestClient {
 
     RestClient() {
         Gson gson = new GsonBuilder()
+                .registerTypeAdapterFactory(new AutoParcelGsonTypeAdapterFactory())
                 .registerTypeAdapter(Address.class, new PayloadSerializer<Address>())
                 .registerTypeAdapter(Animal.class, new PayloadSerializer<Animal>())
                 .registerTypeAdapter(Company.class, new PayloadSerializer<Company>("company"))
@@ -104,9 +106,10 @@ public enum RestClient {
                 .setRequestInterceptor(requestInterceptor)
                 .build();
 
-        restAdapter.create(SessionAPI.class).post(new SessionRequest("", new Device().getDescription()), new Callback<Session>() {
+        restAdapter.create(SessionAPI.class).post(SessionRequest.create("", new Device().getDescription()), new Callback<Session>() {
             @Override public void success(Session session, Response response) {
-                RestClient.this.sessionId = session.getId();
+                RestClient.this.sessionId = session.id();
+                Log.i(null, "sessionId recieved: "+sessionId);
                 //Otto.BUS.getBus().post(new SessionIdReceivedEvent());
             }
 

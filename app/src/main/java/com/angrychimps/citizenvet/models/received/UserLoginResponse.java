@@ -1,33 +1,26 @@
 package com.angrychimps.citizenvet.models.received;
 
+import android.os.Parcelable;
+
 import com.angrychimps.citizenvet.models.shared.Company;
 import com.angrychimps.citizenvet.models.shared.Member;
 
 import java.util.List;
 
+import auto.parcelgson.AutoParcelGson;
+
 /*
     Used in Auth API, received after login
  */
-public class UserLoginResponse {
-    private Member member;
-    private List<Company> companies;
+@AutoParcelGson
+public abstract class UserLoginResponse implements Parcelable {
+    public abstract Member member();
+    public abstract List<Company> companies();
 
-    public UserLoginResponse() {
+    UserLoginResponse() {
     }
 
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public List<Company> getCompanies() {
-        return companies;
-    }
-
-    public void setCompanies(List<Company> companies) {
-        this.companies = companies;
+    public static UserLoginResponse create(Member member, List<Company> companies){
+        return new AutoParcelGson_UserLoginResponse(member, companies);
     }
 }

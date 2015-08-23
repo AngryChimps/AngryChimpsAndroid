@@ -1,237 +1,92 @@
 package com.angrychimps.citizenvet.models.shared;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import java.util.Date;
 import java.util.List;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Used in Auth API, received as part of login response
     Used in Company API??
     Used in Location API, both for send and inside LocationDetail in GET receive
  */
-public class CompanyLocation {
-    private String id; //This may be named company_id in parts?
-    private String name;
-    private String description;
-    private Address address;
-    @SerializedName("is_mobile") private boolean isMobile;
-    @SerializedName("mobile_radius_miles") private float mobileRadiusMiles;
-    private List<String> photos;
-    private int[] services;
-    @SerializedName("walk_ins") private boolean walkIns;
-    private boolean emergencies;
-    private int[] animals;
-    @SerializedName("staff_ids") private List<String> staffIds;
-    private Hours hours;
-    private int status;
+@AutoParcelGson
+public abstract class CompanyLocation implements Parcelable {
+    @Nullable public abstract String id(); //This may be named company_id in parts?
+    @Nullable public abstract String name();
+    @Nullable public abstract String description();
+    @Nullable public abstract Address address();
+    @SerializedName("is_mobile") public abstract boolean isMobile();
+    @SerializedName("mobile_radius_miles") public abstract float mobileRadiusMiles();
+    @Nullable public abstract List<String> photos();
+    @Nullable public abstract int[] services();
+    @SerializedName("walk_ins") public abstract boolean walkIns();
+    public abstract boolean emergencies();
+    @Nullable public abstract int[] animals();
+    @Nullable @SerializedName("staff_ids") public abstract List<String> staffIds();
+    @Nullable public abstract Hours hours();
+    public abstract int status();
 
-    public CompanyLocation() {
+    CompanyLocation() {
     }
 
-    public String getId() {
-        return id;
+    @AutoParcelGson.Builder
+    public abstract static class Builder{
+        public abstract Builder id(String id);
+        public abstract Builder name(String name);
+        public abstract Builder description(String description);
+        public abstract Builder address(Address address);
+        public abstract Builder isMobile(boolean isMobile);
+        public abstract Builder mobileRadiusMiles(float mobileRadiusMiles);
+        public abstract Builder photos(List<String> photos);
+        public abstract Builder services(int[] services);
+        public abstract Builder walkIns(boolean walkIns);
+        public abstract Builder emergencies(boolean emergencies);
+        public abstract Builder animals(int[] animals);
+        public abstract Builder staffIds(List<String> staffIds);
+        public abstract Builder hours(Hours hours);
+        public abstract Builder status(int status);
+        public abstract CompanyLocation build();
+
+        Builder(){
+        }
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public static Builder builder(){
+        return new AutoParcelGson_CompanyLocation.Builder();
     }
 
-    public String getName() {
-        return name;
-    }
+    @AutoParcelGson
+    public abstract static class Hours {
+        public abstract Day sunday();
+        public abstract Day monday();
+        public abstract Day tuesday();
+        public abstract Day wednesday();
+        public abstract Day thursday();
+        public abstract Day friday();
+        public abstract Day saturday();
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public boolean isMobile() {
-        return isMobile;
-    }
-
-    public void setIsMobile(boolean isMobile) {
-        this.isMobile = isMobile;
-    }
-
-    public float getMobileRadiusMiles() {
-        return mobileRadiusMiles;
-    }
-
-    public void setMobileRadiusMiles(float mobileRadiusMiles) {
-        this.mobileRadiusMiles = mobileRadiusMiles;
-    }
-
-    public List<String> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<String> photos) {
-        this.photos = photos;
-    }
-
-    public int[] getServices() {
-        return services;
-    }
-
-    public void setServices(int[] services) {
-        this.services = services;
-    }
-
-    public boolean isWalkIns() {
-        return walkIns;
-    }
-
-    public void setWalkIns(boolean walkIns) {
-        this.walkIns = walkIns;
-    }
-
-    public boolean isEmergencies() {
-        return emergencies;
-    }
-
-    public void setEmergencies(boolean emergencies) {
-        this.emergencies = emergencies;
-    }
-
-    public int[] getAnimals() {
-        return animals;
-    }
-
-    public void setAnimals(int[] animals) {
-        this.animals = animals;
-    }
-
-    public List<String> getStaffIds() {
-        return staffIds;
-    }
-
-    public void setStaffIds(List<String> staffIds) {
-        this.staffIds = staffIds;
-    }
-
-    public Hours getHours() {
-        return hours;
-    }
-
-    public void setHours(Hours hours) {
-        this.hours = hours;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-
-    public static class Hours {
-        private Day sunday;
-        private Day monday;
-        private Day tuesday;
-        private Day wednesday;
-        private Day thursday;
-        private Day friday;
-        private Day saturday;
-
-        public Hours() {
+        Hours() {
         }
 
-        public Day getSunday() {
-            return sunday;
+        public static Hours create(Day sunday, Day monday, Day tuesday, Day wednesday, Day thursday, Day friday, Day saturday){
+            return new AutoParcelGson_CompanyLocation_Hours(sunday, monday, tuesday, wednesday, thursday, friday, saturday);
         }
 
-        public void setSunday(Day sunday) {
-            this.sunday = sunday;
-        }
+        @AutoParcelGson
+        public abstract static class Day {
+            public abstract Date start();
+            public abstract Date end();
 
-        public Day getMonday() {
-            return monday;
-        }
-
-        public void setMonday(Day monday) {
-            this.monday = monday;
-        }
-
-        public Day getTuesday() {
-            return tuesday;
-        }
-
-        public void setTuesday(Day tuesday) {
-            this.tuesday = tuesday;
-        }
-
-        public Day getWednesday() {
-            return wednesday;
-        }
-
-        public void setWednesday(Day wednesday) {
-            this.wednesday = wednesday;
-        }
-
-        public Day getThursday() {
-            return thursday;
-        }
-
-        public void setThursday(Day thursday) {
-            this.thursday = thursday;
-        }
-
-        public Day getFriday() {
-            return friday;
-        }
-
-        public void setFriday(Day friday) {
-            this.friday = friday;
-        }
-
-        public Day getSaturday() {
-            return saturday;
-        }
-
-        public void setSaturday(Day saturday) {
-            this.saturday = saturday;
-        }
-
-
-        public static class Day {
-            private Date start;
-            private Date end;
-
-            public Day() {
+            Day() {
             }
 
-            public Date getStart() {
-                return start;
-            }
-
-            public void setStart(Date start) {
-                this.start = start;
-            }
-
-            public Date getEnd() {
-                return end;
-            }
-
-            public void setEnd(Date end) {
-                this.end = end;
+            public static Day create(Date start, Date end){
+                return new AutoParcelGson_CompanyLocation_Hours_Day(start, end);
             }
         }
     }

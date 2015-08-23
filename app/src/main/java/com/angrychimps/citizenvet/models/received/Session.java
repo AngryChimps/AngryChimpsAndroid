@@ -1,18 +1,18 @@
 package com.angrychimps.citizenvet.models.received;
 
-public class Session {
+import android.os.Parcelable;
 
-    private String id;
+import auto.parcelgson.AutoParcelGson;
 
-    public Session() {
+@AutoParcelGson
+public abstract class Session implements Parcelable {
+
+    public abstract String id();
+
+    Session() {
     }
 
-    public String getId() {
-        return id;
+    public static Session create(String id){
+        return new AutoParcelGson_Session(id);
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
 }

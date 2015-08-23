@@ -1,51 +1,30 @@
 package com.angrychimps.citizenvet.models.shared;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Used in Auth API
     send: start: provide only email  finish: provide all
     receive resetCode after start
  */
-public class UserLoginReset {
-    private String email;
-    private String password;
-    @SerializedName("reset_code") private String resetCode;
+@AutoParcelGson
+public abstract class UserLoginReset implements Parcelable{
+    public abstract String email();
+    @Nullable public abstract String password();
+    @Nullable @SerializedName("reset_code") public abstract String resetCode();
 
-    public UserLoginReset() {
+    UserLoginReset() {
     }
 
-    public UserLoginReset(String email) {
-        this.email = email;
+    public static UserLoginReset create(String email){
+        return new AutoParcelGson_UserLoginReset(email, null, null);
     }
 
-    public UserLoginReset(String email, String password, String resetCode) {
-        this.email = email;
-        this.password = password;
-        this.resetCode = resetCode;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getResetCode() {
-        return resetCode;
-    }
-
-    public void setResetCode(String resetCode) {
-        this.resetCode = resetCode;
+    public static UserLoginReset create(String email, String password, String resetCode){
+        return new AutoParcelGson_UserLoginReset(email, password, resetCode);
     }
 }

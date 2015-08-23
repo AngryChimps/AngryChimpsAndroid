@@ -1,87 +1,31 @@
 package com.angrychimps.citizenvet.models.received;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcelable;
 
 import java.util.Date;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Used in Message API, received from GET
     Used in Messages API, received after POST
  */
-public class MessageDetail {
-    @SerializedName("message_id") private String messageId;
-    @SerializedName("location_id") private String locationId;
-    @SerializedName("consumer_message_id") private String consumerMessageId;
-    @SerializedName("replied_message_id") private String repliedMessageId;
-    @SerializedName("sender_name") private String senderName;
-    private String body;
-    private String status;
-    @SerializedName("created_at") private Date createdAt;
+@AutoParcelGson
+public abstract class MessageDetail implements Parcelable {
+    @SerializedName("message_id") public abstract String messageId();
+    @SerializedName("location_id") public abstract String locationId();
+    @SerializedName("consumer_message_id") public abstract String consumerMessageId();
+    @SerializedName("replied_message_id") public abstract String repliedMessageId();
+    @SerializedName("sender_name") public abstract String senderName();
+    public abstract String body();
+    public abstract String status();
+    @SerializedName("created_at") public abstract Date createdAt();
 
-    public MessageDetail() {
+    MessageDetail() {
     }
 
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
-    public String getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public String getConsumerMessageId() {
-        return consumerMessageId;
-    }
-
-    public void setConsumerMessageId(String consumerMessageId) {
-        this.consumerMessageId = consumerMessageId;
-    }
-
-    public String getRepliedMessageId() {
-        return repliedMessageId;
-    }
-
-    public void setRepliedMessageId(String repliedMessageId) {
-        this.repliedMessageId = repliedMessageId;
-    }
-
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public static MessageDetail create(String messageId, String locationId, String consumerMessageId, String repliedMessageId, String senderName, String body, String status, Date createdAt){
+        return new AutoParcelGson_MessageDetail(messageId, locationId, consumerMessageId, repliedMessageId, senderName, body, status, createdAt);
     }
 }

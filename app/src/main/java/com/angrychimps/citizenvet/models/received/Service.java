@@ -1,28 +1,21 @@
 package com.angrychimps.citizenvet.models.received;
 
+import android.os.Parcelable;
+
+import auto.parcelgson.AutoParcelGson;
+
 /*
     Used in Service API
  */
-public class Service {
-    private int id;
-    private String name;
+@AutoParcelGson
+public abstract class Service implements Parcelable {
+    public abstract int id();
+    public abstract String name();
 
-    public Service() {
+    Service() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public static Service create(int id, String name){
+        return new AutoParcelGson_Service(id, name);
     }
 }

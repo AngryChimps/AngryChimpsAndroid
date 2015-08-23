@@ -1,101 +1,56 @@
 package com.angrychimps.citizenvet.models.received;
 
+import android.os.Parcelable;
+
 import com.angrychimps.citizenvet.models.shared.Company;
 import com.angrychimps.citizenvet.models.shared.CompanyLocation;
 import com.angrychimps.citizenvet.models.shared.StaffMember;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Received by Location API from a GET request
  */
-public class CompanyLocationDetail {
-    private CompanyLocation location;
-    private Company company;
-    private Staff staff;
-    private Reviews reviews;
+@AutoParcelGson
+public abstract class CompanyLocationDetail implements Parcelable {
+    public abstract CompanyLocation location();
+    public abstract Company company();
+    public abstract Staff staff();
+    public abstract Reviews reviews();
 
-    public CompanyLocationDetail() {
+    CompanyLocationDetail() {
     }
 
-    public CompanyLocation getLocation() {
-        return location;
+    public static CompanyLocationDetail create(CompanyLocation location, Company company, Staff staff, Reviews reviews){
+        return new AutoParcelGson_CompanyLocationDetail(location, company, staff, reviews);
     }
 
-    public void setLocation(CompanyLocation location) {
-        this.location = location;
-    }
+    @AutoParcelGson
+    public abstract static class Staff{
+        public abstract int count();
+        @SerializedName("results") public abstract List<StaffMember> staffMembers();
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Staff getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
-    }
-
-    public Reviews getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(Reviews reviews) {
-        this.reviews = reviews;
-    }
-
-    public static class Staff{
-        private int count;
-        @SerializedName("results") private List<StaffMember> staffMembers;
-
-        public Staff() {
+        Staff() {
         }
 
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-        }
-
-        public List<StaffMember> getStaffMembers() {
-            return staffMembers;
-        }
-
-        public void setStaffMembers(List<StaffMember> staffMembers) {
-            this.staffMembers = staffMembers;
+        public static Staff create(int count, List<StaffMember> staffMembers){
+            return new AutoParcelGson_CompanyLocationDetail_Staff(count, staffMembers);
         }
     }
 
-    public static class Reviews {
-        private int count;
-        @SerializedName("results") private List<ReviewDetail> reviews;
+    @AutoParcelGson
+    public abstract static class Reviews {
+        public abstract int count();
+        @SerializedName("results") public abstract List<ReviewDetail> reviews();
 
-        public Reviews() {
+        Reviews() {
         }
 
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-        }
-
-        public List<ReviewDetail> getReviews() {
-            return reviews;
-        }
-
-        public void setReviews(List<ReviewDetail> reviews) {
-            this.reviews = reviews;
+        public static Reviews create(int count, List<ReviewDetail> reviews){
+            return new AutoParcelGson_CompanyLocationDetail_Reviews(count, reviews);
         }
     }
 }

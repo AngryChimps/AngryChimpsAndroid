@@ -1,103 +1,41 @@
 package com.angrychimps.citizenvet.models.shared;
 
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
+
+import auto.parcelgson.AutoParcelGson;
+
 /*
     Used in Company API, inside Company
     Used in Location API, inside CompanyLocation
  */
-public class Address {
-    private String street1;
-    private String street2;
-    private String city;
-    private String state;
-    private int zip;
-    private String phone;
-    private Location location;
+@AutoParcelGson
+public abstract class Address implements Parcelable {
+    public abstract String street1();
+    @Nullable public abstract String street2();
+    public abstract String city();
+    public abstract String state();
+    public abstract int zip();
+    public abstract String phone();
+    public abstract Location location();
 
-    public Address() {
+    Address() {
     }
 
-    public String getStreet1() {
-        return street1;
+    public static Address create(String street1, String street2, String city, String state, int zip, String phone, Location location){
+        return new AutoParcelGson_Address(street1, street2, city, state, zip, phone, location);
     }
 
-    public void setStreet1(String street1) {
-        this.street1 = street1;
-    }
+    @AutoParcelGson
+    public abstract static class Location{
+        public abstract float lat();
+        public abstract float lon();
 
-    public String getStreet2() {
-        return street2;
-    }
-
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public int getZip() {
-        return zip;
-    }
-
-    public void setZip(int zip) {
-        this.zip = zip;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public static class Location{
-        private float lat;
-        private float lon;
-
-        public Location() {
+        Location() {
         }
 
-        public Location(float lat, float lon) {
-            this.lat = lat;
-            this.lon = lon;
-        }
-
-        public float getLat() {
-            return lat;
-        }
-
-        public void setLat(float lat) {
-            this.lat = lat;
-        }
-
-        public float getLon() {
-            return lon;
-        }
-
-        public void setLon(float lon) {
-            this.lon = lon;
+        public static Location create(float lat, float lon){
+            return new AutoParcelGson_Address_Location(lat, lon);
         }
     }
 }

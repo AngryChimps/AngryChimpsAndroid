@@ -1,57 +1,25 @@
 package com.angrychimps.citizenvet.models.send;
 
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Usedin Review API to post a new review
  */
-public class ReviewPost {
-    @SerializedName("location_id") private String locationId;
-    private float rating;
-    private String body;
-    @SerializedName("staff_ids") private List<String> staffIds;
+@AutoParcelGson
+public abstract class ReviewPost {
+    @SerializedName("location_id") public abstract String locationId();
+    public abstract float rating();
+    public abstract String body();
+    @SerializedName("staff_ids") public abstract List<String> staffIds();
 
-    public ReviewPost() {
+    ReviewPost() {
     }
 
-    public ReviewPost(String locationId, float rating, String body, List<String> staffIds) {
-        this.locationId = locationId;
-        this.rating = rating;
-        this.body = body;
-        this.staffIds = staffIds;
-    }
-
-    public String getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public List<String> getStaffIds() {
-        return staffIds;
-    }
-
-    public void setStaffIds(List<String> staffIds) {
-        this.staffIds = staffIds;
+    public static ReviewPost create(String locationId, float rating, String body, List<String> staffIds){
+        return new AutoParcelGson_ReviewPost(locationId, rating, body, staffIds);
     }
 }

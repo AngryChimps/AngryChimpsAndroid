@@ -1,35 +1,21 @@
 package com.angrychimps.citizenvet.models.send;
 
-import com.google.gson.annotations.SerializedName;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Used in Message API, sent from PATCH to change message status
  */
-public class MessageStatus {
-    @SerializedName("message_id") private String messageId;
-    private String status;
+@AutoParcelGson
+public abstract class MessageStatus {
+    @SerializedName("message_id") public abstract String messageId();
+    public abstract String status();
 
-    public MessageStatus() {
+    MessageStatus() {
     }
 
-    public MessageStatus(String messageId, String status) {
-        this.messageId = messageId;
-        this.status = status;
-    }
-
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public static MessageStatus create(String messageId, String status){
+        return new AutoParcelGson_MessageStatus(messageId, status);
     }
 }

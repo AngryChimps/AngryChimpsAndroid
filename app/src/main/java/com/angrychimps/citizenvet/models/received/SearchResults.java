@@ -1,101 +1,42 @@
 package com.angrychimps.citizenvet.models.received;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Parcelable;
 
 import java.util.List;
+
+import auto.parcelgson.AutoParcelGson;
+import auto.parcelgson.gson.annotations.SerializedName;
 
 /*
     Used in Search API
  */
-public class SearchResults {
-    private int count;
-    private List<SearchResult> results;
+@AutoParcelGson
+public abstract class SearchResults implements Parcelable {
+    public abstract int count();
+    public abstract List<SearchResult> results();
 
-    public SearchResults() {
+    SearchResults() {
     }
 
-    public int getCount() {
-        return count;
+    public static SearchResults create(int count, List<SearchResult> results){
+        return new AutoParcelGson_SearchResults(count, results);
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
+    @AutoParcelGson
+    public abstract static class SearchResult {
+        @SerializedName("location_id") public abstract String locationId();
+        @SerializedName("company_name") public abstract String companyName();
+        public abstract String photo();
+        public abstract float rating();
+        public abstract double distance();
+        public abstract int lat();
+        public abstract int lon();
 
-    public List<SearchResult> getResults() {
-        return results;
-    }
-
-    public void setResults(List<SearchResult> results) {
-        this.results = results;
-    }
-
-    public static class SearchResult{
-        @SerializedName("location_id") private String locationId;
-        @SerializedName("company_name") private String companyName;
-        private String photo;
-        private float rating;
-        private double distance;
-        private int lat;
-        private int lon;
-
-        public SearchResult() {
+        SearchResult() {
         }
 
-        public String getLocationId() {
-            return locationId;
-        }
-
-        public void setLocationId(String locationId) {
-            this.locationId = locationId;
-        }
-
-        public String getCompanyName() {
-            return companyName;
-        }
-
-        public void setCompanyName(String companyName) {
-            this.companyName = companyName;
-        }
-
-        public String getPhoto() {
-            return photo;
-        }
-
-        public void setPhoto(String photo) {
-            this.photo = photo;
-        }
-
-        public float getRating() {
-            return rating;
-        }
-
-        public void setRating(float rating) {
-            this.rating = rating;
-        }
-
-        public double getDistance() {
-            return distance;
-        }
-
-        public void setDistance(double distance) {
-            this.distance = distance;
-        }
-
-        public int getLat() {
-            return lat;
-        }
-
-        public void setLat(int lat) {
-            this.lat = lat;
-        }
-
-        public int getLon() {
-            return lon;
-        }
-
-        public void setLon(int lon) {
-            this.lon = lon;
+        public static SearchResult create(String locationId, String companyName, String photo, float rating, double distance, int lat, int lon){
+            return new AutoParcelGson_SearchResults_SearchResult(locationId, companyName, photo, rating, distance, lat, lon);
         }
     }
 }
