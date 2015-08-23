@@ -4,14 +4,11 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.angrychimps.citizenvet.events.LocationUpdatedEvent;
-import com.angrychimps.citizenvet.utils.Otto;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
 
 /*
     Retained fragment which manages current location and broadcasts updates to anyone receiving LocationUpdatedEvent
@@ -57,7 +54,7 @@ public class LocationManagerFragment extends Fragment implements GoogleApiClient
     @Override
     public void onConnected(Bundle bundle) {
         currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        if(currentLocation != null) Otto.BUS.getBus().post(new LocationUpdatedEvent(currentLocation));
+        //if(currentLocation != null) Otto.BUS.getBus().post(new LocationUpdatedEvent(currentLocation));
         startLocationUpdates();
     }
 
@@ -71,7 +68,7 @@ public class LocationManagerFragment extends Fragment implements GoogleApiClient
 
     @Override
     public void onLocationChanged(Location location) {
-        Otto.BUS.getBus().post(new LocationUpdatedEvent(location));
+        //Otto.BUS.getBus().post(new LocationUpdatedEvent(location));
         currentLocation = location;
     }
 }

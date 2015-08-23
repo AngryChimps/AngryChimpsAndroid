@@ -1,32 +1,10 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.6'
-    }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23"
 
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-    }
-
-    defaultConfig {
-        applicationId "com.angrychimps.citizenvet"
-        minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
-    }
     signingConfigs {
         debug {
             storeFile file('/home/jim/Android/keyrings/AngryChimpsKeystore.jks')
@@ -35,6 +13,17 @@ android {
             storePassword 'EmperorNorton'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+    defaultConfig {
+        applicationId "com.angrychimps.citizenvet"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -42,23 +31,26 @@ android {
         }
     }
 }
-
 dependencies {
-    apt 'com.bluelinelabs:logansquare-compiler:1.0.1'
-    apt 'com.google.dagger:dagger-compiler:2.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:cardview-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.google.android.gms:play-services:7.5.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.squareup:otto:1.3.8'
-    //compile 'com.facebook.android:facebook-android-sdk:4.5.0'
-    compile 'me.relex:circleindicator:1.1.5@aar' //Circle indicator for ViewPager
-    //compile 'io.card:android-sdk:5.0.1' //Credit card scanning
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.android.support:design:23.0.0'
+    compile 'com.android.support:palette-v7:23.0.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.google.code.gson:gson:2.3.1'
-    //compile 'org.parceler:parceler:1.0.3'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.google.android.gms:play-services:7.8.0'
+    compile 'com.google.dagger:dagger:2.0.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'frankiesardo:icepick:3.1.0' //Save/load instance state with a simple annotation
+    compile 'com.github.frankiesardo:auto-parcel:0.3.1'
+    //compile 'com.facebook.android:facebook-android-sdk:4.5.0'
+    //compile 'me.relex:circleindicator:1.1.5@aar' //Circle indicator for ViewPager
+    //compile 'io.card:android-sdk:5.0.1' //Credit card scanning
+    provided 'javax.annotation:jsr250-api:1.0'
+    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    apt 'frankiesardo:icepick-processor:3.1.0'
+    apt 'com.github.frankiesardo:auto-parcel-processor:0.3.1'
 }

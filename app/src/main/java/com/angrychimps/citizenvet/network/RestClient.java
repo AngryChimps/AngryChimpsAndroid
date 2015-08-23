@@ -2,7 +2,6 @@ package com.angrychimps.citizenvet.network;
 
 import android.util.Log;
 
-import com.angrychimps.citizenvet.events.SessionIdReceivedEvent;
 import com.angrychimps.citizenvet.models.received.Animal;
 import com.angrychimps.citizenvet.models.received.CompanyLocationDetail;
 import com.angrychimps.citizenvet.models.received.MessageDetail;
@@ -41,7 +40,6 @@ import com.angrychimps.citizenvet.network.api.SessionAPI;
 import com.angrychimps.citizenvet.network.api.StaffAPI;
 import com.angrychimps.citizenvet.network.json_utils.PayloadSerializer;
 import com.angrychimps.citizenvet.utils.Device;
-import com.angrychimps.citizenvet.utils.Otto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
@@ -109,7 +107,7 @@ public enum RestClient {
         restAdapter.create(SessionAPI.class).post(new SessionRequest("", new Device().getDescription()), new Callback<Session>() {
             @Override public void success(Session session, Response response) {
                 RestClient.this.sessionId = session.getId();
-                Otto.BUS.getBus().post(new SessionIdReceivedEvent());
+                //Otto.BUS.getBus().post(new SessionIdReceivedEvent());
             }
 
             @Override public void failure(RetrofitError error) {
