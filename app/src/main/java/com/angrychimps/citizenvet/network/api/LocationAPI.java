@@ -3,14 +3,14 @@ package com.angrychimps.citizenvet.network.api;
 import com.angrychimps.citizenvet.models.received.CompanyLocationDetail;
 import com.angrychimps.citizenvet.models.shared.CompanyLocation;
 
-import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import rx.Observable;
 
 public interface LocationAPI {
-    @GET("/location/{id}") void get(@Path("id") String locationId, Callback<CompanyLocationDetail> callback);
+    @GET("/location/{id}") Observable<CompanyLocationDetail> getCompanyLocation(@Path("id") String locationId);
 
-    @POST("/location") void post(@Body CompanyLocation companyLocation, Callback<CompanyLocation> callback);
+    @POST("/location") Observable<CompanyLocation> postCompanyLocation(@Body CompanyLocation companyLocation);
 }

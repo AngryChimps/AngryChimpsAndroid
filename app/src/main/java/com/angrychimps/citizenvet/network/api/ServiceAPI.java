@@ -4,9 +4,9 @@ import com.angrychimps.citizenvet.models.received.Service;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.http.GET;
+import rx.Observable;
 
 public interface ServiceAPI {
-    @GET("/service") void get(Callback<List<Service>> callback);
+    @GET("/service") Observable<List<Service>> getServices();
 }

@@ -2,7 +2,6 @@ package com.angrychimps.citizenvet.network.api;
 
 import com.angrychimps.citizenvet.models.shared.Member;
 
-import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -10,11 +9,12 @@ import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import rx.Observable;
 
 public interface MemberAPI {
-    @GET("/member/{id}") void get(@Path("id") String user, @Query("userId") String userId, Callback<Member> callback);
+    @GET("/member/{id}") Observable<Member> getMember(@Path("id") String user, @Query("userId") String userId);
 
-    @POST("/member") void post(@Body Member member, Callback<Member> callback);
+    @POST("/member") Observable<Member> postMember(@Body Member member);
 
-    @PATCH("/member/{id}") void patch(@Path("id") String user, @Query("userId") String userId, @Body Member member, Callback<Response> callback);
+    @PATCH("/member/{id}") Observable<Response> patchMember(@Path("id") String user, @Query("userId") String userId, @Body Member member);
 }

@@ -4,9 +4,9 @@ import com.angrychimps.citizenvet.models.received.Animal;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.http.GET;
+import rx.Observable;
 
 public interface AnimalAPI {
-    @GET("/animal") void get(Callback<List<Animal>> callback);
+    @GET("/animal") Observable<List<Animal>> getAnimals();
 }

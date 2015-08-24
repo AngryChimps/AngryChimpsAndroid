@@ -5,17 +5,17 @@ import com.angrychimps.citizenvet.models.send.ReviewPost;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import rx.Observable;
 
 public interface ReviewAPI {
-    @GET("/review") void get(Callback<List<ReviewDetail>> callback);
+    @GET("/review") Observable<List<ReviewDetail>> getReviews();
 
-    @GET("/review{id}") void get(@Path("id") String reviewId, Callback<ReviewDetail> callback);
+    @GET("/review{id}") Observable<ReviewDetail> getReview(@Path("id") String reviewId);
 
-    @POST("/review") void post(@Body ReviewPost review, Callback<Response> callback);
+    @POST("/review") Observable<Response> postReview(@Body ReviewPost review);
 }

@@ -2,18 +2,18 @@ package com.angrychimps.citizenvet.network.api;
 
 import com.angrychimps.citizenvet.models.shared.Company;
 
-import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import rx.Observable;
 
 public interface CompanyAPI {
-    @GET("/company/{id}") void get(@Path("id") String companyId, Callback<Company> callback);
+    @GET("/company/{id}") Observable<Company> getCompany(@Path("id") String companyId);
 
-    @POST("/company") void post(@Body Company company, Callback<Company> callback);
+    @POST("/company") Observable<Company> postCompany(@Body Company company);
 
-    @PATCH("/company/{id}") void patch(@Path("id") String companyId, @Body Company company, Callback<Response> callback);
+    @PATCH("/company/{id}") Observable<Response> patchCompany(@Path("id") String companyId, @Body Company company);
 }
