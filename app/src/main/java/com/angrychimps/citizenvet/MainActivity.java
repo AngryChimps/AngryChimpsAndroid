@@ -22,66 +22,20 @@ public class MainActivity extends AppCompatActivity  {
     @Bind(R.id.nav_view) NavigationView navigationView;
     private Location currentLocation, previousLocation; //Update only if the user has moved
     private FragmentManager fm;
-    private RestClient restClient;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        restClient = RestClient.API;
+        RestClient api = RestClient.API;
 
         fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(TAG_LOCATION_FRAGMENT) == null)
             fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
-//        deals = new SortedList<>(Deal.class, new SortedList.Callback<Deal>() {
-//            @Override public int compare(Deal o1, Deal o2) {
-//                if (o1.getDistance() < o2.getDistance()) return -1;
-//                if (o1.getDistance() > o2.getDistance()) return 1;
-//                else return 0;
-//            }
-//
-//            @Override public void onInserted(int position, int count) {
-//                BUS.getBus().post(new ResultInsertedEvent(position, count));
-//            }
-//
-//            @Override public void onRemoved(int position, int count) {
-//                BUS.getBus().post(new ResultRemovedEvent(position, count));
-//            }
-//
-//            @Override public void onMoved(int fromPosition, int toPosition) {
-//                BUS.getBus().post(new ResultMovedEvent(fromPosition, toPosition));
-//            }
-//
-//            @Override public void onChanged(int position, int count) {
-//                BUS.getBus().post(new ResultChangedEvent(position, count));
-//            }
-//
-//            @Override public boolean areContentsTheSame(Deal oldItem, Deal newItem) {
-//                return Math.abs(oldItem.getDistance() - newItem.getDistance()) < 0.1;
-//            }
-//
-//            @Override public boolean areItemsTheSame(Deal item1, Deal item2) {
-//                return item1.getProvider_ad_id().equals(item2.getProvider_ad_id());
-//            }
-//        });
-
         initiateNavigationDrawer();
-        //setMainFragment();
-    }
 
-
-
-    @Override protected void onStart() {
-        super.onStart();
-        //BUS.getBus().register(this); //Register to receive events
-        //updateIfNecessary();
-    }
-
-    @Override protected void onStop() {
-        super.onStop();
-        //BUS.getBus().unregister(this);
     }
 
     @Override protected void onDestroy() {
@@ -106,11 +60,6 @@ public class MainActivity extends AppCompatActivity  {
         fm.beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
     }
 
-//    private void setMainFragment() {
-//        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        replaceFragmentNoBackStack(serviceProviderMode ? new PMainFragment() : new CMainFragment());
-//    }
-
     private void initiateNavigationDrawer(){
         navigationView.removeAllViews();
         //getLayoutInflater().inflate(serviceProviderMode ? R.layout.drawer_p : R.layout.drawer_c, navigationView);
@@ -122,20 +71,11 @@ public class MainActivity extends AppCompatActivity  {
             case R.id.drawer_profile:
                 break;
             case R.id.drawer_explore:
-                //if(fm.getBackStackEntryCount() != 0) setMainFragment();
                 break;
             case R.id.drawer_messages:
                 break;
             case R.id.drawer_switch:
-                //serviceProviderMode = !serviceProviderMode;
-                //Wait until the drawer is closed to change its contents and the main fragment, otherwise you get stuttering
                 drawerLayout.closeDrawer(navigationView);
-//                handler.postDelayed(new Runnable() {
-//                    @Override public void run() {
-//                        initiateNavigationDrawer();
-//                        setMainFragment();
-//                    }
-//                }, 280);
                 break;
             //Customer mode only
             case R.id.drawer_request:
@@ -212,18 +152,5 @@ public class MainActivity extends AppCompatActivity  {
 //                Log.i(null, "Failure on POST");
 //            }
 //        });
-//    }
-//
-//    @Subscribe public void upNavigationArrowPressed(UpNavigationArrowEvent event) {
-//        setMainFragment();
-//    }
-//
-//    @Subscribe public void upNavigationBurgerPressed(UpNavigationBurgerEvent event) {
-//        drawerLayout.openDrawer(navigationView);
-//    }
-//
-//    @Subscribe public void locationUpdated(LocationUpdatedEvent event) {
-//        currentLocation = event.location;
-//        //updateIfNecessary();
 //    }
 }

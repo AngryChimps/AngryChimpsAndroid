@@ -126,9 +126,10 @@
     <orderEntry type="library" exported="" name="play-services-gcm-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-games-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-wallet-7.8.0" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-drive-7.8.0" level="project" />
-    <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="icepick-3.1.0" level="project" />
+    <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-analytics-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-appindexing-7.8.0" level="project" />
@@ -138,10 +139,12 @@
     <orderEntry type="library" exported="" name="play-services-safetynet-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="jsr250-api-1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.0.0" level="project" />
+    <orderEntry type="library" exported="" name="okio-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-fitness-7.8.0" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-urlconnection-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-vision-7.8.0" level="project" />
     <orderEntry type="library" exported="" name="dagger-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-23.0.0" level="project" />
