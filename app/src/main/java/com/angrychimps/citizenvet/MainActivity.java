@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity  {
             fm.beginTransaction().add(new LocationManagerFragment(), TAG_LOCATION_FRAGMENT).commit();
 
         initiateNavigationDrawer();
-
     }
 
     @Override protected void onDestroy() {

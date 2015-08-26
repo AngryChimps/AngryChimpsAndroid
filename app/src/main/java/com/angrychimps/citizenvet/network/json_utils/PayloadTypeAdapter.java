@@ -13,11 +13,11 @@ import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 
-public class PayloadSerializer<T> implements JsonSerializer, JsonDeserializer<T> {
+public class PayloadTypeAdapter<T> implements JsonSerializer, JsonDeserializer<T> {
 
     private String[] containers;
 
-    public PayloadSerializer(String...containers) {
+    public PayloadTypeAdapter(String... containers) {
         this.containers = containers;
     }
 
