@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models.shared;
+package com.angrychimps.citizenvet.models.base;
 
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -8,13 +8,8 @@ import java.util.List;
 import auto.parcelgson.AutoParcelGson;
 import auto.parcelgson.gson.annotations.SerializedName;
 
-/*
-    Used in Auth API, received as part of login response
-    Used in Company API??
-    Used in Location API, both for send and inside LocationDetail in GET receive
- */
 @AutoParcelGson
-public abstract class CompanyLocation implements Parcelable {
+public abstract class Location implements Parcelable {
     @Nullable public abstract String id(); //This may be named company_id in parts?
     @Nullable public abstract String name();
     @Nullable public abstract String description();
@@ -30,7 +25,7 @@ public abstract class CompanyLocation implements Parcelable {
     @Nullable public abstract Hours hours();
     public abstract int status();
 
-    CompanyLocation() {
+    Location() {
     }
 
     @AutoParcelGson.Builder
@@ -49,14 +44,13 @@ public abstract class CompanyLocation implements Parcelable {
         public abstract Builder staffIds(List<String> staffIds);
         public abstract Builder hours(Hours hours);
         public abstract Builder status(int status);
-        public abstract CompanyLocation build();
+        public abstract Location build();
 
         Builder(){
         }
     }
 
     public static Builder builder(){
-        return new AutoParcelGson_CompanyLocation.Builder();
+        return new AutoParcelGson_Location.Builder();
     }
-
 }

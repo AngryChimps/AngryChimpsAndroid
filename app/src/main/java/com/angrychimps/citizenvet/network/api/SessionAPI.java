@@ -1,7 +1,7 @@
 package com.angrychimps.citizenvet.network.api;
 
 import com.angrychimps.citizenvet.models.Req;
-import com.angrychimps.citizenvet.models.received.Session;
+import com.angrychimps.citizenvet.models.base.Session;
 
 import retrofit.http.Body;
 import retrofit.http.POST;

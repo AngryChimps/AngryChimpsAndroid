@@ -1,8 +1,8 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.shared.StaffMember;
-
-import java.util.List;
+import com.angrychimps.citizenvet.models.base.Staff;
+import com.angrychimps.citizenvet.models.recieved.RecStaffAPIget;
+import com.angrychimps.citizenvet.models.recieved.RecStaffAPIgetAll;
 
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -13,11 +13,11 @@ import retrofit.http.Path;
 import rx.Observable;
 
 public interface StaffAPI {
-    @GET("/staff") Observable<List<StaffMember>> getStaffMembers();
+    @GET("/staff") Observable<RecStaffAPIgetAll> getStaffMembers();
 
-    @GET("/staff/{id}") Observable<StaffMember> getStaffMember(@Path("id") String staffId);
+    @GET("/staff/{id}") Observable<RecStaffAPIget> getStaffMember(@Path("id") String staffId);
 
-    @POST("/staff") Observable<StaffMember> postStaffMember(@Body StaffMember staff);
+    @POST("/staff") Observable<RecStaffAPIget> postStaffMember(@Body Staff staff);
 
-    @PATCH("/staff/{id}") Observable<Response> patchStaffMember(@Path("id") String staffId, @Body StaffMember staff);
+    @PATCH("/staff/{id}") Observable<Response> patchStaffMember(@Path("id") String staffId, @Body Staff staff);
 }

@@ -1,11 +1,13 @@
-package com.angrychimps.citizenvet.models.shared;
+package com.angrychimps.citizenvet.models.base;
+
+import android.os.Parcelable;
 
 import java.util.Date;
 
 import auto.parcelgson.AutoParcelGson;
 
 @AutoParcelGson
-public abstract class Hours {
+public abstract class Hours implements Parcelable {
     public abstract Day sunday();
     public abstract Day monday();
     public abstract Day tuesday();

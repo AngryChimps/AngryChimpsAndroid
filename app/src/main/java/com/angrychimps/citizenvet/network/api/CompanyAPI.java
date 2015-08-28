@@ -1,6 +1,7 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.shared.Company;
+import com.angrychimps.citizenvet.models.base.Company;
+import com.angrychimps.citizenvet.models.recieved.RecCompanyAPI;
 
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -11,9 +12,9 @@ import retrofit.http.Path;
 import rx.Observable;
 
 public interface CompanyAPI {
-    @GET("/company/{id}") Observable<Company> getCompany(@Path("id") String companyId);
+    @GET("/company/{id}") Observable<RecCompanyAPI> getCompany(@Path("id") String companyId);
 
-    @POST("/company") Observable<Company> postCompany(@Body Company company);
+    @POST("/company") Observable<RecCompanyAPI> postCompany(@Body Company company);
 
     @PATCH("/company/{id}") Observable<Response> patchCompany(@Path("id") String companyId, @Body Company company);
 }

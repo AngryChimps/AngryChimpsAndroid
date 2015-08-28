@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.angrychimps.citizenvet.models.Req;
-import com.angrychimps.citizenvet.models.received.Session;
+import com.angrychimps.citizenvet.models.base.Session;
 import com.angrychimps.citizenvet.network.api.AnimalAPI;
 import com.angrychimps.citizenvet.network.api.AuthAPI;
 import com.angrychimps.citizenvet.network.api.CompanyAPI;

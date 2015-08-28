@@ -1,13 +1,10 @@
-package com.angrychimps.citizenvet.models.shared;
+package com.angrychimps.citizenvet.models.base;
 
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import auto.parcelgson.AutoParcelGson;
 
-/*
-    Used in Member API, for both send and receive
- */
 @AutoParcelGson
 public abstract class Member implements Parcelable {
     @Nullable public abstract String id(); //receive only

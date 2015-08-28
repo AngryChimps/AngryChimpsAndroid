@@ -1,4 +1,4 @@
-package com.angrychimps.citizenvet.models.shared;
+package com.angrychimps.citizenvet.models.base;
 
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -8,12 +8,8 @@ import java.util.List;
 import auto.parcelgson.AutoParcelGson;
 import auto.parcelgson.gson.annotations.SerializedName;
 
-/*
-    Used in Location API inside CompanyLocationDetail
-    Used in Staff API, for both send and receive
- */
 @AutoParcelGson
-public abstract class StaffMember implements Parcelable{
+public abstract class Staff implements Parcelable{
     @Nullable public abstract String id(); //receive only
     @Nullable @SerializedName("company_id") public abstract String companyId(); //send only
     @Nullable public abstract String first();
@@ -27,7 +23,6 @@ public abstract class StaffMember implements Parcelable{
     @Nullable @SerializedName("location_ids") public abstract List<String> locationIds();
     public abstract int role();
 
-    StaffMember() {
+    Staff() {
     }
-
 }

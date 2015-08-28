@@ -1,6 +1,6 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.send.Inquiry;
+import com.angrychimps.citizenvet.models.send_deprecated.Inquiry;
 
 import retrofit.client.Response;
 import retrofit.http.Body;

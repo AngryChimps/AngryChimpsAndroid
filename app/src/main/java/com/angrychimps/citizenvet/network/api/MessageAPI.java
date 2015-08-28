@@ -1,8 +1,9 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.received.MessageDetail;
-import com.angrychimps.citizenvet.models.send.MessageSend;
-import com.angrychimps.citizenvet.models.send.MessageStatus;
+import com.angrychimps.citizenvet.models.base.Message;
+import com.angrychimps.citizenvet.models.recieved.RecMessageAPI;
+import com.angrychimps.citizenvet.models.send_deprecated.MessageSend;
+import com.angrychimps.citizenvet.models.send_deprecated.MessageStatus;
 
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -14,7 +15,7 @@ import retrofit.http.Path;
 import rx.Observable;
 
 public interface MessageAPI {
-    @GET("/message/{id}") Observable<MessageDetail> getMessage(@Path("id") String messageId);
+    @GET("/message/{id}") Observable<RecMessageAPI> getMessage(@Path("id") String messageId);
 
     @POST("/message") Observable<Response> postMessage(@Body MessageSend message);
 

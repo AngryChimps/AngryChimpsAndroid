@@ -3,8 +3,8 @@ package com.angrychimps.citizenvet.models;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import com.angrychimps.citizenvet.models.shared.Address;
-import com.angrychimps.citizenvet.models.shared.Hours;
+import com.angrychimps.citizenvet.models.base.Address;
+import com.angrychimps.citizenvet.models.base.Hours;
 
 import java.util.List;
 
