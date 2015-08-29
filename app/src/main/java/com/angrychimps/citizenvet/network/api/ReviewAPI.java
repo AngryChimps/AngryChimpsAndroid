@@ -1,11 +1,8 @@
 package com.angrychimps.citizenvet.network.api;
 
-import com.angrychimps.citizenvet.models.base.Review;
 import com.angrychimps.citizenvet.models.recieved.RecReviewAPIget;
 import com.angrychimps.citizenvet.models.recieved.RecReviewAPIgetAll;
-import com.angrychimps.citizenvet.models.send_deprecated.ReviewPost;
-
-import java.util.List;
+import com.angrychimps.citizenvet.models.send.SendReviewAPI;
 
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -19,5 +16,5 @@ public interface ReviewAPI {
 
     @GET("/review{id}") Observable<RecReviewAPIget> getReview(@Path("id") String reviewId);
 
-    @POST("/review") Observable<Response> postReview(@Body ReviewPost review);
+    @POST("/review") Observable<Response> postReview(@Body SendReviewAPI review);
 }

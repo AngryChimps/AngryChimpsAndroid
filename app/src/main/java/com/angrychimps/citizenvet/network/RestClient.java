@@ -3,8 +3,8 @@ package com.angrychimps.citizenvet.network;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.angrychimps.citizenvet.models.Req;
-import com.angrychimps.citizenvet.models.base.Session;
+import com.angrychimps.citizenvet.models.recieved.RecSessionAPI;
+import com.angrychimps.citizenvet.models.send.SendSessionAPI;
 import com.angrychimps.citizenvet.network.api.AnimalAPI;
 import com.angrychimps.citizenvet.network.api.AuthAPI;
 import com.angrychimps.citizenvet.network.api.CompanyAPI;
@@ -62,16 +62,16 @@ public enum RestClient {
 
     private void checkSession(){
         if(sessionId == null) session()
-                .postSession(Req.session("", new Device().getDescription()))
+                .postSession(SendSessionAPI.create("", new Device().getDescription()))
                 .timeout(10, TimeUnit.SECONDS)
-                .subscribe(new Subscriber<Session>() {
+                .subscribe(new Subscriber<RecSessionAPI>() {
                     @Override public void onCompleted() {
                         Log.i(null, "onCompleted session");
                     }
                     @Override public void onError(Throwable e) {
                         Log.e(null, "error on session id: " + e.toString());
                     }
-                    @Override public void onNext(Session session) {
+                    @Override public void onNext(RecSessionAPI session) {
                         sessionId = session.id();
                         Log.i(null, "sessionId = " + sessionId);
                     }

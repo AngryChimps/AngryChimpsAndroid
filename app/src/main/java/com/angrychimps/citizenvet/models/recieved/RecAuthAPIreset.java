@@ -7,6 +7,7 @@ import auto.parcelgson.gson.annotations.SerializedName;
 public abstract class RecAuthAPIreset {
     abstract PayloadReset payload();
 
+    //May be integer- conflicting api data
     public String resetCode(){
         return payload().resetCode();
     }
